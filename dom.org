@@ -1,0 +1,106 @@
+#+TITLE: Dom
+#+TAGS[]:
+#+CATEGORIES[]:
+#+DRAFT: false
+
+用来处理可扩展标记语言( xml ) 的接口标准
+
+* DOM (文档对象模型)
+** window  
+*** 方法 
+   - onload
+      window.onload = function () {};  //javascript
+      $(document).ready(function () {}); // jQuery  $(funciton()) 简写
+
+    1.执行时间 
+   window.onload必须等到页面内包括图片的所有元素加载完毕后才能执行。 
+   $(document).ready()是DOM结构绘制完毕后就执行，不必等到加载完毕。  
+
+   2.编写个数不同 
+   window.onload不能同时编写多个，如果有多个window.onload方法，只会执行一个 
+   $(document).ready()可以同时编写多个，并且都可以得到执行 
+   
+** document  接口
+*** 属性
+    - cookie        设置或返回与当前文档有关的所有 cookie 
+    - domain        返回当前文档的域名                    
+    - lastModified  返回文档被最后修改的日期和时间        
+    - referrer      返回载入当前文档的文档的 URL          
+    - title         返回当前文档的标题                    
+    - URL           返回当前文档的 URL                    
+*** 方法
+    - getElementById()          返回对拥有指定 id 的第一个对象的引用                                        
+    - getElementsByName()       返回带有指定名称的对象集合 	                                               
+    - getElementsByTagName()    返回带有指定标签名的对象集合                                                
+    - getElementsByClassName()  返回带有指定 class 的对象集合                                               
+    - write()                   向文档写 HTML 表达式 或 JavaScript 代码                                     
+** 节点接口
+   因为 HTML 是按照 树的模型构造的，所以里面都是枝枝叉叉，操作的也是枝枝叉叉(节点)。
+*** 节点属性 (获取或修改)
+    - innerHTML  获取/设置元素内容   
+    - nodeName   获取/设置节点的名称 
+    - nodeValue  获取/设置节点的值   
+         元素节点的 nodeValue 是 undefined 或 null
+        文本节点的 nodeValue 是文本本身
+        属性节点的 nodeValue 是属性值
+        
+
+    获取节点属性
+    #+begin_src js
+      <p id="intro">Hello World!</p>
+  
+      <script type="text/javascript">
+      x=document.getElementById("intro");
+      document.write(x.firstChild.nodeValue);
+      </script>
+    #+end_src
+*** 修改
+    #+begin_src js
+      var para=document.createElement("p");
+      var node=document.createTextNode("This is new.");
+      para.appendChild(node);
+    #+end_src
+    
+    - insertBefore 插到节点前面
+    - removeChild 删除子节点
+    - replaceChild 替换节点
+
+*** 遍历节点
+    #+begin_src js
+          var list = document.getElementsByClassName("events");
+          for (let item of list) {
+            console.log(item);
+          }
+    #+end_src
+
+    for/in 对于迭代 HTMLCollection 没有作用
+*** getAttribute()方法
+    通过元素节点的属性名称获取属性的值。
+** 事件接口
+*** window 
+    - onload    页面结束加载之后触发(最慢，要所有图片都下载完)    
+    - onresize  当浏览器窗口被调整大小时触发                     
+*** 页面或图像
+    - onload 
+    - onUnload
+*** 表单
+    - onFocus
+    - onBlur 
+    - onChange
+    - onselect      在元素中文本被选中后触发            
+    - onsubmit     在提交表单时触发                   
+*** 键盘
+    - onkeydown   在用户按下按键时触发 
+    - onkeypress  在用户敲击按钮时触发 
+    - onkeyup     当用户释放按键时触发 
+*** 鼠标
+    - onclick
+    - ondblclick
+    - onmousedown
+    - onmouseup 
+    - onscroll
+    - onMouseOver 
+    - onMouseOut
+*** Media 
+    - onabort
+    - onplay

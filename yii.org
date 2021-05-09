@@ -1,0 +1,508 @@
+* YII 框架 
+** 安装,启动 
+*** 安装
+     基础版 composer create-project --prefer-dist yiisoft/yii2-app-basic basic
+     开发版 composer create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic yiidev
+     检测配置是否满足运行需求 php requirements.php
+*** 配置服务器
+**** apache 
+#+BEGIN_SRC conf
+    #设置文档根目录为 "basic/web"
+  Document           Root "path/to/basic/web"
+  <Directory "path/to/basic/web">
+      # 开启 mod_rewrite 用于美化 URL 功能的支持（译注：对应 pretty URL 选项）
+      RewriteEngine on
+      # 如果请求的是真实存在的文件或目录，直接访问
+      RewriteCond %{REQUEST_FILENAME} !-f
+      RewriteCond %{REQUEST_FILENAME} !-d
+      # 如果请求的不是真实文件或目录，分发请求至 index.php
+      RewriteRule . index.php
+
+      # ...其它设置...
+  </  Directory>
+#+END_SRC
+**** nginx
+#+BEGIN_SRC conf
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80; ## listen for ipv4
+    #listen [::]:80 default_server ipv6only=on; ## listen for ipv6
+
+    server_name mysite.local;
+    root        /path/to/basic/web;
+    index       index.php;
+
+    access_log  /path/to/basic/log/access.log;
+    error_log   /path/to/basic/log/error.log;
+
+    location / {
+        # Redirect everything that isn't a real file to index.php
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # uncomment to avoid processing of calls to non-existing static files by Yii
+    #location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+    #    try_files $uri =404;
+    #}
+    #error_page 404 /404.html;
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass 127.0.0.1:9000;
+        #fastcgi_pass unix:/var/run/php5-fpm.sock;
+        try_files $uri =404;
+    }
+
+    location ~* /\. {
+        deny all;
+    }
+}
+#+END_SRC
+使用该配置时，你还应该在 php.ini 文件中设置 cgi.fix_pathinfo=0，
+能避免掉很多不必要的 stat() 系统调用。
+还要注意当运行一个 HTTPS 服务器时，需要添加 fastcgi_param HTTPS on; 一行，
+这样 Yii 才能正确地判断连接是否安全。
+**** 不配置 
+     yii serve
+     指定端口 php yii serve --port=8888
+* 第一次问候（Saying Hello）
+** 创建动作 控制器
+#+BEGIN_SRC php
+  <?php
+  namespace app\controllers;
+  use yii\web\Controller;
+
+  class SiteController extends Controller
+  {
+      // ...现存的代码...
+
+      public function actionSay($message = 'Hello')
+      {
+          return $this->render('say', ['message' => $message]);
+      }
+  }
+#+END_SRC
+
+** 创建视图
+   视图是你用来生成响应内容的脚本。为了说 “Hello”， 你需要创建一个 say 视图，以便显示从操作方法中传来的 message 参数。
+#+BEGIN_SRC php
+<?php
+use yii\helpers\Html;
+?>
+<?= Html::encode($message) ?>
+#+END_SRC
+
+** 运行
+访问页面：http://hostname/index.php?r=site/say&message=Hello+World
+** 共用
+   头部和尾部是因为 yii\web\Controller::render() 方法会自动把 say 视图执行的结果嵌入称为布局的文件中，
+   本例中是 views/layouts/main.php。
+
+* 使用 Forms
+** 模型  
+模型类 EntryForm 代表从用户那请求的数据， 该类如下所示并存储在 models/EntryForm.php 文件中。 
+#+BEGIN_SRC php
+<?php
+namespace app\models;
+
+use Yii;
+use yii\base\Model;
+
+class EntryForm extends Model
+{
+    public $name;
+    public $email;
+
+    public function rules()
+    {
+        return [
+            [['name', 'email'], 'required'],
+            ['email', 'email'],
+        ];
+    }
+}
+#+END_SRC
+
+创建动作
+#+BEGIN_SRC php
+<?php
+namespace app\controllers;
+
+use Yii;
+use yii\web\Controller;
+use app\models\EntryForm;  //注意加上这个
+
+class SiteController extends Controller
+{
+    // ...现存的代码...
+
+    public function actionEntry()
+    {
+        $model = new EntryForm;
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // 验证 $model 收到的数据
+
+            // 做些有意义的事 ...
+
+            return $this->render('entry-confirm', ['model' => $model]);
+        } else {
+            // 无论是初始化显示还是数据验证错误
+            return $this->render('entry', ['model' => $model]);
+        }
+    }
+}
+#+END_SRC
+
+该操作首先创建了一个 EntryForm 对象。然后尝试从 $_POST 搜集用户提交的数据， 由 Yii 的 yii\web\Request::post() 
+方法负责搜集。 如果模型被成功填充数据（也就是说用户已经提交了 HTML 表单）， 操作将调用 validate() 去确保用户提交的是有效数据。
+信息：表达式 Yii::$app 代表应用实例，它是一个全局可访问的单例。 同时它也是一个服务定位器， 能提供 request，response，db 等等特定功能的组件。 
+在上面的代码里就是使用 request 组件来访问应用实例收到的 $_POST 数据。
+
+用户提交表单后，操作将会渲染一个名为 entry-confirm 的视图去确认用户输入的数据。 如果没填表单就提交，或数据包含错误（译者：如 email 格式不对），
+ entry 视图将会渲染输出，连同表单一起输出的还有验证错误的详细信息。
+
+注意：在这个简单例子里我们只是呈现了有效数据的确认页面。 实践中你应该考虑使用 refresh() 或 redirect() 去避免表单重复提交问题。
+
+创建视图
+最后创建两个视图文件 entry-confirm 和 entry。 他们会被刚才创建的 entry 操作渲染。
+entry-confirm 视图简单地显示提交的 name 和 email 数据。视图文件应该保存在 views/site/entry-confirm.php。
+#+BEGIN_SRC 
+<?php
+use yii\helpers\Html;
+?>
+<p>You have entered the following information:</p>
+
+<ul>
+    <li><label>Name</label>: <?= Html::encode($model->name) ?></li>
+    <li><label>Email</label>: <?= Html::encode($model->email) ?></li>
+</ul>
+#+END_SRC
+entry 视图显示一个 HTML 表单。视图文件应该保存在 views/site/entry.php。
+#+BEGIN_SRC 
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
+<?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'name') ?>
+
+    <?= $form->field($model, 'email') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+<?php ActiveForm::end(); ?>
+#+END_SRC
+视图使用了一个功能强大的小部件 ActiveForm 去生成 HTML 表单。 其中的 begin() 和 end() 分别用来渲染表单的开始和关闭标签。
+ 在这两个方法之间使用了 field() 方法去创建输入框。 第一个输入框用于 “name”，第二个输入框用于 “email”。 之后使用 yii\helpers\Html::submitButton() 方法生成提交按钮。
+
+尝试下
+用浏览器访问下面的 URL 看它能否工作：
+
+http://hostname/index.php?r=site/entry
+你会看到一个包含两个输入框的表单的页面。每个输入框的前面都有一个标签指明应该输入的数据类型。 如果什么都不填就点击提交按钮，或填入格式不正确的 email 地址，
+将会看到在对应的输入框下显示错误信息。
+
+验证错误的表单
+
+输入有效的 name 和 email 信息并提交后， 将会看到一个显示你所提交数据的确认页面。
+
+输入数据的确认页
+效果说明
+你可能会好奇 HTML 表单暗地里是如何工作的呢， 看起来它可以为每个输入框显示文字标签， 而当你没输入正确的信息时又不需要刷新页面就能给出错误提示，似乎有些神奇。
+
+是的，其实数据首先由客户端 JavaScript 脚本验证，然后才会提交给服务器通过 PHP 验证。yii\widgets\ActiveForm
+足够智能到把你在 EntryForm 模型中声明的验证规则转化成客户端 JavaScript 脚本去执行验证。 如果用户浏览器禁用了 JavaScript，
+服务器端仍然会像 actionEntry() 方法里这样验证一遍数据。这保证了任何情况下用户提交的数据都是有效的。
+
+警告：客户端验证是提高用户体验的手段。 无论它是否正常启用，服务端验证则都是必须的，请不要忽略它。
+
+输入框的文字标签是 field() 方法生成的，内容就是模型中该数据的属性名。 例如模型中的 name 属性生成的标签就是 Name。
+
+你可以在视图中自定义标签 按如下方法：
+
+<?= $form->field($model, 'name')->label('自定义 Name') ?>
+<?= $form->field($model, 'email')->label('自定义 Email') ?>
+信息：Yii 提供了相当多类似的小部件去帮你生成复杂且动态的视图。 在后面你还会了解到自己写小部件是多么简单。 你可能会把自己的很多视图代码转化成小部件以提高重用，加快开发效率。
+
+总结
+本章节指南中你接触了 MVC 设计模式的每个部分。 学到了如何创建一个模型代表用户数据并验证它的有效性。
+
+你还学到了如何从用户那获取数据并在浏览器上回显给用户。 这本来是开发应用的过程中比较耗时的任务， 好在 Yii 提供了强大的小部件让它变得如此简单。
+
+在下一章节中，你将学习如何使用数据库，几乎每个应用都需要数据库。
+* Databases
+本章节将介绍如何创建一个从数据表 country 中读取国家数据并显示出来的页面。 为了实
+现这个目标，你将会配置一个数据库连接， 创建一个活动记录类， 并且创建一个操作及一
+个视图。
+
+贯穿整个章节，你将会学到：
+
+配置一个数据库连接
+定义一个活动记录类
+使用活动记录从数据库中查询数据
+以分页方式在视图中显示数据
+
+请注意，为了掌握本章你应该具备最基本的数据库知识和使用经验。 尤其是应该知道如何
+创建数据库，如何通过数据库终端执行 SQL 语句。
+
+准备数据库
+
+首先创建一个名为 yii2basic 的数据库，应用将从这个数据库中读取数据。 你可以创建
+SQLite，MySQL，PostregSQL，MSSQL 或 Oracle 数据库，Yii 内置多种数据库支持。简单
+起见，后面的内容将以 MySQL 为例做演示。
+
+然后在数据库中创建一个名为 country 的表并插入简单的数据。可以执行下面的语句：
+
+CREATE TABLE `country` (
+  `code` CHAR(2) NOT NULL PRIMARY KEY,
+  `name` CHAR(52) NOT NULL,
+  `population` INT(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `country` VALUES ('AU','Australia',18886000);
+INSERT INTO `country` VALUES ('BR','Brazil',170115000);
+INSERT INTO `country` VALUES ('CA','Canada',1147000);
+INSERT INTO `country` VALUES ('CN','China',1277558000);
+INSERT INTO `country` VALUES ('DE','Germany',82164700);
+INSERT INTO `country` VALUES ('FR','France',59225700);
+INSERT INTO `country` VALUES ('GB','United Kingdom',59623400);
+INSERT INTO `country` VALUES ('IN','India',1013662000);
+INSERT INTO `country` VALUES ('RU','Russia',146934000);
+INSERT INTO `country` VALUES ('US','United States',278357000);
+此时便有了一个名为 yii2basic 的数据库，在这个数据库中有一个包含三个字段的数据表 country，表中有十行数据。
+
+配置数据库连接
+开始之前，请确保你已经安装了 PHP PDO 扩展和你所使用的数据库的 PDO 驱动（例如 MySQL 的 pdo_mysql）。 对于使用关系型数据库来讲，这是基本要求。
+
+驱动和扩展安装可用后，打开 config/db.php 修改里面的配置参数对应你的数据库配置。 该文件默认包含这些内容：
+
+<?php
+
+return [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8',
+];
+config/db.php 是一个典型的基于文件的配置工具。 这个文件配置了数据库连接 yii\db\Connection 的创建和初始化参数， 应用的 SQL 查询正是基于这个数据库。
+
+上面配置的数据库连接可以在应用中通过 Yii::$app->db 表达式访问。
+
+信息：config/db.php 将被包含在应用配置文件 config/web.php 中， 后者指定了整个应用如何初始化。 请参考配置章节了解更多信息。
+
+如果想要使用 Yii 没有捆绑支持的数据库，你可以查看以下插件：
+
+Informix
+IBM DB2
+Firebird
+创建活动记录
+创建一个继承自活动记录类的类 Country， 把它放在 models/Country.php 文件，去代表和读取 country 表的数据。
+
+<?php
+
+namespace app\models;
+
+use yii\db\ActiveRecord;
+
+class Country extends ActiveRecord
+{
+}
+这个 Country 类继承自 yii\db\ActiveRecord。你不用在里面写任何代码。 只需要像现在这样，Yii 就能根据类名去猜测对应的数据表名。
+
+信息：如果类名和数据表名不能直接对应， 可以覆写 tableName() 方法去显式指定相关表名。
+
+使用 Country 类可以很容易地操作 country 表数据，就像这段代码：
+
+use app\models\Country;
+
+// 获取 country 表的所有行并以 name 排序
+$countries = Country::find()->orderBy('name')->all();
+
+// 获取主键为 “US” 的行
+$country = Country::findOne('US');
+
+// 输出 “United States”
+echo $country->name;
+
+// 修改 name 为 “U.S.A.” 并在数据库中保存更改
+$country->name = 'U.S.A.';
+$country->save();
+信息：活动记录是面向对象、功能强大的访问和操作数据库数据的方式。你可以在活动记录章节了解更多信息。 除此之外你还可以使用另一种更原生的被称做数据访问对象的方法操作数据库数据。
+
+创建动作
+为了向最终用户显示国家数据，你需要创建一个操作。相比之前小节掌握的在 site 控制器中创建操作， 在这里为所有和国家有关的数据新建一个控制器更加合理。 新控制器名为 CountryController，并在其中创建一个 index 操作， 如下：
+
+<?php
+
+namespace app\controllers;
+
+use yii\web\Controller;
+use yii\data\Pagination;
+use app\models\Country;
+
+class CountryController extends Controller
+{
+    public function actionIndex()
+    {
+        $query = Country::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 5,
+            'totalCount' => $query->count(),
+        ]);
+
+        $countries = $query->orderBy('name')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'countries' => $countries,
+            'pagination' => $pagination,
+        ]);
+    }
+}
+把上面的代码保存在 controllers/CountryController.php 文件中。
+
+index 操作调用了活动记录 Country::find() 方法，去生成查询语句并从 country 表中取回所有数据。 为了限定每个请求所返回的国家数量，查询在 yii\data\Pagination 对象的帮助下进行分页。Pagination 对象的使命主要有两点：
+
+为 SQL 查询语句设置 offset 和 limit 从句， 确保每个请求只需返回一页数据（本例中每页是 5 行）。
+在视图中显示一个由页码列表组成的分页器， 这点将在后面的段落中解释。
+在代码末尾，index 操作渲染一个名为 index 的视图， 并传递国家数据和分页信息进去。
+
+创建视图
+在 views 目录下先创建一个名为 country 的子目录。 这个目录存储所有由 country 控制器渲染的视图。在 views/country 目录下 创建一个名为 index.php 的视图文件，内容如下：
+
+<?php
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
+?>
+<h1>Countries</h1>
+<ul>
+<?php foreach ($countries as $country): ?>
+    <li>
+        <?= Html::encode("{$country->name} ({$country->code})") ?>:
+        <?= $country->population ?>
+    </li>
+<?php endforeach; ?>
+</ul>
+
+<?= LinkPager::widget(['pagination' => $pagination]) ?>
+这个视图包含两部分用以显示国家数据。第一部分遍历国家数据并以无序 HTML 列表渲染出来。 第二部分使用 yii\widgets\LinkPager 去渲染从操作中传来的分页信息。 小部件 LinkPager 显示一个分页按钮的列表。 点击任何一个按钮都会跳转到对应的分页。
+
+试运行
+浏览器访问下面的 URL 看看能否工作：
+
+http://hostname/index.php?r=country/index
+国家列表
+
+首先你会看到显示着五个国家的列表页面。在国家下面，你还会看到一个包含四个按钮的分页器。 如果你点击按钮 “2”，将会跳转到显示另外五个国家的页面， 也就是第二页记录。如果观察仔细点你还会看到浏览器的 URL 变成了：
+
+http://hostname/index.php?r=country/index&page=2
+在这个场景里，Pagination 提供了为数据结果集分页的所有功能：
+
+首先 Pagination 把 SELECT 的子查询 LIMIT 5 OFFSET 0 数据表示成第一页。 因此开头的五条数据会被取出并显示。
+然后小部件 LinkPager 使用 Pagination::createUrl() 方法生成的 URL 去渲染翻页按钮。URL 中包含必要的参数 page 才能查询不同的页面编号。
+如果你点击按钮 “2”，将会发起一个路由为 country/index 的新请求。Pagination 接收到 URL 中 的 page 参数把当前的页码设为 2。 新的数据库请求将会以 LIMIT 5 OFFSET 5 查询并显示。
+总结
+本章节中你学到了如何使用数据库。你还学到了如何取出并使用 yii\data\Pagination 和 yii\widgets\LinkPager 显示数据。
+
+下一章中你会学到如何使用 Yii 中强大的代码生成器 Gii， 去帮助你实现一些常用的功能需求， 例如增查改删（CRUD）数据表中的数据。 事实上你之前所写的代码全部都可以由 Gii 自动生成。
+* 用 Gii 生成代码（Generating Code with Gii）
+  本章将介绍如何使用 Gii 去自动生成 Web 站点常用功能的代码。使用 Gii 生成代码非
+  常简单， 只要按照 Gii 页面上的介绍输入正确的信息即可。
+
+
+在你的应用中开启 Gii
+使用 Gii 去生成活动记录类
+使用 Gii 去生成数据表操作的增查改删（CRUD）代码
+自定义 Gii 生成的代码
+开始 Gii
+
+Gii 是 Yii 中的一个模块。 可以通过配置应用的 yii\base\Application::modules 属性
+开启它。通常来讲在 config/web.php 文件中会有以下配置代码：
+
+$config = [ ... ];
+
+if (YII_ENV_DEV) {
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+    ];
+}
+这段配置表明，如果当前是开发环境， 应用会包含 gii 模块，模块类是 yii\gii\Module。
+
+如果你检查应用的入口脚本 web/index.php， 将看到这行代码将 YII_ENV_DEV 设为 true：
+
+defined('YII_ENV') or define('YII_ENV', 'dev');
+鉴于这行代码的定义，应用处于开发模式下，按照上面的配置会打开 Gii 模块。你可以直接通过 URL 访问 Gii：
+
+http://hostname/index.php?r=gii
+信息：如果你通过本机以外的机器访问 Gii，请求会被出于安全原因拒绝。 你可以配置 Gii 为其添加允许访问的 IP 地址：
+
+'gii' => [
+    'class' => 'yii\gii\Module',
+    'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'] // 按需调整这里
+],
+Gii
+
+生成活动记录类
+选择 “Model Generator” （点击 Gii 首页的链接）去生成活动记录类。并像这样填写表单：
+
+Table Name: country
+Model Class: Country
+模型生成器
+
+然后点击 “Preview” 按钮。你会看到 models/Country.php 被列在将要生成的文件列表中。可以点击文件名预览内容。
+
+如果你已经创建过同样的文件，使用 Gii 会覆写它， 点击文件名旁边的 diff 能查看现有文件与将要 生成的文件的内容区别。
+
+模型生成器预览
+
+想要覆写已存在文件，选中 “overwrite” 下的复选框然后点击 “Generator”。如果是新文件，只点击 “Generator” 就好。
+
+接下来你会看到一个包含已生成文件的说明页面。如果生成过程中覆写过文件， 还会有一条信息说明代码是重新生成覆盖的。
+
+生成 CRUD 代码
+CRUD 代表增，查，改，删操作，这是绝大多数 Web 站点常用的数据处理方式。选择 Gii 中的 “CRUD Generator” （点击 Gii 首页的链接）去创建 CRUD 功能。本例 “country” 中需要这样填写表单：
+
+Model Class: app\models\Country
+Search Model Class: app\models\CountrySearch
+Controller Class: app\controllers\CountryController
+CRUD 生成器
+
+然后点击 “Preview” 按钮。你会看到下述将要生成的文件列表。
+
+CRUD 生成器预览
+
+如果你之前创建过 controllers/CountryController.php 和 views/country/index.php 文件（在指南的使用数据库章节）， 选中 “overwrite” 下的复选框覆写它们（之前的文件没能全部支持 CRUD）。
+
+试运行
+用浏览器访问下面的 URL 查看生成代码的运行：
+
+http://hostname/index.php?r=country/index
+可以看到一个栅格显示着从数据表中读取的国家数据。支持在列头对数据进行排序， 输入筛选条件进行筛选。
+
+可以浏览详情，编辑，或删除栅格中的每个国家。 还可以点击栅格上方的 “Create Country” 按钮通过表单创建新国家。
+
+国家的数据栅格
+
+编辑一个国家
+
+下面列出由 Gii 生成的文件，以便你研习功能和实现， 或修改它们。
+
+控制器：controllers/CountryController.php
+模型：models/Country.php 和 models/CountrySearch.php
+视图：views/country/*.php
+信息：Gii 被设计成高度可定制和可扩展的代码生成工具。 使用它可以大幅提高应用开发速度。 请参考 Gii 章节了解更多内容。
+
+总结
+本章学习了如何使用 Gii 去生成为数据表中 数据实现完整 CRUD 功能的代码。

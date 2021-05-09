@@ -1,0 +1,668 @@
+** 组件
+
+在组件里的 template 里写上 html（注意要有个根元素，一般为 div）
+在组件里的 style 里写上 css 样式（如果不是作用于全局的样式，一般在 style 后面跟上 scoped，但是要是加了反而改变了原有的样式，就不要加）
+注册
+
+全局注册
+Vue.component('my-component', { //在 main.js 中
+// 选项
+})
+局部注册
+components: {
+// <my-component> 将只在父组件模板中可用
+'my-component': Child //es6 语法：相同时可只写一个
+}
+vue-router
+
+导入 vue-router（main.js）
+import vueRouter from 'vue-router'
+
+html 写代码
+
+写触发链接的标签（按需，没有可不写）
+<router-link to="/newslist">新闻列表</router-link>
+路由的占位符
+<router-view></router-view>
+
+javascript 中写代码
+
+定义组件【不要注册，下面设置路由规则的时候，会自动把我们的组件注册】
+在 component 里新建一个组件 xxx.vue
+创建路由对象，设置路由规则(自动帮我们把组件注册)（router/index.js）
+在 router/index.js 中创建 router，并设置 routes
+const router = new vueRouter({
+routes: [{
+path: '/site',
+component: Layout
+}]
+}
+3.把我们上一步创建的路由对象，注入到根实例，这样我们整个应用就拥有了路由的功能（main.js）
+new Vue({
+el: '#app',
+router,
+render: h => h(App)
+})
+$router&$route
+
+相同点：
+
+都是属于 vue-router 里面的
+必须要在集成 vue-router 的时候，使用 Vue.use(VueRouter)，才会在 vue 原型上面绑定$route、$router 这两个属性
+不同点:
+
+$router 是在编程式导航的时候，使用到它，它里面有两个方法 $router.push、$router.go
+$route 用来获取路径中的参数，$route.params.xxx，还可以通过 $route.query.xxx 来获取路径中的参数 ,在监控路径变化的时候，使用到它
+axios(获取网络请求)
+
+导入 axios（main.js）
+import axios from 'axios'
+
+使用 axios(main.js)
+
+Vue.prototype.$axios = axios
+
+axios.defaults.baseURL = 'http://39.108.135.214:8899/'（方便起见可以设置根路由）
+
+axios.defaults.withCredentials = true （在跨域的时候，允许访问服务器时带上 cookies）
+
+1 发送 get 请求
+3.1.1 在发起请求组件的 methods 里添加函数
+
+getGoodsGroup(){
+const url = 'site/goods/getgoodsgroup/123'
+this.$axios.get(url).then((response)=>{
+this.goodsGroup = response.data.message
+})
+}
+
+3.1.2 在组件加载前运行该请求函数
+
+created(){
+    this.getGoodsGroup()
+}
+2 发送 post 请求
+与 get 类似，不过请求参数的设置有所区别
+
+有两个格式可选，具体选哪种看后台设置的 contentType 而定，一般后台两个格式都可以接收
+
+this.$axios.post(url,{username:'zhangsan',password:123}).then(response=>{})
+this.$axios.post(url,"username=zhangsan&password=123").then(response=>{})
+导入文件
+
+导入样式
+
+全局导入（main.js）
+import './statics/site/css/style.css'
+局部导入
+@import './statics/site/css/style.css'
+导入插件
+
+安装
+cnpm i xxx -S
+导入
+import vueRouter from 'vue-router'
+全局使用（如果不需要全局使用，则这步可以省略）
+2.1 基于 vue
+Vue.use(vueRouter)
+2.2 不基于 vue
+Vue.prototype.$axios = axios
+导入 jQuery
+1.导入 jQuery
+安装
+cnpm i jquery -S
+在 build/webpack.base.conf.js 里加入
+var webpack = require("webpack")
+在 module.exports 的最后加入：
+new webpack.optimize.CommonsChunkPlugin('common.js'),
+new webpack.ProvidePlugin({
+jQuery: "jquery",
+$: "jquery"
+})
+在 main.js 中引入
+import $ from 'jquery'
+最后一定要重新 npm run dev
+2.导入 jQuery 插件
+确保安装了 jquery
+在 script 中引入插件 js
+import '~/site/js/jqueryplugins/jqimgzoom/js/magnifier.js'
+在 style 中引入插件 css
+@import '../../../static/site/js/jqueryplugins/jqimgzoom/css/magnifier.css';
+在 script 的 mounted 生命周期钩子中初始化，一般要给其增加延时，以防数据没有请求回来
+setTimeout(() => {
+$(function () {
+$('#magnifier1').imgzoon({
+magnifier: '#magnifier1'
+});
+});
+}, 200)
+关于 router-link
+
+router-link 会自动的把该元素变成 a 标签
+添加了 to 属性后，不需要原来的 href 属性
+to 属性动态获取其他值时前面要加冒号（：）
+to 属性动态拼接时外面的双引号要写在里面所有字符串的外面，固定不变的值外面加上单引号以加号连接外部变量
+过滤器
+
+使用：加在双花括号插值表达式中，以管道符号'|'指示：
+{{message | dateFmt}}
+
+定义：在局部组件的选项中定义局部过滤器，或者在创建 Vue 实例之前全局定义过滤器
+
+内部的函数可接受多个参数，第一个参数为上面 message 的值
+
+filters: { //局部过滤器(xxx.vue)
+dateFmt: function (value) {
+if (!value) return ''
+value = value.toString()
+return value.charAt(0).toUpperCase() + value.slice(1)
+}
+}
+
+Vue.filter('dateFmt',(value,fmt='YYYY-MM-DD')=>{ //全局过滤器（main.js）
+return moment(value).format(fmt)
+})
+
+new Vue({
+// ...
+})
+
+关于已定义的数据在模板与 vue 实例中调用形式
+
+数据在模板中调用直接写属性名
+数据在 vue 实例中调用要在前面写上 this，由 vue 实例调用
+关于动画
+
+在最外面的 div 内定义 transition 组件，里面放要动画的元素
+给要动画的元素设置 css 过渡样式：
+transition: all .5s
+给要动画的元素设置显示隐藏：
+v-show="isShowPic"
+由另一个 button 设置触发事件，改变 isShowPic
+给 transition 组件添加动画钩子：
+进入：@before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter"
+移出：@before-leave="beforeLeave" @leave="leave" @after-leave="afterLeave"
+在 methods 中定义各个动画钩子
+beforeEnter: function (el) {
+el.style = 'transform:translateX(200px)'
+},
+enter: function (el, done) {
+el.offsetWidth
+el.style.transform = 'translateX(0px)'
+done()
+},
+afterEnter: function (el) {
+this.isShow = false
+},
+beforeLeave: function (el) {
+el.style = 'transform:translateX(0px)'
+},
+leave: function (el, done) {
+el.offsetWidth
+el.style = 'transform:translateX(200px)'
+el.addEventListener('transitionend', done)
+},
+afterLeave: function (el) {
+this.isShow = false
+}
+注意：
+el 指的是该动画元素
+在 before 里写动画的起始状态或位置、enter 或 leave 里写动画的结束状态或位置
+after 里写动画的回调函数（如消失隐藏），在 enter 或 leave 里调用
+关于 done 在进入时可直接调用，不过在离开时需要在过渡完成事件里调用
+在 enter 或着 leave 中要添加 el.offsetWidth 刷新动画帧
+关于 ref
+
+在 dom 元素中定义 ref 属性，则可在 vue 示例中通过 this.refs 获取所有有 ref 属性的 dom 元素
+
+ref 获取不到其父组件所定义 ref 的 dom 元素，可用 id 获取
+
+关于监听路由跳转
+
+在 watch 属性里添加监听对象$route：对应一个函数，当路由的值发生变化时，重新渲染页面
+
+ watch: {
+      // 监控路由变化
+      $route: function (val) {
+        // 刷新商品详情和评论数据
+        this.getGoodsinfoData()
+        this.getCommentData()
+      }
+    },
+关于 vuex
+
+导入 vuex，并声明全局使用（main.js）
+
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+创建 store 对象（main.js）
+
+const store = new Vuex.Store({
+state: {
+count:1
+},
+getters:{
+//获取 state 数据
+getCount(state){
+return state.count
+}
+}, //对仓库的增删改
+mutations: {
+addGoods(state,goodsObj){
+state.count = addLocal(goodsObj)
+}
+}
+})
+
+注入根实例（main.js）
+new Vue({
+el: '#app',
+router,
+store, //<--见此处
+components: { App },
+template: '<App/>'
+})
+
+一般 vuex 会结合 localStorage 使用
+4.1 新建一个 common 文件夹，一般与 main.js 同级，在里面创建一个 localTool.js，专门用来写对本地存储的增删改查操作，并暴露出去
+4.2 查找
+const getLocal = () => {
+return JSON.parse(localStorage.getItem('goods') || '{}')
+}
+
+3 增加
+export const addLocal = (goodsObj) => {
+const localGoods = getLocal()
+if (localGoods[goodsObj.id]) {
+localGoods[goodsObj.id] += goodsObj.count
+} else {
+localGoods[goodsObj.id] = goodsObj.count
+}
+localStorage.setItem('goods', JSON.stringify(localGoods))
+return getTotal() //调用其他函数返回一个值
+}
+在创建 store 对象前引入 localTool.js
+import {addLocal} from './common/localTool'
+
+在 store 对象中添加 mutations 对象的方法，
+示例方法是把值存入本地，调用 localTool.js 的 addLocal 方法，并同步 state 的 count
+mutations: {
+addGoods(state,goodsObj){
+state.count = addLocal(goodsObj)
+}}
+
+使用
+
+使用 mutations 对象里的方法
+在调用 mutation 其中方法的组件中，使用：
+this.$store.commit('addGoods',goodsObj)
+【第一个参数是 mutations 的方法名，其他可选，是调用过程中会使用的参数】
+使用 getters 获取 state（数据）
+在使用 vuex 状态（即数据）的组件中，直接使用：
+this.$store.getters.getCount
+父子组件传值
+
+一般情况
+
+在父组件中集成子组件
+1.1 创建子组件
+新建一个 vue 组件，如：inputnumber.vue
+1.2 在父组件中导入子组件
+import inputnumber from '../subcomponents/inputnumber'
+1.3 在父组件的 components 中注册子组件
+components: { inputnumber }
+1.4 直接在父组件的 template（模板）中，像自定义标签的形式使用
+<inputnumber></inputnumber>
+父组件传值给子组件【通过 props】
+2.1 接收方 (inputnumber.vue) :子组件
+子组件要显式地用 props 选项声明它预期的数据：
+props: ['initCount']
+2 发送方 (shopcart.vue) :父组件
+在使用子组件的地方，即在子组件的标签中，通过 属性名称=值 的方式传值,可动态传值
+<inputnumber :initCount="item.buycount"></inputnumber>
+子组件 把更改之后的值 传回给父组件 【通过自定义事件】
+3.1 接收方 (shopcart.vue) :父组件
+3.1.1 父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件
+@countChange="getChangedCount"
+3.1.2 父组件在 methods 中定义触发自定义事件后的方法
+getChangedCount（changedGoods）{} //changedGoods 为传回的值
+3.2 发送方 （inputnumber.vue）:子组件
+通过触发事件传值
+this.$emit('countChange',{count:this.count}) //值可以是任何类型
+element-ui 计数器的父子传值
+
+集成组件，设置他的最大和最小值
+
+<template>
+<el-input-number size="mini" :min="1" :max="10" v-model="num7"></el-input-number>
+</template>
+<script>
+export default {
+data() {
+return {
+num7: 1
+}}};
+</script>
+
+把要传给计数器的值放在 v-model 中，即修改 v-model 的值
+
+把计数器增减后的值传回来
+
+设置 change 事件（标签），其中第一个参数是另外传给计数器的值，最后一个参数是计数器完成操作后返回的结果
+@change="changeCount(item.id, $event)"
+设置 change 事件（methods）
+changeCount(value, event){
+const goodsObj = {
+goodsid:value,
+count:event
+};
+console.log(goodsObj);
+}
+非父子组件传值
+
+只有在父组件中通过 components: { inputnumber }注册的才能称为父子组件，在 template 通过 router-view 占位的不算父子组件
+新建一个 common.js 文件，定义一个组件 bus 作为非父子组件的中转站
+
+import Vue from 'vue'
+export const bus = new Vue()
+
+两个组件分别引入 bus
+
+import {bus} from '@/common/common'
+
+在发送组件的 methods 中触发事件
+bus.$emit(ISLOGIN,true)
+
+在接收组件的 created 中监听事件
+
+created(){
+bus.$on(ISLOGIN,(logined)=>{
+this.isLogin = logined
+})
+},
+
+点击删除，删除某项数据
+
+数据在后台
+发起删除数据请求，获得数据后，重新渲染页面
+数据在本地（利用 vue 的数据驱动，修改 data 中的值，页面也会相应的变化）
+2.1 利用 vuex 删除本地数据
+2.2 在之前获得的渲染页面的数组中，直接删除对应索引的数据
+登陆验证
+
+需要登陆验证的组件，在设置该路由规则时，添加元数据(router)
+meta:{needLogin:true}
+
+利用导航守卫，给需要登陆验证的组件（即 meta 有 needLogin），发送请求给后台，判断是否登陆(router)
+
+注意：router.beforeEach 里一定要有 next()，否则路由根本不会跳转
+router.beforeEach((to,from,next)=>{
+if(to.meta.needLogin){
+const url = 'site/account/islogin'
+axios.get(url).then(res=>{
+if(res.data.code === 'nologin'){
+router.push({ name:'login'}) // 去登陆页
+}else{
+next() // 正常路由跳转
+}
+})
+}else{
+next()
+}})
+
+在 router.beforeEach 中将要跳转的路径保存到本地(router)
+
+if(to.path!='/site/login'){
+localStorage.setItem('lastVisited',to.path)
+}
+
+在登陆页中登陆成功后，跳转到本地保存的路径(login.vue)
+this.$router.push({path:localStorage.getItem('lastVisited')})
+
+发送请求时默认带上 cookie（main.js）
+axios.defaults.withCredentials = true
+
+返回上一页
+
+直接返回上一页
+
+this.$router.go(-1)
+
+经过登陆验证后，返回他本该去的页面
+2.1 在路由守卫中本地保存要去的页面的路径，注意要排除掉/login
+if (to.path != '/site/login') {
+localStorage.setItem('lastVisited', to.path);
+}
+2.2 登陆成功时，设置跳到本地保存的路径中
+this.$router.push({path:localStorage.getItem('lastVisited')})
+
+Vue 组件的生命周期
+
+基本概念
+
+Vue:
+    beforeCreate（组件创建之前） ---> created（组件已经创建出来了）
+    ---> beforeMount（组件的 dom 元素被渲染出来之前） ---> mounted（dom 元素已经渲染出来了） ---> 【模型数据发生了更改】beforeUpdate（视图重新渲染之前） ---> updated(视图已经重新渲染完毕) ---> beforeDestory(组件销毁之前) ---> destoryed（组件销毁了）
+注意点:
+
+1、Vue 的一系列生命周期钩子，都是 Vue 框架提供者，我们开发者，只需要
+实现，那么我们 Vue 框架底层就会在恰当的时机，自动调用他们
+
+2、每个组件中都有这些生命周期钩子
+应用场景:
+
+1、created
+
+发送网络请求，获取数据
+2、mounted
+
+等视图渲染完成，然后拿着 dom 进行操作，有时候可能拿不到 dom 元素，或者有些效果出不来，可以尝试加 200ms 的延时
+如：使用 jQuery 插件
+3、beforeUpdate & update
+
+数据模型发生了更改，会调用，它会重新渲染组件
+4、beforeDestory & destory
+
+beforeDestory 记录未提交的数据
+created 将本地的数据，自动填充上
+beforeDestory:记录上次滚动到那个地方了
+created：自动滚动到你上次看得那个位置
+使用 vue-cli 打包
+
+使用 npm run build
+
+修改 config/index.js 里 module.exports 的 assetsPublicPath 改为:
+assetsPublicPath: './'
+
+修改 build/utils.js 里 generateLoaders 的 publicPath 改为:
+publicPath: '../../'
+
+如果引入了 jQuery，则在 webpack.prod.conf.js 里也要声明全局使用,在 module.exports 的最后加入：
+
+new webpack.optimize.CommonsChunkPlugin('common.js'),
+new webpack.ProvidePlugin({
+jQuery: "jquery",
+$: "jquery"
+})
+
+若想删掉自动生成的 map 文件:
+修改 config/index.js 里 module.exports 的 productionSourceMap 改为 productionSourceMap: false,
+
+vue-cli 优化
+
+删掉.map
+
+.map 文件只是帮助我们调试用的，正式上线时可以去掉这个文件
+修改 config/index.js 里 module.exports 的 productionSourceMap 改为 productionSourceMap: false
+element-ui 和 iview 按需导入
+
+element-ui
+
+安装 babel-plugin-component：
+cnpm install babel-plugin-component -D
+
+将 .babelrc 修改为：
+
+{
+"presets": [
+["env", { "modules": false }]
+],
+"plugins": [["component", {
+"libraryName": "element-ui",
+"styleLibraryName": "theme-chalk"
+}
+]]
+}
+
+在 main.js 中引入部分组件
+
+如只引入 Button ， Select 和 Message
+import { Button, Select， Message} from 'element-ui'
+Vue.use(Button) //顺便会导入 Button 的 css，不需另外导入
+Vue.use(Select)
+Vue.prototype.$message = Message //有部分组件不能直接通过 use 声明全局使用
+iview
+
+安装 babel-plugin-import：
+cnpm install babel-plugin-import -D
+
+在 .babelrc 中配置：
+
+{
+"plugins": [["import", {
+"libraryName": "iview",
+"libraryDirectory": "src/components"
+}]]
+}
+
+按需引入组件
+
+import { Button, Table } from 'iview';
+Vue.component('Button', Button);
+Vue.component('Table', Table);
+
+导入样式
+
+import 'iview/dist/styles/iview.css';
+
+路由懒加载
+
+建议：在刚开始时直接用这种方式引入路由文件
+安装 babel-plugin-syntax-dynamic-import
+cnpm i babel-plugin-syntax-dynamic-import -D
+
+在 .babelrc 中配置：
+
+{
+"plugins": ["syntax-dynamic-import"]
+}
+
+修改路由中引入文件的方式，把
+
+//（原来）import Layout from '@/components/Layout'
+const Layout = () => import('@/components/Layout')
+
+CDN 引入
+
+将 jquery、moment 等大资源的文件通过 cdn 的方式引入
+常见 cdn：bootcdn
+实现：
+引入资源
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+公开供全局使用，修改 bulid 文件夹下的 webpack.base.conf.js 文件
+这里小写的 vue 和 vue-router 是我们引入资源时对应的名字，冒号后面大写的名字是库的主人所暴露出来的全局方法名，当然这两个名字可以一样
+module.exports = {
+entry: {
+app: './src/main.js'
+},
+externals:{
+'BMap': 'BMap',
+'vue': 'Vue',
+'vue-router': 'VueRouter'
+}
+将项目中引用对应资源的地方将原先的引入方式去掉
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+BUG
+
+关于渲染值 undefined
+
+请求是异步费时操作，在渲染时数据还没有返回回 来，此时就会报 undefined 错误
+虽然之后数据返回后会再次渲染，但刚开始报的错不会消失
+v-for 不需担心 undefined 的问题
+直接拿数据渲染时可以在其父盒子添加 v-if=“渲染数组/对象”，则在没有返回数据时不会渲染页面
+关于 vue 设置属性时，number 类型的值设置无效
+
+vue 中属性的值为 number 类型不能直接写 label:1，要写:label:“1”
+关于 css 样式与原来不一致
+
+设置 css 样式的 style 加了 scoped 导致，删掉就可还原
+在路由中设置了 site/login，但是当 a 标签的 href 设置为‘/site/login’时不会跳转到对应页面
+
+vue 中的无刷新跳转是通过设置 url 的哈希值（即#）实现的，默认的会在 url 的末尾添加#，即若 href 设置为‘#/site/login’，则可以正常跳转
+不过 vue 还是建议我们用 router-link 来实现跳转，使用时不用担心#的问题
+<router-link to="/site/login"></router-link>
+网站本来能正常显示，设置了路由守卫后连首页都打不开了
+
+在设置路由守卫时没有调用 next()
+由当前页面通过路由跳转显示不同数据时，jquery 插件在 mounted 钩子中初始化后只能显示第一次时的数据
+
+jQuery 是事件驱动，vue 是数据驱动
+
+同页面的路由跳转并没有销毁并重新打开新的组件，在 mounted 中初始化的插件，在路由跳转后并不执行初始化函数，所以不能显示
+
+可以把初始化函数放到加载页面数据的请求回来后，这样每次重新渲染页面时就会重新加载初始化函数
+
+一般把 jQuery 放入 axios 中
+
+其他
+
+关于 foreach 和 for in
+
+foreach 一般用来遍历数组：
+
+myArry.forEach((value,index,arr)=>{
+console.log(value);
+});
+
+for in 一般用来遍历对象：
+
+for(var value in myArry){
+console.log(value)
+}
+
+关于 localStorage
+
+localStorage 存的起始都是字符串，所以不能对其中的某个键值对进行增删改查操作
+数组化某个 localStorage
+var contrastdata = JSON.parse(localStorage.getItem('contrastdata'))
+对数组进行增删改操作
+contrastdata[a] = b
+delete contrastdata[a]
+contrastdata[a] = c
+将操作后的数组存入该 localStorage
+localStorage.setItem(JSON.stringify(contrastdata))
+把数组中对象的某个键对应的值取出来
+
+如：[{id:1,age:2},{id:2,age:4},{id:3,age:5}]
+创建一个新数组
+const tempArr = []
+遍历这个数组，把对象中某个键对应的值放入该数组中
+this.shopcartgoods.forEach(item=>{
+tempArr.push(item.id)
+})
+转成字符串
+tempArr.join(',')
+数组与字符串互转
+
+数组转字符串
+var a, b,c;
+a = new Array(a,b,c,d,e);
+b = a.join('-'); //a-b-c-d-e 使用-拼接数组元素
+c = a.join(''); //abcde
+字符串转数组
+var str = 'ab+c+de';
+var a = str.split('+'); // [ab, c, de]
+var b = str.split(''); //[a, b, +, c, +, d, e]
+

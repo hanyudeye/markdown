@@ -1,0 +1,3 @@
+
+导出数据 sqlite3 db/boardsprofile.db ".dump" > /var/ftp/profile.sql
+导入数据 sqlite3 test.db ".read /var/ftp/profile.sql"  
