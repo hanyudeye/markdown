@@ -19,8 +19,6 @@ SELECT column_name,column_name FROM table_name;
 SELECT * FROM table_name;
 ```
 
-
-
 ### ORDER_BY
 
 ORDER BY 关键字用于对结果集按照一个列或者多个列进行排序。
