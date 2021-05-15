@@ -3676,8 +3676,6 @@
        - > insertAll ($userList ) ;
 
 ****** 分页查询
-
-
        用于文章分页查询是 =limit=方法比较常用的场合，例如：
 
        Db : : table ( 'article' ) - > limit ( 10 , 25 ) - > select ( ) ;
