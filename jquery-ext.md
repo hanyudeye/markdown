@@ -1,3 +1,26 @@
+##  jQuery获取和设置checkbox的checked属性小结
+今天写静态页面，需要拿jquery去控制checkbox的check属性，开始用的attr，每次设置完成后，点开f12观察elements，后面每次，无论怎么点击checkbox，它的checked属性都是选中的，于是上网查找，得以解决，下面是是转载的内容
+
+在jquery里，有两种操作元素属性的方法，一种是attr()，另一种是prop()。
+
+attr()的属性在页面首次加载时就确定。当页面初始状态checkbox没有选中，("#cb1").attr("checked")为undefined，点击选中后，还是undefined，不管选中与否(“#cb1”).attr(“checked”)始终都是undefined；当页面初试状态checkbox选中，$(“#cb1”).attr(“checked”)为checked，之后取消选中还是checked。
+
+prop()方法随checked属性改变而改变，选中时为true，为选中时为false。
+
+最后，总结下获取和设置checked属性的方法。
+
+得到选中属性
+$("#id").prop("checked")
+$("#id").get(0).checked)
+document.getElementById("#id").checked
+$("#id").is(":checked")
+
+设置选中
+$("#id").prop("checked",true)
+$("#id").get(0).checked = true
+
+document.getElementById("#id").checked = true
+
 * 实用 jQuery 代码
 ** 2. 重用你的元素查询
    #+begin_src js
