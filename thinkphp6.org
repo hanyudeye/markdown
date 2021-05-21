@@ -1,7 +1,18 @@
 * thinkphp6
-  
-** 配置
-*** 环境变量
+** 安装
+   
+#+begin_src sh
+composer create-project topthink/think tp 6.0.*
+#+end_src
+
+更新框架
+#+begin_src sh
+  composer update topthink/framework
+#+end_src
+
+** config
+
+*** environment-variables
     #+BEGIN_EXAMPLE
     [DATABASE ]
     USERNAME  =  root
@@ -22,7 +33,7 @@
     #+END_EXAMPLE
 
     think\facade\Env
-*** 配置文件
+*** config-file
 use think\facade\Config ;
 
  #+begin_src php
@@ -43,32 +54,29 @@ use think\facade\Config ;
       Config::get('config' ) ;
     #+end_src
 
-*** 系统配置文件
- | 配置文件名     | 描述            |
- |----------------+-----------------|
- | app.php        | 应用配置        |
- | cache.php      | 缓存配置        |
- | console.php    | 控制台配置      |
- | cookie.php     | Cookie 配置     |
- | database.php   | 数据库配置      |
- | filesystem.php | 磁盘配置        |
- | lang.php       | 多语言配置      |
- | log.php        | 日志配置        |
- | middleware.php | 中间件配置      |
- | route.php      | 路由和 URL 配置 |
- | session.php    | Session 配置    |
- | trace.php      | 页面 Trace 配置 |
- | view.php       | 视图配置        |
+*** system-config-files
+ | app.php        |            |
+ | cache.php      |            |
+ | console.php    |            |
+ | cookie.php     |            |
+ | database.php   |            |
+ | filesystem.php |            |
+ | lang.php       |            |
+ | log.php        |            |
+ | middleware.php | 中间件配置 |
+ | route.php      |            |
+ | session.php    |            |
+ | trace.php      |            |
+ | view.php       | 视图配置   |
 
-*** 显示错误信息
+*** show-error-msg
     #+begin_src php
-      // 显示错误信息
       'show_error_msg' => true,
      #+end_src
 
 *** multi-app
     #+begin_src sh
-   composer require topthink/think-multi-app  
+      composer require topthink/think-multi-app  
     #+end_src
 
    ! tip: every module must contain a controller fold 
@@ -3671,8 +3679,6 @@ use think\facade\Config ;
       SELECT user_id ,test_time ,username , max (score ) FROM user GROUP BY user_id ,test_time
   
 ***** having
-
-
       =HAVING=方法用于配合 group 方法完成从分组的结果中筛选（通常是聚合条件）数据。
 
       =having=方法只有一个参数，并且只能使用字符串，例如：
@@ -10904,3 +10910,9 @@ use think\facade\Config ;
    |                                |                                        | 'password'=>'requireIf:account,1'                             |
    | requireWith:field              | 验证某个字段有值的时候必须             | // 当account有值的时候password字段必须\\                      |
    |                                |                                        | 'password'=>'requireWith:account'                             |
+
+* Q&A   
+** Driver [Think] not supported 
+   #+begin_src sh
+composer require topthink/think-view
+   #+end_src
