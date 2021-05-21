@@ -24,50 +24,6 @@ ThinkPHP`5.0+`版本全部使用`Git`进行代码版本管理，`5.1+`版本开�
 * 应用仓库：https://gitee.com/liu21st/thinkphp
 * 核心框架：https://gitee.com/liu21st/framework
 
-## BUG反馈和建议
-
-对于框架的BUG和建议，建议使用[`Issues`](https://github.com/top-think/framework/issues)功能，但不应该在`Issues`里面提问。
-
-欢迎有能力的开发者贡献和提交PR给我们，帮助我们更好的完善和改进，但并不是所有的PR官方都会合并。请首先注意是否通过CI检测并注意代码规范，然后官方团队会评估该PR是否适合合并。
-
-## 微信公众号
-
-及时了解官方最新的资讯、活动和漏洞通知，以及每周原创的优秀内容，是目前官方的主要公告和推广渠道，如果还没有关注的话，不容错过。
-
-![](https://box.kancloud.cn/d46f0e60ef4542902239cd6c082b6e05_258x258.png)
-
-## 官方微博
-
-官方（新浪）微博 [@thinkphp](https://weibo.com/thinkphp)，通常会同步更新官方活动和资讯，由于广告泛滥等其它原因，不再更新其它内容。
-
-## 官方博客
-
-官方博客（[https://blog.thinkphp.cn](https://blog.thinkphp.cn)）是独立于官网而设计的，专注于官方最新资讯、新功能和技巧和最佳实践等方面的文章，目前托管在看云平台，对移动端访问支持良好。
-
-### 近期精选阅读
-
-* [值得升级到5.1的18个理由](https://blog.thinkphp.cn/736203)
-* [JSON字段类型在ORM中的使用](https://blog.thinkphp.cn/784281)
-* [教你使用5.1的数组对象查询](https://blog.thinkphp.cn/778497)
-* [你真的了解Db类和模型的正确使用姿势么？](https://blog.thinkphp.cn/810719)
-* [模型三大利器之一：搜索器](https://blog.thinkphp.cn/783775)
-* [模型三大利器之二：修改器](https://blog.thinkphp.cn/817548)
-* [模型三大利器之三：获取器](https://blog.thinkphp.cn/825350)
-* [ThinkPHP安全规范指引](https://blog.thinkphp.cn/789333)
-* [让你少犯错的数据查询基本原则](https://blog.thinkphp.cn/833794)
-* [如何有效提高ThinkPHP的应用性能](https://blog.thinkphp.cn/843679)
-* [让你提高开发效率的查询技巧](https://blog.thinkphp.cn/848639)
-* [模型关联查询不完全指南](https://blog.thinkphp.cn/852701)
-* [ThinkPHP项目及代码规范指北](https://blog.thinkphp.cn/877574)
-
-## 开发者周刊
-
-![](https://box.kancloud.cn/f97f5aa846688eb4e44e80f5ea496828_194x259.png)
-
-ThinkPHP[开发者周刊](https://www.kancloud.cn/thinkphp/weekly/content)旨在更好的鼓励和传播`ThinkPHP`生态的优秀内容和产品服务，于2018年国庆创刊，每周周一定时推送精选的优质内容。
-
-周刊推送渠道包括官方QQ群、微博（[@thinkphp](https://weibo.com/thinkphp)）、微信公众号（thinkphp2012），以及[邮件订阅](https://tinyletter.com/thinkphp)。
-
 ## 完全开发手册
 
 官方权威开发手册全部（并且只有）托管在看云文档平台，下面的各个版本的开发手册都可以导出`PDF`/`EPUB`到本地离线阅读，并支持发送到`Kindle`阅读，开发手册经常会保持更新，建议收藏随时以备查询。由于手册内容庞杂，不建议新手上来就看完全开发手册，容易摸不到北，最好通读下官方出品的[快速入门系列教程](https://www.kancloud.cn/special/thinkphp5_quickstart)。

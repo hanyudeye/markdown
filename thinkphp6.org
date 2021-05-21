@@ -1,208 +1,81 @@
-* tp6
-** 基础
-*** 配置
-**** 环境变量
-     注意，环境变量不支持数组参数，如果需要使用数组参数可以，可以使用
+* thinkphp6
+  
+** 配置
+*** 环境变量
+    #+BEGIN_EXAMPLE
+    [DATABASE ]
+    USERNAME  =  root
+    PASSWORD  =   123456
+    #+END_EXAMPLE
 
-     #+BEGIN_EXAMPLE
-     [DATABASE ]
-     USERNAME  =  root
-     PASSWORD  =   123456
-     #+END_EXAMPLE
+    数组
+    #+BEGIN_EXAMPLE
+        PATHINFO_PATH[ ]  = ORIG_PATH_INFO
+        PATHINFO_PATH[ ]  = REDIRECT_PATH_INFO
+        PATHINFO_PATH[ ]  = REDIRECT_URL
+    #+END_EXAMPLE
 
-     如果要设置一个没有键值的数组参数，可以使用
+    #+BEGIN_EXAMPLE
+        Env::get('database.username' ) ;
+        Env::get('database.password' ) ;
+        Env::get('PATHINFO_PATH' ) ;
+    #+END_EXAMPLE
 
-     #+BEGIN_EXAMPLE
-         PATHINFO_PATH[ ]  = ORIG_PATH_INFO
-         PATHINFO_PATH[ ]  = REDIRECT_PATH_INFO
-         PATHINFO_PATH[ ]  = REDIRECT_URL
-     #+END_EXAMPLE
+    think\facade\Env
+*** 配置文件
+use think\facade\Config ;
 
-     获取环境变量的值可以使用下面的方式获取：
+ #+begin_src php
+ Config::get( 'app.app_name' ) ;
+ #+end_src
 
-     #+BEGIN_EXAMPLE
-         Env::get('database.username' ) ;
-         Env::get('database.password' ) ;
-         Env::get('PATHINFO_PATH' ) ;
-     #+END_EXAMPLE
+判断
 
-     要使用 =Env= 类，必须先引入 =think\facade\Env= 环境变量的获取不区分大小写
- 
-     可以支持默认值，例如：
-     
-     #+BEGIN_EXAMPLE
-         // 获取环境变量 如果不存在则使用默认值root
-         Env : : get ( 'database.username' ,  'root' ) ;
-     #+END_EXAMPLE
-
-     可以直接在配置文件中使用环境变量进行本地环境和服务器的自动配置，例如：
-
-     #+BEGIN_EXAMPLE
-           return  [
-              'hostname'   = >  Env : : get ( 'hostname' , '127.0.0.1' ) ,
-          ] ;
-     #+END_EXAMPLE
-
-**** 配置获取
-  要使用 =Config= 类，首先需要在你的类文件中引入 use think\facade\Config ;
-
-  然后就可以使用下面的方法读取某个配置参数的值：
-  读取一级配置的所有参数（每个配置文件都是独立的一级配置）
-
-  Config::get('app');
-
-  读取单个配置参数
-
-  #+begin_src php
-  Config::get( 'app.app_name' ) ;
-  Config::get( 'route.url_domain_root' ) ;
-  #+end_src
-
-  读取数组配置（理论上支持无限级配置参数读取）
-
-  #+begin_src php
-    Config::get( 'database.default.host' ) ;
-  #+end_src
-
-  判断是否存在某个设置参数：
-
-  #+begin_src php
-    Config::has('template' ) ;
-    Config::has('route.route_rule_merge' ) ;
-  #+end_src
+ #+begin_src php
+   Config::has('route.route_rule_merge' ) ;
+ #+end_src
       
-**** 参数批量设置
-     #+begin_src php
-       // 批量设置参数
-       Config::set(['name1' =>'value1' ,  'name2'  =>  'value2' ] ,  'config' ) ;
-       // 获取配置
-       Config::get('config' ) ;
+批量设置
+    #+begin_src php
+      // 批量设置参数
+      Config::set(['name1' =>'value1' ,  'name2'  =>  'value2' ] ,  'config' ) ;
+      // 获取配置
+      Config::get('config' ) ;
+    #+end_src
+
+*** 系统配置文件
+ | 配置文件名     | 描述            |
+ |----------------+-----------------|
+ | app.php        | 应用配置        |
+ | cache.php      | 缓存配置        |
+ | console.php    | 控制台配置      |
+ | cookie.php     | Cookie 配置     |
+ | database.php   | 数据库配置      |
+ | filesystem.php | 磁盘配置        |
+ | lang.php       | 多语言配置      |
+ | log.php        | 日志配置        |
+ | middleware.php | 中间件配置      |
+ | route.php      | 路由和 URL 配置 |
+ | session.php    | Session 配置    |
+ | trace.php      | 页面 Trace 配置 |
+ | view.php       | 视图配置        |
+
+*** 显示错误信息
+    #+begin_src php
+      // 显示错误信息
+      'show_error_msg' => true,
      #+end_src
 
-**** 系统配置文件
-  下面系统自带的配置文件列表及其作用：
+*** multi-app
+    #+begin_src sh
+   composer require topthink/think-multi-app  
+    #+end_src
 
-  | 配置文件名     | 描述            |
-  |----------------+-----------------|
-  | app.php        | 应用配置        |
-  | cache.php      | 缓存配置        |
-  | console.php    | 控制台配置      |
-  | cookie.php     | Cookie 配置     |
-  | database.php   | 数据库配置      |
-  | filesystem.php | 磁盘配置        |
-  | lang.php       | 多语言配置      |
-  | log.php        | 日志配置        |
-  | middleware.php | 中间件配置      |
-  | route.php      | 路由和 URL 配置 |
-  | session.php    | Session 配置    |
-  | trace.php      | 页面 Trace 配置 |
-  | view.php       | 视图配置        |
-
-  具体的配置参数及默认值可以直接查看应用 =config= 目录下面的相关文件内容。
-  如果是多应用模式的话配置文件可能同时存在全局和应用配置文件两个同名文件
-
-**** 显示错误信息
-     #+begin_src php
-       // 显示错误信息
-       'show_error_msg' => true,
-      #+end_src
-
-** 请求流程
-     对于一个 HTTP 应用来说，从用户发起请求到响应输出结束，大致的标准请求流程如下：
-
-  -  载入 =Composer=的自动加载 =autoload=文件
-  -  实例化系统应用基础类 =think\App=
-  -  获取应用目录等相关路径信息
-  -  加载全局的服务提供 =provider.php=文件
-  -  设置容器实例及应用对象实例，确保当前容器对象唯一
-  -  从容器中获取 =HTTP=应用类 =think\Http=
-  -  执行 =HTTP=应用类的 =run=方法启动一个 =HTTP=应用
-  -  获取当前请求对象实例（默认为 =app\Request= 继承 =think\Request=）保存到容器
-  -  执行 =think\App=类的初始化方法 =initialize=
-  -  加载环境变量文件 =.env=和全局初始化文件
-  -  加载全局公共文件、系统助手函数、全局配置文件、全局事件定义和全局服务定义
-  -  判断应用模式（调试或者部署模式）
-  -  监听 =AppInit=事件
-  -  注册异常处理
-  -  服务注册
-  -  启动注册的服务
-  -  加载全局中间件定义
-  -  监听 =HttpRun=事件
-  -  执行全局中间件
-  -  执行路由调度（ =Route=类 =dispatch=方法）
-  -  如果开启路由则检查路由缓存
-  -  加载路由定义
-  -  监听 =RouteLoaded=事件
-  -  如果开启注解路由则检测注解路由
-  -  路由检测（中间流程很复杂 略）
-  -  路由调度对象 =think\route\Dispatch=初始化
-  -  设置当前请求的控制器和操作名
-  -  注册路由中间件
-  -  绑定数据模型
-  -  设置路由额外参数
-  -  执行数据自动验证
-  -  执行路由调度子类的 =exec=方法返回响应 =think\Response=对象
-  -  获取当前请求的控制器对象实例
-  -  利用反射机制注册控制器中间件
-  -  执行控制器方法以及前后置中间件
-  -  执行当前响应对象的 =send=方法输出
-  -  执行 HTTP 应用对象的 =end=方法善后
-  -  监听 =HttpEnd=事件
-  -  执行中间件的 =end=回调
-  -  写入当前请求的日志信息
-
-  至此，当前请求流程结束。
-
+   ! tip: every module must contain a controller fold 
 ** 路由
 *** 路由
-  路由是应用开发中比较关键的一个环节，其主要作用包括但不限于：
-
-  -  让 URL 更规范以及优雅；
-  -  隐式传入额外请求参数；
-  -  统一拦截并进行权限检查等操作；
-  -  绑定请求数据；
-  -  使用请求缓存；
-  -  路由中间件支持；
-
-  路由解析的过程一般包含：
-
-  -  路由定义：完成路由规则的定义和参数设置；
-  -  路由检测：检查当前的 URL 请求是否有匹配的路由；
-  -  路由解析：解析当前路由实际对应的操作（方法或闭包）；
-  -  路由调度：执行路由解析的结果调度；
-
-  掌握路由主要是要掌握路由定义及参数设置，其它环节是由系统自动完成的。
-
-    路由的主体规划和定义应该尽可能在应用开发前完成，在后期可以进行路由的参数调整和规则增补。
- 
-
 **** 路由定义文件
-  路由规则的注册必须在应用的路由定义文件中完成。路由定义和检测是针对应用的，因此如果你采用的是多应用模式，每个应用的路由都是完全独立的，并且路由地址不能跨应用（除非采用重定向路由）。
-
-
-    =route=目录下的任何路由定义文件都是有效的，分开多个路由定义文件并没有实际的意义，纯粹出于管理方便而已。默认的路由定义文件是 =route.php=，但你完全可以更改文件名，或者添加多个路由定义文件。
- 
-
-       ├─route                 路由定义目录
-       │  ├─route .php          路由定义
-       │  ├─api .php            路由定义
-       │  └─ . . .                更多路由定义
-
-  如果你使用了多应用模式，那么路由定义文件则放入应用目录下：
-
-       ├─app           应用目录
-      │  ├─app_name           应用目录
-      │  │  ├─common .php      函数文件
-      │  │  ├─controller      控制器目录
-      │  │  ├─model           模型目录
-      │  │  ├─view            视图目录
-      │  │  ├─config          配置目录
-      │  │  ├─route           路由目录
-      │  │  │  ├─route .php    路由定义
-      │  │  │  ├─api .php      路由定义
-      │  │  │  └─ . . .          更多路由定义
-
-  多应用模式下面，如果你开启了自动多应用，路由的规则是指在 URL 地址的应用名之后的部分，也就是说 URL 中的应用名是不能省略和改变的，例如你在 =index=应用中定义了路由。
+     多应用模式下面，如果你开启了自动多应用，路由的规则是指在 URL 地址的应用名之后的部分，也就是说 URL 中的应用名是不能省略和改变的，例如你在 =index=应用中定义了路由。
 
        Route : : rule ( 'hello/:name' ,  'index/hello' ) ;
 
