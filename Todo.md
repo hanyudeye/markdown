@@ -6,3 +6,5 @@
 
 ipad 开通黑白模式
 https://jingyan.baidu.com/article/b87fe19e362d77521835680b.html
+
+下载手机模板
