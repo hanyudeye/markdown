@@ -2,7 +2,7 @@
 ** 安装
    
 #+begin_src sh
-composer create-project topthink/think tp 6.0.*
+  composer create-project topthink/think tp 6.0.*
 #+end_src
 
 更新框架
