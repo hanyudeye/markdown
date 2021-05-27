@@ -11,7 +11,6 @@
 #+end_src
 
 ** config
-
 *** environment-variables
     #+BEGIN_EXAMPLE
     [DATABASE ]
@@ -80,6 +79,7 @@ use think\facade\Config ;
     #+end_src
 
    ! tip: every module must contain a controller fold 
+   
 ** 路由
 *** 路由
 **** 路由定义文件
@@ -94,7 +94,6 @@ use think\facade\Config ;
   一旦你开启了自动多应用，那么实际的 URL 地址应该是
 
        http : / /serverName /index .php /index /hello /think
-
 
     如果不做特殊说明的话，后面章节的例子都采用单应用模式或者多个入口应用举例，如果你是自动多应用的话请参考上面的实例进行 URL 地址调整。
  
@@ -10914,5 +10913,5 @@ use think\facade\Config ;
 * Q&A   
 ** Driver [Think] not supported 
    #+begin_src sh
-composer require topthink/think-view
+     composer require topthink/think-view
    #+end_src
