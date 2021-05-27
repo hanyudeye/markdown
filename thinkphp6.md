@@ -1,1412 +1,176 @@
-* thinkphp6
-** 安装
-   
-#+begin_src sh
-  composer create-project topthink/think tp 6.0.*
-#+end_src
-
-更新框架
-#+begin_src sh
-  composer update topthink/framework
-#+end_src
-
-** config
-*** environment-variables
-    #+BEGIN_EXAMPLE
-    [DATABASE ]
-    USERNAME  =  root
-    PASSWORD  =   123456
-    #+END_EXAMPLE
-
-    数组
-    #+BEGIN_EXAMPLE
-        PATHINFO_PATH[ ]  = ORIG_PATH_INFO
-        PATHINFO_PATH[ ]  = REDIRECT_PATH_INFO
-        PATHINFO_PATH[ ]  = REDIRECT_URL
-    #+END_EXAMPLE
-
-    #+BEGIN_EXAMPLE
-        Env::get('database.username' ) ;
-        Env::get('database.password' ) ;
-        Env::get('PATHINFO_PATH' ) ;
-    #+END_EXAMPLE
-
-    think\facade\Env
-*** config-file
-use think\facade\Config ;
-
- #+begin_src php
- Config::get( 'app.app_name' ) ;
- #+end_src
-
-判断
-
- #+begin_src php
-   Config::has('route.route_rule_merge' ) ;
- #+end_src
+# thinkphp6
+## config (设置)
+### environment-variables
+think\facade\Env
+```
+Env::get('database.username');
+```
+### config-file
+think\facade\Config;
+```
+ Config::get('app.app_name');
+ Config::has('route.route_rule_merge');
+```
       
-批量设置
-    #+begin_src php
-      // 批量设置参数
-      Config::set(['name1' =>'value1' ,  'name2'  =>  'value2' ] ,  'config' ) ;
-      // 获取配置
-      Config::get('config' ) ;
-    #+end_src
+### system-config-files
+| 文件           | 配置                     |
+| -------------- | ------------------------ |
+| app.php        | 'show_error_msg' => true |
+| cache.php      |                          |
+| console.php    |                          |
+| cookie.php     |                          |
+| database.php   |                          |
+| filesystem.php |                          |
+| lang.php       |                          |
+| log.php        |                          |
+| middleware.php | 中间件配置               |
+| route.php      |                          |
+| session.php    |                          |
+| trace.php      |                          |
+| view.php       | 视图配置                 |
 
-*** system-config-files
- | app.php        |            |
- | cache.php      |            |
- | console.php    |            |
- | cookie.php     |            |
- | database.php   |            |
- | filesystem.php |            |
- | lang.php       |            |
- | log.php        |            |
- | middleware.php | 中间件配置 |
- | route.php      |            |
- | session.php    |            |
- | trace.php      |            |
- | view.php       | 视图配置   |
-
-*** show-error-msg
-    #+begin_src php
-      'show_error_msg' => true,
-     #+end_src
-
-*** multi-app
-    #+begin_src sh
-      composer require topthink/think-multi-app  
-    #+end_src
-
-   ! tip: every module must contain a controller fold 
-   
-** 路由
-*** 路由
-**** 路由定义文件
-     多应用模式下面，如果你开启了自动多应用，路由的规则是指在 URL 地址的应用名之后的部分，也就是说 URL 中的应用名是不能省略和改变的，例如你在 =index=应用中定义了路由。
-
-       Route : : rule ( 'hello/:name' ,  'index/hello' ) ;
-
-  在没有开启自动多应用的情况下，URL 地址是
-
-       http : / /serverName /index .php /hello /think
-
-  一旦你开启了自动多应用，那么实际的 URL 地址应该是
-
-       http : / /serverName /index .php /index /hello /think
-
-    如果不做特殊说明的话，后面章节的例子都采用单应用模式或者多个入口应用举例，如果你是自动多应用的话请参考上面的实例进行 URL 地址调整。
- 
-
-**** 路由配置文件
-  路由的配置文件独立为 =config=目录下的 =route.php=，如果是多应用模式则支持在应用配置的 =route.php=设置，请注意路由配置文件和路由定义文件之间的区别。
-
-**** 关闭路由
-  如果你的某个应用不需要使用路由功能，那么可以在应用的 =app.php=配置文件中设置：
-
-        // 关闭应用的路由功能
-       'with_route'     = >     false ,
-
-  关闭某个应用的路由。路由关闭后，你只能使用默认的 URL 解析规则来访问。
-
-*** 路由定义
-  要使用 =Route=类注册路由必须首先在路由定义文件开头添加引用（后面不再重复说明）
-  use think\facade\Route ;
-
-**** 注册路由
-  最基础的路由定义方法是：
-
-    Route::rule('路由表达式', '路由地址', '请求类型');
-
-  例如注册如下路由规则（假设为单应用模式）：
-
-  // 注册路由到News控制器的read操作
-  Route::rule ( 'new/:id' , 'News/read' ) ;
-
-  我们访问：
-       http://serverName/new/5
-       
-       会自动路由到：
-       http://serverName /news/read/id/5
-
-       并且原来的访问地址会自动失效。
-
-       可以在 =rule=方法中指定请求类型（不指定的话默认为任何请求类型有效），例如：
-
-       Route::rule( 'new/:id' ,  'News/update' ,  'POST' ) ;
-
-    请求类型参数不区分大小写。
-
-  表示定义的路由规则在 =POST=请求下才有效。如果要定义 =GET=和 =POST=请求支持的路由规则，可以用：
-
-       Route : : rule ( 'new/:id' , 'News/read' , 'GET|POST' ) ;
-
-  不过通常我们更推荐使用对应请求类型的快捷方法，包括：
-
-  | 类型     | 描述           | 快捷方法   |
-  |----------+----------------+------------|
-  | GET      | GET 请求        | get        |
-  | POST     | POST 请求       | post       |
-  | PUT      | PUT 请求        | put        |
-  | DELETE   | DELETE 请求     | delete     |
-  | PATCH    | PATCH 请求      | patch      |
-  | *        | 任何请求类型   | any        |
-
-  快捷注册方法的用法为：
-
-    Route::快捷方法名('路由表达式', '路由地址');
-
-  使用示例如下：
-
-       Route : : get ( 'new/' , 'News/read' ) ;  // 定义GET请求路由规则
-      Route : : post ( 'new/' , 'News/update' ) ;  // 定义POST请求路由规则
-      Route : : put ( 'new/:id' , 'News/update' ) ;  // 定义PUT请求路由规则
-      Route : : delete ( 'new/:id' , 'News/delete' ) ;  // 定义DELETE请求路由规则
-      Route : : any ( 'new/:id' , 'News/read' ) ;  // 所有请求都支持的路由规则
-
-  注册多个路由规则后，系统会依次遍历注册过的满足请求类型的路由规则，一旦匹配到正确的路由规则后则开始执行最终的调度方法，后续规则就不再检测。
-
-**** 规则表达式
-  规则表达式通常包含静态规则和动态规则，以及两种规则的结合，例如下面都属于有效的规则表达式：
-
-       Route : : rule ( '/' ,  'index' ) ;  // 首页访问路由
-      Route : : rule ( 'my' ,  'Member/myinfo' ) ;  // 静态地址路由
-      Route : : rule ( 'blog/:id' ,  'Blog/read' ) ;  // 静态地址和动态地址结合
-      Route : : rule ( 'new/:year/:month/:day' ,  'News/read' ) ;  // 静态地址和动态地址结合
-      Route : : rule ( ':user/:blog_id' ,  'Blog/read' ) ;  // 全动态地址
-
-
-    规则表达式的定义以 =/=为参数分割符（无论你的 =PATH_INFO=分隔符设置是什么，请确保在定义路由规则表达式的时候统一使用 =/=进行 URL 参数分割，除非是使用组合变量的情况）。
- 
-
-  每个参数中可以包括动态变量，例如 =:变量=或者 ==都表示动态变量（新版推荐使用第二种方式，更利于混合变量定义），并且会自动绑定到操作方法的对应参数。
-
-
-    你的 URL 访问 =PATH_INFO=分隔符使用 =pathinfo_depr=配置，但无论如何配置，都不影响路由的规则表达式的路由分隔符定义。
- 
-
-**** 可选变量
-
-
-  支持对路由参数的可选定义，例如：
-
-       Route : : get ( 'blog/:year/[:month]' , 'Blog/archive' ) ;
-       // 或者
-      Route : : get ( 'blog//' , 'Blog/archive' ) ;
-
-  变量用 =[ ]=包含起来后就表示该变量是路由匹配的可选变量。
-
-  以上定义路由规则后，下面的 URL 访问地址都可以被正确的路由匹配：
-
-       http : / /serverName /index .php /blog / 2015
-      http : / /serverName /index .php /blog / 2015 / 12
-
-  采用可选变量定义后，之前需要定义两个或者多个路由规则才能处理的情况可以合并为一个路由规则。
-
-
-    可选参数只能放到路由规则的最后，如果在中间使用了可选参数的话，后面的变量都会变成可选参数。
- 
-
-**** 完全匹配
-
-
-  规则匹配检测的时候默认只是对 URL 从头开始匹配，只要 URL 地址开头包含了定义的路由规则就会匹配成功，如果希望 URL 进行完全匹配，可以在路由表达式最后使用 =$=符号，例如：
-
-       Route : : get ( 'new/:cate$' ,  'News/category' ) ;
-
-  这样定义后
-
-       http : / /serverName /index .php / new /info
-
-  会匹配成功,而
-
-       http : / /serverName /index .php / new /info / 2
-
-  则不会匹配成功。
-
-  如果是采用
-
-       Route : : get ( 'new/:cate' ,  'News/category' ) ;
-
-  方式定义的话，则两种方式的 URL 访问都可以匹配成功。
-
-  如果需要全局进行 URL 完全匹配，可以在路由配置文件中设置
-
-        // 开启路由完全匹配
-       'route_complete_match'    = >  true ,
-
-  开启全局完全匹配后，如果需要对某个路由关闭完全匹配，可以使用
-
-       Route : : get ( 'new/:cate' ,  'News/category' ) - > completeMatch ( false ) ;
-
-**** 额外参数
-
-
-  在路由跳转的时候支持额外传入参数对（额外参数指的是不在 URL 里面的参数，隐式传入需要的操作中，有时候能够起到一定的安全防护作用，后面我们会提到）。例如：
-
-       Route : : get ( 'blog/:id' , 'blog/read' )
-           - > append ( [ 'status'  = >  1 ,  'app_id'  = > 5 ] ) ;
-
-  上面的路由规则定义中 =status=和 =app_id=参数都是 URL 里面不存在的，属于隐式传值。可以针对不同的路由设置不同的额外参数。
-
-
-    如果 =append=方法中的变量和路由规则存在冲突的话，append 方法传入的优先。
   
-
-**** 路由标识
-
-
-  如果你需要快速的根据路由生成 URL 地址，可以在定义路由的时候指定生成标识（但要确保唯一）。
-
-  例如
-
-        // 注册路由到News控制器的read操作
-      Route : : rule ( 'new/:id' , 'News/read' )
-           - > name ( 'new_read' ) ;
-
-  生成路由地址的时候就可以使用
-
-        url ( 'new_read' ,  [ 'id'  = >  10 ] ) ;
-
-  如果不定义路由标识的话，系统会默认使用路由地址作为路由标识，例如可以使用下面的方式生成
-
-        url ( 'News/read' ,  [ 'id'  = >  10 ] ) ;
-
-**** 强制路由
-
-
-  在路由配置文件中设置
-
-        'url_route_must'      = >   true ,
-
-  将开启强制使用路由，这种方式下面必须严格给每一个访问地址定义路由规则（ *包括首页*），否则将抛出异常。
-
-  首页的路由规则采用 =/=定义即可，例如下面把网站首页路由输出 =Hello,world!=
-
-       Route : : get ( '/' ,  function  ( )  {
-           return  'Hello,world!' ;
-       } ) ;
-
-*** 变量规则
-**** 变量规则
-
-    系统默认的变量规则设置是 =\w+=，只会匹配字母、数字、中文和下划线字符，并不会 *匹配特殊符号以及其它字符*，需要定义变量规则或者调整默认变量规则。
-  
-
-  可以在路由配置文件中自定义默认的变量规则，例如增加中划线字符的匹配：
-
-        'default_route_pattern'   = >   '[\w\-]+' ,
-
-  支持在规则路由中指定变量规则，弥补了动态变量无法限制具体的类型问题，并且支持全局规则设置。使用方式如下：
-
-***** 局部变量规则
-
-
-  局部变量规则，仅在当前路由有效：
-
-        // 定义GET请求路由规则 并设置name变量规则
-      Route : : get ( 'new/:name' ,  'News/read' )
-           - > pattern ( [ 'name'  = >  '[\w|\-]+' ] ) ;
-
-
-    不需要开头添加 =^=或者在最后添加 =$=，也不支持模式修饰符，系统会自动添加。
-  
-
-***** 全局变量规则
-
-
-  设置全局变量规则，全部路由有效：
-
-        // 支持批量添加
-      Route : : pattern ( [
-           'name'  = >  '\w+' ,
-           'id'    = >  '\d+' ,
-       ] ) ;
-
-**** 组合变量
-
-
-  如果你的路由规则比较特殊，可以在路由定义的时候使用组合变量。
-
-  例如：
-
-       Route : : get ( 'item--' ,  'product/detail' )
-           - > pattern ( [ 'name'  = >  '\w+' ,  'id'  = >  '\d+' ] ) ;
-
-  组合变量的优势是路由规则中没有固定的分隔符，可以随意组合需要的变量规则和分割符，例如路由规则改成如下一样可以支持：
-
-       Route : : get ( 'item' ,  'product/detail' )
-           - > pattern ( [ 'name'  = >  '[a-zA-Z]+' ,  'id'  = >  '\d+' ] ) ;
-      Route : : get ( 'item@-' ,  'product/detail' )
-           - > pattern ( [ 'name'  = >  '\w+' ,  'id'  = >  '\d+' ] ) ;
-
-  使用组合变量的情况下如果需要使用可选变量，则可以使用下面的方式：
-
-       Route : : get ( 'item-' ,  'product/detail' )
-           - > pattern ( [ 'name'  = >  '[a-zA-Z]+' ,  'id'  = >  '\d+' ] ) ;
-
-**** 动态路由
-
-
-  可以把路由规则中的变量传入路由地址中，就可以实现一个动态路由，例如：
-
-        // 定义动态路由
-      Route : : get ( 'hello/:name' ,  'index/:name/hello' ) ;
-
-  =name=变量的值作为路由地址传入。
-
-  动态路由中的变量也支持组合变量及拼装，例如：
-
-       Route : : get ( 'item--' ,  'product_:name/detail' )
-           - > pattern ( [ 'name'  = >  '\w+' ,  'id'  = >  '\d+' ] ) ;
-
-*** 路由地址
-**** 路由地址
-  路由地址表示定义的路由表达式最终需要路由到的实际地址（或者响应对象）以及一些需要的额外参数，支持下面几种方式定义：
-
-**** 路由到控制器/操作
-  这是最常用的一种路由方式，把满足条件的路由规则路由到相关的控制器和操作，然后由系统调度执行相关的操作，格式为：
-
-***** 控制器/操作
-  解析规则是从操作开始解析，然后解析控制器，例如：
-
-        // 路由到blog控制器
-      Route : : get ( 'blog/:id' , 'Blog/read' ) ;
-
-  Blog 类定义如下：
-
-        < ?php
-      namespace app\index\controller ;
-
-      class  Blog
-       {
-          public  function  read ($id )
-           {
-               return  'read:'  . $id ;
-           }
-       }
-
-  路由地址中支持多级控制器，使用下面的方式进行设置：
-
-       Route : : get ( 'blog/:id' , 'group.Blog/read' ) ;
-
-  表示路由到下面的控制器类，
-
-       index /controller /group /Blog
-
-  还可以支持路由到动态的应用、控制器或者操作，例如：
-
-        // action变量的值作为操作方法传入
-      Route : : get ( ':action/blog/:id' ,  'Blog/:action' ) ;
-
-**** 路由到类的方法
-
-
-  这种方式的路由可以支持执行任何类的方法，而不局限于执行控制器的操作方法。
-
-  路由地址的格式为（动态方法）：
-
-  或者（静态方法）
-  例如：
-
-       Route : : get ( 'blog/:id' , '\app\index\service\Blog@read' ) ;
-
-  执行的是 =\app\index\service\Blog=类的 =read=方法。\\
-  也支持执行某个静态方法，例如：
-
-       Route : : get ( 'blog/:id' , '\app\index\service\Blog::read' ) ;
-
-**** 重定向路由
-
-
-  可以直接使用 =redirect=方法注册一个重定向路由
-
-       Route : : redirect ( 'blog/:id' ,  'http://blog.thinkphp.cn/read/:id' ,  302 ) ;
-
-**** 路由到模板
-
-
-  支持路由直接渲染模板输出。
-
-        // 路由到模板文件
-      Route : : view ( 'hello/:name' ,  'index/hello' ) ;
-
-  表示该路由会渲染当前应用下面的 =view/index/hello.html=模板文件输出。
-
-  模板文件中可以直接输出当前请求的 =param=变量，如果需要增加额外的模板变量，可以使用：
-
-       Route : : view ( 'hello/:name' ,  'index/hello' ,  [ 'city' = > 'shanghai' ] ) ;
-
-  在模板中可以输出 =name=和 =city=两个变量。
-
-       Hello , {$name } -- {$city }！
-
-**** 路由到闭包
-
-
-  我们可以使用闭包的方式定义一些特殊需求的路由，而不需要执行控制器的操作方法了，例如：
-
-       Route : : get ( 'hello' ,  function  ( )  {
-           return  'hello,world!' ;
-       } ) ;
-
-  可以通过闭包的方式支持路由自定义响应输出，例如：
-
-       Route : : get ( 'hello/:name' ,  function  ( )  {
-           response ( ) - > data ( 'Hello,ThinkPHP' )
-           - > code ( 200 )
-           - > contentType ( 'text/plain' ) ;
-       } ) ;
-
-***** 参数传递
-
-
-  闭包定义的时候支持参数传递，例如：
-
-       Route : : get ( 'hello/:name' ,  function  ($name )  {
-           return  'Hello,'  . $name ;
-       } ) ;
-
-  规则路由中定义的动态变量的名称 就是闭包函数中的参数名称，不分次序。
-
-  因此，如果我们访问的 URL 地址是：
-
-       http : / /serverName /hello /thinkphp
-
-  则浏览器输出的结果是：
-
-       Hello ,thinkphp
-
-***** 依赖注入
-
-
-  可以在闭包中使用依赖注入，例如：
-
-       Route : : rule ( 'hello/:name' ,  function  (Request $request , $name )  {
-          $method  = $request - > method ( ) ;
-           return  '['  . $method  .  '] Hello,'  . $name ;
-       } ) ;
-
-**** 路由到调度对象（ =V6.0.3+=）
-
-
-  =V6.0.3+=版本开始，可以支持路由到一个自定义的路由调度对象。
-
-        // 路由到自定义调度对象
-      Route : : get ( 'blog/:id' ,\app\route\BlogDispatch : :class ) ;
-
-       namespace app\route ;
-
-      use think\route\Dispatch ;
-      use think\route\Rule ;
-      use think\Request ;
-
-      class  BlogDispatch extends  Dispatch
-       {
-          public  function  exec ( )
-           {
-               // 自定义路由调度
-           }
-       }
-
-  具体调度类的实现可以参考内置的几个调度类的实现。
-
-*** 资源路由
-**** 资源路由
-
-
-  支持设置 =RESTFul=请求的资源路由，方式如下：
-
-       Route : : resource ( 'blog' ,  'Blog' ) ;
-
-  表示注册了一个名称为 =blog=的资源路由到 =Blog=控制器，系统会自动注册 7 个路由规则，如下：
-
-  | 标识     | 请求类型   | 生成路由规则      | 对应操作方法（默认）   |
-  |----------+------------+-------------------+------------------------|
-  | index    | GET        | =blog=            | index                  |
-  | create   | GET        | =blog/create=     | create                 |
-  | save     | POST       | =blog=            | save                   |
-  | read     | GET        | =blog/:id=        | read                   |
-  | edit     | GET        | =blog/:id/edit=   | edit                   |
-  | update   | PUT        | =blog/:id=        | update                 |
-  | delete   | DELETE     | =blog/:id=        | delete                 |
-
-  具体指向的控制器由路由地址决定，你只需要为 =Blog=控制器创建以上对应的操作方法就可以支持下面的 URL 访问：
-
-       http : / /serverName /blog /
-      http : / /serverName /blog / 128
-      http : / /serverName /blog / 28 /edit
-
-  Blog 控制器中的对应方法如下：
-
-        < ?php
-      namespace app\controller ;
-
-      class  Blog
-       {
-          public  function  index ( )
-           {
-           }
-
-          public  function  read ($id )
-           {
-           }
-
-          public  function  edit ($id )
-           {
-           }
-       }
-
-  可以通过命令行快速创建一个资源控制器类（参考后面的控制器章节的资源控制器一节）。
-
-  可以改变默认的 id 参数名，例如：
-
-       Route : : resource ( 'blog' ,  'Blog' )
-           - > vars ( [ 'blog'  = >  'blog_id' ] ) ;
-
-  控制器的方法定义需要调整如下：
-
-        < ?php
-      namespace app\controller ;
-
-      class  Blog
-       {
-          public  function  index ( )
-           {
-           }
-
-          public  function  read ($blog_id )
-           {
-           }
-
-          public  function  edit ($blog_id )
-           {
-           }
-       }
-
-  也可以在定义资源路由的时候限定执行的方法（标识），例如：
-
-        // 只允许index read edit update 四个操作
-      Route : : resource ( 'blog' ,  'Blog' )
-           - > only ( [ 'index' ,  'read' ,  'edit' ,  'update' ] ) ;
-        
-       // 排除index和delete操作
-      Route : : resource ( 'blog' ,  'Blog' )
-           - > except ( [ 'index' ,  'delete' ] ) ;
-
-  资源路由的标识不可更改，但生成的路由规则和对应操作方法可以修改。
-
-  如果需要更改某个资源路由标识的对应操作，可以使用下面方法：
-
-       Route : : rest ( 'create' , [ 'GET' ,  '/add' , 'add' ] ) ;
-
-  设置之后，URL 访问变为：
-
-       http : / /serverName /blog /create
-      变成
-      http : / /serverName /blog /add
-
-  创建 blog 页面的对应的操作方法也变成了 add。
-
-  支持批量更改，如下：
-
-       Route : : rest ( [
-           'save'    = >  [ 'POST' ,  '' ,  'store' ] ,
-           'update'  = >  [ 'PUT' ,  '/:id' ,  'save' ] ,
-           'delete'  = >  [ 'DELETE' ,  '/:id' ,  'destory' ] ,
-       ] ) ;
-
-**** 资源嵌套
-
-
-  支持资源路由的嵌套，例如：
-
-       Route : : resource ( 'blog' ,  'Blog' ) ;
-      Route : : resource ( 'blog.comment' , 'Comment' ) ;
-
-  就可以访问如下地址：
-
-       http : / /serverName /blog / 128 /comment / 32
-      http : / /serverName /blog / 128 /comment / 32 /edit
-
-  生成的路由规则分别是：
-
-       blog / :blog_id /comment / :id
-      blog / :blog_id /comment / :id /edit
-
-  Comment 控制器对应的操作方法如下：
-
-        < ?php
-
-      namespace app\controller ;
-
-      class  Comment
-       {
-          public  function  edit ($id , $blog_id )
-           {
-           }
-       }
-
-  edit 方法中的参数顺序可以随意，但参数名称必须满足定义要求。
-
-  如果需要改变其中的变量名，可以使用：
-
-        // 更改嵌套资源路由的blog资源的资源变量名为blogId
-      Route : : resource ( 'blog.comment' ,  'index/comment' )
-           - > vars ( [ 'blog'  = >  'blogId' ] ) ;
-
-  Comment 控制器对应的操作方法改变为：
-
-        < ?php
-      namespace app\controller ;
-
-      class  Comment
-       {
-          public  function  edit ($id , $blogId )
-           {
-           }
-       }
-
-*** 注解路由
-**** 注解路由
-
-
-  ThinkPHP 支持使用注解方式定义路由（也称为注解路由），如果需要使用注解路由需要安装额外的扩展：
-
-       composer require topthink /think -annotation
-
-  然后只需要直接在控制器类的方法注释中定义，例如：
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\Route ;
-
-      class  Index
-       {
-           /**
-           * @param  string $name 数据名称
-           * @return mixed
-           * @Route("hello/:name")
-           */
-          public  function  hello ($name )
-           {
-               return  'hello,' .$name ;
-           }
-       }
-
-  =@Route("hello/:name")= 就是注解路由的内容，请务必注意注释的规范，不能在注解路由里面使用单引号，否则可能导致注解路由解析失败，可以利用 IDE 生成规范的注释。如果你使用 =PHPStorm=的话，建议安装 =PHP Annotations=插件： [[https://plugins.jetbrains.com/plugin/7320-php-annotations]] ，可以支持注解的自动完成。
-
-
-    该方式定义的路由在调试模式下面实时生效，部署模式则在第一次访问的时候生成注解缓存。
-  
-
-  然后就使用下面的 URL 地址访问：
-
-       http : / /tp5 .com /hello /thinkphp
-
-  页面输出
-
-       hello ,thinkphp
-
-  默认注册的路由规则是支持所有的请求，如果需要指定请求类型，可以在第二个参数中指定请求类型：
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\Route ;
-
-      class  Index
-       {
-           /**
-           * @param  string $name 数据名称
-           * @return mixed
-           * @Route("hello/:name", method="GET")
-           */
-          public  function  hello ($name )
-           {
-               return  'hello,' .$name ;
-           }
-       }
-
-  如果有路由参数需要定义，可以直接在后面添加方法，例如：
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\Route ;
-
-      class  Index
-       {
-           /**
-           * @param string $name 数据名称
-           * @Route('hello/:name', method="GET", https=1, ext="html")
-           * @return mixed
-           */
-          public  function  hello ($name )
-           {
-               return  'hello,' .$name ;
-           }
-       }
-
-  支持在类的注释里面定义资源路由，例如：
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\route\Resource ;
-
-       /**
-       * @Resource("blog")
-       */
-      class  Blog
-       {
-          public  function  index ( )
-           {
-           }
-
-          public  function  read ($id )
-           {
-           }
-
-          public  function  edit ($id )
-           {
-           }
-       }
-
-  如果需要定义路由分组，可以使用
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\route\Group ;
-      use think\annotation\route\Route ;
-
-       /**
-       * @Group("blog")
-       */
-      class  Blog
-       {
-           /**
-           * @param  string $name 数据名称
-           * @return mixed
-           * @Route("hello/:name", method="GET")
-           */
-          public  function  hello ($name )
-           {
-               return  'hello,' .$name ;
-           }
-       }
-
-  当前控制器中的注解路由会自动加入 =blog=分组下面，最终，会注册一个 =blog/hello/:name=的路由规则。你一样可以对该路由分组设置公共的参数，例如：
-
-        < ?php
-      namespace app\controller ;
-
-      use think\annotation\route\Middleware ;
-      use think\annotation\route\Group ;
-      use think\annotation\route\Route ;
-      use think\middleware\SessionInit ;
-
-       /**
-       * @Group("blog",ext="html")
-       * @Middleware({SessionInit::class})
-       */
-      class  Blog
-       {
-           /**
-           * @param  string $name 数据名称
-           * @return mixed
-           * @Route("hello/:name",method="GET")
-           */
-          public  function  hello ($name )
-           {
-               return  'hello,' .$name ;
-           }
-       }
-
-*** 路由绑定
-
-
-  可以使用路由绑定简化 URL 或者路由规则的定义，绑定支持如下方式：
-
-**** 绑定到控制器/操作
-
-
-  把当前的 URL 绑定到控制器/操作，最多支持绑定到操作级别，例如在路由定义文件中添加：
-
-        // 绑定当前的URL到 Blog控制器
-      Route : : bind ( 'blog' ) ;
-       // 绑定当前的URL到 Blog控制器的read操作
-      Route : : bind ( 'blog/read' ) ;
-
-  该方式针对路由到控制器/操作有效，假如我们绑定到了 blog 控制器，那么原来的访问 URL 从
-
-       http : / /serverName /blog /read /id / 5
-
-  可以简化成
-
-       http : / /serverName /read /id / 5
-
-  如果定义了路由
-
-       Route : : get ( 'blog/:id' , 'blog/read' ) ;
-
-  那么访问 URL 就变成了
-
-       http : / /serverName / 5
-
-**** 绑定到命名空间
-
-
-  把当前的 URL 绑定到某个指定的命名空间，例如：
-
-        // 绑定命名空间
-      Route : : bind ( ':\app\index\controller' ) ;
-
-  那么，我们接下来只需要通过
-
-       http : / /serverName /blog /read /id / 5
-
-  就可以直接访问 =\app\index\controller\Blog=类的 read 方法。
-
-**** 绑定到类
-
-
-  把当前的 URL 直接绑定到某个指定的类，例如：
-
-        // 绑定到类
-      Route : : bind ( '\app\index\controller\Blog' ) ;
-
-  那么，我们接下来只需要通过
-
-       http : / /serverName /read /id / 5
-
-  就可以直接访问 =\app\index\controller\Blog=类的 read 方法。
-
-*** 域名路由
-**** 域名路由
-  ThinkPHP 支持完整域名、子域名和 IP 部署的路由和绑定功能，同时还可以起到简化 URL 的作用。
-
-  可以单独给域名设置路由规则，例如给 =blog=子域名注册单独的路由规则：
-
-       Route : : domain ( 'blog' ,  function  ( )  {
-           // 动态注册域名的路由规则
-          Route : : rule ( 'new/:id' ,  'news/read' ) ;
-          Route : : rule ( ':user' ,  'user/info' ) ;
-       } ) ;
-
-  一旦定义了域名路由，该域名的访问就只会读取域名路由定义的路由规则。
-
-
-    闭包中可以使用路由的其它方法，包括路由分组，但不能再包含域名路由
-  
-
-  支持同时对多个域名设置相同的路由规则：
-
-       Route : : domain ( [ 'blog' ,  'admin' ] ,  function  ( )  {
-           // 动态注册域名的路由规则
-          Route : : rule ( 'new/:id' ,  'news/read' ) ;
-          Route : : rule ( ':user' ,  'user/info' ) ;
-       } ) ;
-
-  如果你需要设置一个路由跨所有域名都可以生效，可以对分组路由或者某个路由使用 =crossDomainRule=方法设置：
-
-       Route : : group (  function  ( )  {
-           // 动态注册域名的路由规则
-          Route : : rule ( 'new/:id' ,  'news/read' ) ;
-          Route : : rule ( ':user' ,  'user/info' ) ;
-       } ) - > crossDomainRule ( ) ;
-
-**** 域名绑定
-***** 绑定到控制器类
-        // blog子域名绑定控制器
-        Route : : domain ( 'blog' ,  '@blog' ) ;
-
-***** 绑定到命名空间
-        // blog子域名绑定命名空间
-      Route : : domain ( 'blog' ,  ':\app\blog\controller' ) ;
-
-***** 绑定到类
-        // blog子域名绑定到类
-      Route : : domain ( 'blog' ,  '\app\blog\controller\Article' ) ;
-
-**** 绑定到 Response 对象
-  可以直接绑定某个域名到 =Response=对象，例如：
-
-        // 绑定域名到Response对象
-      Route : : domain ( 'test' ,  response ( ) - > code ( 404 ) ) ;
-
-  如果域名需要同时定义路由规则，并且对其它的情况进行绑定操作，可以在闭包里面执行绑定操作，例如：
-
-       Route : : domain ( 'blog' ,  function  ( )  {
-           // 动态注册域名的路由规则
-          Route : : rule ( 'new/:id' ,  'index/news/read' ) ;
-       } ) - > bind ( 'blog' ) ;
-
-  在 =blog=域名下面定义了一个 =new/:id=的路由规则，指向 =index=应用，而其它的路由则绑定到 =blog=应用。
-
-**** 路由参数
-  域名路由本身也是一个路由分组，所以可以和路由分组一样定义公共的路由参数，例如：
-
-       Route : : domain ( 'blog' ,  function  ( )  {
-           // 动态注册域名的路由规则
-          Route : : rule ( 'new/:id' ,  'news/read' ) ;
-          Route : : rule ( ':user' ,  'user/info' ) ;
-       } ) - > ext ( 'html' )
-       - > pattern ( [ 'id'  = >  '\d+' ] )
-       - > append ( [ 'group_id'  = >  1 ] ) ;
-
-** 控制器
-*** 控制器定义
-**** 渲染输出
-  默认情况下，控制器的输出全部采用 =return=的方式，无需进行任何的手动输出，系统会自动完成渲染内容的输出。
-
-  下面都是有效的输出方式：
-
-        < ?php
-      namespace app\index\controller ;
-
-      class  Index 
-       {
-          public  function  hello ( )
-           {
-               // 输出hello,world!
-               return  'hello,world!' ;
-           }
-        
-          public  function  json ( )
-           {
-               // 输出JSON
-               return  json ($data ) ;
-           }
-        
-          public  function  read ( )
-           {
-               // 渲染默认模板输出
-               return  view ( ) ;
-           }
-
-       }
-
-
-    控制器一般不需要任何输出，直接 =return=即可。并且控制器在 =json=请求会自动转
-    换为 =json=格式输出。
-  
-
-
-    不要在控制器中使用包括 =die=、 =exit=在内的中断代码。如果你需要调试并中止执
-    行，可以使用系统提供的 =halt=助手函数。
-  
-        halt ( '输出测试' ) ;
-
-**** 多级控制器
-
-  支持任意层次级别的控制器，并且支持路由，例如：
-
-        < ?php
-      namespace app\index\controller\user ;
-
-      class   Blog 
-       {
-          public  function  index ( )
-           {
-               return  'index' ;
-           }
-        
-       }
-
-  该控制器类的文件位置为：
-
-       app /index /controller /user /Blog .php
-
-  访问地址可以使用
-
-       http : / /serverName /index .php /user .blog /index
-
-  由于 URL 访问不能访问默认的多级控制器（可能会把多级控制器名误识别为 URL 后缀），因此建议所有的多级控制器都通过路由定义后访问，如果要在路由定义中使用多级控制器，可以使用：
-
-       Route : : get ( 'user/blog' , 'user.blog/index' ) ;
-       
-*** 基础控制器
-  大多数情况下，我们建议给你的控制器继承一个基础控制器。
-
-  默认安装后，系统提供了一个 =app\BaseController=基础控制器类，你可以对该基础控制器进行修改。
-    基础控制器的位置可以随意放置，只需要注意更改命名空间即可。
-  
-
-  该基础控制器仅仅提供了控制器验证功能，并注入了 =think\App=和 =think\Request=对象，因此你可以直接在控制器中使用 =app=和 =request=属性调用 =think\App=和 =think\Request=对象实例，下面是一个例子：
-
-       namespace app\controller ;
-
-      use app\BaseController ;
-
-      class  Index extends  BaseController
-       {
-          public  function  index ( )
-           {
-              $action  = $this - >request - > action ( ) ;
-              $path  = $this - >app - > getBasePath ( ) ;
-           }
-       }
-
-**** 控制器验证
-  基础控制器提供了数据验证功能，使用如下：
-
-       namespace app\controller ;
-
-      use app\BaseController ;
-      use think\exception\ValidateException ;
-
-      class  Index extends  BaseController
-       {
-          public  function  index ( )
-           {
-               try  {
-                  $this - > validate (  [
-                       'name'   = >  'thinkphp' ,
-                       'email'  = >  'thinkphp@qq.com' ,
-                   ] ,   'app\index\validate\User' ) ;
-               }  catch  ( ValidateException $e )  {
-                   // 验证失败 输出错误信息
-                   dump ($e - > getError ( ) ) ;
-               }
-           }
-       }
-
-    该示例使用了验证器功能，具体可以参考验证章节的验证器部分，这里暂时不做展开。
-  如果需要批量验证，可以改为：
-
-       namespace app\controller ;
-
-      use app\BaseController ;
-      use think\exception\ValidateException ;
-
-      class  Index extends  BaseController
-       {
-           // 开启批量验证
-          protected $batchValidate  =  true ;
-
-          public  function  index ( )
-           {
-               try  {
-                  $this - > validate (  [
-                       'name'   = >  'thinkphp' ,
-                       'email'  = >  'thinkphp@qq.com' ,
-                   ] ,   'app\index\validate\User' ) ;
-               }  catch  ( ValidateException $e )  {
-                   // 验证失败 输出错误信息
-                   dump ($e - > getError ( ) ) ;
-               }
-           }
-       }
-
-*** 空控制器
-
-
-**** 空控制器
-
-
-  空控制器的概念是指当系统找不到指定的控制器名称的时候，系统会尝试定位当前应用下的空控制器( =Error=)类，利用这个机制我们可以用来定制错误页面和进行 URL 的优化。
-
-  例如，下面是单应用模式下，我们可以给项目定义一个 =Error=控制器类。
-
-        < ?php
-      namespace app\controller ;
-
-      class  Error 
-       {
-          public  function  __call ($method , $args )
-           {
-               return  'error request!' ;
-           }
-       }
-
-*** 资源控制器
-    资源控制器可以让你轻松的创建 =RESTFul=资源控制器，可以通过命令行生成需要的资
-    源控制器，例如生成 index 应用的 Blog 资源控制器使用：
-
-       php think make :controller index@Blog
-
-  或者使用完整的命名空间生成
-
-       php think make :controller app\index\controller\Blog
-
-  如果只是用于接口开发，可以使用
-
-       php think make:controller index@Blog  --api
-
-       然后你只需要为资源控制器注册一个资源路由：
-
-       Route : : resource ( 'blog' ,  'Blog' ) ;
-
-       设置后会自动注册 7 个路由规则，对应资源控制器的 7 个方法，更多内容请参考资源路由章节。
-*** 控制器中间件
-**** 控制器中间件
-  支持为控制器定义中间件，你只需要在你的控制器中定义 =middleware=属性，例如：
-
-        < ?php
-      namespace app\controller ;
-      use app\middleware\Auth ;
-
-      class  Index 
-       {
-          protected $middleware  =  [Auth : :class ] ;
-
-          public  function  index ( )
-           {
-               return  'index' ;
-           }
-
-          public  function  hello ( )
-           {
-               return  'hello' ;
-           }
-       }
-
-  当执行 =index=控制器的时候就会调用 =Auth=中间件，一样支持使用完整的命名空间定义。
-
-  如果需要设置控制器中间的生效操作，可以如下定义：
-
-        < ?php
-      namespace app\index\controller ;
-
-      class  Index 
-       {
-          protected $middleware  =  [ 
-              Auth : :class   .  ':admin'      = >  [ 'except'   = >  [ 'hello' ]  ] ,
-               'Hello'  = >  [ 'only'        = >  [ 'hello' ]  ] ,
-           ] ;
-
-          public  function  index ( )
-           {
-               return  'index' ;
-           }
-
-          public  function  hello ( )
-           {
-               return  'hello' ;
-           }
-       }
-
-**** 中间件传参
-
-
-  如果需要给中间件传参，可以的定义的时候使用
-
-        < ?php
-      namespace app\controller ;
-
-      class  Index 
-       {
-          protected $middleware  =  [ 'Auth' ] ;
-
-          public  function  index ( )
-           {
-               return  'index' ;
-           }
-
-          public  function  hello ( )
-           {
-               return  'hello' ;
-           }
-       }
-
-**** 控制器传参
-
-
-  可以通过给请求对象赋值的方式传参给控制器（或者其它地方），例如
-
-        < ?php
-
-      namespace app\http\middleware ;
-
-      class  Hello
-       {
-          public  function  handle ($request , \Closure $next )
-           {
-              $request - >hello  =  'ThinkPHP' ;
-            
-               return $ next ($request ) ;
-           }
-       }
-
-  然后在控制器的方法里面可以直接使用
-
-       public  function  index (Request $request )
-       {
-           return $request - >hello ;  // ThinkPHP
-       }
-
-** 请求 
-*** 请求对象
-  当前的请求对象由 =think\Request=类负责，该类不需要单独实例化调用，通常使用依赖注入即可。在其它场合则可以使用 =think\facade\Request=静态类操作。
-
-
-    项目里面应该使用 =app\Request=对象，该对象继承了系统的 =think\Request=对象，但可以增加自定义方法或者覆盖已有方法。项目里面已经在 =provider.php=中进行了定义，所以你仍然可以和之前一样直接使用容器和静态代理操作请求对象。
-**** 构造方法注入
-
-
-  一般适用于没有继承系统的控制器类的情况。
-
-        < ?php
-
-      namespace app\index\controller ;
-
-      use think\Request ;
-
-      class  Index 
-       {
-           /**
-           * @var \think\Request Request实例
-           */
-          protected $request ;
-        
-           /**
-           * 构造方法
-           * @param Request $request Request对象
-           * @access public
-           */
-          public  function  __construct (Request $request )
-           {
-              $this - >request  = $request ;
-           }
-        
-          public  function  index ( )
-           {
-               return $this - >request - > param ( 'name' ) ;
-           }    
-       }
-
-**** 操作方法注入
-
-
-  另外一种选择是在每个方法中使用依赖注入。
-
-        < ?php
-
-      namespace app\index\controller ;
-
-      use think\Request ;
-
-      class  Index
-       {
-        
-          public  function  index (Request $request )
-           {
-               return $request - > param ( 'name' ) ;
-           }    
-       }
-
-  无论是否继承系统的控制器基类，都可以使用操作方法注入。
-
-
-    更多关于依赖注入的内容，请参考依赖注入章节。
-  
-**** 静态调用
-
-
-  在没有使用依赖注入的场合，可以通过 =Facade=机制来静态调用请求对象的方法（注意 =use=引入的类库区别）。
-
-        < ?php
-
-      namespace app\index\controller ;
-
-      use think\facade\Request ;
-
-      class  Index
-       {
-        
-          public  function  index ( )
-           {
-               return Request : : param ( 'name' ) ;
-           }    
-       }
-
-  该方法也同样适用于依赖注入无法使用的场合。
-
-**** 助手函数
-  为了简化调用，系统还提供了 =request=助手函数，可以在任何需要的时候直接调用当前请求对象。
-
-        < ?php
-
-      namespace app\index\controller ;
-
-
-      class  Index
-       {
-
-          public  function  index ( )
-           {
-               return  request ( ) - > param ( 'name' ) ;
-           }
-       }
-
-**** 自定义请求对象
-
-
-  你可以在项目里面自定义 Request 对象，修改已有的方法或者增加新的方法，默认已经在项目里面为你准备了 =app\Request=类，你只需要直接修改该类就可以为你的项目单独自定义请求对象。
-
-  自定义请求对象不支持为多应用的某个应用自定义，只能是全局自定义，如果你需要为某个应用定义不同的请求对象，可以在入口文件里面修改。例如：
-
-        // 执行HTTP应用并响应
-      $request  =  new  app \common \Request ( ) ;
-      $http  =  ( new  App ( ) ) - >http ;
-      $response  = $http - > run ($request ) ;
-      $response - > send ( ) ;
-      $http - > end ($response ) ;
-
-*** 请求信息
-**** 请求信息
-  =Request=对象支持获取当前的请求信息，包括：
-
-  | 方法            | 含义                                     |
-  |-----------------+------------------------------------------|
-  | =host=          | 当前访问域名或者 IP                       |
-  | =scheme=        | 当前访问协议                             |
-  | =port=          | 当前访问的端口                           |
-  | =remotePort=    | 当前请求的 REMOTE\_PORT                   |
-  | =protocol=      | 当前请求的 SERVER\_PROTOCOL               |
-  | =contentType=   | 当前请求的 CONTENT\_TYPE                  |
-  | =domain=        | 当前包含协议的域名                       |
-  | =subDomain=     | 当前访问的子域名                         |
-  | =panDomain=     | 当前访问的泛域名                         |
-  | =rootDomain=    | 当前访问的根域名                         |
-  | =url=           | 当前完整 URL                              |
-  | =baseUrl=       | 当前 URL（不含 QUERY\_STRING）             |
-  | =query=         | 当前请求的 QUERY\_STRING 参数              |
-  | =baseFile=      | 当前执行的文件                           |
-  | =root=          | URL 访问根地址                            |
-  | =rootUrl=       | URL 访问根目录                            |
-  | =pathinfo=      | 当前请求 URL 的 pathinfo 信息（含 URL 后缀）   |
-  | =ext=           | 当前 URL 的访问后缀                        |
-  | =time=          | 获取当前请求的时间                       |
-  | =type=          | 当前请求的资源类型                       |
-  | =method=        | 当前请求类型                             |
-  | =rule=          | 当前请求的路由对象实例                   |
-
-  对于上面的这些请求方法，一般调用无需任何参数，但某些方法可以传入 =true=参数，表示获取带域名的完整地址，例如：
-
-       use think\facade\Request ;
-       // 获取完整URL地址 不带域名
-      Request : : url ( ) ;
-       // 获取完整URL地址 包含域名
-      Request : : url ( true ) ;
-       // 获取当前URL（不含QUERY_STRING） 不带域名
-      Request : : baseFile ( ) ;
-       // 获取当前URL（不含QUERY_STRING） 包含域名
-      Request : : baseFile ( true ) ;
-       // 获取URL访问根地址 不带域名
-      Request : : root ( ) ;
-       // 获取URL访问根地址 包含域名
-      Request : : root ( true ) ;
-
-
-    注意 =domain=方法的值本身就包含协议和域名
-  
-
-**** 获取当前控制器/操作
-
+## 路由 (指针)
+### 路由
+路由地址不能跨__应用__（除非采用重定向路由） 
+    
+路由定义文件
+![](image/computer/language/php/Snipaste_2021-05-27_16-18-39.png)
+
+路由定义     
+![](image/computer/language/php/Snipaste_2021-05-27_16-22-05.png)
+
+关闭路由
+```
+// 关闭应用的路由功能
+'with_route' =>false,
+```
+
+### 路由定义
+```
+Route::get('new/<id>','News/read'); // 定义GET请求路由规则
+Route::post('new/<id>','News/update'); // 定义POST请求路由规则
+Route::put('new/:id','News/update'); // 定义PUT请求路由规则
+Route::delete('new/:id','News/delete'); // 定义DELETE请求路由规则
+Route::any('new/:id','News/read'); // 所有请求都支持的路由规则
+```
+规则表达式
+```
+Route::rule('/', 'index'); // 首页访问路由
+Route::rule('my', 'Member/myinfo'); // 静态地址路由
+Route::rule('blog/:id', 'Blog/read'); // 静态地址和动态地址结合
+Route::rule('new/:year/:month/:day', 'News/read'); // 静态地址和动态地址结合
+Route::rule(':user/:blog_id', 'Blog/read'); // 全动态地址
+```
+### 路由地址
+#### 路由到控制器/操作
+![](image/computer/language/php/Snipaste_2021-05-27_16-55-04.png)
+#### 路由到类的方法
+![](image/computer/language/php/Snipaste_2021-05-27_16-56-48.png)
+#### 重定向路由
+```
+Route::redirect('blog/:id', 'http://blog.thinkphp.cn/read/:id', 302);
+```
+#### 路由到模板
+```
+// 路由到模板文件
+Route::view('hello/:name', 'index/hello');
+```
+
+
+### 资源路由
+![](image/computer/language/php/Snipaste_2021-05-27_16-59-46.png)
+### 路由绑定
+  可以使用路由绑定简化 URL 或者路由规则的定义
+#### 绑定到控制器/操作
+
+
+#### 绑定到命名空间
+## 控制器
+### 控制器定义
+控制器后缀
+![](image/computer/language/php/Snipaste_2021-05-27_17-04-35.png)
+
+渲染输出
+> halt('输出测试');
+
+### 资源控制器
+
+资源控制器可以让你轻松的创建RESTFul资源控制器，可以通过命令行生成需要的资源控制器，例如生成index应用的Blog资源控制器使用：
+
+php think make:controller index@Blog
+或者使用完整的命名空间生成
+
+php think make:controller app\index\controller\Blog
+如果只是用于接口开发，可以使用
+
+php think make:controller index@Blog --api
+然后你只需要为资源控制器注册一个资源路由：
+
+Route::resource('blog', 'Blog');
+设置后会自动注册7个路由规则，对应资源控制器的7个方法，更多内容请参考资源路由章节。
+
+## 请求
+### 请求对象 
+操作方法注入
+```
+<?php
+namespace app\index\controller;
+use think\Request;
+
+class Index
+{
+    
+    public function index(Request $request)
+    {
+		return $request->param('name');
+    }    
+}
+```
+
+助手函数
+```
+<?php
+
+namespace app\index\controller;
+
+
+class Index
+{
+
+    public function index()
+    {
+        return request()->param('name');
+    }
+}
+```
+### 请求信息
+#### 请求信息
+
+``` 
+use think\facade\Request;
+// 获取完整URL地址 不带域名
+Request::url();
+// 获取完整URL地址 包含域名
+Request::url(true);
+// 获取当前URL（不含QUERY_STRING） 不带域名
+Request::baseFile();
+// 获取当前URL（不含QUERY_STRING） 包含域名
+Request::baseFile(true);
+// 获取URL访问根地址 不带域名
+Request::root();
+// 获取URL访问根地址 包含域名
+Request::root(true);
+```
+
+#### 获取当前控制器/操作
+Request::controller();
+Request::action();
+
+如果使用了多应用模式，可以通过下面的方法来获取当前应用
+```
+app('http')->getName();
+```
 
   可以通过请求对象获取当前请求的控制器/操作名。
 
@@ -1445,7 +209,7 @@ use think\facade\Config ;
 
         app ( 'http' ) - > getName ( ) ;
 
-*** 输入变量
+### 输入变量
 
 
   可以通过 =Request=对象完成全局输入变量的检测、获取和安全过滤，支持包括 =$_GET=、 =$_POST=、 =$_REQUEST=、 =$_SERVER=、 =$_SESSION=、 =$_COOKIE=、 =$_ENV=等系统变量，以及文件上传信息。
@@ -1467,7 +231,7 @@ use think\facade\Config ;
   -  [[calibre_link-112][中间件变量]]
   -  [[calibre_link-113][助手函数]]
 
-**** 检测变量是否设置
+#### 检测变量是否设置
 
 
   可以使用 =has=方法来检测一个变量参数是否设置，如下：
@@ -1477,11 +241,11 @@ use think\facade\Config ;
 
   变量检测可以支持所有支持的系统变量，包括 =get/post/put/request/cookie/server/session/env/file=。
 
-**** 变量获取
+#### 变量获取
      变量获取使用 =\think\Request=类的如下方法及参数：
 
 
-***** 变量类型方法('变量名/变量修饰符','默认值','过滤方法')
+##### 变量类型方法('变量名/变量修饰符','默认值','过滤方法')
 
    变量类型方法包括：
 
@@ -1501,7 +265,7 @@ use think\facade\Config ;
    | middleware   | 获取 中间件赋值/传递的变量       |
    | file         | 获取 $_FILES 变量               |
 
-***** 获取 =PARAM=变量
+##### 获取 =PARAM=变量
 
 
   =PARAM=类型变量是框架提供的用于自动识别当前请求的一种变量获取方式，是系统推荐的获取请求参数的方法，用法如下：
@@ -1521,7 +285,7 @@ use think\facade\Config ;
 
   其它的输入变量获取方法和 =param=方法用法基本一致。
 
-  你无法使用 *get 方法获取路由变量*，例如当访问地址是
+  你无法使用 #get 方法获取路由变量#，例如当访问地址是
 
        http : / /localhost /index .php /index /index /hello /name /thinkphp
 
@@ -1537,7 +301,7 @@ use think\facade\Config ;
     除了 =server=和 =env=方法的变量名不区分大小写（会自动转为大写后获取），其它变量名区分大小写。
   
 
-**** 默认值
+#### 默认值
   获取输入变量的时候，可以支持默认值，例如当 URL 中不包含 =$_GET['name']=的时候，使用下面的方式输出的结果比较。
 
   Request : : get ( 'name' ) ;  // 返回值为null
@@ -1546,7 +310,7 @@ use think\facade\Config ;
 
   前面提到的方法都支持在第二个参数中传入默认值的方式。
 
-**** 变量过滤
+#### 变量过滤
 
 
 
@@ -1583,7 +347,7 @@ use think\facade\Config ;
     对于 body 中提交的 =json=对象，你无需使用 =php://input=去获取，可以直接当做表单提交的数据使用，因为系统已经自动处理过了
   
 
-**** 获取部分变量
+#### 获取部分变量
 
 
   如果你只需要获取当前请求的部分参数，可以使用：
@@ -1625,13 +389,13 @@ use think\facade\Config ;
        // 排除POST请求的id和name变量
       Request : : except ( [ 'id' , 'name' ] ,  'post' ) ;
 
-**** 变量修饰符
+#### 变量修饰符
   支持对变量使用修饰符功能，可以一定程度上简单过滤变量，更为严格的过滤请使用前面提过的变量过滤功能。
 
   用法如下：
 
 
-    *** Request::变量类型('变量名/修饰符');
+    ### Request::变量类型('变量名/修饰符');
   支持的变量修饰符，包括：
 
   | 修饰符   | 作用                   |
@@ -1648,7 +412,7 @@ use think\facade\Config ;
       Request : : post ( 'name/s' ) ;
       Request : : post ( 'ids/a' ) ;
 
-**** 中间件变量
+#### 中间件变量
 
 
   可以在中间件里面设置和获取请求变量的值，这个值的改变不会影响 =PARAM=变量的获取。
@@ -1669,7 +433,7 @@ use think\facade\Config ;
            }
        }
 
-**** 助手函数
+#### 助手函数
 
 
   为了简化使用，还可以使用系统提供的 =input=助手函数完成上述大部分功能。
@@ -1707,8 +471,8 @@ use think\facade\Config ;
        input ( 'post.name/s' ) ;
        input ( 'post.ids/a' ) ;
 
-*** 请求类型
-**** 获取请求类型
+### 请求类型
+#### 获取请求类型
   在很多情况下面，我们需要判断当前操作的请求类型是 =GET=、 =POST=、 =PUT=、 =DELETE=或者 =HEAD=，一方面可以针对请求类型作出不同的逻辑处理，另外一方面有些情况下面需要验证安全性，过滤不安全的请求。
 
   请求对象 =Request=类提供了下列方法来获取或判断当前请求类型：
@@ -1736,7 +500,7 @@ use think\facade\Config ;
     没有必要在控制器中判断请求类型再来执行不同的逻辑，完全可以在路由中进行设置。
   
 
-**** 请求类型伪装
+#### 请求类型伪装
   支持请求类型伪装，可以在 =POST=表单里面提交 =_method=变量，传入需要伪装的请求类型，例如：
 
         <form method = "post" action = "" >
@@ -1761,7 +525,7 @@ use think\facade\Config ;
 
   如果你需要改变伪装请求的变量名，可以修改自定义 Request 类的 =varMethod=属性：
 
-****  =AJAX/PJAX=伪装
+####  =AJAX/PJAX=伪装
 
 
   可以对请求进行 =AJAX=请求伪装，如下：
@@ -1777,7 +541,7 @@ use think\facade\Config ;
 
     =_ajax=和 =_pjax=可以通过 =GET/POST/PUT=等请求变量伪装。
   
-*** HTTP 头信息
+### HTTP 头信息
   可以使用 =Request=对象的 =header=方法获取当前请求的 =HTTP=请求头信息，例如：
 
   $info  = Request : : header ( ) ;
@@ -1794,7 +558,7 @@ use think\facade\Config ;
        $agent  = Request : : header ( 'user-agent' ) ;
       $agent  = Request : : header ( 'USER_AGENT' ) ;
 
-*** 参数绑定
+### 参数绑定
   参数绑定是把当前请求的变量作为操作方法（也包括架构方法）的参数直接传入，参数绑
   定并不区分请求类型。
 
@@ -1879,16 +643,16 @@ use think\facade\Config ;
            return  'id='  . $blogId ;
        }
 
-** 响应 
-*** 响应
-**** 响应
+## 响应 
+### 响应
+#### 响应
     响应（ =Response=）对象用于动态响应客户端请求，控制发送给用户的信息。通常用于输出数据给客户端或者浏览器。
 
   =ThinkPHP=的 =Response=响应对象由 =think\Response=类或者子类完成，ThinkPHP 的响应输出是自动的（命令行模式除外），最终会调用 =Response=对象的 =send=方法完成输出。
 
     =Response=类不能直接实例化，必须使用 =Response::make()= 静态方式创建，建议直接使用系统提供的助手函数完成。
     
-*** 响应输出
+### 响应输出
   大多数情况，我们不需要关注 =Response=对象本身，只需要在控制器的操作方法中返回数据即可。
 
   最简单的响应输出是直接在路由闭包或者控制器操作方法中返回一个字符串，例如：
@@ -1969,10 +733,10 @@ use think\facade\Config ;
            }
        }
 
-*** 响应参数
+### 响应参数
   =Response=对象提供了一系列方法用于设置响应参数，包括设置输出内容、状态码及 =header=信息等，并且支持链式调用以及多次调用。
 
-**** 设置数据
+#### 设置数据
 
 
   =Response=基类提供了 =data=方法用于设置响应数据。
@@ -1989,7 +753,7 @@ use think\facade\Config ;
 
     如果要获取当前响应对象实例的实际输出数据可以使用 =getContent=方法。
   
-**** 设置状态码
+#### 设置状态码
   =Response=基类提供了 =code=方法用于设置响应数据，但大部分情况一般我们是直接在调用助手函数的时候直接传入状态码，例如：
 
         json ($data , 201 ) ;
@@ -2005,7 +769,7 @@ use think\facade\Config ;
 
   如果要获取当前响应对象实例的状态码的值，可以使用 =getCode=方法。
 
-**** 设置头信息
+#### 设置头信息
 
 
   可以使用 =Response=类的 =header=设置响应的头信息
@@ -2028,12 +792,12 @@ use think\facade\Config ;
 
   你可以使用 =getHeader=方法获取当前响应对象实例的头信息。
 
-**** 写入 Cookie
+#### 写入 Cookie
 
 
         response ( ) - > cookie ( 'name' ,  'value' ,  600 ) ;
 
-**** 设置额外参数
+#### 设置额外参数
 
 
   有些时候，响应输出需要设置一些额外的参数，例如：\\
@@ -2045,7 +809,7 @@ use think\facade\Config ;
            'json_encode_param'      = > JSON_PRETTY_PRINT ,
        ] ) ;
 
-**** 关闭当前的请求缓存
+#### 关闭当前的请求缓存
 
 
   支持使用 =allowCache=方法动态控制是否需要使用请求缓存。
@@ -2053,12 +817,12 @@ use think\facade\Config ;
         // 关闭当前页面的请求缓存
        json ($data ) - > code ( 201 ) - > allowCache ( false ) ;
 
-**** 自定义响应
+#### 自定义响应
 
 
   如果需要特别的自定义响应输出，可以自定义一个 =Response=子类，并且在控制器的操作方法中直接返回。又或者通过设置响应参数的方式进行响应设置输出。
 
-*** 重定向
+### 重定向
   可以使用 =redirect=助手函数进行重定向
 
         < ?php
@@ -2072,7 +836,7 @@ use think\facade\Config ;
            }
        }
 
-***** 重定向传参
+##### 重定向传参
 
 
   如果是站内重定向的话，可以支持 URL 组装，有两种方式组装 URL，第一种是直接使用完整地址（ =/=打头）
@@ -2102,9 +866,9 @@ use think\facade\Config ;
            }    
        }
 
-  从示例可以看到重定向隐式传值使用的是 =Session=闪存数据隐式传值，并且 *仅在下一次请求有效*，再次访问重定向地址的时候无效。
+  从示例可以看到重定向隐式传值使用的是 =Session=闪存数据隐式传值，并且 #仅在下一次请求有效#，再次访问重定向地址的时候无效。
 
-***** 记住请求地址
+##### 记住请求地址
 
 
   在很多时候，我们重定向的时候需要记住当前请求地址（为了便于跳转回来），我们可以使用 =remember=方法记住重定向之前的请求地址。
@@ -2147,7 +911,7 @@ use think\facade\Config ;
            }
        }
 
-*** 文件下载
+### 文件下载
   支持文件下载功能，可以更简单的读取文件进行下载操作，支持直接下载输出内容。
 
   你可以在控制器的操作方法中添加如下代码：
@@ -2205,13 +969,13 @@ use think\facade\Config ;
            return  download ( 'image.jpg' ,  'my.jpg' ) - > force ( false ) ;
        }
        
-** 数据库 
-*** 数据库
+## 数据库 
+### 数据库
    要使用 Db 类必须使用门面方式（ =think\facade\Db=）调用
-*** 连接数据库
+### 连接数据库
   如果应用需要使用数据库，必须配置数据库连接信息，数据库的配置文件有多种定义方式。
 
-**** 配置文件
+#### 配置文件
   在全局或者应用配置目录（不清楚配置目录位置的话参考配置章节）下面的 =database.php=中（后面统称为数据库配置文件）配置下面的数据库参数：
 
         return  [
@@ -2262,7 +1026,7 @@ use think\facade\Config ;
            'default'     = >     'admin' , 
        ] ;
 
-***** 连接参数
+##### 连接参数
   可以针对不同的连接需要添加数据库的连接参数（具体的连接参数可以参考 PHP 手册），内置采用的参数包括如下：
 
   #+begin_src php
@@ -2285,7 +1049,7 @@ use think\facade\Config ;
 
     你可以在 =params= 参数里面配置任何 PDO 支持的连接参数。
   
-**** 切换连接
+#### 切换连接
 
   我们可以在数据库配置文件中定义多个连接信息
 
@@ -2352,7 +1116,7 @@ use think\facade\Config ;
   
   这种方式的动态连接和切换数据库比较方便，经常用于多数据库连接的应用需求。
 
-**** 模型类定义
+#### 模型类定义
      如果某个模型类里面定义了 =connection= 属性的话，则该模型操作的时候会自动按照给定的数据库配置进行连接，而不是配置文件中设置的默认连接信息，例如：
 
      #+begin_src php
@@ -2367,7 +1131,7 @@ use think\facade\Config ;
         #+end_src
 
     需要注意的是，ThinkPHP 的数据库连接是惰性的，所以并不是在实例化的时候就连接数据库，而是在有实际的数据操作的时候才会去连接数据库。
-**** 配置参数参考
+#### 配置参数参考
 
   下面是默认支持的数据库连接信息：
 
@@ -2402,7 +1166,7 @@ use think\facade\Config ;
     如果是使用 =pgsql=数据库驱动的话，请先导入 =thinkphp/library/think/db/connector/pgsql.sql=文件到数据库执行。
   
 
-**** 断线重连
+#### 断线重连
   如果你使用的是长连接或者命令行，在超出一定时间后，数据库连接会断开，这个时候你需要开启断线重连才能确保应用不中断。
 
   在数据库连接配置中设置：
@@ -2419,8 +1183,8 @@ use think\facade\Config ;
 
   在 =break_match_str=配置中加入你的数据库错误信息关键词。
 
-*** 分布式数据库
-**** 分布式支持
+### 分布式数据库
+#### 分布式支持
 
 
   数据访问层支持分布式数据库，包括读写分离，要启用分布式数据库，需要开启数据库配置文件中的 =deploy=参数：
@@ -2453,14 +1217,14 @@ use think\facade\Config ;
 
   主从服务器支持设置不同的连接参数，包括：
 
-  | 连接参数   |
-  |------------|
-  | username   |
-  | password   |
-  | hostport   |
-  | database   |
-  | dsn        |
-  | charset    |
+  | 连接参数 |
+  | -------- |
+  | username |
+  | password |
+  | hostport |
+  | database |
+  | dsn      |
+  | charset  |
 
   如果主从服务器的上述参数一致的话，只需要设置一个，对于不同的参数，可以分别设置，例如：
 
@@ -2518,7 +1282,7 @@ use think\facade\Config ;
            ] ,
        ] ;
 
-**** 读写分离
+#### 读写分离
 
 
   还可以设置分布式数据库的读写是否分离，默认的情况下读写不分离，也就是每台服务器都可以进行读写操作，对于主从式数据库而言，需要设置读写分离，通过下面的设置就可以：
@@ -2550,7 +1314,7 @@ use think\facade\Config ;
     -  第二种：始终保持同一个 IP 连接数据库，内部会进行读写分离 IP 调度（阿里云就是采用该方式）。
   
 
-**** 主库读取
+#### 主库读取
 
 
   有些情况下，需要直接从主库读取数据，例如刚写入数据之后，从库数据还没来得及同步完成，你可以使用
@@ -2569,9 +1333,9 @@ use think\facade\Config ;
 
   开启后，一旦我们对某个数据表进行了写操作，那么当前请求的后续所有对该表的查询都会使用主库读取。
 
-*** 查询构造器
-**** 查询数据
-***** 查询单个数据
+### 查询构造器
+#### 查询数据
+##### 查询单个数据
       查询单个数据使用 =find=方法：
 
       // table方法必须指定完整的数据表名
@@ -2579,7 +1343,7 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句可能是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  =  1 LIMIT  1
+      SELECT  # FROM `think_user` WHERE  `id`  =  1 LIMIT  1
       =find=方法查询结果不存在，返回 =null=，否则返回结果数组
   
 
@@ -2594,14 +1358,14 @@ use think\facade\Config ;
  
       如果没有查找到数据，则会抛出一个 =think\db\exception\DataNotFoundException=异常。
 
-***** 查询数据集
+##### 查询数据集
       查询多个数据（数据集）使用 =select=方法：
 
       Db : : table ( 'think_user' ) - > where ( 'status' ,  1 ) - > select ( ) ;
  
       最终生成的 SQL 语句可能是：
 
-      SELECT  * FROM `think_user` WHERE `status`  =  1
+      SELECT  # FROM `think_user` WHERE `status`  =  1
  
 
       =select= 方法查询结果是一个数据集对象，如果需要转换为数组可以使用
@@ -2625,7 +1389,7 @@ use think\facade\Config ;
 
       在 =find=和 =select=方法之前可以使用所有的链式操作（参考链式操作章节）方法。
 
-***** 值和列查询
+##### 值和列查询
 
 
       查询某个字段的值可以用
@@ -2647,13 +1411,13 @@ use think\facade\Config ;
       如果要返回完整数据，并且添加一个索引值的话，可以使用
 
       // 指定id字段的值作为索引 返回所有数据
-      Db : : table ( 'think_user' ) - > where ( 'status' , 1 ) - > column ( '*' , 'id' ) ;
+      Db : : table ( 'think_user' ) - > where ( 'status' , 1 ) - > column ( '#' , 'id' ) ;
  
 
       =column=方法查询结果不存在，返回空数组
   
 
-***** 数据分批处理
+##### 数据分批处理
 
 
       如果你需要处理成千上百条数据库记录，可以考虑使用 =chunk=方法，该方法一次获取结果集的一小块，然后填充每一小块数据到要处理的闭包，该方法在编写处理大量数据库记录的时候非常有用。
@@ -2704,7 +1468,7 @@ use think\facade\Config ;
 
              =chunk=方法一般用于命令行操作批处理数据库的数据，不适合 WEB 访问处理大量数据，很容易导致超时。
   
-***** 游标查询
+##### 游标查询
 
 
       如果你需要处理大量的数据，可以使用新版提供的游标查询功能，该查询方式利用了 PHP 的生成器特性，可以大幅减少大量数据查询的内存开销问题。
@@ -2716,8 +1480,8 @@ use think\facade\Config ;
  
       =cursor=方法返回的是一个生成器对象， =user=变量是数据表的一条数据（数组）。
 
-**** 添加数据
-***** 添加一条数据
+#### 添加数据
+##### 添加一条数据
       可以使用 =save=方法统一写入数据，自动判断是新增还是更新数据（以写入数据中是否存在主键数据为依据）。
 
       $data  =  [ 'foo'  = >  'bar' ,  'bar'  = >  'foo' ] ;
@@ -2754,7 +1518,7 @@ use think\facade\Config ;
          
       =insertGetId= 方法添加数据成功返回添加数据的自增主键
 
-***** 添加多条数据
+##### 添加多条数据
       添加多条数据直接向 Db 类的 =insertAll= 方法传入需要添加的数据（通常是二维数组）即可。
 
       $data  =  [
@@ -2794,8 +1558,8 @@ use think\facade\Config ;
       - > limit ( 100 )
       - > insertAll ($data ) ;
 
-**** 更新数据
-***** 更新数据
+#### 更新数据
+##### 更新数据
       可以使用 save 方法更新数据
 
       Db : : name ( 'user' )
@@ -2856,7 +1620,7 @@ use think\facade\Config ;
         'read_time'     = >  Db : : raw ( 'read_time+1' )
         ] ) ;
 
-***** 自增/自减
+##### 自增/自减
       可以使用 =inc/dec=方法自增或自减一个字段的值（ 如不加第二个参数，默认步长为 1）。
 
       // score 字段加 1
@@ -2890,8 +1654,8 @@ use think\facade\Config ;
                    UPDATE `think_user`  SET `score`  = `score`  -  1  WHERE  `id`  =  1
                    UPDATE `think_user`  SET `score`  = `score`  -  5  WHERE  `id`  =  1
 
-**** 删除数据
-***** 删除数据
+#### 删除数据
+##### 删除数据
       // 根据主键删除
       Db : : table ( 'think_user' ) - > delete ( 1 ) ;
       Db : : table ( 'think_user' ) - > delete ( [ 1 , 2 , 3 ] ) ;
@@ -2936,8 +1700,8 @@ use think\facade\Config ;
  
       =useSoftDelete=方法表示使用软删除，并且指定软删除字段为 =delete_time=，写入数据为当前的时间戳。
 
-**** 查询表达式
-***** 查询表达式
+#### 查询表达式
+##### 查询表达式
 
 
       查询表达式支持大部分的 SQL 查询语法，也是 =ThinkPHP=查询语言的精髓，查询表达式的使用格式：
@@ -2972,7 +1736,7 @@ use think\facade\Config ;
 
       表达式查询的用法示例如下：
 
-***** 等于（=）
+##### 等于（=）
 
 
       例如：
@@ -2985,9 +1749,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  =  100
+      SELECT  # FROM `think_user` WHERE  `id`  =  100
  
-***** 不等于（<>）
+##### 不等于（<>）
 
 
       例如：
@@ -2996,9 +1760,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  < >  100
+      SELECT  # FROM `think_user` WHERE  `id`  < >  100
  
-***** 大于（>）
+##### 大于（>）
 
 
       例如：
@@ -3007,9 +1771,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  >  100
+      SELECT  # FROM `think_user` WHERE  `id`  >  100
  
-***** 大于等于（>=）
+##### 大于等于（>=）
 
 
       例如：
@@ -3018,9 +1782,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  >=  100
+      SELECT  # FROM `think_user` WHERE  `id`  >=  100
  
-***** 小于（<）
+##### 小于（<）
 
 
       例如：
@@ -3029,9 +1793,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  <  100
+      SELECT  # FROM `think_user` WHERE  `id`  <  100
  
-***** 小于等于（<=）
+##### 小于等于（<=）
 
 
       例如：
@@ -3040,9 +1804,9 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `id`  <=  100
+      SELECT  # FROM `think_user` WHERE  `id`  <=  100
  
-***** [NOT] LIKE： 同 sql 的 LIKE
+##### [NOT] LIKE： 同 sql 的 LIKE
 
 
       例如：
@@ -3051,7 +1815,7 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  `name` LIKE  'thinkphp%'
+      SELECT  # FROM `think_user` WHERE  `name` LIKE  'thinkphp%'
  
       =like=查询支持使用数组
 
@@ -3059,14 +1823,14 @@ use think\facade\Config ;
  
       实际生成的 SQL 语句为：
 
-      SELECT  * FROM `think_user` WHERE   (`name` LIKE  '%think' OR `name` LIKE  'php%' )
+      SELECT  # FROM `think_user` WHERE   (`name` LIKE  '%think' OR `name` LIKE  'php%' )
  
       为了更加方便，应该直接使用 =whereLike=方法
 
       Db : : name ( 'user' ) - > whereLike ( 'name' , 'thinkphp%' ) - > select ( ) ;
       Db : : name ( 'user' ) - > whereNotLike ( 'name' , 'thinkphp%' ) - > select ( ) ;
  
-***** [NOT] BETWEEN ：同 sql 的[not] between
+##### [NOT] BETWEEN ：同 sql 的[not] between
 
 
       查询条件支持字符串或者数组，例如：
@@ -3079,14 +1843,14 @@ use think\facade\Config ;
  
       最终生成的 SQL 语句都是：
 
-      SELECT  * FROM `think_user` WHERE  `id` BETWEEN  1 AND  8
+      SELECT  # FROM `think_user` WHERE  `id` BETWEEN  1 AND  8
  
       或者使用快捷查询方法：
 
       Db : : name ( 'user' ) - > whereBetween ( 'id' , '1,8' ) - > select ( ) ;
       Db : : name ( 'user' ) - > whereNotBetween ( 'id' , '1,8' ) - > select ( ) ;
  
-***** [NOT] IN： 同 sql 的[not] in
+##### [NOT] IN： 同 sql 的[not] in
       查询条件支持字符串或者数组，例如：
       Db : : name ( 'user' ) - > where ( 'id' , 'in' , '1,5,8' ) - > select ( ) ;
  
@@ -3096,7 +1860,7 @@ use think\facade\Config ;
  
       最终的 SQL 语句为：
 
-      SELECT  * FROM `think_user` WHERE  `id` IN  ( 1 , 5 , 8 )
+      SELECT  # FROM `think_user` WHERE  `id` IN  ( 1 , 5 , 8 )
  
       或者使用快捷查询方法：
 
@@ -3107,7 +1871,7 @@ use think\facade\Config ;
       =[NOT] IN=查询支持使用闭包方式
   
 
-***** [NOT] NULL ：
+##### [NOT] NULL ：
       查询字段是否（不）是 =Null=，例如：
 
       Db : : name ( 'user' ) - > where ( 'name' ,  null )
@@ -3117,7 +1881,7 @@ use think\facade\Config ;
 
       实际生成的 SQL 语句为：
 
-      SELECT  * FROM `think_user` WHERE  `name` IS NULL  AND `email` IS NULL  AND `name` IS NOT NULL
+      SELECT  # FROM `think_user` WHERE  `name` IS NULL  AND `email` IS NULL  AND `name` IS NOT NULL
  
       如果你需要查询一个字段的值为字符串 =null=或者 =not null=，应该使用：
 
@@ -3132,7 +1896,7 @@ use think\facade\Config ;
       - > whereNotNull ( 'name' )
       - > select ( ) ;
 
-***** EXP：表达式
+##### EXP：表达式
       支持更复杂的查询情况 例如：
 
       Db : : name ( 'user' ) - > where ( 'id' , 'in' , '1,3,8' ) - > select ( ) ;
@@ -3147,7 +1911,7 @@ use think\facade\Config ;
 
       Db : : name ( 'user' ) - > whereExp ( 'id' ,  'IN (1,3,8) ' ) - > select ( ) ;
  
-**** 链式操作
+#### 链式操作
      数据库提供的链式操作方法，可以有效的提高数据存取的代码清晰度和开发效率，并且支持所有的 CURD 操作（原生查询不支持链式操作）。
 
      使用也比较简单，假如我们现在要查询一个 User 表的满足状态为 1 的前 10 条记录，并希望按照用户的创建时间排序 ，代码如下：
@@ -3204,25 +1968,25 @@ use think\facade\Config ;
 
              | 连贯操作        | 作用                                   | 支持的参数类型       |
              |-----------------+----------------------------------------+----------------------|
-             | where*          | 用于 AND 查询                            | 字符串、数组和对象   |
-             | whereOr*        | 用于 OR 查询                             | 字符串、数组和对象   |
-             | whereTime*      | 用于时间日期的快捷查询                 | 字符串               |
+             | where#          | 用于 AND 查询                            | 字符串、数组和对象   |
+             | whereOr#        | 用于 OR 查询                             | 字符串、数组和对象   |
+             | whereTime#      | 用于时间日期的快捷查询                 | 字符串               |
              | table           | 用于定义要操作的数据表名称             | 字符串和数组         |
              | alias           | 用于给当前数据表定义别名               | 字符串               |
-             | field*          | 用于定义要查询的字段（支持字段排除）   | 字符串和数组         |
-             | order*          | 用于对结果排序                         | 字符串和数组         |
+             | field#          | 用于定义要查询的字段（支持字段排除）   | 字符串和数组         |
+             | order#          | 用于对结果排序                         | 字符串和数组         |
              | limit           | 用于限制查询结果数量                   | 字符串和数字         |
              | page            | 用于查询分页（内部会转换成 limit）      | 字符串和数字         |
              | group           | 用于对查询的 group 支持                  | 字符串               |
              | having          | 用于对查询的 having 支持                 | 字符串               |
-             | join*           | 用于对查询的 join 支持                   | 字符串和数组         |
-             | union*          | 用于对查询的 union 支持                  | 字符串、数组和对象   |
-             | view*           | 用于视图查询                           | 字符串、数组         |
+             | join#           | 用于对查询的 join 支持                   | 字符串和数组         |
+             | union#          | 用于对查询的 union 支持                  | 字符串、数组和对象   |
+             | view#           | 用于视图查询                           | 字符串、数组         |
              | distinct        | 用于查询的 distinct 支持                 | 布尔值               |
              | lock            | 用于数据库的锁机制                     | 布尔值               |
              | cache           | 用于查询缓存                           | 支持多个参数         |
-             | with*           | 用于关联预载入                         | 字符串、数组         |
-             | bind*           | 用于数据绑定操作                       | 数组或多个参数       |
+             | with#           | 用于关联预载入                         | 字符串、数组         |
+             | bind#           | 用于数据绑定操作                       | 数组或多个参数       |
              | comment         | 用于 SQL 注释                            | 字符串               |
              | force           | 用于数据集的强制索引                   | 字符串               |
              | master          | 用于设置主服务器读取数据               | 布尔值               |
@@ -3235,10 +1999,10 @@ use think\facade\Config ;
              | duplicate       | 用于设置 DUPLCATE 信息                   | 数组 字符串          |
 
 
-             所有的连贯操作都返回当前的模型实例对象（this），其中带*标识的表示支持多次调用。
+             所有的连贯操作都返回当前的模型实例对象（this），其中带#标识的表示支持多次调用。
   
 
-***** where
+##### where
 
 
       =where=方法的用法是 ThinkPHP 查询语言的精髓，也是 ThinkPHP =ORM=的重要组成部分和亮点所在，可以完成包括普通查询、表达式查询、快捷查询、区间查询、组合查询在内的查询操作。 =where=方法的参数支持的变量类型包括字符串、数组和闭包。
@@ -3247,7 +2011,7 @@ use think\facade\Config ;
       和 =where=方法相同用法的方法还包括 =whereOr=、 =whereIn=等一系列快捷查询方法，下面仅以 =where=为例说明用法。
   
 
-****** 表达式查询
+###### 表达式查询
 
 
 
@@ -3263,12 +2027,12 @@ use think\facade\Config ;
 
        更多的表达式查询语法，可以参考前面的查询表达式部分。
 
-****** 数组条件
+###### 数组条件
 
 
        数组方式有两种查询条件类型：关联数组和索引数组。
 
-******* 关联数组
+####### 关联数组
 
 
         主要用于等值 =AND=条件，例如：
@@ -3281,9 +2045,9 @@ use think\facade\Config ;
   
         最后生成的 SQL 语句是
 
-        SELECT  * FROM think_user WHERE `name` = 'thinkphp' AND status  =  1
+        SELECT  # FROM think_user WHERE `name` = 'thinkphp' AND status  =  1
   
-******* 索引数组
+####### 索引数组
 
 
         索引数组方式批量设置查询条件，使用方式如下：
@@ -3296,7 +2060,7 @@ use think\facade\Config ;
   
         最后生成的 SQL 语句是
 
-        SELECT  * FROM think_user WHERE `name` = 'thinkphp' AND status  =  1
+        SELECT  # FROM think_user WHERE `name` = 'thinkphp' AND status  =  1
   
         如果需要事先组装数组查询条件，可以使用：
 
@@ -3307,7 +2071,7 @@ use think\facade\Config ;
         数组方式查询还有一些额外的复杂用法，我们会在后面的高级查询章节提及。
   
 
-****** 字符串条件
+###### 字符串条件
 
 
        使用字符串条件直接查询和操作，例如：
@@ -3316,7 +2080,7 @@ use think\facade\Config ;
   
        最后生成的 SQL 语句是
 
-       SELECT  * FROM think_user WHERE type = 1 AND status = 1
+       SELECT  # FROM think_user WHERE type = 1 AND status = 1
   
 
        注意使用字符串查询条件和表达式查询的一个区别在于，不会对查询字段进行避免关键词冲突处理。
@@ -3328,12 +2092,12 @@ use think\facade\Config ;
        - > whereRaw ( "id=:id and username=:name" ,  [ 'id'  = >  1  ,  'name'  = >  'thinkphp' ] )
        - > select ( ) ;
 
-***** table
+##### table
 
 
       =table=方法主要用于指定操作的数据表。
 
-****** 用法
+###### 用法
 
 
        一般情况下，操作模型的时候系统能够自动识别当前对应的数据表，所以，使用 =table=方法的情况通常是为了：
@@ -3374,7 +2138,7 @@ use think\facade\Config ;
 
                 使用数组方式定义的优势是可以避免因为表名和关键字冲突而出错的情况。
 
-***** alias
+##### alias
 
 
       =alias=用于设置当前数据表的别名，便于使用其他的连贯操作例如 join 方法等。
@@ -3388,7 +2152,7 @@ use think\facade\Config ;
 
       最终生成的 SQL 语句类似于：
 
-      SELECT  * FROM think_user a INNER JOIN think_dept b ON b .user_id = a .id
+      SELECT  # FROM think_user a INNER JOIN think_dept b ON b .user_id = a .id
   
       可以传入数组批量设置数据表以及别名，例如：
 
@@ -3399,17 +2163,17 @@ use think\facade\Config ;
 
       最终生成的 SQL 语句类似于：
 
-      SELECT  * FROM think_user user INNER JOIN think_dept dept ON dept .user_id = user .id
+      SELECT  # FROM think_user user INNER JOIN think_dept dept ON dept .user_id = user .id
   
-***** field
+##### field
 
 
       =field=方法主要作用是标识要返回或者操作的字段，可以用于查询和写入操作。
 
-****** 用于查询
+###### 用于查询
 
 
-******* 指定字段
+####### 指定字段
 
 
         在查询操作中 =field=方法是使用最频繁的。
@@ -3428,7 +2192,7 @@ use think\facade\Config ;
 
         SELECT id ,nickname as name FROM user
   
-******* 使用 SQL 函数
+####### 使用 SQL 函数
 
 
         可以在 =fieldRaw=方法中直接使用函数，例如：
@@ -3443,7 +2207,7 @@ use think\facade\Config ;
         除了 =select=方法之外，所有的查询方法，包括 =find=等都可以使用 =field=方法。
   
 
-******* 使用数组参数
+####### 使用数组参数
 
 
         =field=方法的参数可以支持数组，例如：
@@ -3460,17 +2224,17 @@ use think\facade\Config ;
 
         SELECT id ,nickname as name FROM user
   
-******* 获取所有字段
+####### 获取所有字段
 
 
         如果有一个表有非常多的字段，需要获取所有的字段（这个也许很简单，因为不调用 field 方法或者直接使用空的 field 方法都能做到）：
 
         Db : : table ( 'user' ) - > select ( ) ;
-        Db : : table ( 'user' ) - > field ( '*' ) - > select ( ) ;
+        Db : : table ( 'user' ) - > field ( '#' ) - > select ( ) ;
   
         上面的用法是等效的，都相当于执行 SQL：
 
-        SELECT  * FROM user
+        SELECT  # FROM user
   
         但是这并不是我说的获取所有字段，而是显式的调用所有字段（对于对性能要求比较高的系统，这个要求并不过分，起码是一个比较好的习惯），下面的用法可以完成预期的作用：
 
@@ -3478,7 +2242,7 @@ use think\facade\Config ;
   
         =field(true)=的用法会显式的获取数据表的所有字段列表，哪怕你的数据表有 100 个字段。
 
-******* 字段排除
+####### 字段排除
 
 
         如果我希望获取排除数据表中的 =content=字段（文本字段的值非常耗内存）之外的所有字段值，我们就可以使用 field 方法的排除功能，例如下面的方式就可以实现所说的功能：
@@ -3495,10 +2259,10 @@ use think\facade\Config ;
         注意的是 字段排除功能不支持跨表和 join 操作。
   
 
-****** 用于写入
+###### 用于写入
 
 
-       除了查询操作之外， =field=方法还有一个非常重要的安全功能-- *字段合法性检测*。 =field=方法结合数据库的写入方法使用就可以完成表单提交的字段合法性检测，如果我们在表单提交的处理方法中使用了：
+       除了查询操作之外， =field=方法还有一个非常重要的安全功能-- #字段合法性检测#。 =field=方法结合数据库的写入方法使用就可以完成表单提交的字段合法性检测，如果我们在表单提交的处理方法中使用了：
 
        Db : : table ( 'user' ) - > field ( 'title,email,content' ) - > insert ($data ) ;
   
@@ -3511,7 +2275,7 @@ use think\facade\Config ;
        'fields_strict'     = >   false ,
   
 
-***** strict
+##### strict
 
 
       =strict=方法用于设置是否严格检查字段名，用法如下：
@@ -3528,11 +2292,11 @@ use think\facade\Config ;
       如果开启字段严格检查的话，在更新和写入数据库的时候，一旦存在非数据表字段的值，则会抛出异常。
   
 
-***** limit
+##### limit
       =limit=方法主要用于指定查询和操作的数量。
       =limit=方法可以兼容所有的数据库驱动类的
 
-****** 限制结果数量
+###### 限制结果数量
 
        例如获取满足要求的 10 个用户，如下调用即可：
 
@@ -3555,7 +2319,7 @@ use think\facade\Config ;
        - > limit ( 100 )
        - > insertAll ($userList ) ;
 
-****** 分页查询
+###### 分页查询
        用于文章分页查询是 =limit=方法比较常用的场合，例如：
 
        Db : : table ( 'article' ) - > limit ( 10 , 25 ) - > select ( ) ;
@@ -3564,7 +2328,7 @@ use think\facade\Config ;
 
        对于大数据表，尽量使用 =limit=限制查询结果，否则会导致很大的内存开销和性能问题。
 
-***** page
+##### page
 
 
       page 方法主要用于分页查询。
@@ -3593,7 +2357,7 @@ use think\facade\Config ;
 
       Db : : table ( 'article' ) - > page ( 3 , 25 ) - > select ( ) ; 
   
-***** order
+##### order
 
 
       =order=方法用于对操作的结果排序或者优先级限制。
@@ -3606,7 +2370,7 @@ use think\facade\Config ;
       - > limit ( 5 )
       - > select ( ) ;
 
-        SELECT  * FROM `user` WHERE `status`  =  1 ORDER BY `id` desc LIMIT  5
+        SELECT  # FROM `user` WHERE `status`  =  1 ORDER BY `id` desc LIMIT  5
 
 
       如果没有指定 =desc=或者 =asc=排序规则的话，默认为 =asc=。
@@ -3625,7 +2389,7 @@ use think\facade\Config ;
       最终的查询 SQL 可能是
 
       #+begin_src sql
-      SELECT  * FROM `user` WHERE `status`  =  1 ORDER BY `order` ,`id` desc LIMIT  5
+      SELECT  # FROM `user` WHERE `status`  =  1 ORDER BY `order` ,`id` desc LIMIT  5
       #+end_src
   
       对于更新数据或者删除数据的时候可以用于优先级限制
@@ -3650,7 +2414,7 @@ use think\facade\Config ;
       - > limit ( 5 )
       - > select ( ) ;
 
-***** group
+##### group
       =GROUP=方法通常用于结合合计函数，根据一个或多个列对结果集进行分组 。
 
       =group=方法只有一个参数，并且只能使用字符串。
@@ -3677,7 +2441,7 @@ use think\facade\Config ;
 
       SELECT user_id ,test_time ,username , max (score ) FROM user GROUP BY user_id ,test_time
   
-***** having
+##### having
       =HAVING=方法用于配合 group 方法完成从分组的结果中筛选（通常是聚合条件）数据。
 
       =having=方法只有一个参数，并且只能使用字符串，例如：
@@ -3692,25 +2456,25 @@ use think\facade\Config ;
 
       SELECT username , max (score ) FROM score GROUP BY user_id HAVING  count (test_time ) > 3
   
-***** join
+##### join
 
 
       =JOIN=方法用于根据两个或多个表中的列之间的关系，从这些表中查询数据。join 通常有下面几种类型，不同类型的 join 操作会影响返回的数据结果。
 
-      -  *INNER JOIN*: 等同于 JOIN（默认的 JOIN 类型）,如果表中有至少一个匹配，则返回行
-      -  *LEFT JOIN*: 即使右表中没有匹配，也从左表返回所有的行
-      -  *RIGHT JOIN*: 即使左表中没有匹配，也从右表返回所有的行
-      -  *FULL JOIN*: 只要其中一个表中存在匹配，就返回行
+      -  #INNER JOIN#: 等同于 JOIN（默认的 JOIN 类型）,如果表中有至少一个匹配，则返回行
+      -  #LEFT JOIN#: 即使右表中没有匹配，也从左表返回所有的行
+      -  #RIGHT JOIN#: 即使左表中没有匹配，也从右表返回所有的行
+      -  #FULL JOIN#: 只要其中一个表中存在匹配，就返回行
 
-****** 说明
+###### 说明
        join  ( mixed join  [ , mixed $condition  =  null  [ , string $type  =  'INNER' ] ]  )
        leftJoin  ( mixed join  [ , mixed $condition  =  null  ]  )
        rightJoin  ( mixed join  [ , mixed $condition  =  null  ]  )
        fullJoin  ( mixed join  [ , mixed $condition  =  null  ]  )
   
-       *参数*
+       #参数#
 
-******* join
+####### join
 
 
         要关联的（完整）表名以及别名
@@ -3721,20 +2485,20 @@ use think\facade\Config ;
         -  写法 2：'不带数据表前缀的表名'（自动作为别名）
         -  写法 2：'不带数据表前缀的表名 别名'
 
-******* condition
+####### condition
 
 
         关联条件，只能是字符串。
   
-******* type
+####### type
 
 
         关联类型。可以为 :`INNER`、`LEFT`、`RIGHT`、`FULL`，不区分大小写，默认为`INNER`。
   
-        *返回值*\\
+        #返回值#\\
         模型对象
 
-****** 举例
+###### 举例
 
 
        Db : : table ( 'think_artist' )
@@ -3769,7 +2533,7 @@ use think\facade\Config ;
          - > join ( [$subsql = >  'w' ] ,  'a.artist_id = w.artist_id' )
          - > select ( ) ;
   
-***** union
+##### union
       UNION 操作用于合并两个或多个 SELECT 语句的结果集。
 
       使用示例：
@@ -3820,7 +2584,7 @@ use think\facade\Config ;
 
                 UNION 内部的 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每条 SELECT 语句中的列的顺序必须相同。
   
-***** distinct
+##### distinct
       DISTINCT 方法用于返回唯一不同的值 。
 
       例如数据库表中有以下数据
@@ -3846,7 +2610,7 @@ use think\facade\Config ;
   
       =distinct=方法的参数是一个布尔值。
 
-***** lock
+##### lock
 
 
       =Lock=方法是用于数据库的锁机制，如果在查询或者执行操作的时候使用：
@@ -3859,10 +2623,10 @@ use think\facade\Config ;
 
       Db : : name ( 'user' ) - > where ( 'id' , 1 ) - > lock ( 'lock in share mode' ) - > find ( ) ;
   
-***** cache
+##### cache
       =cache=方法用于查询缓存操作，也是连贯操作方法之一。
 
-      *cache*可以用于 =select=、 =find=、 =value=和 =column=方法，以及其衍生方法，使用 =cache=方法后，在缓存有效期之内不会再次进行数据库查询操作，而是直接获取缓存中的数据，关于数据缓存的类型和设置可以参考缓存部分。
+      #cache#可以用于 =select=、 =find=、 =value=和 =column=方法，以及其衍生方法，使用 =cache=方法后，在缓存有效期之内不会再次进行数据库查询操作，而是直接获取缓存中的数据，关于数据缓存的类型和设置可以参考缓存部分。
 
       下面举例说明，例如，我们对 find 方法使用 cache 方法如下：
     
@@ -3895,7 +2659,7 @@ use think\facade\Config ;
 
       Db : : table ( 'user' ) - > cache ( 'key' , 60 , 'tagName' ) - > find ( ) ;
   
-****** 缓存自动更新
+###### 缓存自动更新
 
 
        这里的缓存自动更新是指一旦数据更新或者删除后会自动清理缓存（下次获取的时候会自动重新缓存）。
@@ -3914,7 +2678,7 @@ use think\facade\Config ;
        Db : : table ( 'user' ) - > cache ( true ) - > where ( 'id' ,  1 ) - > update ( [ 'name' = > 'thinkphp' ] ) ;
        Db : : table ( 'user' ) - > cache ( true ) - > find ( 1 ) ;
   
-***** comment
+##### comment
 
 
       COMMENT 方法 用于在生成的 SQL 语句中添加注释内容，例如：
@@ -3927,9 +2691,9 @@ use think\facade\Config ;
 
       最终生成的 SQL 语句是：
 
-      SELECT username ,score FROM think_score ORDER BY score desc LIMIT  10  /* 查询考试前十名分数 */
+      SELECT username ,score FROM think_score ORDER BY score desc LIMIT  10  /# 查询考试前十名分数 #/
   
-***** fetchSql
+##### fetchSql
 
 
       =fetchSql=用于直接返回 SQL 而不是执行查询，适用于任何的 CURD 操作方法。 例如：
@@ -3938,13 +2702,13 @@ use think\facade\Config ;
   
       输出结果为：
 
-      SELECT  * FROM user where `id`  =  1
+      SELECT  # FROM user where `id`  =  1
   
 
       对于某些 NoSQL 数据库可能不支持 fetchSql 方法
   
 
-***** force
+##### force
 
 
       force 方法用于数据集的强制索引操作，例如：
@@ -3953,7 +2717,7 @@ use think\facade\Config ;
   
       对查询强制使用 =user=索引， =user=必须是数据表实际创建的索引名称。
 
-***** partition
+##### partition
 
 
       =partition= 方法用于 =MySQL=数据库的分区查询，用法如下：
@@ -3968,7 +2732,7 @@ use think\facade\Config ;
         - > partition ( 'p1' )
         - > insert ( [ 'name'  = >  'think' ,  'score'  = >  100' ] ) ;
   
-***** failException
+##### failException
 
 
       =failException=设置查询数据为空时是否需要抛出异常，用于 =select=和 =find=方法，例如：
@@ -3997,21 +2761,21 @@ use think\facade\Config ;
               - > where ( 'status' ,  1 )
               - > findOrFail ( ) ;
 
-***** sequence
+##### sequence
       =sequence=方法用于 =pgsql=数据库指定自增序列名，其它数据库不必使用，用法为：
 
       Db : : name ( 'user' )
       - > sequence ( 'user_id_seq' )
       - > insert ( [ 'name' = > 'thinkphp' ] ) ;
 
-***** replace
+##### replace
       =replace=方法用于设置 =MySQL=数据库 =insert=方法或者 =insertAll=方法写入数据的时候是否适用 =REPLACE=方式。
 
       Db : : name ( 'user' )
       - > replace ( )
       - > insert ($data ) ;
 
-***** extra
+##### extra
       =extra=方法可以用于 =CURD=查询，例如：
 
       Db : : name ( 'user' )
@@ -4026,20 +2790,20 @@ use think\facade\Config ;
                 - > extra ( 'SQL_BUFFER_RESULT' )
                 - > select ( ) ;
 
-***** duplicate
+##### duplicate
       用于设置 =DUPLICATE=查询，用法示例：
 
       Db : : name ( 'user' )
       - > duplicate ( [ 'score'  = >  10 ] )
       - > insert ( [ 'name'  = >  'think' ] ) ;
 
-***** procedure
+##### procedure
       =procedure=方法用于设置当前查询是否为存储过程查询，用法如下：
 
       $resultSet  = Db : : procedure ( true )
       - > query ( 'call procedure_name' ) ;
 
-**** 聚合查询
+#### 聚合查询
      在应用中我们经常会用到一些统计数据，例如当前所有（或者满足某些条件）的用户数、所有用户的最大积分、用户的平均成绩等等，ThinkPHP 为这些统计操作提供了一系列的内置方法，包括：
 
      | 方法    | 说明                                       |
@@ -4054,10 +2818,10 @@ use think\facade\Config ;
      聚合方法如果没有数据，默认都是 0，聚合查询都可以配合其它查询条件
   
 
-***** 用法示例
+##### 用法示例
       获取用户数： Db : : table ( 'think_user' ) - > count ( ) ;
  
-      实际生成的 SQL 语句是： SELECT  COUNT ( * ) AS tp_count FROM `think_user` LIMIT  1
+      实际生成的 SQL 语句是： SELECT  COUNT ( # ) AS tp_count FROM `think_user` LIMIT  1
  
       或者根据字段统计： Db : : table ( 'think_user' ) - > count ( 'id' ) ;
  
@@ -4105,8 +2869,8 @@ use think\facade\Config ;
 
       Db : : table ( 'score' ) - > field ( 'user_id,SUM(score) AS sum_score' ) - > group ( 'user_id' ) - > select ( ) ;
  
-**** 分页查询
-***** 分页实现
+#### 分页查询
+##### 分页实现
       =ThinkPHP=内置了分页实现，要给数据添加分页输出功能变得非常简单，可以直接在 =Db=类查询的时候调用 =paginate=方法：
 
       // 查询状态为1的用户数据 并且每页显示10条数据
@@ -4172,7 +2936,7 @@ use think\facade\Config ;
       return  view ( 'index' ,  [ 'list'  = > $list ,  'count'  = > $count ] ) ;
       #+end_src
  
-****** 传入总记录数
+###### 传入总记录数
 
        支持传入总记录数而不会自动进行总数计算，例如：
 
@@ -4187,7 +2951,7 @@ use think\facade\Config ;
        对于 =UNION=查询以及一些特殊的复杂查询，推荐使用这种方式首先单独查询总记录数，然后再传入分页方法
   
 
-****** 分页后数据处理
+###### 分页后数据处理
 
 
        支持分页类后数据直接 =each=遍历处理，方便修改分页后的数据，而不是只能通过模型的获取器来补充字段。
@@ -4205,7 +2969,7 @@ use think\facade\Config ;
        $item - >nickname  =  'think' ;
        } ) ;
  
-***** 简洁分页
+##### 简洁分页
       如果你仅仅需要输出一个 仅仅只有上下页的分页输出，可以使用下面的简洁分页代码：
 
       // 查询状态为1的用户数据 并且每页显示10条数据
@@ -4226,7 +2990,7 @@ use think\facade\Config ;
 
       由于简洁分页模式不需要查询总数据数，因此可以提高查询性能。
   
-***** 分页参数
+##### 分页参数
       主要的分页参数如下：
 
       | 参数         | 描述          |
@@ -4249,7 +3013,7 @@ use think\facade\Config ;
       如果需要在分页的时候传入查询条件，可以使用 =query=参数拼接额外的查询参数
   
 
-***** 大数据分页
+##### 大数据分页
 
 
       对于大量数据的分页查询，系统提供了一个高性能的 =paginateX=分页查询方法，用法和 =paginate=分页查询存在一定区别。如果你要分页查询的数据量在百万级以上，使用 =paginateX=方法会有明显的提升，尤其是在分页数较大的情况下。并且由于针对大数据量而设计，该分页查询只能采用简洁分页模式，所以没有总数。
@@ -4268,7 +3032,7 @@ use think\facade\Config ;
  
       查询方法会执行两次查询，第一次查询用于查找满足当前查询条件的最大或者最小值，然后配合主键查询条件来进行分页数据查询。
 
-***** 自定义分页类
+##### 自定义分页类
 
 
       如果你需要自定义分页，可以扩展一个分页驱动。
@@ -4279,13 +3043,13 @@ use think\facade\Config ;
       'think\Paginator'     = >     'app\common\Bootstrap'
       ] ;
  
-**** 时间查询
-***** 时间比较
+#### 时间查询
+##### 时间比较
 
       框架内置了常用的时间查询方法，并且可以自动识别时间字段的类型，所以无论采用什么类型的时间字段，都可以统一使用本章的时间查询用法。
   
 
-****** 使用 =whereTime=方法
+###### 使用 =whereTime=方法
 
 
        =whereTime=方法提供了日期和时间字段的快捷查询，示例如下：
@@ -4314,7 +3078,7 @@ use think\facade\Config ;
        - > whereTime ( 'create_time' , '-2 hours' )
        - > select ( ) ;
 
-***** 查询某个时间区间
+##### 查询某个时间区间
 
 
       针对时间的区间查询，系统还提供了 =whereBetweenTime/whereNotBetweenTime=快捷方法。
@@ -4329,7 +3093,7 @@ use think\facade\Config ;
         - > whereNotBetweenTime ( 'create_time' ,  '2017-01-01' ,  '2017-06-30' )
         - > select ( ) ;
  
-***** 查询某年
+##### 查询某年
 
 
       查询今年注册的用户
@@ -4351,7 +3115,7 @@ use think\facade\Config ;
       - > whereYear ( 'create_time' ,  '2018' )
       - > select ( ) ;    
 
-***** 查询某月
+##### 查询某月
 
 
       查询本月注册的用户
@@ -4372,7 +3136,7 @@ use think\facade\Config ;
       - > whereMonth ( 'create_time' ,  '2018-06' )
       - > select ( ) ;    
 
-***** 查询某周
+##### 查询某周
 
 
       查询本周数据
@@ -4394,7 +3158,7 @@ use think\facade\Config ;
       - > whereWeek ( 'create_time' ,  '2019-1-1' )
       - > select ( ) ;    
 
-***** 查询某天
+##### 查询某天
 
 
       查询当天注册的用户
@@ -4416,7 +3180,7 @@ use think\facade\Config ;
       - > whereDay ( 'create_time' ,  '2018-06-01' )
       - > select ( ) ;    
 
-***** 时间字段区间比较
+##### 时间字段区间比较
 
 
       可以支持对两个时间字段的区间比较
@@ -4434,16 +3198,16 @@ use think\facade\Config ;
       - > whereTime ( 'end_time' ,  '>=' ,  time ( ) )
       - > select ( ) ;
 
-***** 自定义时间查询规则
+##### 自定义时间查询规则
       你可以通过在数据库配置文件中设置 =time_query_rule=添加自定义的时间查询规则，
 
       'time_query_rule'     = >     [
       'hour'     = >     [ '1 hour ago' ,  'now' ] ,
       ] ,
  
-**** 高级查询
-***** 快捷查询
-      快捷查询方式是 *一种多字段相同查询条件*的简化写法，可以进一步简化查询条件的写法，在多个字段之间用 =|=分割表示 =OR=查询，用 =&=分割表示 =AND=查询，可以实现下面的查询，例如：
+#### 高级查询
+##### 快捷查询
+      快捷查询方式是 #一种多字段相同查询条件#的简化写法，可以进一步简化查询条件的写法，在多个字段之间用 =|=分割表示 =OR=查询，用 =&=分割表示 =AND=查询，可以实现下面的查询，例如：
 
       Db : : table ( 'think_user' )
       - > where ( 'name|title' , 'like' , 'thinkphp%' )
@@ -4452,13 +3216,13 @@ use think\facade\Config ;
 
       生成的查询 SQL 是：
 
-      SELECT  *  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  OR  `title `  LIKE  'thinkphp%'  )  AND  (  `create_time `  >  0  AND  `update_time `  >  0  )  LIMIT  1
+      SELECT  #  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  OR  `title `  LIKE  'thinkphp%'  )  AND  (  `create_time `  >  0  AND  `update_time `  >  0  )  LIMIT  1
  
 
       快捷查询支持所有的查询表达式。
   
 
-***** 批量（字段）查询
+##### 批量（字段）查询
 
       可以进行多个条件的批量条件查询定义，例如：
 
@@ -4473,7 +3237,7 @@ use think\facade\Config ;
 
                生成的 SQL 语句为：
 
-               SELECT  *  FROM  `think_user `  WHERE  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  AND  `id `  >  0  AND  ` status `  =  '1'
+               SELECT  #  FROM  `think_user `  WHERE  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  AND  `id `  >  0  AND  ` status `  =  '1'
  
                数组方式如果使用 =exp=查询的话，一定要用 =raw=方法。
 
@@ -4513,7 +3277,7 @@ use think\facade\Config ;
 
                生成的 SQL 语句为：
 
-               SELECT  *  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  AND  `id `  >  0  )  AND  ` status `  =  '1'
+               SELECT  #  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  AND  `id `  >  0  )  AND  ` status `  =  '1'
  
                如果使用下面的多个条件组合
 
@@ -4533,13 +3297,13 @@ use think\facade\Config ;
 
                生成的 SQL 语句为：
 
-               SELECT  *  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  )  OR  (  `name `  LIKE  'kancloud%'  AND  `title `  LIKE  '%kancloud'  )
+               SELECT  #  FROM  `think_user `  WHERE  (  `name `  LIKE  'thinkphp%'  AND  `title `  LIKE  '%thinkphp'  )  OR  (  `name `  LIKE  'kancloud%'  AND  `title `  LIKE  '%kancloud'  )
  
 
                善用多维数组查询，可以很方便的拼装出各种复杂的 SQL 语句
   
 
-***** 闭包查询
+##### 闭包查询
       #+begin_src php
         $name  =  'thinkphp' ;
         $id  =  10 ;
@@ -4551,11 +3315,11 @@ use think\facade\Config ;
  
       生成的 SQL 语句为：
 
-      SELECT  *  FROM  `think_user `  WHERE  (  `name `  =  'thinkphp'  OR  `id `  >  10  )
+      SELECT  #  FROM  `think_user `  WHERE  (  `name `  =  'thinkphp'  OR  `id `  >  10  )
  
       可见每个闭包条件两边也会自动加上括号。
   
-***** 混合查询
+##### 混合查询
       可以结合前面提到的所有方式进行混合查询，例如：
 
       #+begin_src php
@@ -4569,9 +3333,9 @@ use think\facade\Config ;
  
       生成的 SQL 语句是：
 
-      SELECT  *  FROM  `think_user `  WHERE   `name `  LIKE  'thinkphp%'  AND  (  `id `  <  10  )
+      SELECT  #  FROM  `think_user `  WHERE   `name `  LIKE  'thinkphp%'  AND  (  `id `  <  10  )
  
-***** 字符串条件查询
+##### 字符串条件查询
 
 
       对于一些实在复杂的查询，也可以直接使用原生 SQL 语句进行查询，例如：
@@ -4586,7 +3350,7 @@ use think\facade\Config ;
       - > whereRaw ( 'id > :id AND name LIKE :name ' ,  [ 'id'  = >  0 ,  'name'  = >  'thinkphp%' ] )
       - > select ( ) ;
 
-***** 快捷方法
+##### 快捷方法
 
 
       系统封装了一系列快捷方法，用于简化查询，包括：
@@ -4618,7 +3382,7 @@ use think\facade\Config ;
 
       生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  ( `update_time`  > `create_time`  ) 
+      SELECT  # FROM `think_user` WHERE  ( `update_time`  > `create_time`  ) 
  
       查询 =name=和 =nickname=相同的用户数据
 
@@ -4628,7 +3392,7 @@ use think\facade\Config ;
 
       生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  ( `name`  = `nickname`  )
+      SELECT  # FROM `think_user` WHERE  ( `name`  = `nickname`  )
  
       相同字段条件也可以简化为
 
@@ -4645,9 +3409,9 @@ use think\facade\Config ;
  
       生成的 SQL 语句是：
 
-      SELECT  * FROM `think_user` WHERE  ( `name`  = `nickname` AND `update_time`  > `create_time`  ) 
+      SELECT  # FROM `think_user` WHERE  ( `name`  = `nickname` AND `update_time`  > `create_time`  ) 
  
-***** 动态查询
+##### 动态查询
 
 
       查询构造器还提供了动态查询机制，用于简化查询条件，包括：
@@ -4692,7 +3456,7 @@ use think\facade\Config ;
                =getBy=和 =getFieldBy=方法只会查询一条记录，可以和其它的链式方法搭配使用
   
 
-***** 条件查询
+##### 条件查询
 
 
       查询构造器支持条件查询，例如：
@@ -4712,7 +3476,7 @@ use think\facade\Config ;
       $query - > where ( 'score' ,  '>' ,  60 ) ;
       } ) ;
  
-**** 视图查询
+#### 视图查询
 
 
      视图查询可以实现不依赖数据库视图的多表查询，并不需要数据库支持视图，是 JOIN 方法的推荐替代方法，例如：
@@ -4767,12 +3531,12 @@ use think\facade\Config ;
 
      SELECT member .id  AS uid ,member .name  AS account ,Profile .truename ,Profile .phone ,Profile .email ,Score .score  FROM think_user member  INNER  JOIN think_profile Profile  ON Profile .user_id =member .id  INNER  JOIN think_socre Score  ON Score .user_id =Profile .id  WHERE Score .score  >  80
  
-**** JSON 字段
+#### JSON 字段
 
 
      如果你的 =user=表有一个 =info=字段是 =JSON=类型的（或者说你存储的是 JSON 格式，但并非是要 JSON 字段类型），你可以使用下面的方式操作数据。
 
-***** JSON 数据写入
+##### JSON 数据写入
 
 
       $user [ 'name' ]  =  'thinkphp' ;
@@ -4784,7 +3548,7 @@ use think\facade\Config ;
       - > json ( [ 'info' ] )
       - > insert ($user ) ;
 
-***** JSON 数据查询
+##### JSON 数据查询
 
 
       查询整个 JSON 数据：
@@ -4811,7 +3575,7 @@ use think\facade\Config ;
              - > find ( ) ;
              dump ($user ) ;
  
-***** JSON 数据更新
+##### JSON 数据更新
 
 
       完整 JSON 数据更新
@@ -4833,12 +3597,12 @@ use think\facade\Config ;
       - > where ( 'id' , 1 )
       - > update ($data ) ;
 
-**** 子查询
+#### 子查询
 
 
      首先构造子查询 SQL，可以使用下面三种的方式来构建子查询。
 
-***** 使用 =fetchSql=方法
+##### 使用 =fetchSql=方法
 
 
       fetchSql 方法表示不进行查询而只是返回构建的 SQL 语句，并且不仅仅支持 =select=，而是支持所有的 CURD 查询。
@@ -4853,7 +3617,7 @@ use think\facade\Config ;
 
       SELECT  `id ` , `name `  FROM  `think_user `  WHERE  `id `  >  10 
  
-***** 使用 =buildSql=构造子查询
+##### 使用 =buildSql=构造子查询
       $subQuery  = Db : : table ( 'think_user' )
       - > field ( 'id,name' )
       - > where ( 'id' ,  '>' ,  10 )
@@ -4874,9 +3638,9 @@ use think\facade\Config ;
 
       生成的 SQL 语句为：
 
-      SELECT  *  FROM  (  SELECT  `id ` , `name `  FROM  `think_user `  WHERE  `id `  >  10  ) a  WHERE a .name  LIKE  'thinkphp'  ORDER  BY  `id `  desc
+      SELECT  #  FROM  (  SELECT  `id ` , `name `  FROM  `think_user `  WHERE  `id `  >  10  ) a  WHERE a .name  LIKE  'thinkphp'  ORDER  BY  `id `  desc
  
-***** 使用闭包构造子查询
+##### 使用闭包构造子查询
 
 
       =IN/NOT IN=和 =EXISTS/NOT EXISTS=之类的查询可以直接使用闭包作为子查询，例如：
@@ -4889,7 +3653,7 @@ use think\facade\Config ;
 
                生成的 SQL 语句是
 
-               SELECT  *  FROM  `think_user `  WHERE  `id `  IN  (  SELECT  `id `  FROM  `think_profile `  WHERE  ` status `  =  1  )
+               SELECT  #  FROM  `think_user `  WHERE  `id `  IN  (  SELECT  `id `  FROM  `think_profile `  WHERE  ` status `  =  1  )
  
                Db : : table ( 'think_user' )
                - > whereExists ( function  ($query )  {
@@ -4898,30 +3662,30 @@ use think\facade\Config ;
  
                生成的 SQL 语句为
 
-               SELECT  * FROM `think_user` WHERE EXISTS  ( SELECT  * FROM `think_profile` WHERE `status`  =  1  ) 
+               SELECT  # FROM `think_user` WHERE EXISTS  ( SELECT  # FROM `think_profile` WHERE `status`  =  1  ) 
  
 
                除了上述查询条件外，比较运算也支持使用闭包子查询
   
-**** 原生查询
+#### 原生查询
      =Db=类支持原生 =SQL=查询操作，主要包括下面两个方法：
 
 
      =V6.0.3+=版本开始，原生查询仅支持 Db 类操作，不支持在模型中调用原生查询方法（包括 =query=和 =execute=方法）。
-*****  =query=方法  ! 注意，数组索引不能重复，要变一下
+#####  =query=方法  ! 注意，数组索引不能重复，要变一下
 
       =query=方法用于执行 =SQL=查询操作，返回查询结果数据集（数组）。
 
       使用示例：
-      Db : : query ( "select * from think_user where status=:id" ,  [ 'id'  = >  1 ] ) ;
+      Db : : query ( "select # from think_user where status=:id" ,  [ 'id'  = >  1 ] ) ;
  
       如果你当前采用了分布式数据库，并且设置了读写分离的话， =query=方法默认是在读服务器执行，而不管你的 SQL 语句是什么。
   
       如果希望从主库读取，可以使用
 
-      Db : : query ( "select * from think_user where status=:id" ,  [ 'id'  = >  1 ] ,  true ) ;
+      Db : : query ( "select # from think_user where status=:id" ,  [ 'id'  = >  1 ] ,  true ) ;
  
-*****  =execute=方法
+#####  =execute=方法
 
 
       =execute=用于更新和写入数据的 sql 操作，如果数据非法或者查询错误则返回 =false=，否则返回影响的记录数。
@@ -4934,20 +3698,20 @@ use think\facade\Config ;
       如果你当前采用了分布式数据库，并且设置了读写分离的话， =execute=方法始终是在写服务器执行，而不管你的 SQL 语句是什么。
   
 
-***** 参数绑定
+##### 参数绑定
 
 
       支持在原生查询的时候使用参数绑定，包括问号占位符或者命名占位符，例如：
 
-      Db : : query ( "select * from think_user where id=? AND status=?" ,  [ 8 ,  1 ] ) ;
+      Db : : query ( "select # from think_user where id=? AND status=?" ,  [ 8 ,  1 ] ) ;
       // 命名绑定
       Db : : execute ( "update think_user set name=:name where status=:status" ,  [ 'name'  = >  'thinkphp' ,  'status'  = >  1 ] ) ;
  
 
       注意不支持对表名使用参数绑定
   
-*** 查询事件
-**** 查询事件
+### 查询事件
+#### 查询事件
      数据库操作的回调也称为查询事件，是针对数据库的 CURD 操作而设计的回调方法，主要包括：
 
      | 事件             | 描述                     |
@@ -4970,8 +3734,8 @@ use think\facade\Config ;
 
      查询事件的方法参数只有一个：当前的查询对象。但你可以通过依赖注入的方式添加额外的参数。
   
-*** 获取器
-**** 获取器
+### 获取器
+#### 获取器
 
 
      Db 类也可以支持获取器定义，例如：
@@ -4999,7 +3763,7 @@ use think\facade\Config ;
 
             查询结果返回的时候，会自动对 =info=字段（ =JSON=字段）的 =name=属性使用获取器操作。
 
-*** 事务操作
+### 事务操作
 
     使用事务处理的话，需要数据库引擎支持事务处理。比如 =MySQL= 的 =MyISAM= 不支持事务处理，需要使用 =InnoDB= 引擎。
   
@@ -5039,7 +3803,7 @@ use think\facade\Config ;
 
     要确保你的数据表引擎为 =InnoDB=，并且开启 XA 事务支持。
   
-*** 存储过程
+### 存储过程
 
 
     数据访问层支持存储过程调用，调用数据库存储过程使用下面的方法：
@@ -5066,7 +3830,7 @@ use think\facade\Config ;
 
     无论存储过程内部做了什么操作，每次存储过程调用仅仅被当成一次查询。
   
-*** 数据集
+### 数据集
     数据库的查询结果默认返回数据集对象。
 
     // 获取数据集
@@ -5139,9 +3903,9 @@ use think\facade\Config ;
     | whereBetween      | Between 查询过滤数组中的元素                |
     | whereNotBetween   | Not Between 查询过滤数组中的元素            |
 
-** 模型 
-*** 定义
-**** 模型定义
+## 模型 
+### 定义
+#### 模型定义
      定义一个模型类很简单，例如下面是一个 =User=模型：
 
      #+begin_src php
@@ -5184,7 +3948,7 @@ use think\facade\Config ;
      protected $name  =  'user' ;
      }
 
-**** 模型设置
+#### 模型设置
 
 
      默认主键为 =id=，如果你没有使用 =id=作为主键名，需要在模型中设置属性：
@@ -5238,7 +4002,7 @@ use think\facade\Config ;
 
      模型不支持对数据表的前缀单独设置，并且也不推荐使用数据表的前缀设计，应该用不同的库区分。当你的数据表没有前缀的时候， =name=和 =table=属性的定义是没有区别的，定义任何一个即可。
   
-**** 模型初始化
+#### 模型初始化
 
 
      模型支持初始化，只需要定义 =init=方法，例如：
@@ -5260,11 +4024,11 @@ use think\facade\Config ;
 
      =init=必须是静态方法，并且只在第一次实例化的时候执行，并且只会执行一次
   
-**** 模型操作
+#### 模型操作
 
 
 
-     在模型中除了可以调用数据库类的方法之外（换句话说， *数据库的所有查询构造器方法模型中都可以支持*），可以定义自己的方法，所以也可以把模型看成是数据库的增强版。
+     在模型中除了可以调用数据库类的方法之外（换句话说， #数据库的所有查询构造器方法模型中都可以支持#），可以定义自己的方法，所以也可以把模型看成是数据库的增强版。
   
 
      模型的操作方法无需和数据库查询一样调用必须首先调用 =table=或者 =name=方法，因为模型会按照规则自动匹配对应的数据表，例如：
@@ -5275,11 +4039,11 @@ use think\facade\Config ;
 
      User : : where ( 'id' , '>' , 10 ) - > select ( ) ;
 
-     虽然看起来是相同的查询条件，但一个最明显的区别是 *查询结果的类型*不同。第一种方式的查询结果是一个（二维）数组，而第二种方式的查询结果是包含了模型（集合）的数据集。不过，在大多数情况下，这二种返回类型的使用方式并无明显区别。
+     虽然看起来是相同的查询条件，但一个最明显的区别是 #查询结果的类型#不同。第一种方式的查询结果是一个（二维）数组，而第二种方式的查询结果是包含了模型（集合）的数据集。不过，在大多数情况下，这二种返回类型的使用方式并无明显区别。
 
      模型操作和数据库操作的另外一个显著区别是模型支持包括获取器、修改器、自动时间写入在内的一系列自动化操作和事件，简化了数据的存取操作，但随之而来的是性能有所下降（其实并没下降，而是自动帮你处理了一些原本需要手动处理的操作），后面会逐步领略到模型的这些特色功能。
 
-**** 动态切换后缀
+#### 动态切换后缀
 
 
      新版模型增加了一个数据表后缀属性，可以用于多语言或者数据分表的模型查询，省去为多个相同结构的表定义多个模型的麻烦。
@@ -5312,7 +4076,7 @@ use think\facade\Config ;
      $blog  =  new  Blog ($data ) ;
      $blog - > setSuffix ( '_en' ) - > save ( ) ;
 
-**** 模型方法依赖注入
+#### 模型方法依赖注入
 
 
      如果你需要对模型的方法支持依赖注入，可以把模型的方法改成闭包的方式，例如，你需要对获取器方法增加依赖注入
@@ -5335,8 +4099,8 @@ use think\facade\Config ;
      return $this - > invoke ( 'bar' , [ 'think' ] ) ;
      }
 
-*** 模型字段
-**** 模型字段
+### 模型字段
+#### 模型字段
      模型的数据字段和对应数据表的字段是对应的，默认会自动获取（包括字段类型），但自动获取会导致增加一次查询，因此你可以在模型中明确定义字段信息避免多一次查询的开销。
 
      #+begin_src php
@@ -5373,7 +4137,7 @@ use think\facade\Config ;
 
      运行后会自动生成数据表的字段信息缓存。使用命令行缓存的优势是 Db 类的查询仍然有效。
 
-**** 字段类型
+#### 字段类型
      =schema=属性一旦定义，就必须定义完整的数据表字段类型。\\
      如果你只希望对某个字段定义需要自动转换的类型，可以使用 =type=属性，例如：
 
@@ -5394,7 +4158,7 @@ use think\facade\Config ;
 
      =type=属性定义的不一定是实际的字段，也有可能是你的字段别名。
 
-**** 废弃字段
+#### 废弃字段
 
 
      如果因为历史遗留问题 ，你的数据表存在很多的废弃字段，你可以在模型里面定义这些不再使用的字段。
@@ -5412,7 +4176,7 @@ use think\facade\Config ;
 
      在查询和写入的时候会忽略定义的 =status=和 =type=废弃字段。
 
-**** 获取数据
+#### 获取数据
 
 
      在模型外部获取数据的方法如下
@@ -5435,7 +4199,7 @@ use think\facade\Config ;
 
      否则可能会出现意想不到的错误。
 
-**** 模型赋值
+#### 模型赋值
 
 
      可以使用下面的代码给模型对象赋值
@@ -5473,7 +4237,7 @@ use think\facade\Config ;
 
      表示只设置 =data=数组的 =name=和 =score=数据。
 
-**** 严格区分字段大小写
+#### 严格区分字段大小写
 
 
      默认情况下，你的模型数据名称和数据表字段应该保持严格一致，也就是说区分大小写。
@@ -5506,10 +4270,10 @@ use think\facade\Config ;
      echo $user - >createTime ; 
      echo $user - >create_time ; 
 
-*** 新增
+### 新增
     模型数据的新增和数据库的新增数据有所区别，数据库的新增只是单纯的写入给定的数据，而模型的数据写入会包含修改器、自动完成以及模型事件等环节，数据库的数据写入参考数据库章节。
     
-**** 添加一条数据
+#### 添加一条数据
      第一种是实例化模型对象后赋值并保存：
 
      $user            =  new  User ;
@@ -5543,7 +4307,7 @@ use think\facade\Config ;
 
      =save=方法新增数据返回的是写入的记录数（通常是 =1=），而不是自增主键值。
   
-****  =Replace=写入
+####  =Replace=写入
 
 
      =save=方法可以支持 =replace=写入。
@@ -5553,7 +4317,7 @@ use think\facade\Config ;
      $user - >email     =  'thinkphp@qq.com' ;
      $user - > replace ( ) - > save ( ) ;
 
-**** 获取自增 ID
+#### 获取自增 ID
      如果要获取新增数据的自增 ID，可以使用下面的方式：
 
      $user            =  new  User ;
@@ -5575,7 +4339,7 @@ use think\facade\Config ;
 
      不要在同一个实例里面多次新增数据，如果确实需要多次新增，可以使用后面的静态方法处理。
   
-**** 批量增加数据
+#### 批量增加数据
      支持批量新增，可以使用：
 
      $user  =  new  User ;
@@ -5590,7 +4354,7 @@ use think\facade\Config ;
 
      =saveAll=方法新增数据默认会自动识别数据是需要新增还是更新操作，当数据中存在主键的时候会认为是更新操作。
 
-**** 静态方法
+#### 静态方法
      还可以直接静态调用 =create=方法创建并写入：
 
      $user  = User : : create ( [
@@ -5623,17 +4387,17 @@ use think\facade\Config ;
      'email'  = >   'thinkphp@qq.com'
      ] ,  [ 'name' , 'email' ] ,  true ) ;
 
-**** 最佳实践
+#### 最佳实践
 
 
 
      新增数据的最佳实践原则：使用 =create=方法新增数据，使用 =saveAll=批量新增数据。
   
-*** 更新
+### 更新
     和模型新增一样，更新操作同样也会经过修改器、自动完成以及模型事件等处理，并不等同于数据库的数据更新，而且更新方法和新增方法使用的是同一个方法，通常系统会自动判断需要新增还是更新数据。
 
-**** 查找并更新
-     在取出数据后，更改字段内容后使用 =save=方法更新数据。 *这种方式是最佳的更新方式*。
+#### 查找并更新
+     在取出数据后，更改字段内容后使用 =save=方法更新数据。 #这种方式是最佳的更新方式#。
 
      $user  = User : : find ( 1 ) ;
      $user - >name      =  'thinkphp' ;
@@ -5670,7 +4434,7 @@ use think\facade\Config ;
             $user - >score     =  Db : : raw ( 'score+1' ) ;
             $user - > save ( ) ;
       
-**** 字段过滤
+#### 字段过滤
 
 
      默认情况下会过滤非数据表字段的数据，如果你通过外部提交赋值给模型，并且希望指定某些字段写入，可以使用：
@@ -5686,7 +4450,7 @@ use think\facade\Config ;
      $data  = Request : : only ( [ 'name' , 'email' ] ) ;
      $user - > save ($data ) ;
 
-**** 批量更新数据
+#### 批量更新数据
 
 
      可以使用 =saveAll=方法批量更新数据，只需要在批量更新的数据中包含主键即可，例如：
@@ -5703,7 +4467,7 @@ use think\facade\Config ;
 
      批量更新仅能根据主键值进行更新，其它情况请自行处理。
   
-**** 直接更新（静态方法）
+#### 直接更新（静态方法）
 
 
      使用模型的静态 =update=方法更新：
@@ -5724,7 +4488,7 @@ use think\facade\Config ;
 
      上面的代码只会更新 =name=字段的数据。
 
-**** 自动识别
+#### 自动识别
 
 
      我们已经看到，模型的新增和更新方法都是 =save=方法，系统有一套默认的规则来识别当前的数据需要更新还是新增。
@@ -5737,18 +4501,18 @@ use think\facade\Config ;
 
      不要调用 =save=方法进行多次数据写入。
   
-**** 最佳实践
+#### 最佳实践
 
 
 
      更新的最佳实践原则是：如果需要使用模型事件，那么就先查询后更新，如果不需要使用事件或者不查询直接更新，直接使用静态的 =Update=方法进行条件更新，如非必要，尽量不要使用批量更新。
   
-*** 删除
+### 删除
 
 
     模型的删除和数据库的删除方法区别在于，模型的删除会包含模型的事件处理。
 
-**** 删除当前模型
+#### 删除当前模型
 
 
      删除模型数据，可以在查询后调用 =delete=方法。
@@ -5760,7 +4524,7 @@ use think\facade\Config ;
      =delete=方法返回布尔值
   
 
-**** 根据主键删除
+#### 根据主键删除
 
 
      或者直接调用静态方法（根据主键删除）
@@ -5773,7 +4537,7 @@ use think\facade\Config ;
      当 =destroy=方法传入空值（包括空字符串和空数组）的时候不会做任何的数据删除操作，但传入 0 则是有效的
   
 
-**** 条件删除
+#### 条件删除
 
 
      还支持使用闭包删除，例如：
@@ -5790,17 +4554,17 @@ use think\facade\Config ;
      直接调用数据库的 =delete=方法的话无法调用模型事件。
   
 
-**** 最佳实践
+#### 最佳实践
 
 
 
      删除的最佳实践原则是：如果删除当前模型数据，用 =delete=方法，如果需要直接删除数据，使用 =destroy=静态方法。
   
-*** 查询
+### 查询
     模型查询和数据库查询方法的区别主要在于，模型中的查询的数据在获取的时候会经过获取器的处理，以及更加对象化的获取方式。
 
     模型查询除了使用自身的查询方法外，一样可以使用数据库的查询构造器，返回的都是模型对象实例。但如果直接调用查询对象的方法，IDE 可能无法完成自动提示。
-**** 获取单个数据
+#### 获取单个数据
 
 
      获取单个数据的方法包括：
@@ -5827,7 +4591,7 @@ use think\facade\Config ;
 
      如果你是在模型内部获取数据，请不要使用 =$this->name=的方式来获取数据，请使用 =$this->getAttr('name')= 替代。
   
-**** 获取多个数据
+#### 获取多个数据
      取出多个数据：
 
      #+begin_src php
@@ -5850,7 +4614,7 @@ use think\facade\Config ;
      #+end_src
      查询构造器方式的查询可以支持更多的连贯操作，包括排序、数量限制等。
 
-***** 自定义数据集对象
+##### 自定义数据集对象
       模型的 =select=方法返回的是一个包含多个模型实例的数据集对象（默认为 =\think\model\Collection=），支持在模型中单独设置查询数据集的返回对象的名称，例如：
 
       #+begin_src php
@@ -5868,7 +4632,7 @@ use think\facade\Config ;
 
       =resultSetType=属性用于设置自定义的数据集使用的类名，该类应当继承系统的 =think\model\Collection=类。
 
-**** 使用查询构造器
+#### 使用查询构造器
      在模型中仍然可以调用数据库的链式操作和查询方法，可以充分利用数据库的查询构造器的优势。
 
      例如：
@@ -5881,7 +4645,7 @@ use think\facade\Config ;
 
      使用查询构造器直接使用静态方法调用即可，无需先实例化模型。
 
-***** 获取某个字段或者某个列的值
+##### 获取某个字段或者某个列的值
 
 
       // 获取某个用户的积分
@@ -5895,7 +4659,7 @@ use think\facade\Config ;
       =value=和 =column=方法返回的不再是一个模型对象实例，而是纯粹的值或者某个列的数组。
   
 
-***** 动态查询
+##### 动态查询
 
 
       支持数据库的动态查询方法，例如：
@@ -5906,7 +4670,7 @@ use think\facade\Config ;
       // 根据email字段查询用户
       $user  = User : : getByEmail ( 'thinkphp@qq.com' ) ;
 
-***** 聚合查询
+##### 聚合查询
 
 
       同样在模型中也可以调用数据库的聚合方法查询，例如：
@@ -5920,7 +4684,7 @@ use think\facade\Config ;
 
       User : : max ( 'name' ,  false ) ;
 
-***** 数据分批处理
+##### 数据分批处理
 
 
       模型也可以支持对返回的数据分批处理，这在处理大量数据的时候非常有用，例如：
@@ -5931,7 +4695,7 @@ use think\facade\Config ;
       }
       } ) ;
 
-**** 使用游标查询
+#### 使用游标查询
      模型也可以使用数据库的 =cursor=方法进行游标查询，返回生成器对象
 
      #+begin_src php
@@ -5942,10 +4706,10 @@ use think\facade\Config ;
 
      =user=变量是一个模型对象实例。
 
-**** 最佳实践
+#### 最佳实践
      模型查询的最佳实践原则是：在模型外部使用静态方法进行查询，内部使用动态方法查询，包括使用数据库的查询构造器。
   
-*** 查询范围
+### 查询范围
     可以对模型的查询和写入操作进行封装，例如：
     #+begin_src php
 
@@ -6015,7 +4779,7 @@ use think\facade\Config ;
     使用查询范围后，只能使用 =find=或者 =select=查询。
   
 
-**** 全局查询范围
+#### 全局查询范围
 
 
      支持在模型里面设置 =globalScope=属性，定义全局的查询范围
@@ -6053,7 +4817,7 @@ use think\facade\Config ;
 
      User : : withoutGlobalScope ( [ 'status' ] ) - > select ( ) ;
 
-*** JSON 字段
+### JSON 字段
     可以更为方便的操作模型的 JSON 数据字段。
 
 
@@ -6074,7 +4838,7 @@ use think\facade\Config ;
 
     定义后，可以进行如下 JSON 数据操作。
 
-**** 写入 JSON 数据
+#### 写入 JSON 数据
 
 
      使用数组方式写入 JSON 数据：
@@ -6097,7 +4861,7 @@ use think\facade\Config ;
      $user - >info  = $info ;
      $user - > save ( ) ;
 
-**** 查询 JSON 数据
+#### 查询 JSON 数据
 
 
      $user  = User : : find ( 1 ) ;
@@ -6155,7 +4919,7 @@ use think\facade\Config ;
      echo $user - >info [ 'email' ] ;  // thinkphp@qq.com
      echo $user - >info [ 'nickname' ] ;  // 流年
 
-**** 更新 JSON 数据
+#### 更新 JSON 数据
 
 
      $user  = User : : find ( 1 ) ;
@@ -6173,16 +4937,16 @@ use think\facade\Config ;
      $user - >info  = $info ;
      $user - > save ( ) ;
 
-*** 获取器
+### 获取器
 
 
-**** 获取器
+#### 获取器
 
 
      获取器的作用是对模型实例的（原始）数据做出自动处理。一个获取器对应模型的一个特殊方法（该方法必须为 =public=类型），方法命名规范为：
 
 
-     *** get =FieldName=Attr
+     ### get =FieldName=Attr
      :PROPERTIES:
      :CUSTOM_ID: get-fieldnameattr
      :CLASS: calibre6
@@ -6248,7 +5012,7 @@ use think\facade\Config ;
      $user  = User : : find ( 1 ) ;
      echo $user - >status_text ;  // 例如输出“正常”
 
-**** 获取原始数据
+#### 获取原始数据
 
 
      如果你定义了获取器的情况下，希望获取数据表中的原始数据，可以使用：
@@ -6261,7 +5025,7 @@ use think\facade\Config ;
      // 获取全部原始数据
      dump ($user - > getData ( ) ) ;
 
-**** 动态获取器
+#### 动态获取器
 
 
      可以支持对模型使用动态获取器，无需在模型类中定义获取器方法。
@@ -6313,10 +5077,10 @@ use think\facade\Config ;
      return  strtolower ($value ) ;
      } ) ;
 
-*** 修改器
+### 修改器
 
 
-**** 修改器
+#### 修改器
 
 
      和获取器相反，修改器的主要作用是对模型设置的数据对象值进行处理。
@@ -6324,7 +5088,7 @@ use think\facade\Config ;
      修改器方法的命名规范为：
 
 
-     *** set =FieldName=Attr
+     ### set =FieldName=Attr
      :PROPERTIES:
      :CUSTOM_ID: set-fieldnameattr
      :CLASS: calibre6
@@ -6402,7 +5166,7 @@ use think\facade\Config ;
 
      上面的例子，在 =test_field=字段的修改器中修改了 =other_field=字段数据，并且没有返回值（表示不对 =test_field=字段做任何修改）。
 
-**** 批量修改
+#### 批量修改
 
 
      除了赋值的方式可以触发修改器外，还可以用下面的方法批量触发修改器：
@@ -6433,16 +5197,16 @@ use think\facade\Config ;
      $data [ 'email' ]  =  'thinkphp@qq.com' ;
      $user - > insert ($data ) ;
 
-*** 搜索器
+### 搜索器
 
 
-**** 搜索器
+#### 搜索器
 
 
      搜索器的作用是用于封装字段（或者搜索标识）的查询条件表达式，一个搜索器对应一个特殊的方法（该方法必须是 =public=类型），方法命名规范为：
 
 
-     *** search =FieldName=Attr
+     ### search =FieldName=Attr
      :PROPERTIES:
      :CUSTOM_ID: search-fieldnameattr
      :CLASS: calibre6
@@ -6487,7 +5251,7 @@ use think\facade\Config ;
 
      最终生成的 SQL 语句类似于
 
-     SELECT  * FROM `think_user` WHERE  `name` LIKE  'think%' AND `create_time` BETWEEN  '2018-08-01 00:00:00' AND  '2018-08-05 00:00:00' 
+     SELECT  # FROM `think_user` WHERE  `name` LIKE  'think%' AND `create_time` BETWEEN  '2018-08-01 00:00:00' AND  '2018-08-05 00:00:00' 
 
      可以看到查询条件中并没有 =status=字段的数据，因此可以很好的避免表单的非法查询条件传入，在这个示例中仅能使用 =name=和 =create_time=条件进行查询。
 
@@ -6530,7 +5294,7 @@ use think\facade\Config ;
 
      最终查询的 SQL 可能是
 
-     SELECT  * FROM `think_user` WHERE  `name` LIKE  'think%' AND `create_time` BETWEEN  '2018-08-01 00:00:00' AND  '2018-08-05 00:00:00' ORDER BY `status` DESC
+     SELECT  # FROM `think_user` WHERE  `name` LIKE  'think%' AND `create_time` BETWEEN  '2018-08-01 00:00:00' AND  '2018-08-05 00:00:00' ORDER BY `status` DESC
 
      你可以给搜索器定义字段别名，例如：
 
@@ -6545,10 +5309,10 @@ use think\facade\Config ;
 
      搜索器通常会和查询范围进行比较，搜索器无论定义了多少，只需要一次调用，查询范围如果需要组合查询的时候就需要多次调用。
   
-*** 数据集
+### 数据集
 
 
-**** 数据集
+#### 数据集
 
 
 
@@ -6624,7 +5388,7 @@ use think\facade\Config ;
             // 计算交集
             dump ($list1 - > intersect ($list2 ) ) ;
 
-**** 批量删除和更新数据
+#### 批量删除和更新数据
 
 
      支持对数据集的数据进行批量删除和更新操作，例如：
@@ -6635,7 +5399,7 @@ use think\facade\Config ;
      $list  = User : : where ( 'status' ,  1 ) - > select ( ) ;
      $list - > delete ( ) ;
 
-*** 自动时间戳
+### 自动时间戳
 
 
     系统支持自动写入创建和更新的时间戳字段（默认关闭），有两种方式配置支持。
@@ -6751,7 +5515,7 @@ use think\facade\Config ;
     $user - >read  + = 1 ;
     $user - > isAutoWriteTimestamp ( false ) - > save ( ) ;
 
-*** 只读字段
+### 只读字段
 
 
     只读字段用来保护某些特殊的字段值不被更改，这个字段的值一旦写入，就无法更改。 要使用只读字段的功能，我们只需要在模型中定义 =readonly=属性：
@@ -6802,10 +5566,10 @@ use think\facade\Config ;
     // 保存更改后的用户数据
     $user - > where ( 'id' ,  5 ) - > update ($data ) ;
 
-*** 软删除
+### 软删除
 
 
-**** 软删除
+#### 软删除
 
 
      在实际项目中，对数据频繁使用删除操作会导致性能问题，软删除的作用就是把数据加上删除标记，而不是真正的删除，同时也便于需要的时候进行数据的恢复。
@@ -6880,7 +5644,7 @@ use think\facade\Config ;
      $user  =  new  User ;
      $user - > where ( 'id' , 1 ) - > delete ( ) ;
 
-*** 类型转换
+### 类型转换
     支持给字段设置类型自动转换，会在写入和读取的时候自动进行类型转换处理，例如：
 
     < ?php
@@ -6913,42 +5677,42 @@ use think\facade\Config ;
 
     数据库查询默认取出来的数据都是字符串类型，如果需要转换为其他的类型，需要设置，支持的类型包括如下类型：
 
-****  =integer=
+####  =integer=
 
 
      设置为 integer（整型）后，该字段写入和输出的时候都会自动转换为整型。
 
-****  =float=
+####  =float=
 
 
      该字段的值写入和输出的时候自动转换为浮点型。
 
-****  =boolean=
+####  =boolean=
 
 
      该字段的值写入和输出的时候自动转换为布尔型。
 
-****  =array=
+####  =array=
 
 
      如果设置为强制转换为 =array=类型，系统会自动把数组编码为 json 格式字符串写入数据库，取出来的时候会自动解码。
 
-****  =object=
+####  =object=
 
 
      该字段的值在写入的时候会自动编码为 json 字符串，输出的时候会自动转换为 =stdclass=对象。
 
-****  =serialize=
+####  =serialize=
 
 
      指定为序列化类型的话，数据会自动序列化写入，并且在读取的时候自动反序列化。
 
-****  =json=
+####  =json=
 
 
      指定为 =json=类型的话，数据会自动 =json_encode=写入，并且在读取的时候自动 =json_decode=处理。
 
-****  =timestamp=
+####  =timestamp=
 
 
      指定为时间戳字段类型的话，该字段的值在写入时候会自动使用 =strtotime=生成对应的时间戳，输出的时候会自动转换为 =dateFormat=属性定义的时间字符串格式，默认的格式为 =Y-m-d H:i:s=，如果希望改变其他格式，可以定义如下：
@@ -6989,13 +5753,13 @@ use think\facade\Config ;
      $user  = User : : find ( 1 ) ;
      echo $user - >birthday ;  // 2015/5/1
 
-****  =datetime=
+####  =datetime=
 
 
      和 =timestamp=类似，区别在于写入和读取数据的时候都会自动处理成时间字符串 =Y-m-d H:i:s=的格式。
 
-*** 模型输出
-**** 模型输出
+### 模型输出
+#### 模型输出
      模型数据的模板输出可以直接把模型对象实例赋值给模板变量，在模板中可以直接输出，例如：
 
      < ?php
@@ -7024,7 +5788,7 @@ use think\facade\Config ;
      模板中的模型数据输出一样会调用获取器。
   
 
-**** 数组转换
+#### 数组转换
 
 
      可以使用 =toArray=方法将当前的模型实例输出为数组，例如：
@@ -7058,7 +5822,7 @@ use think\facade\Config ;
 
      注意，必须要首先调用一次 Db 类的方法后才能调用 =hidden=/ =visible=/ =append=方法。
 
-***** 追加关联属性
+##### 追加关联属性
 
 
       支持追加关联模型的属性到当前模型，例如：
@@ -7078,7 +5842,7 @@ use think\facade\Config ;
 
       =hidden=、 =visible=和 =append=方法同样支持数据集对象。
 
-**** JSON 序列化
+#### JSON 序列化
 
 
      可以调用模型的 =toJson=方法进行 =JSON=序列化， =toJson=方法的使用和 =toArray=一样。
@@ -7115,10 +5879,10 @@ use think\facade\Config ;
 
      输出的结果和上面是一样的。
 
-*** 模型事件
+### 模型事件
 
 
-**** 模型事件
+#### 模型事件
 
 
      模型事件是指在进行模型的查询和写入操作的时候触发的操作行为。
@@ -7149,7 +5913,7 @@ use think\facade\Config ;
      如果 =before_write=、 =before_insert=、 =before_update= 、 =before_delete=事件方法中返回 =false=或者抛出 =think\exception\ModelEventException=异常的话，则不会继续执行后续的操作。
  
 
-**** 模型事件定义
+#### 模型事件定义
 
 
      最简单的方式是在模型类里面定义静态方法来定义模型的相关事件响应。
@@ -7177,10 +5941,10 @@ use think\facade\Config ;
 
      参数是当前的模型对象实例，支持使用依赖注入传入更多的参数。
 
-*** 模型关联
+### 模型关联
 
 
-**** 模型关联
+#### 模型关联
 
 
      通过模型关联操作把数据表的关联关系对象化，解决了大部分常用的关联场景，封装的关联操作比起常规的数据库联表操作更加智能和高效，并且直观。
@@ -7198,7 +5962,7 @@ use think\facade\Config ;
      // 获取用户的档案中的手机资料
      $user - >profile - >mobile ;
 
-     为了更方便和灵活的定义模型的关联关系，框架选择了方法定义而不是属性定义的方式，每个 *关联属性*其实是对应了一个模型的（关联）方法，这个关联属性和模型的数据一样是动态的，并非模型类的实体属性。
+     为了更方便和灵活的定义模型的关联关系，框架选择了方法定义而不是属性定义的方式，每个 #关联属性#其实是对应了一个模型的（关联）方法，这个关联属性和模型的数据一样是动态的，并非模型类的实体属性。
 
      例如上面的关联属性就是在 =User=模型类中定义了一个 =profile=方法（ =mobile=属性是 =Profile=模型的属性）：
 
@@ -7344,13 +6108,13 @@ use think\facade\Config ;
      具体不同的关联关系的详细使用，请继续参考后面的内容。
  
 
-**** 一对一关联
+#### 一对一关联
 
 
-***** 一对一关联
+##### 一对一关联
 
 
-****** 关联定义
+###### 关联定义
 
 
        定义一对一关联，例如，一个用户都有一个个人资料，我们定义 =User=模型如下：
@@ -7371,7 +6135,7 @@ use think\facade\Config ;
        =hasOne=方法的参数包括：
 
  
-       *** hasOne('关联模型类名', '外键', '主键');
+       ### hasOne('关联模型类名', '外键', '主键');
        :PROPERTIES:
        :CUSTOM_ID: hasone 关联模型类名-外键-主键
        :CLASS: calibre6
@@ -7380,9 +6144,9 @@ use think\facade\Config ;
 
        除了关联模型外，其它参数都是可选。
 
-       -  *关联模型*（必须）：关联模型类名
-       -  *外键*：默认的外键规则是当前模型名（不含命名空间，下同）+ =_id= ，例如 =user_id=
-       -  *主键*：当前模型主键，默认会自动获取也可以指定传入
+       -  #关联模型#（必须）：关联模型类名
+       -  #外键#：默认的外键规则是当前模型名（不含命名空间，下同）+ =_id= ，例如 =user_id=
+       -  #主键#：当前模型主键，默认会自动获取也可以指定传入
 
        一对一关联定义的时候还支持额外的方法，包括：
 
@@ -7395,7 +6159,7 @@ use think\facade\Config ;
        如果使用了 JOIN 方式的关联查询方式，你可以在额外的查询条件中使用关联对象名（不含命名空间）作为表的别名。
  
 
-****** 关联查询
+###### 关联查询
 
 
        定义好关联之后，就可以使用下面的方法获取关联数据：
@@ -7423,7 +6187,7 @@ use think\facade\Config ;
        有一点需要注意的是，关联方法的命名规范是驼峰法，而关联属性则一般是小写+下划线的方式，系统在获取的时候会自动转换对应，读取 =user_profile=关联属性则对应的关联方法应该是 =userProfile=。
  
 
-****** 根据关联数据查询
+###### 根据关联数据查询
 
 
        可以根据关联条件来查询当前模型对象数据，例如：
@@ -7437,7 +6201,7 @@ use think\facade\Config ;
        $query - > where ( 'nickname' ,  'like' ,  'think%' ) ;
        } ) - > select ( ) ;
  
-****** 预载入查询
+###### 预载入查询
 
 
        可以使用预载入查询解决典型的 =N+1=查询问题，使用：
@@ -7496,7 +6260,7 @@ use think\facade\Config ;
 
        #+end_src
  
-****** 关联保存
+###### 关联保存
        $user  = User : : find ( 1 ) ;
        // 如果还没有关联数据 则进行新增
        $user - > profile ( ) - > save ( [ 'email'  = >  'thinkphp' ] ) ;
@@ -7513,7 +6277,7 @@ use think\facade\Config ;
          $user - >profile - > save ( [ 'email'  = >  'thinkphp' ] ) ;
        #+end_src
  
-****** 定义相对关联
+###### 定义相对关联
 
 
        我们可以在 =Profile=模型中定义一个相对的关联关系，例如：
@@ -7534,7 +6298,7 @@ use think\facade\Config ;
        =belongsTo=的参数包括：
 
  
-       *** belongsTo('关联模型','外键', '关联主键');
+       ### belongsTo('关联模型','外键', '关联主键');
        :PROPERTIES:
        :CUSTOM_ID: belongsto 关联模型外键-关联主键
        :CLASS: calibre6
@@ -7543,9 +6307,9 @@ use think\facade\Config ;
 
        除了关联模型外，其它参数都是可选。
 
-       -  *关联模型*（必须）：关联模型类名
-       -  *外键*：当前模型外键，默认的外键名规则是关联模型名+ =_id=
-       -  *关联主键*：关联模型主键，一般会自动获取也可以指定传入
+       -  #关联模型#（必须）：关联模型类名
+       -  #外键#：当前模型外键，默认的外键名规则是关联模型名+ =_id=
+       -  #关联主键#：关联模型主键，一般会自动获取也可以指定传入
 
        默认的关联外键是 =user_id=，如果不是，需要在第二个参数定义
 
@@ -7568,7 +6332,7 @@ use think\facade\Config ;
        // 输出User关联模型的属性
        echo $profile - >user - >account ;
  
-***** 绑定属性到父模型
+##### 绑定属性到父模型
 
 
       可以在定义关联的时候使用 =bind=方法绑定属性到父模型，例如：
@@ -7634,7 +6398,7 @@ use think\facade\Config ;
       echo $user - >email ;
       echo $user - >truename ;
  
-***** 关联自动写入
+##### 关联自动写入
 
 
       我们可以使用 =together=方法更方便的进行关联自动写入操作。
@@ -7674,25 +6438,25 @@ use think\facade\Config ;
       // 删除当前及关联模型
       $blog - > together ( [ 'content' ] ) - > delete ( ) ;
  
-**** 一对多关联
+#### 一对多关联
 
 
-***** 一对多关联
+##### 一对多关联
 
 
-****** 关联定义
+###### 关联定义
 
 
        一对多关联的情况也比较常见，使用 =hasMany=方法定义，参数包括：
 
  
-       *** hasMany('关联模型','外键','主键');
+       ### hasMany('关联模型','外键','主键');
 
        除了关联模型外，其它参数都是可选。
 
-       -  *关联模型*（必须）：关联模型类名
-       -  *外键*：关联模型外键，默认的外键名规则是当前模型名+ =_id=
-       -  *主键*：当前模型主键，一般会自动获取也可以指定传入
+       -  #关联模型#（必须）：关联模型类名
+       -  #外键#：关联模型外键，默认的外键名规则是当前模型名+ =_id=
+       -  #主键#：当前模型主键，一般会自动获取也可以指定传入
 
        例如一篇文章可以有多个评论
 
@@ -7724,7 +6488,7 @@ use think\facade\Config ;
        }
        }
  
-****** 关联查询
+###### 关联查询
 
 
        我们可以通过下面的方式获取关联数据
@@ -7735,7 +6499,7 @@ use think\facade\Config ;
        // 也可以进行条件搜索
        dump ($article - > comments ( ) - > where ( 'status' , 1 ) - > select ( ) ) ;
  
-****** 根据关联条件查询
+###### 根据关联条件查询
 
 
        可以根据关联条件来查询当前模型对象数据，例如：
@@ -7750,7 +6514,7 @@ use think\facade\Config ;
        $where  = Comment : : where ( 'status' , 1 ) - > where ( 'content' ,  'like' ,  '%think%' ) ;
        $list  = Article : : hasWhere ( 'comments' , $where ) - > select ( ) ;
  
-****** 关联新增
+###### 关联新增
 
 
        $article  = Article : : find ( 1 ) ;
@@ -7762,7 +6526,7 @@ use think\facade\Config ;
        [ 'content' = > 'onethink' ] ,
        ] ) ;
  
-****** 定义相对的关联
+###### 定义相对的关联
 
 
        要在 Comment 模型定义相对应的关联，可使用 =belongsTo= 方法：
@@ -7780,7 +6544,7 @@ use think\facade\Config ;
        }
        }
  
-****** 关联删除
+###### 关联删除
 
 
        在删除文章的同时删除下面的评论
@@ -7788,7 +6552,7 @@ use think\facade\Config ;
        $article  = Article : : with ( 'comments' ) - > find ( 1 ) ;
        $article - > together ( [ 'comments' ] ) - > delete ( ) ;
  
-**** 远程一对多
+#### 远程一对多
 
 
      远程一对多关联用于定义有跨表的一对多关系，例如：
@@ -7797,7 +6561,7 @@ use think\facade\Config ;
      -  每个用户有多个话题
      -  城市和话题之间并无关联
 
-***** 关联定义
+##### 关联定义
 
 
       就可以直接通过远程一对多关联获取每个城市的多个话题， =City=模型定义如下：
@@ -7822,17 +6586,17 @@ use think\facade\Config ;
       =hasManyThrough=方法的参数如下：
 
  
-      *** hasManyThrough('关联模型', '中间模型', '外键', '中间表关联键','当前模型主键','中间模型主键');
+      ### hasManyThrough('关联模型', '中间模型', '外键', '中间表关联键','当前模型主键','中间模型主键');
 
 
-      -  *关联模型*（必须）：关联模型类名
-      -  *中间模型*（必须）：中间模型类名
-      -  *外键*：默认的外键名规则是当前模型名+ =_id=
-      -  *中间表关联键*：默认的中间表关联键名的规则是中间模型名+ =_id=
-      -  *当前模型主键*：一般会自动获取也可以指定传入
-      -  *中间模型主键*：一般会自动获取也可以指定传入
+      -  #关联模型#（必须）：关联模型类名
+      -  #中间模型#（必须）：中间模型类名
+      -  #外键#：默认的外键名规则是当前模型名+ =_id=
+      -  #中间表关联键#：默认的中间表关联键名的规则是中间模型名+ =_id=
+      -  #当前模型主键#：一般会自动获取也可以指定传入
+      -  #中间模型主键#：一般会自动获取也可以指定传入
 
-***** 关联查询
+##### 关联查询
 
 
       我们可以通过下面的方式获取关联数据
@@ -7847,7 +6611,7 @@ use think\facade\Config ;
       条件搜索的时候，需要带上模型名作为前缀
  
 
-****** 根据关联条件查询
+###### 根据关联条件查询
 
 
        如果需要根据关联条件来查询当前模型，可以使用
@@ -7859,7 +6623,7 @@ use think\facade\Config ;
        $where  = Topic : : where ( 'status' ,  1 ) - > where ( 'title' ,  'like' ,  '%think%' ) ;
        $list  = City : : hasWhere ( 'topics' ,$where ) - > select ( ) ;
  
-**** 远程一对一
+#### 远程一对一
 
 
      远程一对一关联用于定义有跨表的一对一关系，例如：
@@ -7868,7 +6632,7 @@ use think\facade\Config ;
      -  每个档案有一个档案卡
      -  用户和档案卡之间并无关联
 
-***** 关联定义
+##### 关联定义
 
 
       就可以直接通过远程一对一关联获取每个用户的档案卡， =User=模型定义如下：
@@ -7891,16 +6655,16 @@ use think\facade\Config ;
       =hasOneThrough=方法的参数如下：
 
  
-      *** hasOneThrough('关联模型', '中间模型', '外键', '中间表关联键','当前模型主键','中间模型主键');
+      ### hasOneThrough('关联模型', '中间模型', '外键', '中间表关联键','当前模型主键','中间模型主键');
      
-      -  *关联模型*（必须）：关联模型类名
-      -  *中间模型*（必须）：中间模型类名
-      -  *外键*：默认的外键名规则是当前模型名+ =_id=
-      -  *中间表关联键*：默认的中间表关联键名的规则是中间模型名+ =_id=
-      -  *当前模型主键*：一般会自动获取也可以指定传入
-      -  *中间模型主键*：一般会自动获取也可以指定传入
+      -  #关联模型#（必须）：关联模型类名
+      -  #中间模型#（必须）：中间模型类名
+      -  #外键#：默认的外键名规则是当前模型名+ =_id=
+      -  #中间表关联键#：默认的中间表关联键名的规则是中间模型名+ =_id=
+      -  #当前模型主键#：一般会自动获取也可以指定传入
+      -  #中间模型主键#：一般会自动获取也可以指定传入
 
-***** 关联查询
+##### 关联查询
 
 
       我们可以通过下面的方式获取关联数据
@@ -7909,13 +6673,13 @@ use think\facade\Config ;
       // 获取用户的档案卡
       dump ($user - >card ) ;
  
-**** 多对多关联
+#### 多对多关联
 
 
-***** 多对多关联
+##### 多对多关联
 
 
-***** 关联定义
+##### 关联定义
 
 
       例如，我们的用户和角色就是一种多对多的关系，我们在 =User=模型定义如下：
@@ -7936,13 +6700,13 @@ use think\facade\Config ;
       =belongsToMany=方法的参数如下：
 
  
-      *** belongsToMany('关联模型','中间表','外键','关联键');
+      ### belongsToMany('关联模型','中间表','外键','关联键');
 
 
-      -  *关联模型*（必须）：关联模型类名
-      -  *中间表*：默认规则是当前模型名+ =_=+关联模型名 （可以指定模型名）
-      -  *外键*：中间表的当前模型外键，默认的外键名规则是关联模型名+ =_id=
-      -  *关联键*：中间表的当前模型关联键名，默认规则是当前模型名+ =_id=
+      -  #关联模型#（必须）：关联模型类名
+      -  #中间表#：默认规则是当前模型名+ =_=+关联模型名 （可以指定模型名）
+      -  #外键#：中间表的当前模型外键，默认的外键名规则是关联模型名+ =_id=
+      -  #关联键#：中间表的当前模型关联键名，默认规则是当前模型名+ =_id=
 
       中间表名无需添加表前缀，并支持定义中间表模型，例如：
 
@@ -7965,7 +6729,7 @@ use think\facade\Config ;
  
       中间表模型的基类 =Pivot=默认关闭了时间戳自动写入，上面的中间表模型则开启了时间戳字段自动写入。
 
-****** 关联查询
+###### 关联查询
 
 
        我们可以通过下面的方式获取关联数据
@@ -7980,7 +6744,7 @@ use think\facade\Config ;
        dump ($role - >pivot ) ;
        }
  
-****** 关联新增
+###### 关联新增
 
 
        $user  = User : : find ( 1 ) ;
@@ -8017,7 +6781,7 @@ use think\facade\Config ;
        =attach=方法的返回值是一个 =Pivot=对象实例，如果是附加多个关联数据，则返回 =Pivot=对象实例的数组。
  
 
-****** 定义相对的关联
+###### 定义相对的关联
 
 
        我们可以在 =Role=模型中定义一个相对的关联关系，例如：
@@ -8035,10 +6799,10 @@ use think\facade\Config ;
        }
        }
  
-**** 多态关联
+#### 多态关联
 
 
-***** 多态一对多关联
+##### 多态一对多关联
 
 
       多态关联允许一个模型在单个关联定义方法中从属一个以上其它模型，例如用户可以评论书和文章，但评论表通常都是同一个数据表的设计。多态一对多关联关系，就是为了满足类似的使用场景而设计。
@@ -8062,7 +6826,7 @@ use think\facade\Config ;
  
       有两个需要注意的字段是 =comment= 表中的 =commentable_id= 和 =commentable_type=我们称之为多态字段。其中， =commentable_id= 用于存放书或者文章的 id（主键） ，而 =commentable_type= 用于存放所属模型的类型。通常的设计是多态字段有一个公共的前缀（例如这里用的 =commentable=），当然，也支持设置完全不同的字段名（例如使用 =data_id=和 =type=）。
 
-****** 多态关联定义
+###### 多态关联定义
 
 
        接着，让我们来查看创建这种关联所需的模型定义：
@@ -8076,9 +6840,9 @@ use think\facade\Config ;
 
        class  Article extends  Model
        {
-       /**
-               * 获取所有针对文章的评论。
-                 */
+       /##
+               # 获取所有针对文章的评论。
+                 #/
                  public  function  comments ( )
                  {
                  return $this - > morphMany (Comment : :class ,  'commentable' ) ;
@@ -8088,14 +6852,14 @@ use think\facade\Config ;
                =morphMany=方法的参数如下：
 
  
-               *** morphMany('关联模型','多态字段','多态类型');
+               ### morphMany('关联模型','多态字段','多态类型');
 
 
-               *关联模型*（必须）：关联的模型类名
+               #关联模型#（必须）：关联的模型类名
 
-               *多态字段*（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀。
+               #多态字段#（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀。
 
-               *多态类型*（可选）：当前模型对应的多态类型，默认为当前模型名，可以使用模型名（如 =Article=）或者完整的命名空间模型名（如 =app\index\model\Article=）。
+               #多态类型#（可选）：当前模型对应的多态类型，默认为当前模型名，可以使用模型名（如 =Article=）或者完整的命名空间模型名（如 =app\index\model\Article=）。
 
                书籍模型：
 
@@ -8106,9 +6870,9 @@ use think\facade\Config ;
 
                class  Book extends  Model
                {
-               /**
-               * 获取所有针对书籍的评论。
-               */
+               /##
+               # 获取所有针对书籍的评论。
+               #/
                public  function  comments ( )
                {
                return $this - > morphMany (Comment : :class ,  'commentable' ) ;
@@ -8126,9 +6890,9 @@ use think\facade\Config ;
 
                class  Comment extends  Model
                {
-               /**
-               * 获取评论对应的多态模型。
-               */
+               /##
+               # 获取评论对应的多态模型。
+               #/
                public  function  commentable ( )
                {
                return $this - > morphTo ( ) ;
@@ -8138,13 +6902,13 @@ use think\facade\Config ;
                =morphTo=方法的参数如下：
 
  
-               *** morphTo('多态字段',['多态类型别名']);
+               ### morphTo('多态字段',['多态类型别名']);
 
 
-               *多态字段*（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀\\
-               *多态类型别名*（可选）：数组方式定义
+               #多态字段#（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀\\
+               #多态类型别名#（可选）：数组方式定义
 
-****** 获取多态关联
+###### 获取多态关联
 
 
        一旦你的数据表及模型被定义，则可以通过模型来访问关联。例如，若要访问某篇文章的所有评论，则可以简单的使用 =comments= 动态属性：
@@ -8162,7 +6926,7 @@ use think\facade\Config ;
  
        =Comment= 模型的 =commentable= 关联会返回 =Article= 或 =Book= 模型的对象实例，这取决于评论所属模型的类型。
 
-****** 自定义多态关联的类型字段
+###### 自定义多态关联的类型字段
 
 
        默认情况下，ThinkPHP 会使用模型名作为多态表的类型区分，例如， =Comment=属于 =Article= 或者 =Book= , =commentable_type= 的默认值可以分别是 =Article= 或者 =Book= 。我们可以通过定义多态的时候传入参数来对数据库进行解耦。
@@ -8175,7 +6939,7 @@ use think\facade\Config ;
        ] ) ;
        }
  
-***** 多态一对一关联
+##### 多态一对一关联
 
 
       多态一对一相比多态一对多关联的区别是动态的一对一关联，举个例子说有一个个人和团队表，而无论个人还是团队都有一个头像需要保存但都会对应同一个头像表
@@ -8203,9 +6967,9 @@ use think\facade\Config ;
 
       class  Member extends  Model
       {
-      /**
-             * 获取用户的头像
-               */
+      /##
+             # 获取用户的头像
+               #/
                public  function  avatar ( )
                {
                return $this - > morphOne (Avatar : :class ,  'imageable' ) ;
@@ -8221,9 +6985,9 @@ use think\facade\Config ;
 
              class  Team extends  Model
              {
-             /**
-             * 获取团队的头像
-             */
+             /##
+             # 获取团队的头像
+             #/
              public  function  avatar ( )
              {
              return $this - > morphOne (Avatar : :class ,  'imageable' ) ;
@@ -8233,13 +6997,13 @@ use think\facade\Config ;
              =morphOne=方法的参数如下：
 
  
-             *** morphOne('关联模型','多态字段','多态类型');
+             ### morphOne('关联模型','多态字段','多态类型');
 
-             *关联模型*（必须）：关联的模型类名。
+             #关联模型#（必须）：关联的模型类名。
 
-             *多态字段*（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀。
+             #多态字段#（可选）：支持两种方式定义 如果是字符串表示多态字段的前缀，多态字段使用 =多态前缀_type=和 =多态前缀_id=，如果是数组，表示使用['多态类型字段名','多态 ID 字段名']，默认为当前的关联方法名作为字段前缀。
 
-             *多态类型*（可选）：当前模型对应的多态类型，默认为当前模型名，可以使用模型名（如 =Member=）或者完整的命名空间模型名（如 =app\index\model\Member=）。
+             #多态类型#（可选）：当前模型对应的多态类型，默认为当前模型名，可以使用模型名（如 =Member=）或者完整的命名空间模型名（如 =app\index\model\Member=）。
 
              下面是头像模型的关联定义：
 
@@ -8250,9 +7014,9 @@ use think\facade\Config ;
 
              class  Avatar extends  Model
              {
-             /**
-             * 获取头像对应的多态模型。
-             */
+             /##
+             # 获取头像对应的多态模型。
+             #/
              public  function  imageable ( )
              {
              return $this - > morphTo ( ) ;
@@ -8261,10 +7025,10 @@ use think\facade\Config ;
  
              理解了多态一对多关联后，多态一对一关联其实就很容易理解了，区别就是当前模型和动态关联的模型之间的关联属于一对一关系。
 
-**** 关联预载入
+#### 关联预载入
 
 
-***** 关联预载入
+##### 关联预载入
 
 
       关联查询的预查询载入功能，主要解决了 =N+1=次查询的问题，例如下面的查询如果有 3 个记录，会执行 4 次查询：
@@ -8356,7 +7120,7 @@ use think\facade\Config ;
       $query - > withField ( 'truename,email' ) ;
       } ] ) - > select ( [ 1 , 2 , 3 ] ) ;
  
-***** 延迟预载入
+##### 延迟预载入
       有些情况下，需要根据查询出来的数据来决定是否需要使用关联预载入，当然关联查询本身就能解决这个问题，因为关联查询是惰性的，不过用预载入的理由也很明显，性能具有优势。
 
       延迟预载入仅针对多个数据的查询，因为单个数据的查询用延迟预载入和关联惰性查询没有任何区别，所以不需要使用延迟预载入。
@@ -8374,7 +7138,7 @@ use think\facade\Config ;
         }
       #+end_src
  
-***** 关联预载入缓存
+##### 关联预载入缓存
       关联预载入可以支持查询缓存，例如：
 #+begin_src php
       $list  = User : : with ( [ 'profile' ] ) - > withCache ( 30 ) - > select ( [ 1 , 2 , 3 ] ) ;
@@ -8397,10 +7161,10 @@ use think\facade\Config ;
       $list - > load ( [ 'cards' ] ,  30 ) ;
       #+end_src
  
-**** 关联统计
+#### 关联统计
 
 
-***** 关联统计
+##### 关联统计
 
 
       有些时候，并不需要获取关联数据，而只是希望获取关联数据的统计，这个时候可以使用 =withCount=方法进行指定关联的统计。
@@ -8499,12 +7263,12 @@ use think\facade\Config ;
         echo $user - >card_total ;
         }
  
-**** 关联输出
+#### 关联输出
 
 
      关联数据的输出也可以使用 =hidden=、 =visible=和 =append=方法进行控制，下面举例说明。
 
-***** 隐藏关联属性
+##### 隐藏关联属性
 
 
       如果要隐藏关联模型的属性，可以使用
@@ -8517,7 +7281,7 @@ use think\facade\Config ;
       $list  = User : : with ( 'profile' ) - > select ( ) ;
       $list - > hidden ( [ 'profile'  = >  [ 'address' , 'phone' , 'email' ] ] ) - > toArray ( ) ;
  
-***** 显示关联属性
+##### 显示关联属性
 
 
       同样，可以使用 visible 方法来显示关联属性：
@@ -8525,7 +7289,7 @@ use think\facade\Config ;
       $list  = User : : with ( 'profile' ) - > select ( ) ;
       $list - > visible ( [ 'profile'  = >  [ 'address' , 'phone' , 'email' ] ] ) - > toArray ( ) ;
  
-***** 追加关联属性
+##### 追加关联属性
 
 
       追加一个 =Profile=模型的额外属性（非实际数据，可能是定义了获取器方法）
@@ -8538,15 +7302,15 @@ use think\facade\Config ;
       $list  = User : : with ( 'profile' ) - > select ( ) ;
       $list - > append ( [ 'Book.name' ] ) - > toArray ( ) ;
  
-** 视图 
-*** 视图
+## 视图 
+### 视图
     如果你需要使用 =think-template=模板引擎，只需要安装 =think-view= 模板引擎驱动。
     composer require topthink /think -view
     
     视图相关的配置在配置目录的 =view.php= 配置文件中进行定义。 通常可以直接使用 =think\facade\View= 来操作视图。
 
-*** 模板变量
-**** 模板赋值
+### 模板变量
+#### 模板赋值
      模板中的变量（除了一些系统变量外）必须先进行模板赋值后才能使用，可以使用 =assign=方法进行全局模板变量赋值。
 
     #+begin_src php
@@ -8569,7 +7333,7 @@ use think\facade\Config ;
        ] ) ;
      #+end_src
      
-***** 助手函数
+##### 助手函数
       如果使用 =view= 助手函数渲染输出的话，可以使用下面的方法进行模板变量赋值：
 
       #+begin_src php
@@ -8579,7 +7343,7 @@ use think\facade\Config ;
         ] ) ;
       #+end_src
 
-*** 视图过滤
+### 视图过滤
     可以对视图的渲染输出进行过滤
     #+begin_src php
       // 使用视图输出过滤
@@ -8598,10 +7362,10 @@ use think\facade\Config ;
       } ) ;
    #+end_src
 
-*** 模板渲染
-**** 模板路径
+### 模板渲染
+#### 模板路径
      默认情况下，框架会自动定位你的模板文件路径，优先定位应用目录下的 =view= 目录，这种方式的视图目录下就是应用的控制器目录。
-**** 模板渲染
+#### 模板渲染
      模板渲染的最典型用法是直接使用 =fetch= 方法，不带任何参数：
 
      #+begin_src php
@@ -8620,7 +7384,7 @@ use think\facade\Config ;
      return View : : fetch ( '../template/public/menu.html' ) ;
      这种方式需要带模板路径和后缀指定一个完整的模板文件位置，这里的 =../template/public= 目录是相对于当前项目入口文件位置
 
-**** 助手函数
+#### 助手函数
      可以使用系统提供的助手函数 =view= ，可以完成相同的功能：
 
      #+begin_src php
@@ -8628,7 +7392,7 @@ use think\facade\Config ;
      return  view ( 'hello' ,  [ 'name'  = >  'thinkphp' ] ) ;
     #+end_src
 
-**** 渲染内容
+#### 渲染内容
      如果希望直接解析内容而不通过模板文件的话，可以使用 =display= 方法：
      #+begin_src php
        // 直接渲染内容
@@ -8636,16 +7400,16 @@ use think\facade\Config ;
        return View::display ($content ,  [ 'name'  =>  'thinkphp' ,  'email'  =>  'thinkphp@qq.com' ] ) ;
      #+end_src
 
-**** 模板函数使用三元运算符
+#### 模板函数使用三元运算符
      {:date('Y-m-d H:i:s',$abc ? $abc : time())}
 
-**** 循环
+#### 循环
      | 标签名  | 作用               | 包含属性                      |
      | volist  | 循环数组数据输出   | name,id,offset,length,key,mod |
      | foreach | 数组或对象遍历输出 | name,item,key                 |
 
-*** 引入公共部分head和foot(多种方法)
-**** include 
+### 引入公共部分head和foot(多种方法)
+#### include 
      首先在view下面新建一个文件夹(common)，用来存放公共模板，然后使用include在需要的地方引用该板块：
      
      {include file="common/head" /}
@@ -8664,11 +7428,11 @@ use think\facade\Config ;
            <meta name="keywords" content="[keywords]" />
          </head>
      #+end_src
-**** 模板布局
+#### 模板布局
 
-** 错误和日志 
-*** 异常处理
-**** 异常处理接管
+## 错误和日志 
+### 异常处理
+#### 异常处理接管
      框架支持异常处理由开发者自定义类进行接管，需要在 =app=目录下面的 =provider.php=文件中绑定异常处理类，例如：
 
      #+begin_src php
@@ -8715,7 +7479,7 @@ use think\facade\Config ;
  
      需要注意的是，如果自定义异常处理类没有再次调用系统 =render=方法的话，配置 =http_exception_template=就不再生效，具体可以参考 =Handle=类内实现的功能。
  
-**** 手动抛出和捕获异常
+#### 手动抛出和捕获异常
      ThinkPHP 大部分情况异常都是自动抛出和捕获的，你也可以手动使用 =throw=来抛出一个异常，例如：
 
      // 使用think自带异常类抛出异常
@@ -8736,7 +7500,7 @@ use think\facade\Config ;
  
      支持使用 =try-catch-finally=结构捕获异常。
  
-**** HTTP 异常
+#### HTTP 异常
      可以使用 =\think\exception\HttpException=类来抛出异常\\
      框架提供了一个 =abort=助手函数快速抛出一个 HTTP 异常：
 
@@ -8771,7 +7535,7 @@ use think\facade\Config ;
 
      如果你的应用是 API 接口，那么请注意在客户端首先判断 HTTP 状态码是否正常，然后再进行数据处理，当遇到错误的状态码的话，应该根据状态码自行给出错误提示，或者采用下面的方法进行自定义异常处理。
 
-     *部署模式*下一旦抛出了 =HttpException=异常，可以定义单独的异常页面模板，只需要在 =app.php=配置文件中增加：
+     #部署模式#下一旦抛出了 =HttpException=异常，可以定义单独的异常页面模板，只需要在 =app.php=配置文件中增加：
 
      'http_exception_template'     = >   [
      // 定义404错误的模板文件地址
@@ -8785,12 +7549,12 @@ use think\facade\Config ;
  
      =http_exception_template=配置仅在部署模式下面生效。
  
-*** 日志处理
+### 日志处理
     日志记录和写入由 =\think\Log=类完成，通常我们使用 =think\facade\Log=类进行静态调用。
 
     由于日志记录了所有的运行错误，因此养成经常查看日志文件的习惯，可以避免和及早发现很多的错误隐患。
  
-**** 日志配置
+#### 日志配置
      日志的配置文件是配置文件目录下的 =log.php=文件，系统在进行日志写入之前会读取该配置文件进行初始化。
 
      新版的日志配置支持多通道，默认配置如下：
@@ -8855,8 +7619,8 @@ use think\facade\Config ;
  
      为了避免同一个目录下面的日志文件过多的性能问题，日志文件会自动生成日期子目录。
  
-**** 日志写入
-***** 手动记录
+#### 日志写入
+##### 手动记录
       一般情况下，系统的错误日志记录是自动的，如果需要记录应用的业务日志或者额外的日志信息，就需要手动记录日志信息，Log 类主要提供了 2 个方法用于记录日志。
 
       | 方法       | 描述                   |
@@ -8901,13 +7665,13 @@ use think\facade\Config ;
       为避免内存溢出，在命令行下面执行的话日志信息会自动实时写入。
  
 
-***** 关闭日志
+##### 关闭日志
       要关闭日志功能，可以调用 =Log::close()=方法关闭本次请求的日志写入。
 
       // 关闭当前日志写入
       Log : : close ( ) ;
 
-***** 日志级别
+##### 日志级别
       ThinkPHP 对系统的日志按照级别来分类记录，按照 =PSR-3=日志规范，日志的级别从低到高依次为： =debug=, =info=, =notice=, =warning=, =error=, =critical=, =alert=, =emergency=，ThinkPHP 额外增加了一个 =sql=日志级别仅用于记录 =SQL=日志（并且仅当开启数据库调试模式有效）。
 
  
@@ -8940,14 +7704,14 @@ use think\facade\Config ;
  
       默认情况下是不会记录 HTTP 异常日志（避免受一些攻击的影响写入大量日志），除非你接管了系统的异常处理，重写了 =report=方法。
     
-***** 上下文信息
+##### 上下文信息
       日志可以传入上下文信息（数组），并且被替换到日志内容中，例如：
 
       Log : : info ( '日志信息{user}' ,  [ 'user'  = >  '流年' ] ) ;
 
       实际写入日志的时候， ={user}=会被替换为流年。
 
-***** 独立日志
+##### 独立日志
       为了便于分析， =File=类型的日志还支持设置某些级别的日志信息单独文件记录，例如：
 
       return  [
@@ -8967,7 +7731,7 @@ use think\facade\Config ;
       如果 =apart_level=设置为 =true=，则表示所有的日志类型都会独立记录。
  
 
-***** 单文件日志
+##### 单文件日志
 
 
       默认情况下，日志是按照日期为目录，按天为文件生成的，但如果希望仅生成单个文件（方便其它的工具或者服务读取以及分析日志）。
@@ -8978,7 +7742,7 @@ use think\facade\Config ;
       'file'     = >     [
       'type'           = >  'file' , 
       'single'        = >   true ,
-      'file_size'     = >   1024 * 1024 * 10 ,    
+      'file_size'     = >   1024 # 1024 # 10 ,    
       ] ,
       ] ,
       ] ;
@@ -8993,7 +7757,7 @@ use think\facade\Config ;
       'file'     = >     [
       'type'           = >  'file' , 
       'single'        = >   'single_file' ,
-      'file_size'     = >   1024 * 1024 * 10 ,    
+      'file_size'     = >   1024 # 1024 # 10 ,    
       ] ,
       ] ,
       ] ;
@@ -9004,7 +7768,7 @@ use think\facade\Config ;
       单文件日志也支持 =max_files=参数设置，因为单文件日志同样会生成多个日志备份文件而导致日志文件数据过大。
  
 
-***** 写入处理
+##### 写入处理
 
 
       日志支持写入回调处理，通过事件的方式处理。
@@ -9015,7 +7779,7 @@ use think\facade\Config ;
       }
       } ) ;
 
-***** 格式化日志信息
+##### 格式化日志信息
 
 
       系统提供了两个参数用于日志信息的格式化，第一个是用于自定义时间显示格式的 =time_format=，第二个是调整日志输出格式的 =format=参数。
@@ -9026,14 +7790,14 @@ use think\facade\Config ;
       'file'     = >     [
       'type'           = >  'file' , 
       'json'          = >   true
-      'file_size'     = >   1024 * 1024 * 10 ,    
+      'file_size'     = >   1024 # 1024 # 10 ,    
       'time_format'    = >     'Y-m-d H:i:s' ,
       'format'         = >     '[%s][%s]:%s' ,
       ] ,
       ] ,
       ] ;
 
-***** 清空日志
+##### 清空日志
 
 
       一旦执行 =save=方法后，内存中的日志信息就会被自动清空，如果需要手动清空可以使用：
@@ -9049,7 +7813,7 @@ use think\facade\Config ;
       日志清空仅仅是清空内存中的日志。
  
 
-***** 日志自动清理
+##### 日志自动清理
 
 
       文件类型的日志支持自动清理。可以设置 =max_files=参数，超过数量的最早日志将会自动删除。
@@ -9062,7 +7826,7 @@ use think\facade\Config ;
       'file'     = >     [
       'type'           = >  'file' , 
       'max_files'     = >   30 ,
-      'file_size'     = >   1024 * 1024 * 10 ,    
+      'file_size'     = >   1024 # 1024 # 10 ,    
       ] ,
       ] ,
       ] ;
@@ -9071,7 +7835,7 @@ use think\facade\Config ;
       设置 =max_files=参数后，日志文件将不会分日期子目录存放。
  
 
-***** JSON 格式日志
+##### JSON 格式日志
 
 
       可以支持 =JSON=格式记录文件日志，更加方便一些第三方日志分析工具进行日志分析。
@@ -9084,7 +7848,7 @@ use think\facade\Config ;
       'file'     = >     [
       'type'           = >  'file' , 
       'json'          = >   true
-      'file_size'     = >   1024 * 1024 * 10 ,    
+      'file_size'     = >   1024 # 1024 # 10 ,    
       ] ,
       ] ,
       ] ;
@@ -9093,7 +7857,7 @@ use think\facade\Config ;
 
       使用 JSON 格式记录后，每次请求是一行 JSON 数据，但如果使用 =Log::write=记录的日志是例外的单独一行 JSON 数据。
 
-**** 日志通道
+#### 日志通道
      你可以配置不同的日志通道，并且把不同的日志记录到不同的通道。
 
      Log : : channel ( 'email' ) - > info ( '一条测试日志' ) ;
@@ -9135,8 +7899,8 @@ use think\facade\Config ;
 
      Log : : clear ( 'file' ) ;
 
-** 调试 
-*** 调试模式
+## 调试 
+### 调试模式
     ThinkPHP 有专门为开发过程而设置的调试模式，开启调试模式后，会牺牲一定的执行效率，但带来的方便和除错功能非常值得。
 
  
@@ -9178,7 +7942,7 @@ use think\facade\Config ;
  
     出于安全考虑， =V6.0.3+=版本开始已经取消了调试模式的默认异常页面中的环境变量显示。
  
-*** Trace 调试
+### Trace 调试
 
 
     调试模式并不能完全满足我们调试的需要，有时候我们需要手动的输出一些调试信息。除了本身可以借助一些开发工具进行调试外，ThinkPHP 还提供了一些内置的调试工具和函数。
@@ -9191,7 +7955,7 @@ use think\facade\Config ;
 
     就不会安装页面 Trace 扩展。
 
-**** 使用
+#### 使用
 
 
  
@@ -9257,7 +8021,7 @@ use think\facade\Config ;
 
      'file'     = >     'app\trace\page_trace.html' ,
 
-**** 浏览器控制台输出
+#### 浏览器控制台输出
 
 
      trace 功能支持在浏览器的 =console=直接输出，这样可以方便没有页面输出的操作功能调试，只需要在配置文件中设置：
@@ -9274,17 +8038,17 @@ use think\facade\Config ;
  
      由于页面 Trace 功能是通过中间件来执行，所以命令行下面不会显示任何的页面 Trace 信息
  
-*** SQL 调试
+### SQL 调试
 
 
-**** 查看页面 Trace
+#### 查看页面 Trace
 
 
      通过查看页面 Trace 信息可以看到当前请求所有执行的 SQL 语句，例如：
 
      [[file:images/000007.png]]
 
-**** 查看 SQL 日志
+#### 查看 SQL 日志
 
 
      如果开启了数据库的日志监听（ =trigger_sql=)的话，可以在日志文件（或者设置的日志输出类型）中看到详细的 SQL 执行记录。
@@ -9296,7 +8060,7 @@ use think\facade\Config ;
      下面是一个典型的 SQL 日志：
 
      [ SQL  ] SHOW COLUMNS FROM `think_user`  [ RunTime : 0.001339s  ]
-     [ SQL  ] SELECT  * FROM `think_user` LIMIT  1  [ RunTime : 0.000539s  ]
+     [ SQL  ] SELECT  # FROM `think_user` LIMIT  1  [ RunTime : 0.000539s  ]
 
      如果需要增加额外的 SQL 监听，可以使用
 
@@ -9306,7 +8070,7 @@ use think\facade\Config ;
 
      监听方法支持三个参数，依次是执行的 SQL 语句，运行时间（秒），以及主从标记（如果没有开启分布式的话，该参数为 null，否则为布尔值）。
 
-**** 调试执行的 SQL 语句
+#### 调试执行的 SQL 语句
 
 
      在模型操作中 ，为了更好的查明错误，经常需要查看下最近使用的 SQL 语句，我们可以用 =getLastsql=方法来输出上次执行的 sql 语句。例如：
@@ -9316,7 +8080,7 @@ use think\facade\Config ;
 
      输出结果是
 
-     SELECT  * FROM  'think_user' WHERE `id`  =  1
+     SELECT  # FROM  'think_user' WHERE `id`  =  1
 
  
      =getLastSql=方法只能获取最后执行的 =SQL=记录。
@@ -9328,7 +8092,7 @@ use think\facade\Config ;
 
      输出的结果是一样的。
 
-*** 变量调试
+### 变量调试
     输出某个变量是开发过程中经常会用到的调试方法，除了使用 php 内置的 =var_dump=
     和 =print_r=之外，ThinkPHP 框架内置了一个对浏览器友好的 =dump=方法，用于输出
     变量的信息到浏览器查看。
@@ -9353,12 +8117,12 @@ use think\facade\Config ;
     执行后会输出同样的结果并中止执行后续的程序。
     为了方便查看，某些核心对象由于定义了 =__debugInfo=方法，因此在 =dump=输出的时候属性可能做了简化。
  
-*** 远程调试
+### 远程调试
     =ThinkPHP=提供了 =Socket=日志驱动用于本地和远程调试。
 
     首先需要安装 =think-socketlog=扩展
     composer require topthink /think -socketlog
-****  Socket调试
+####  Socket调试
      只需要在 =log.php=配置文件中设置如下：
 
      return  [
@@ -9378,27 +8142,27 @@ use think\facade\Config ;
 
      =SocketLog=通过 =websocket=将调试日志打印到浏览器的 =console=中。你还可以用它来分析开源程序，分析 SQL 性能，结合 taint 分析程序漏洞。
 
-***** 安装 Chrome 插件
+##### 安装 Chrome 插件
 
 
       =SocketLog=首先需要安装 =chrome=插件，Chrome [[https://chrome.google.com/webstore/detail/socketlog/apkmbfpihjhongonfcgdagliaglghcod][插件安装页面]] （需翻墙）
 
-***** 使用方法
+##### 使用方法
 
 
       -  首先，请在 chrome 浏览器上安装好插件。
       -  安装服务端 =npm install -g socketlog-server= , 运行命令 =socketlog-server= 即可启动服务。 将会在本地起一个 websocket 服务 ，监听端口是 1229 。
       -  如果想服务后台运行： =socketlog-server > /dev/null &=
 
-***** 参数
+##### 参数
 
 
-      -  =client_id=: 在 chrome 浏览器中，可以设置插件的 =Client_ID= ， *Client\_ID*是你任意指定的字符串。\\
+      -  =client_id=: 在 chrome 浏览器中，可以设置插件的 =Client_ID= ， #Client\_ID#是你任意指定的字符串。\\
         [[file:images/000008.png]]
 
       -  设置 =client_id=后能实现以下功能：
 
-      -  1，配置 =allow_client_ids= 配置项，让指定的浏览器才能获得日志，这样就可以把调试代码带上线。 普通用户访问不会触发调试，不会发送日志。 开发人员访问就能看的调试日志， 这样利于找线上 bug。 *Client\_ID* 建议设置为姓名拼音加上随机字符串，这样如果有员工离职可以将其对应的 =client_id=从配置项 =allow_client_ids=中移除。 =client_id=除了姓名拼音，加上随机字符串的目的，以防别人根据你公司员工姓名猜测出 =client_id=,获取线上的调试日志。
+      -  1，配置 =allow_client_ids= 配置项，让指定的浏览器才能获得日志，这样就可以把调试代码带上线。 普通用户访问不会触发调试，不会发送日志。 开发人员访问就能看的调试日志， 这样利于找线上 bug。 #Client\_ID# 建议设置为姓名拼音加上随机字符串，这样如果有员工离职可以将其对应的 =client_id=从配置项 =allow_client_ids=中移除。 =client_id=除了姓名拼音，加上随机字符串的目的，以防别人根据你公司员工姓名猜测出 =client_id=,获取线上的调试日志。
 
       -  设置 =allow_client_ids=示例代码：
 
@@ -9406,9 +8170,9 @@ use think\facade\Config ;
 
       -  2, 设置 =force_client_ids=配置项，让后台脚本也能输出日志到chrome。 网站有可能用了队列，一些业务逻辑通过后台脚本处理， 如果后台脚本需要调试，你也可以将日志打印到浏览器的console中， 当然后台脚本不和浏览器接触，不知道当前触发程序的是哪个浏览器，所以我们需要强制将日志打印到指定 =client_id=的浏览器上面。 我们在后台脚本中使用SocketLog时设置 =force_client_ids= 配置项指定要强制输出浏览器的 =client_id= 即可。
 
-** 杂项 
-*** 缓存
-**** 概述
+## 杂项 
+### 缓存
+#### 概述
      ThinkPHP 采用 =think\Cache=类（实际使用 =think\facade\Cache=类即可）提供缓存功能支持。
 
      内置支持的缓存类型包括 file、memcache、wincache、sqlite、redis。
@@ -9416,7 +8180,7 @@ use think\facade\Config ;
  
      ThinkPHP 的缓存类遵循 =PSR-16=规范。
  
-**** 设置
+#### 设置
      全局的缓存配置直接修改配置目录下面的 =cache.php=文件。
 
      新版的缓存支持多通道，你可以事先定义好所有的缓存类型及配置参数，然后在使用的时候可以随时切换。默认使用的是文件缓存类型，你可以添加 =redis=缓存支持，例如：
@@ -9455,8 +8219,8 @@ use think\facade\Config ;
  
      如果是自定义驱动， =type=的值则为自定义驱动的类名（包含命名空间）
  
-**** 使用
-***** 设置缓存
+#### 使用
+##### 设置缓存
       设置缓存有效期
       // 缓存在3600秒之后过期
       
@@ -9468,7 +8232,7 @@ use think\facade\Config ;
 
       如果设置成功返回 true，否则返回 false。
 
-***** 缓存自增
+##### 缓存自增
 
 
       针对数值类型的缓存数据，可以使用自增操作，例如：
@@ -9483,7 +8247,7 @@ use think\facade\Config ;
       只能对数字或者浮点型数据进行自增和自减操作。
  
 
-***** 缓存自减
+##### 缓存自减
 
 
       针对数值类型的缓存数据，可以使用自减操作，例如：
@@ -9493,7 +8257,7 @@ use think\facade\Config ;
       // name自减（步进值为3）
       Cache : : dec ( 'name' , 3 ) ;
 
-***** 获取缓存
+##### 获取缓存
 
 
       获取缓存数据可以使用：
@@ -9508,7 +8272,7 @@ use think\facade\Config ;
 
       表示如果 =name=值不存在，则返回空字符串。
 
-***** 追加一个缓存数据
+##### 追加一个缓存数据
 
 
       如果缓存数据是一个数组，可以通过 =push=方法追加一个数据。
@@ -9517,24 +8281,24 @@ use think\facade\Config ;
       Cache : : push ( 'name' ,  4 ) ;
       Cache : : get ( 'name' ) ;  // [1,2,3,4]
 
-***** 删除缓存
+##### 删除缓存
 
 
       Cache : : delete ( 'name' ) ; 
 
-***** 获取并删除缓存
+##### 获取并删除缓存
 
 
       Cache : : pull ( 'name' ) ; 
 
       如果 =name=值不存在，则返回 =null=。
 
-***** 清空缓存
+##### 清空缓存
 
 
       Cache : : clear ( ) ; 
 
-***** 不存在则写入缓存数据后返回
+##### 不存在则写入缓存数据后返回
 
 
       Cache : : remember ( 'start_time' ,  time ( ) ) ;
@@ -9549,7 +8313,7 @@ use think\facade\Config ;
 
       remember 方法的第三个参数可以设置缓存的有效期。
 
-***** 缓存标签
+##### 缓存标签
 
 
       支持给缓存数据打标签，例如：
@@ -9572,7 +8336,7 @@ use think\facade\Config ;
 
       Cache : : tag ( 'tag' ) - > append ( 'name3' ) ;
 
-***** 获取缓存对象
+##### 获取缓存对象
 
 
       可以获取缓存对象，并且调用驱动类的高级方法，例如：
@@ -9580,7 +8344,7 @@ use think\facade\Config ;
       // 获取缓存对象句柄
       $handler  = Cache : : handler ( ) ;
 
-***** 助手函数
+##### 助手函数
 
 
       系统对缓存操作提供了助手函数 =cache=，用法如下：
@@ -9594,12 +8358,12 @@ use think\facade\Config ;
       // 返回缓存对象实例
       $cache  =  cache ( ) ;
 
-**** 跨应用缓存
+#### 跨应用缓存
 
 
      默认情况下，文件缓存数据是区分不同应用的，如果你希望缓存跨应用，可以设置一个统一的数据缓存 =path=目录。
 
-**** 切换缓存类型
+#### 切换缓存类型
 
 
      没有指定缓存类型的话，默认读取的是 =default=缓存配置，可以动态切换
@@ -9621,81 +8385,81 @@ use think\facade\Config ;
      // 获取Redis对象 进行额外方法调用
      Cache : : store ( 'redis' ) - > handler ( ) ;
 
-**** 自定义驱动
+#### 自定义驱动
 
 
      如果需要自定义缓存驱动，需要继承 =think\cache\Driver=类，并且实现 =think\contract\CacheHandlerInterface=接口。
 
      interface  CacheHandlerInterface
      {
-     /**
-     * 判断缓存
-     * @access public
-     * @param  string $name 缓存变量名
-     * @return bool
-       */
+     /##
+     # 判断缓存
+     # @access public
+     # @param  string $name 缓存变量名
+     # @return bool
+       #/
        public  function  has ($name ) : bool ;
 
-       /**
-       * 读取缓存
-       * @access public
-       * @param  string $name 缓存变量名
-       * @param  mixed  $default 默认值
-       * @return mixed
-         */
+       /##
+       # 读取缓存
+       # @access public
+       # @param  string $name 缓存变量名
+       # @param  mixed  $default 默认值
+       # @return mixed
+         #/
          public  function  get ($name , $default  =  false ) ;
 
-         /**
-         * 写入缓存
-         * @access public
-         * @param  string            $name 缓存变量名
-         * @param  mixed             $value  存储数据
-         * @param  integer|\DateTime $expire  有效时间（秒）
-         * @return bool
-           */
+         /##
+         # 写入缓存
+         # @access public
+         # @param  string            $name 缓存变量名
+         # @param  mixed             $value  存储数据
+         # @param  integer|\DateTime $expire  有效时间（秒）
+         # @return bool
+           #/
            public  function  set ($name , $value , $expire  =  null ) : bool ;
 
-           /**
-           * 自增缓存（针对数值缓存）
-           * @access public
-           * @param  string    $name 缓存变量名
-           * @param  int       $step 步长
-           * @return false|int
-           */
+           /##
+           # 自增缓存（针对数值缓存）
+           # @access public
+           # @param  string    $name 缓存变量名
+           # @param  int       $step 步长
+           # @return false|int
+           #/
            public  function  inc (string $name , int $step  =  1 ) ;
 
-           /**
-           * 自减缓存（针对数值缓存）
-           * @access public
-           * @param  string    $name 缓存变量名
-           * @param  int       $step 步长
-           * @return false|int
-           */
+           /##
+           # 自减缓存（针对数值缓存）
+           # @access public
+           # @param  string    $name 缓存变量名
+           # @param  int       $step 步长
+           # @return false|int
+           #/
            public  function  dec (string $name , int $step  =  1 ) ;
 
-           /**
-           * 删除缓存
-           * @access public
-           * @param  string $name 缓存变量名
-           * @return bool
-           */
+           /##
+           # 删除缓存
+           # @access public
+           # @param  string $name 缓存变量名
+           # @return bool
+           #/
            public  function  delete ($name ) : bool ;
 
-           /**
-           * 清除缓存
-           * @access public
-           * @return bool
-           */
+           /##
+           # 清除缓存
+           # @access public
+           # @return bool
+           #/
            public  function  clear ( ) : bool ;
 
            }
 
            使用自定义驱动后，只需要配置缓存 =type=的值为该驱动类名（包含命名空间）即可。
 
-*** Session
+### Session
 
 
-**** 概述
+#### 概述
 
 
      可以直接使用 =think\facade\Session=类操作 =Session=。
@@ -9706,7 +8470,7 @@ use think\facade\Config ;
 
      =6.0=的 =Session=类可以很好的支持诸如 =Swoole=/ =Workerman=等环境。
 
-**** 开启 Session
+#### 开启 Session
 
 
      =Session=功能默认是没有开启的（API 应用通常不需要使用 =Session=），如果你需要使用 =Seesion=，需要在全局的中间件定义文件中加上下面的中间件定义：
@@ -9717,7 +8481,7 @@ use think\facade\Config ;
      如果是多应用模式，并且你只是用于部分应用，那么也可以在应用中间件定义文件中单独开启。
  
 
-**** Session 初始化
+#### Session 初始化
 
 
      系统会自动按照 =session.php=配置的参数自动初始化 =Session=。
@@ -9749,20 +8513,20 @@ use think\facade\Config ;
      尽量避免把对象保存到 =Session=会话
  
 
-**** 基础用法
+#### 基础用法
 
 
-***** 赋值
+##### 赋值
 
 
       Session : : set ( 'name' ,  'thinkphp' ) ;
 
-***** 判断是否存在
+##### 判断是否存在
 
 
       Session : : has ( 'name' ) ;
 
-***** 取值
+##### 取值
 
 
       // 如果值不存在，返回null
@@ -9772,12 +8536,12 @@ use think\facade\Config ;
       // 获取全部数据
       Session : : all ( ) ;
 
-***** 删除
+##### 删除
 
 
       Session : : delete ( 'name' ) ;
 
-***** 取值并删除
+##### 取值并删除
 
 
       // 取值并删除
@@ -9785,18 +8549,18 @@ use think\facade\Config ;
 
       如果 name 的值不存在，返回 =Null=。
 
-***** 清空
+##### 清空
 
 
       Session : : clear ( ) ;
 
-***** 闪存数据，下次请求之前有效
+##### 闪存数据，下次请求之前有效
 
 
       // 设置session 并且在下一次请求之前有效
       Session : : flash ( 'name' , 'value' ) ;
 
-***** 提前清除当前请求有效的数据
+##### 提前清除当前请求有效的数据
 
 
       // 清除当前请求有效的session
@@ -9806,7 +8570,7 @@ use think\facade\Config ;
       注意， =Session=写入数据的操作会在请求结束的时候统一进行本地化存储，所以不要在写入 =Session=数据之后使用 exit 等中断操作，可能会导致 =Session=没有正常写入。
  
 
-**** 多级数组
+#### 多级数组
 
 
      支持 =session=的多级数组操作，例如：
@@ -9822,7 +8586,7 @@ use think\facade\Config ;
 
      其中 =set=和 =delete=方法只能支持二级数组，其他方法支持任意级数组操作。
 
-**** 助手函数
+#### 助手函数
 
 
      系统也提供了助手函数 =session=完成相同的功能，例如：
@@ -9838,7 +8602,7 @@ use think\facade\Config ;
      // 清除session
      session ( null ) ;
 
-**** Request 对象中读取 Session
+#### Request 对象中读取 Session
 
 
      可以在 Request 对象中读取 Session 数据
@@ -9852,7 +8616,7 @@ use think\facade\Config ;
 
      但 =Request=类中不支持 =Session=写入操作。
 
-**** 应用独立会话
+#### 应用独立会话
 
 
  
@@ -9861,7 +8625,7 @@ use think\facade\Config ;
 
      如果是 File 类型的话，默认的 =session=会话数据保存在 =runtime/session=目录下面，你可以设置 =path=改变存储路径。
 
-**** Session 驱动
+#### Session 驱动
 
 
      默认的 =Session=驱动采用文件缓存方式记录，并且支持如下配置
@@ -9905,7 +8669,7 @@ use think\facade\Config ;
      ] ,
      ] ;
 
-**** 自定义驱动
+#### 自定义驱动
 
 
      如果需要自定义 =Session=驱动，你的驱动类必须实现 =think\contract\SessionHandlerInterface=接口，包含了三个方法。
@@ -9921,15 +8685,15 @@ use think\facade\Config ;
      =write=方法是在本地化会话数据的时候执行（调用 =Session::save()=方法），系统会在每次请求结束的时候自动执行。\\
      =delete=方法是在销毁会话的时候执行（调用 =Session::destroy()=方法）。
 
-*** Cookie
+### Cookie
 
 
-**** 概述
+#### 概述
 
 
      ThinkPHP 采用 =think\facade\Cookie=类提供 Cookie 支持。
 
-**** 配置
+#### 配置
 
 
      配置文件位于配置目录下的 =cookie.php=文件，无需手动初始化，系统会在调用之前自动进行 =Cookie=初始化工作。
@@ -9948,7 +8712,7 @@ use think\facade\Config ;
      'httponly'   = >  '' ,
 
      
-**** 域名绑定应用
+#### 域名绑定应用
      =config/app.php= 配置文件中定义域名和应用的绑定
 
      #+BEGIN_EXAMPLE
@@ -9958,26 +8722,26 @@ use think\facade\Config ;
          ], 
      #+END_EXAMPLE
 
-**** 基本操作
-***** 设置
+#### 基本操作
+##### 设置
       // 设置Cookie 有效期为 3600秒
       Cookie : : set ( 'name' ,  'value' ,  3600 ) ;
 
       =Cookie=数据不支持数组，如果需要请自行序列化后存入。
 
-***** 永久保存
+##### 永久保存
 
 
       // 永久保存Cookie
       Cookie : : forever ( 'name' ,  'value' ) ;
 
-***** 删除
+##### 删除
 
 
       //删除cookie
       Cookie : : delete ( 'name' ) ;
 
-***** 读取
+##### 读取
 
 
       // 读取某个cookie数据
@@ -9985,7 +8749,7 @@ use think\facade\Config ;
       // 获取全部cookie数据
       Cookie : : get ( ) ;
 
-**** 助手函数
+#### 助手函数
      系统提供了 =cookie=助手函数用于基本的 =cookie=操作，例如：
 
      // 设置
@@ -9997,12 +8761,12 @@ use think\facade\Config ;
      // 删除
      cookie ( 'name' ,  null ) ;
 
-*** 多语言
+### 多语言
 
 
     ThinkPHP 内置通过 =\think\facade\Lang=类提供多语言支持，如果你的应用涉及到国际化的支持，那么可以定义相关的语言包文件。任何字符串形式的输出，都可以定义语言常量。
 
-**** 开启和加载语言包
+#### 开启和加载语言包
 
 
      默认系统会加载默认语言包，但如果需要多语言自动侦测及自动切换，你需要在全局的中间件定义文件中添加中间件定义：
@@ -10041,7 +8805,7 @@ use think\facade\Config ;
 
      设置后，自动检测的语言会通过 =Cookie=记录下来，下次则直接通过 =Cookie=判断语言。
 
-**** 语言变量定义
+#### 语言变量定义
 
 
      语言变量的定义，只需要在需要使用多语言的地方，写成：
@@ -10054,7 +8818,7 @@ use think\facade\Config ;
 
      语言定义一般采用英语来描述。
 
-**** 语言文件定义
+#### 语言文件定义
 
 
      自动加载的应用语言文件位于：
@@ -10096,7 +8860,7 @@ use think\facade\Config ;
 
      可以输出当前语言包里面定义的 =lang_var=语言定义。
 
-**** 变量传入支持
+#### 变量传入支持
 
 
      语言包定义的时候支持传入变量，有两种方式
@@ -10117,7 +8881,7 @@ use think\facade\Config ;
 
      { : lang ( 'file_format' , [ 'jpeg,png,gif,jpg' , '2MB' ] ) }
 
-**** 语言分组
+#### 语言分组
 
 
      首先你需要在 lang.php 配置文件中开启语言分组，
@@ -10140,8 +8904,8 @@ use think\facade\Config ;
      Lang : : get ( 'user.login' ) ;
      lang ( 'user.login' ) ;
 
-*** 上传
-**** 上传文件
+### 上传
+#### 上传文件
      内置的上传只是上传到本地服务器，上传到远程或者第三方平台的话需要安装额外的扩展。
  
 
@@ -10163,7 +8927,7 @@ use think\facade\Config ;
 
      =$file=变量是一个 =\think\File=对象，你可以获取相关的文件信息，支持使用 =SplFileObject=类的属性和方法。
 
-**** 上传规则
+#### 上传规则
 
 
      默认情况下是上传到本地服务器，会在 =runtime/storage=目录下面生成以当前日期为子目录，以微秒时间的 =md5=编码为文件名的文件，例如上面生成的文件名可能是：
@@ -10221,7 +8985,7 @@ use think\facade\Config ;
 
      $savename  = \think\facade\Filesystem : : putFileAs (  'topic' , $file , 'abc.jpg' ) ;
 
-**** 多文件上传
+#### 多文件上传
      如果你使用的是多文件上传表单，例如：
 
      <form action = "/index/index/upload" enctype = "multipart/form-data" method = "post" >
@@ -10242,7 +9006,7 @@ use think\facade\Config ;
      }
      }
 
-**** 上传验证
+#### 上传验证
 
 
      支持使用验证类对上传文件的验证，包括文件大小、文件类型和后缀：
@@ -10271,7 +9035,7 @@ use think\facade\Config ;
 
        具体用法可以参考验证章节的内置规则-> 上传验证。
 
-**** 获取文件 hash 散列值
+#### 获取文件 hash 散列值
 
 
      可以获取上传文件的哈希散列值，例如：
@@ -10290,8 +9054,8 @@ use think\facade\Config ;
      echo $file - > hash ( 'sha1' ) ;
      echo $file - > hash ( 'md5' ) ;
 
-** 命令行 
-*** 命令行
+## 命令行 
+### 命令行
     | 指令                | 描述                       |
     |---------------------+----------------------------|
     | build               | 自动生成应用目录和文件     |
@@ -10318,16 +9082,16 @@ use think\facade\Config ;
     | service:discover    | 自动注册扩展包的系统服务   |
     | vendor:publish      | 自动生成扩展的配置文件     |
 
-*** 启动内置服务器
+### 启动内置服务器
     >php think run
     IP 和端口访问
     >php think run  -H tp .com  -p  80
     然后你可以直接在浏览器里面访问
     http : / /tp .com /
 
-*** 自动生成应用目录
+### 自动生成应用目录
     ThinkPHP 具备自动创建功能，可以用来自动生成需要的应用及目录结构和文件等。
-**** 快速生成应用
+#### 快速生成应用
      如果使用了多应用模式，可以快速生成一个应用，例如生成 =demo=应用的指令如下：
 
      >php think build demo
@@ -10346,8 +9110,8 @@ use think\facade\Config ;
 
      您好！这是一个 [demo ]示例应用
 
-*** 创建类库文件
-**** 快速生成控制器
+### 创建类库文件
+#### 快速生成控制器
      执行下面的指令可以生成 =index=应用的 =Blog=控制器类库文件
 
      >php think make :controller index@Blog
@@ -10380,7 +9144,7 @@ use think\facade\Config ;
 
      可以支持 --api 参数生成用于 API 接口的资源控制器。
 
-**** 快速生成模型
+#### 快速生成模型
      和生成控制器类似，执行下面的指令可以生成 =index=应用的 =Blog=模型类库文件
 
      >php think make :model index@Blog
@@ -10401,7 +9165,7 @@ use think\facade\Config ;
      //
      }
 
-**** 生成带后缀的类库
+#### 生成带后缀的类库
 
 
      如果要生成带后缀的类库，可以直接使用：
@@ -10410,7 +9174,7 @@ use think\facade\Config ;
 
      >php think make :model BlogModel
 
-**** 快速生成中间件
+#### 快速生成中间件
 
 
      可以使用下面的指令生成一个中间件类。
@@ -10419,7 +9183,7 @@ use think\facade\Config ;
 
      会自动生成一个 =app\middleware\Auth=类文件。
 
-**** 创建验证器类
+#### 创建验证器类
 
 
      可以使用
@@ -10428,7 +9192,7 @@ use think\facade\Config ;
 
      生成一个 =app\index\validate\User= 验证器类，然后添加自己的验证规则和错误信息。
 
-*** 清除缓存文件
+### 清除缓存文件
     如果需要清除应用的缓存文件，可以使用下面的命令：
 
     php think clear
@@ -10459,7 +9223,7 @@ use think\facade\Config ;
 
     php think clear  --path d :\www\tp\runtime\log\
 
-*** 生成路由映射缓存
+### 生成路由映射缓存
     路由映射缓存用于开启路由延迟解析的情况下，支持路由反解的 URL 生成，如果你没有开启路由延迟解析或者没有使用 URL 路由反解生成则不需要生成。
  
 
@@ -10473,8 +9237,8 @@ use think\facade\Config ;
 
     php think optimize :route index
 
-*** 输出路由定义
-**** 输出并生成路由列表
+### 输出路由定义
+#### 输出并生成路由列表
 
 
      假设你的路由定义文件内容为：
@@ -10517,7 +9281,7 @@ use think\facade\Config ;
      如果你的路由定义发生改变的话， 则需要重新调用该指令，会自动更新上面生成的缓存文件。
  
 
-**** 输出样式
+#### 输出样式
 
 
      支持定义不同的样式输出，例如：
@@ -10574,7 +9338,7 @@ use think\facade\Config ;
      | blog / <id >       | Blog /update  | put     | Blog /update  |
      | blog / <id >       | Blog /delete  | delete  | Blog /delete  | 
 
-**** 排序支持
+#### 排序支持
 
 
      如果你希望生成的路由列表按照路由规则排序，可以使用
@@ -10621,7 +9385,7 @@ use think\facade\Config ;
      支持排序的字段名包括： =rule=、 =route=、 =name=、 =method=和 =domain=（全部小写）。
  
 
-**** 输出详细信息
+#### 输出详细信息
 
 
      如果你希望看到更多的路由参数和变量规则，可以使用
@@ -10644,8 +9408,8 @@ use think\facade\Config ;
        | blog / <id >       | Blog /delete  | delete  | Blog /delete  |         |  [ ]                       |  [ ]       |
        + -- -- -- -- -- -- -- -- + -- -- -- -- -- -- - + -- -- -- -- + -- -- -- -- -- -- - + -- -- -- -- + -- -- -- -- -- -- -- -- -- -- -- -- - + -- -- -- -- - +
 
-*** 自定义指令
-**** 创建自定义指令
+### 自定义指令
+#### 创建自定义指令
 
 
      第一步，创建一个自定义命令类文件，运行指令
@@ -10765,7 +9529,7 @@ use think\facade\Config ;
 
      php think make :command app\index\Command second
 
-**** 在控制器中调用命令
+#### 在控制器中调用命令
      支持在控制器的操作方法中直接调用命令，例如：
 
      < ?php
@@ -10790,13 +9554,13 @@ use think\facade\Config ;
      页面会输出
 
      Hello thinkphp !
-* thinkphp 5.0 验证规则
-** Article
+# thinkphp 5.0 验证规则
+## Article
 
    [[http://www.kancloud.cn/manual/thinkphp5/129319][官方文档 - 内置规则]]\\
    系统内置的验证规则如下：
 
-   *格式验证类：*
+   #格式验证类：#
 
    | 规则                  | 说明                                                                                       | 示例                                |
    |-----------------------+--------------------------------------------------------------------------------------------+-------------------------------------|
@@ -10816,7 +9580,7 @@ use think\facade\Config ;
    | ip                    | 验证某个字段的值是否为有效的IP地址（采用filter_var验证），支持验证ipv4和ipv6格式的IP地址   | ‘ip'=>'ip'                          |
    | dateFormat:format     | 验证某个字段的值是否为指定格式的日期                                                       | ‘create_time'=>'dateFormat:y-m-d'   |
 
-   *长度和区间验证类：*
+   #长度和区间验证类：#
 
    | 规则                        | 说明                                                               | 示例                                             |
    |-----------------------------+--------------------------------------------------------------------+--------------------------------------------------|
@@ -10825,13 +9589,13 @@ use think\facade\Config ;
    | between                     | 验证某个字段的值是否在某个区间                                     | ‘num'=>'between:1,10'                            |
    | notBetween                  | 验证某个字段的值不在某个范围                                       | ‘num'=>'notBetween:1,10'                         |
    | length:num1,num2            | 验证某个字段的值的长度是否在某个范围，或者指定长度。\\             | ‘name'=>'length:4,25'\\                          |
-   |                             | *如果验证的数据是数组，则判断数组的长度。\\                        | 'name'=>'length:4'                               |
+   |                             | #如果验证的数据是数组，则判断数组的长度。\\                        | 'name'=>'length:4'                               |
    |                             | 如果验证的数据是File对象，则判断文件的大小。                       |                                                  |
    | max:number                  | 验证某个字段的值的最大长度\\                                       | ‘name'=>'max:25'                                 |
-   |                             | *如果验证的数据是数组，则判断数组的长度。\\                        |                                                  |
+   |                             | #如果验证的数据是数组，则判断数组的长度。\\                        |                                                  |
    |                             | 如果验证的数据是File对象，则判断文件的大小。                       |                                                  |
    | min:number                  | 验证某个字段的值的最小长度\\                                       | ‘name'=>'min:5'                                  |
-   |                             | *如果验证的数据是数组，则判断数组的长度。\\                        |                                                  |
+   |                             | #如果验证的数据是数组，则判断数组的长度。\\                        |                                                  |
    |                             | 如果验证的数据是File对象，则判断文件的大小。                       |                                                  |
    | after:日期                  | 验证某个字段的值是否在某个日期之后                                 | ‘begin_time' => ‘after:2016-3-18',               |
    | before:日期                 | 验证某个字段的值是否在某个日期之前                                 | ‘end_time' => ‘before:2016-10-01',               |
@@ -10839,7 +9603,7 @@ use think\facade\Config ;
    | allowIp:allow1,allow2,...   | 验证当前请求的IP是否在某个范围，该规则可以用于某个后台的访问权限   | ‘name' => ‘allowIp:114.45.4.55',                 |
    | denyIp:allow1,allow2,...    | 验证当前请求的IP是否禁止访问                                       | ‘name' => ‘denyIp:114.45.4.55',                  |
 
-   *字段比较类：*
+   #字段比较类：#
 
    | 规则                  | 说明                                       | 示例                     |
    |-----------------------+--------------------------------------------+--------------------------|
@@ -10857,13 +9621,13 @@ use think\facade\Config ;
    |                       |                                            | 'num'=>'=:100'\\         |
    |                       |                                            | 'num'=>'same:100'        |
 
-   *filter验证：*
+   #filter验证：#
 
    | 规则   | 说明                         | 示例                         |
    |--------+------------------------------+------------------------------|
    |        | 支持使用filter_var进行验证   | ‘ip'=>'filter:validate_ip'   |
 
-   *正则验证：*
+   #正则验证：#
 
    | 规则   | 说明                   | 示例                    |
    |--------+------------------------+-------------------------|
@@ -10871,7 +9635,7 @@ use think\facade\Config ;
    |        |                        | // 或者\\               |
    |        |                        | 'zip'=>'regex:\d{6}',   |
 
-   *上传验证：*
+   #上传验证：#
 
    | 规则                          | 说明                                                                              | 示例   |
    |-------------------------------+-----------------------------------------------------------------------------------+--------|
@@ -10881,13 +9645,13 @@ use think\facade\Config ;
    | fileMime:允许的文件类型       | 验证上传文件类型                                                                  |        |
    | fileSize:允许的文件字节大小   | 验证上传文件大小                                                                  |        |
 
-   *行为验证：*
+   #行为验证：#
 
    | 规则   | 说明               | 示例                                           |
    |--------+--------------------+------------------------------------------------|
    |        | 使用行为验证数据   | ‘data'=>'behavior:\app\index\behavior\Check'   |
 
-   *其它验证：*
+   #其它验证：#
 
    | 规则                           | 说明                                   | 示例                                                          |
    |--------------------------------+----------------------------------------+---------------------------------------------------------------|
@@ -10910,8 +9674,15 @@ use think\facade\Config ;
    | requireWith:field              | 验证某个字段有值的时候必须             | // 当account有值的时候password字段必须\\                      |
    |                                |                                        | 'password'=>'requireWith:account'                             |
 
-* Q&A   
-** Driver [Think] not supported 
-   #+begin_src sh
-     composer require topthink/think-view
-   #+end_src
+# Q&A   
+## Driver [Think] not supported 
+```
+composer require topthink/think-view
+```
+
+### multi-app
+```
+composer require topthink/think-multi-app  
+```
+! tip: every module must contain a controller fold 
+ 
