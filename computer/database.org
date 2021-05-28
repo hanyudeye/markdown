@@ -1,3 +1,7 @@
+* 数据库设置
+|数据|长度|
+|email(邮箱)| 254|
+
 * [[http://www.runoob.com/redis/redis-commands.html][Redis]]
 ** 安装 
    sudo apt-get install redis-server
