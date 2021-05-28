@@ -1,0 +1,681 @@
+* [[http://www.runoob.com/redis/redis-commands.html][Redis]]
+** 安装 
+   sudo apt-get install redis-server
+   启动 redis-server
+** 命令行 ( redis-cli )
+    ping 
+    获取配置  CONFIG GET *
+    
+    设置  set name "yiibai.com"
+    获取 get name 
+    删除 del name
+    
+    连接到服务器语法  redis-cli -h host -p port -a password
+    redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
+    redis-cli -h 10.170.63.180 -p 6379
+
+| 命令                                 | 描述                                                            |
+| DEL key                              | 此命令删除一个指定键(如果存在)。                                |
+| DUMP key                             | 此命令返回存储在指定键的值的序列化版本。                        |
+| EXISTS key                           | 此命令检查键是否存在。                                          |
+| EXPIRE key seconds                   | 设置键在指定时间秒数之后到期/过期。                             |
+| EXPIREAT key timestamp               | 设置在指定时间戳之后键到期/过期。这里的时间是 Unix 时间戳格式。 |
+| PEXPIRE key milliseconds             | 设置键的到期时间(以毫秒为单位)。                                |
+| PEXPIREAT key milliseconds-timestamp | 以 Unix 时间戳形式来设置键的到期时间(以毫秒为单位)。            |
+| KEYS pattern                         | 查找与指定模式匹配的所有键。                                    |
+| MOVE key db                          | 将键移动到另一个数据库。                                        |
+| PERSIST key                          | 删除指定键的过期时间，得永生。                                  |
+| PTTL key                             | 获取键的剩余到期时间。                                          |
+| RANDOMKEY                            | 从 Redis 返回一个随机的键。                                     |
+| RENAME key newkey                    | 更改键的名称。                                                  |
+| PTTL key                             | 获取键到期的剩余时间(以毫秒为单位)。                            |
+| RENAMENX key newkey                  | 如果新键不存在，重命名键。                                      |
+| TYPE key                             | 返回存储在键中的值的数据类型。                                  |
+
+
+| SET key value                   | 此命令设置指定键的值。                     |
+| GET key                         | 获取指定键的值。                           |
+| GETRANGE key start end          | 获取存储在键上的字符串的子字符串。         |
+| GETSET key value                | 设置键的字符串值并返回其旧值。             |
+| GETBIT key offset               | 返回在键处存储的字符串值中偏移处的位值。   |
+| MGET key1 [key2..]              | 获取所有给定键的值                         |
+| SETBIT key offset value         | 存储在键上的字符串值中设置或清除偏移处的位 |
+| SETEX key seconds value         | 使用键和到期时间来设置值                   |
+| SETNX key value                 | 设置键的值，仅当键不存在时                 |
+| SETRANGE key offset value       | 在指定偏移处开始的键处覆盖字符串的一部分   |
+| STRLEN key                      | 获取存储在键中的值的长度                   |
+| MSET key value [key value …]   | 为多个键分别设置它们的值                   |
+| MSETNX key value [key value …] | 为多个键分别设置它们的值，仅当键不存在时   |
+| PSETEX key milliseconds value   | 设置键的值和到期时间(以毫秒为单位)         |
+| INCR key                        | 将键的整数值增加 1                         |
+| INCRBY key increment            | 将键的整数值按给定的数值增加               |
+| INCRBYFLOAT key increment       | 将键的浮点值按给定的数值增加               |
+| DECR key                        | 将键的整数值减 1                           |
+| DECRBY key decrement            | 按给定数值减少键的整数值                   |
+| APPEND key value                | 将指定值附加到键                           |
+| APPEND key value                | 将指定值附加到键                           |
+
+ 1	AUTH password	使用给定的密码验证服务器
+ 2	ECHO message	打印给定的字符串信息
+ 3	PING	检查服务器是否正在运行
+ 4	QUIT	关闭当前连接
+ 5	SELECT index	更改当前连接的所选数据库 
+ # Server
+ redis_version:2.8.4
+ redis_git_sha1:00000000
+ redis_git_dirty:0
+ redis_build_id:8f6097d7914679ca
+ redis_mode:standalone
+ os:Linux 3.19.0-25-generic i686
+ arch_bits:32
+ multiplexing_api:epoll
+ gcc_version:4.8.2
+ process_id:1004
+ run_id:1e53acea2aa628199c4e438a3ed815d96eebc036
+ tcp_port:6379
+ uptime_in_seconds:888450
+ uptime_in_days:10
+ hz:10
+ lru_clock:1861984
+ config_file:/etc/redis/redis.conf
+
+ # Clients
+ connected_clients:1
+ client_longest_output_list:0
+ client_biggest_input_buf:0
+ blocked_clients:0
+
+ # Memory
+ used_memory:424872
+ used_memory_human:414.91K
+ used_memory_rss:6709248
+ used_memory_peak:424464
+ used_memory_peak_human:414.52K
+ used_memory_lua:22528
+ mem_fragmentation_ratio:15.79
+ mem_allocator:jemalloc-3.4.1
+
+ # Persistence
+ loading:0
+ rdb_changes_since_last_save:0
+ rdb_bgsave_in_progress:0
+ rdb_last_save_time:1486607123
+ rdb_last_bgsave_status:ok
+ rdb_last_bgsave_time_sec:0
+ rdb_current_bgsave_time_sec:-1
+ aof_enabled:0
+ aof_rewrite_in_progress:0
+ aof_rewrite_scheduled:0
+ aof_last_rewrite_time_sec:-1
+ aof_current_rewrite_time_sec:-1
+ aof_last_bgrewrite_status:ok
+
+ # Stats
+ total_connections_received:1
+ total_commands_processed:263
+ instantaneous_ops_per_sec:0
+ rejected_connections:0
+ sync_full:0
+ sync_partial_ok:0
+ sync_partial_err:0
+ expired_keys:0
+ evicted_keys:0
+ keyspace_hits:257
+ keyspace_misses:0
+ pubsub_channels:0
+ pubsub_patterns:0
+ latest_fork_usec:4793
+
+ # Replication
+ role:master
+ connected_slaves:0
+ master_repl_offset:0
+ repl_backlog_active:0
+ repl_backlog_size:1048576
+ repl_backlog_first_byte_offset:0
+ repl_backlog_histlen:0
+
+ # CPU
+ used_cpu_sys:24.65
+ used_cpu_user:15.84
+ used_cpu_sys_children:0.08
+ used_cpu_user_children:0.00
+
+ # Keyspace
+ db0:keys=14,expires=0,avg_ttl=0
+ db1:keys=1,expires=0,avg_ttl=0
+ 127.0.0.1:6379>
+ Shell14. Redis 备份 Redis 数据库可以使用安全的方案，使得进行连接的任何客户端在执行命令之前都需要进行身份验证。要保护 Redis 安全，需要在配置文件中设置密码。示例下面的示例显示了保护 Redis 实例的步骤。127.0.0.1:6379> CONFIG get requirepass 
+ 1) "requirepass" 
+ 2) ""
+ Shell 默认情况下，此属性为空，这表示还没有为此实例设置密码。您可以通过执行以下命令更改此属性。127.0.0.1:6379> CONFIG set requirepass "yiibai" 
+ OK 
+ 127.0.0.1:6379> CONFIG get requirepass 
+ 1) "requirepass" 
+ 2) "yiibai"
+ Shell 设置密码后，如果任何客户端运行命令而不进行身份验证，则会返回一个(error) NOAUTH Authentication required.的错误信息。 因此，客户端需要使用 AUTH 命令来验证。语法以下是 AUTH 命令的基本语法。127.0.0.1:6379> AUTH password
+ Shell 示例 127.0.0.1:6379> AUTH "yiibai" 
+ OK 
+ 127.0.0.1:6379> SET mykey "Test value" 
+ OK 
+ 127.0.0.1:6379> GET mykey 
+ "Test value"
+ Shell15. Redis 客户端连接 Redis 在配置的监听 TCP 端口和 Unix 套接字上等待和接受客户端的连接(如果已启用)。 当接受新的客户端连接时，执行以下操作 -由于 Redis 使用复用和非阻塞 I/O，因此客户端套接字处于非阻塞状态。设置 TCP_NODELAY 选项是为了确保连接不延迟。创建可读文件事件，以便 Redis 能够在套接字上读取新数据时收集客户端查询。最大客户数在 Redis 配置文件(redis.conf)中，有一个名称为 maxclients 的属性，它描述了可以连接到 Redis 的客户端的最大数量。以下是命令的基本语法。127.0.0.1:6379> config get maxclients
+ 1) "maxclients"
+ 2) "3984"
+ Shell 默认情况下，此属性设置为 10000(取决于操作系统的文件描述符限制的最大数量)，但您可以更改此属性。示例在以下示例中，我们已将客户端的最大数目设置为 100000，并启动服务器。yiibai@ubuntu:~$ redis-server --maxclients 100000
+ Shell 客户端命令
+ 编号	命令	描述
+ 1	CLIENT LIST	返回连接到 Redis 服务器的客户端列表
+ 2	CLIENT SETNAME	为当前连接分配/设置新的名称
+ 3	CLIENT GETNAME	返回由 CLIENT SETNAME 设置的当前连接的名称
+ 4	CLIENT PAUSE	这是一个连接控制命令，能够将所有 Redis 客户端按指定的时间量(以毫秒为单位)挂起
+ 5	CLIENT KILL	此命令关闭指定的客户端连接。16. Redis 管道 Redis 是一个 TCP 服务器，支持请求/响应协议。 在 Redis 中，请求通过以下步骤完成：客户端向服务器发送查询，并从套接字读取，通常以阻塞的方式，用于服务器响应。服务器处理命令并将响应发送回客户端。管道的意义管道的基本含义是，客户端可以向服务器发送多个请求，而不必等待回复，并最终在一个步骤中读取回复。示例要检查 Redis 管道，只需启动 Redis 实例，并在终端中键入以下命令。$(echo -en "PING\r\n SET tutorial redis\r\nGET tutorial\r\nINCR 
+ visitor\r\nINCR visitor\r\nINCR visitor\r\n"; sleep 10) | nc localhost 6379  
+ +PONG 
+ +OK 
+ redis 
+ :1 
+ :2 
+ :3
+ Shell 在上面的例子中，我们将使用 PING 命令检查 Redis 连接。这里设置了一个名称为 tutorial 的字符串，值为 redis。 然后得到键值，并增加 visitor 数量三次。 在结果中，我们可以看到所有命令都提交到 Redis 一次，Redis 在一个步骤中提供所有命令的输出。管道的好处这种技术的好处是大大提高了协议性能。通过管道从连接到本地主机速度增加五倍，因特网连接的至少快一百倍。17. Redis 分区分区是将数据拆分为多个 Redis 实例的过程，因此每个实例只包含一部分键。分区的优点它允许更大的数据库，使用更多计算机的内存总和。如果没有分区，则限制为单个计算机可以支持的内存量。它允许将计算能力扩展到多个核心和多个计算机，并将网络带宽扩展到多个计算机和网络适配器。分区的缺点通常不支持涉及多个键的操作。 例如，如果两个集合存储在映射到不同 Redis 实例的键中，则不能执行两个集合之间的交集操作。不能使用涉及多个键的 Redis 事务。分区粒度是关键，因此不可能使用单个巨大的键(如非常大的排序集合)来分割数据集。使用分区时，数据处理更复杂。 例如，必须处理多个 RDB/AOF 文件，并获得数据的备份，您需要聚合来自多个实例和主机的持久性文件。添加和删除容量可能很复杂。 例如，Redis Cluster 支持大多数透明的数据重新平衡，具有在运行时添加和删除节点的能力。但是，其他系统(如客户端分区和代理)不支持此功能。但可以使用一种叫作 Presharding 的技术来处理这方面的问题。分区类型 Redis 中有两种类型的分区。假设有四个 Redis 实例：R0，R1，R2，R3 以许多代表用户的键，如 user：1，user：2，…等等。范围分区范围分区通过将对象的范围映射到特定的 Redis 实例来实现。假设在上面示例中，从 ID 0 到 ID 10000 的用户将进入实例 R0，而从 ID 10001 到 ID 20000 的用户将进入实例 R1，以此类推。哈希分区在这种类型的分区中，使用散列函数(例如，模函数)将键转换成数字，然后将数据存储在不同的 Redis 实例中。18. Java 连接 Redis 在 Java 程序中使用 Redis 之前，需要确保在机器上安装了 Redis 的 Java 驱动程序和 Java 环境。可以先在将 Java 电脑上并配置好环境。安装现在，让我们看看如何设置 Redis Java 驱动程序。下载 jedis.jar - http://repo1.maven.org/maven2/redis/clients/jedis/2.1.0/jedis-2.1.0-sources.jar ，确保下载的 jedis.jar 是最新版本。将 jedis.jar 包含到类路径中。Java 连接到 Redis 服务器请参考以下一个简单的示例代码 - import redis.clients.jedis.Jedis; 
+
+ public class RedisJava { 
+    public static void main(String[] args) { 
+       //Connecting to Redis server on localhost 
+       Jedis jedis = new Jedis("localhost"); 
+       System.out.println("Connection to server sucessfully"); 
+       //check whether server is running or not 
+       System.out.println("Server is running: "+jedis.ping()); 
+    } 
+ }
+ Java 现在，编译并运行上面的程序来测试与 Redis 服务器的连接。可以根据需要更改路径。假设 jedis.jar 的当前版本在当前路径中可以使用。
+ 执行上面代码，将生成以下结果 - $javac RedisJava.java 
+ $java RedisJava 
+ Connection to server sucessfully 
+ Server is running: PONG
+ JavaRedis Java 字符串示例 import redis.clients.jedis.Jedis; 
+
+ public class RedisStringJava { 
+    public static void main(String[] args) { 
+       //Connecting to Redis server on localhost 
+       Jedis jedis = new Jedis("localhost"); 
+       System.out.println("Connection to server sucessfully"); 
+       //set the data in redis string 
+       jedis.set("tutorial-name", "Redis tutorial"); 
+       // Get the stored data and print it 
+       System.out.println("Stored string in redis:: "+ jedis.get("tutorialname")); 
+    } 
+ }
+ Java 执行上面代码，将生成以下结果 - $javac RedisStringJava.java 
+ $java RedisStringJava 
+ Connection to server sucessfully 
+ Stored string in redis:: Redis tutorial
+ JavaRedis Java 列表示例 import redis.clients.jedis.Jedis; 
+
+ public class RedisListJava { 
+    public static void main(String[] args) { 
+       //Connecting to Redis server on localhost 
+       Jedis jedis = new Jedis("localhost"); 
+       System.out.println("Connection to server sucessfully"); 
+
+       //store data in redis list 
+       jedis.lpush("tutorial-list", "Redis"); 
+       jedis.lpush("tutorial-list", "Mongodb"); 
+       jedis.lpush("tutorial-list", "Mysql"); 
+       // Get the stored data and print it 
+       List<String> list = jedis.lrange("tutorial-list", 0 ,5); 
+
+       for(int i = 0; i<list.size(); i++) { 
+          System.out.println("Stored string in redis:: "+list.get(i)); 
+       } 
+    } 
+ }
+ Java 执行上面代码，将生成以下结果 - $javac RedisListJava.java 
+ $java RedisListJava 
+ Connection to server sucessfully 
+ Stored string in redis:: Redis 
+ Stored string in redis:: Mongodb 
+ Stored string in redis:: Mysql
+ JavaRedis Java 键示例 import redis.clients.jedis.Jedis; 
+
+ public class RedisKeyJava { 
+    public static void main(String[] args) { 
+       //Connecting to Redis server on localhost 
+       Jedis jedis = new Jedis("localhost"); 
+       System.out.println("Connection to server sucessfully"); 
+       //store data in redis list 
+       // Get the stored data and print it 
+       List<String> list = jedis.keys("*"); 
+
+       for(int i = 0; i<list.size(); i++) { 
+          System.out.println("List of stored keys:: "+list.get(i)); 
+       } 
+    } 
+ }
+ Java 执行上面代码，将生成以下结果 - $javac RedisKeyJava.java 
+ $java RedisKeyJava 
+ Connection to server sucessfully 
+ List of stored keys:: tutorial-name 
+ List of stored keys:: tutorial-list
+ Java19. PHP 连接 Redis 在 php 程序中使用 Redis 之前，需要确保在机器上安装了 Redis 的 PHP 驱动程序和 PHP 环境。可以先在将 PHP 电脑上并配置好环境。安装现在，让我们看看如何设置 Redis PHP 驱动程序。
+ 从 github 库下载 phpredis=> http://github.com/nicolasff/phpredis。 当下载它之后，提取文件到 phpredis 目录。在 Ubuntu 上，安装以下扩展。cd phpredis 
+ sudo phpize 
+ sudo ./configure 
+ sudo make 
+ sudo make install
+ Shell 现在，将“modules”文件夹的内容复制并粘贴到 PHP 扩展目录中，并在 php.ini 中添加以下行。extension = redis.so
+ Shell 现在，Redis PHP 安装完成！使用连接到 Redis 服务器<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //check whether server is running or not 
+    echo "Server is running: ".$redis->ping(); 
+ ?>
+ PHP 当程序执行时，将产生以下结果。Connection to server sucessfully 
+ Server is running: PONG
+ ShellRedis PHP 字符串示例<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //set the data in redis string 
+    $redis->set("tutorial-name", "Redis tutorial"); 
+    // Get the stored data and print it 
+    echo "Stored string in redis:: " .$redis→get("tutorial-name"); 
+ ?>
+ PHP 执行上面代码，将生成以下结果 - Connection to server sucessfully 
+ Stored string in redis:: Redis tutorial
+ JavaRedis php 列表示例<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //store data in redis list 
+    $redis->lpush("tutorial-list", "Redis"); 
+    $redis->lpush("tutorial-list", "Mongodb"); 
+    $redis->lpush("tutorial-list", "Mysql");  
+
+    // Get the stored data and print it 
+    $arList = $redis->lrange("tutorial-list", 0 ,5); 
+    echo "Stored string in redis:: "; 
+    print_r($arList); 
+ ?>
+ PHP 执行上面代码，将生成以下结果 - Connection to server sucessfully 
+ Stored string in redis:: 
+ Redis 
+ Mongodb 
+ Mysql
+ PHPRedis php 键示例<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    // Get the stored keys and print it 
+    $arList = $redis->keys("*"); 
+    echo "Stored keys in redis:: " 
+    print_r($arList); 
+ ?>
+ PHP 执行上面代码，将生成以下结果 - Connection to server sucessfully 
+ Stored string in redis:: 
+ tutorial-name 
+ tutorial-list
+ PHP20. C#连接 Redis 前面我们已经准备成功开启 Redis 服务，其端口号为 6379，接下来我们就看看如何使用 C#语言来操作 Redis。就如 MongoDB 一样，要操作 Redis 服务，自然就需要下载 C#的客户端，这里通过 Nuget 下载了“ServiceStack.Redis”客户端，引入成功之后，就可以使用 C#来对 Redis 服务进行操作了。 由于 Redis 一般是用来作为缓存的，也就是一般我们把一些不经常改变的数据通过 Redis 缓存起来，之后用户的请求就不需要再访问数据库，而可以直接从 Redis 缓存中直接获取，这样就可以减轻数据库服务器的压力以及加快响应速度。既然是用来做缓存的，也就是通过指定 key 值来把对应 Value 保存起来，之后再根据 key 值来获得之前缓存的值。具体的操作代码如下所示，这里就不过多介绍了。请参考以下代码 - class Program
+     {
+         static void Main(string[] args)
+         {
+             //在 Redis 中存储常用的 5 种数据类型：String,Hash,List,SetSorted set
+             var client = new RedisClient("127.0.0.1", 6379);
+             //AddString(client);
+             //AddHash(client);
+             //AddList(client);
+             //AddSet(client);
+             AddSetSorted(client);
+
+             Console.ReadLine();
+         }
+
+         private static void AddString(RedisClient client)
+         {
+             var timeOut = new TimeSpan(0,0,0,30);
+             client.Add("Test", "Learninghard", timeOut);
+             while (true)
+             {
+                 if (client.ContainsKey("Test"))
+                 {
+                     Console.WriteLine("String Key: Test -Value: {0}, 当前时间: {1}", client.Get<string>("Test"), DateTime.Now);
+                     Thread.Sleep(10000);
+                 }
+                 else
+                 {
+                     Console.WriteLine("Value 已经过期了，当前时间：{0}", DateTime.Now);
+                     break;
+                 }
+             }
+
+             var person = new Person() {Name = "Learninghard", Age = 26};
+             client.Add("lh", person);
+             var cachePerson = client.Get<Person>("lh");
+             Console.WriteLine("Person's Name is : {0}, Age: {1}", cachePerson.Name, cachePerson.Age);
+         }
+
+         private static void AddHash(RedisClient client)
+         {
+             if (client == null) throw new ArgumentNullException("client");
+
+             client.SetEntryInHash("HashId", "Name", "Learninghard");
+             client.SetEntryInHash("HashId", "Age", "26");
+             client.SetEntryInHash("HashId", "Sex", "男");
+
+             var hashKeys = client.GetHashKeys("HashId");
+             foreach (var key in hashKeys)
+             {
+                 Console.WriteLine("HashId--Key:{0}", key);
+             }
+
+             var haskValues = client.GetHashValues("HashId");
+             foreach (var value in haskValues)
+             {
+                 Console.WriteLine("HashId--Value:{0}", value);
+             }
+
+             var allKeys = client.GetAllKeys(); //获取所有的 key。
+             foreach (var key in allKeys)
+             {
+                 Console.WriteLine("AllKey--Key:{0}", key);
+             }
+         }
+
+         private static void AddList(RedisClient client)
+         {
+             if (client == null) throw new ArgumentNullException("client");
+
+             client.EnqueueItemOnList("QueueListId", "1.Learnghard");  //入队
+             client.EnqueueItemOnList("QueueListId", "2.张三");
+             client.EnqueueItemOnList("QueueListId", "3.李四");
+             client.EnqueueItemOnList("QueueListId", "4.王五");
+             var queueCount = client.GetListCount("QueueListId");
+
+             for (var i = 0; i < queueCount; i++)
+             {
+                 Console.WriteLine("QueueListId 出队值：{0}", client.DequeueItemFromList("QueueListId"));   //出队(队列先进先出)
+             }
+
+             client.PushItemToList("StackListId", "1.Learninghard");  //入栈
+             client.PushItemToList("StackListId", "2.张三");
+             client.PushItemToList("StackListId", "3.李四");
+             client.PushItemToList("StackListId", "4.王五");
+
+             var stackCount = client.GetListCount("StackListId");
+             for (var i = 0; i < stackCount; i++)
+             {
+                 Console.WriteLine("StackListId 出栈值：{0}", client.PopItemFromList("StackListId"));   //出栈(栈先进后出)
+             }
+         }
+
+         //它是 string 类型的无序集合。set 是通过 hash table 实现的，添加，删除和查找,对集合我们可以取并集，交集，差集
+         private static void AddSet(RedisClient client)
+         {
+             if (client == null) throw new ArgumentNullException("client");
+
+             client.AddItemToSet("Set1001", "A");
+             client.AddItemToSet("Set1001", "B");
+             client.AddItemToSet("Set1001", "C");
+             client.AddItemToSet("Set1001", "D");
+             var hastset1 = client.GetAllItemsFromSet("Set1001");
+             foreach (var item in hastset1)
+             {
+                 Console.WriteLine("Set 无序集合 Value:{0}", item); //出来的结果是无须的
+             }
+
+             client.AddItemToSet("Set1002", "K");
+             client.AddItemToSet("Set1002", "C");
+             client.AddItemToSet("Set1002", "A");
+             client.AddItemToSet("Set1002", "J");
+             var hastset2 = client.GetAllItemsFromSet("Set1002");
+             foreach (var item in hastset2)
+             {
+                 Console.WriteLine("Set 无序集合 ValueB:{0}", item); //出来的结果是无须的
+             }
+
+             var hashUnion = client.GetUnionFromSets(new string[] { "Set1001", "Set1002" });
+             foreach (var item in hashUnion)
+             {
+                 Console.WriteLine("求 Set1001 和 Set1002 的并集:{0}", item); //并集
+             }
+
+             var hashG = client.GetIntersectFromSets(new string[] { "Set1001", "Set1002" });
+             foreach (var item in hashG)
+             {
+                 Console.WriteLine("求 Set1001 和 Set1002 的交集:{0}", item);  //交集
+             }
+
+             var hashD = client.GetDifferencesFromSet("Set1001", new string[] { "Set1002" });  //[返回存在于第一个集合，但是不存在于其他集合的数据。差集]
+             foreach (var item in hashD)
+             {
+                 Console.WriteLine("求 Set1001 和 Set1002 的差集:{0}", item);  //差集
+             }
+
+         }
+
+         /*
+         sorted set 是 set 的一个升级版本，它在 set 的基础上增加了一个顺序的属性，这一属性在添加修改.元素的时候可以指定，
+         * 每次指定后，zset(表示有序集合)会自动重新按新的值调整顺序。可以理解为有列的表，一列存 value,一列存顺序。操作中 key 理解为 zset 的名字.
+         */
+         private static void AddSetSorted(RedisClient client)
+         {
+             if (client == null) throw new ArgumentNullException("client");
+
+             client.AddItemToSortedSet("SetSorted1001", "A");
+             client.AddItemToSortedSet("SetSorted1001", "B");
+             client.AddItemToSortedSet("SetSorted1001", "C");
+             var listSetSorted = client.GetAllItemsFromSortedSet("SetSorted1001");
+             foreach (var item in listSetSorted)
+             {
+                 Console.WriteLine("SetSorted 有序集合{0}", item);
+             }
+
+             client.AddItemToSortedSet("SetSorted1002", "A", 400);
+             client.AddItemToSortedSet("SetSorted1002", "D", 200);
+             client.AddItemToSortedSet("SetSorted1002", "B", 300);
+
+             // 升序获取第一个值:"D"
+             var list = client.GetRangeFromSortedSet("SetSorted1002", 0, 0);
+
+             foreach (var item in list)
+             {
+                 Console.WriteLine(item);
+             }
+
+             //降序获取第一个值:"A"
+             list = client.GetRangeFromSortedSetDesc("SetSorted1002", 0, 0);
+
+             foreach (var item in list)
+             {
+                 Console.WriteLine(item);
+             }
+         }
+     }
+
+     class Person
+     {
+         public string Name { get; set; }
+         public int Age { get; set; }
+     }
+     C#如何要想查看自己操作是否成功，也可以像 MongoDB 那样下载一个客户端工具，这里推荐一款 Redis Desktop Manager。这个工具就相当于 SQL Server 的客户端工具一样。通过这款工具可以查看 Redis 服务器中保存的数据和对应格式。其使用也非常简单，只需要添加一个 Redis 服务连接即可。该工具的下载地址为：http://pan.baidu.com/s/1sjp55Ul
+* Redis (REmote DIctionary Server,key-value 非关系型数据库)
+** 启动 Redis
+   sudo serveer redis-server start
+   redis-cli 客户端
+** 配置
+*** 配置文件 /etc/redis/redis.conf 
+*** 获取所有配置 config get *
+*** 设置 confit set Name Value
+*** 参数说明
+1. Redis 默认不是以守护进程的方式运行，可以通过该配置项修改，使用 yes 启用守护进程
+    daemonize no
+
+2. 当 Redis 以守护进程方式运行时，Redis 默认会把 pid 写入/var/run/redis.pid 文件，可以通过 pidfile 指定
+    pidfile /var/run/redis.pid
+
+3. 指定 Redis 监听端口，默认端口为 6379，作者在自己的一篇博文中解释了为什么选用 6379 作为默认端口，因为 6379 在手机按键上 MERZ 对应的号码，而 MERZ 取自意大利歌女 Alessia Merz 的名字
+    port 6379
+
+4. 绑定的主机地址
+    bind 127.0.0.1
+
+5.当 客户端闲置多长时间后关闭连接，如果指定为 0，表示关闭该功能
+    timeout 300
+
+6. 指定日志记录级别，Redis 总共支持四个级别：debug、verbose、notice、warning，默认为 verbose
+    loglevel verbose
+
+7. 日志记录方式，默认为标准输出，如果配置 Redis 为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null
+    logfile stdout
+
+8. 设置数据库的数量，默认数据库为 0，可以使用 SELECT <dbid>命令在连接上指定数据库 id
+    databases 16
+
+9. 指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合
+    save <seconds> <changes>
+
+    Redis 默认配置文件中提供了三个条件：
+    save 900 1
+    save 300 10
+    save 60 10000
+
+    分别表示 900 秒（15 分钟）内有 1 个更改，300 秒（5分钟）内有 10 个更改以及 60 秒内有 10000 个更改。
+
+ 
+
+10. 指定存储至本地数据库时是否压缩数据，默认为 yes，Redis 采用 LZF 压缩，如果为了节省 CPU 时间，可以关闭该选项，但会导致数据库文件变的巨大
+    rdbcompression yes
+
+11. 指定本地数据库文件名，默认值为 dump.rdb
+    dbfilename dump.rdb
+
+12. 指定本地数据库存放目录
+    dir ./
+
+13. 设置当本机为 slav 服务时，设置 master 服务的 IP 地址及端口，在 Redis 启动时，它会自动从 master 进行数据同步
+    slaveof <masterip> <masterport>
+
+14. 当 master 服务设置了密码保护时，slav 服务连接 master 的密码
+    masterauth <master-password>
+
+15. 设置 Redis 连接密码，如果配置了连接密码，客户端在连接 Redis 时需要通过 AUTH <password>命令提供密码，默认关闭
+    requirepass foobared
+
+16. 设置同一时间最大客户端连接数，默认无限制，Redis 可以同时打开的客户端连接数为 Redis 进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis 会关闭新的连接并向客户端返回 max number of clients reached 错误信息
+    maxclients 128
+
+17. 指定 Redis 最大内存限制，Redis 在启动时会把数据加载到内存中，达到最大内存后，Redis 会先尝试清除已到期或即将到期的 Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis 新的 vm 机制，会把 Key 存放内存，Value 会存放在 swap 区
+    maxmemory <bytes>
+
+18. 指定是否在每次更新操作后进行日志记录，Redis 在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis 本身同步数据文件是按上面 save 条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为 no
+
+    appendonly no
+
+19. 指定更新日志文件名，默认为 appendonly.aof
+
+     appendfilename appendonly.aof
+
+20. 指定更新日志条件，共有 3 个可选值： 
+    no：表示等操作系统进行数据缓存同步到磁盘（快） 
+    always：表示每次更新操作后手动调用 fsync()将数据写到磁盘（慢，安全） 
+    everysec：表示每秒同步一次（折中，默认值）
+
+    appendfsync everysec
+
+21. 指定是否启用虚拟内存机制，默认值为 no，简单的介绍一下，VM 机制将数据分页存放，由 Redis 将访问量较少的页即冷数据 swap 到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析 Redis 的 VM 机制）
+
+     vm-enabled no
+
+22. 虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个 Redis 实例共享
+
+     vm-swap-file /tmp/redis.swap
+
+23. 将所有大于 vm-max-memory 的数据存入虚拟内存,无论 vm-max-memory 设置多小,所有索引数据都是内存存储的(Redis 的索引数据 就是 keys),也就是说,当 vm-max-memory 设置为 0 的时候,其实是所有 value 都存在于磁盘。默认值为 0
+
+     vm-max-memory 0
+
+24. Redis swap 文件分成了很多的 page，一个对象可以保存在多个 page 上面，但一个 page 上不能被多个对象共享，vm-page-size 是要根据存储的 数据大小来设定的，作者建议如果存储很多小对象，page 大小最好设置为 32 或者 64bytes；如果存储很大大对象，则可以使用更大的 page，如果不 确定，就使用默认值
+
+     vm-page-size 32
+
+25. 设置 swap 文件中的 page 数量，由于页表（一种表示页面空闲或使用的 bitmap）是在放在内存中的，，在磁盘上每 8 个 pages 将消耗 1byte 的内存。
+
+     vm-pages 134217728
+
+26. 设置访问 swap 文件的线程数,最好不要超过机器的核数,如果设置为 0,那么所有对 swap 文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为 4
+
+     vm-max-threads 4
+
+27. 设置在向客户端应答时，是否把较小的包合并为一个包发送，默认为开启
+
+    glueoutputbuf yes
+
+28. 指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法
+
+    hash-max-zipmap-entries 64
+
+    hash-max-zipmap-value 512
+
+29. 指定是否激活重置哈希，默认为开启（后面在介绍 Redis 的哈希算法时具体介绍）
+
+    activerehashing yes
+
+30. 指定包含其它的配置文件，可以在同一主机上多个 Redis 实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件
+
+    include /path/to/local.conf
+* redis 
+#+begin_src sh
+  # 查看所有的配置
+  config get *
+  config get dir
+  # 清空所有的数据
+  flushall
+  # save 时只管保存，其它不管，全部阻塞 
+  SAVE
+  # Redis 会在后台异步进行快照操作，快照同时还可以响应客户端请求
+  BGSAVE
+  # 查看所有的键
+  KEYS *
+  # 操作集合
+  SADD 键 值 # 向一个集合中添加一个值
+  SCARD 键  # 返回该集合的基数
+  SMEMBERS 键 # 返回一个集合 key 中的全部成员
+  SINTER 键 1 键 2 ... # 返回一个集合的全部成员，该集合是所有给定集合的交集。
+  # 操作列表
+  LPUSH 键 值
+  RPUSH 键 值
+  LRANGE 键 start stop 
+  # 关闭服务器
+  SHUTDOWN
+  # 获得 value 是字符串的键的 value
+  get 键名
+  # 获得 value 是 set 的键的 value
+  SCARD 键名
+  SMEMBERS 键名
+  # 测试服务是否开启
+  ping 返回 PONG 的话表明一切正常
+#+end_src
+
+## 配置文件
+#+begin_src sh
+# 表明需要在后台运行
+daemonize yes
+# 设置信任的主机
+bind 0.0.0.0
+# 设置访问的端口
+port 6379
+# 设置连接密码
+requirepass 你要设置的密码
+# 设置 rdb 文件的位置
+dir /usr/redis
+# 设置 rdb 文件的文件名
+dbfilename dump.rdb
+# 设置保存 rdb 的条件
+save 900 1 300 10 60 10000"
+#+end_src

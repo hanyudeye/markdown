@@ -1,0 +1,271 @@
+#+TITLE: 爬虫简介
+#+DESCRIPTION: 爬虫简介
+#+TAGS[]: scrapy 
+#+CATEGORIES[]: 软件使用
+
+网络爬虫（web crawler），以前经常称之为网络蜘蛛（spider），是按照一定的规则自动
+浏览万维网并获取信息的机器人程序（或脚本），曾经被广泛的应用于互联网搜索引擎。使
+用过互联网和浏览器的人都知道，网页中除了供用户阅读的文字信息之外，还包含一些超链
+接。网络爬虫系统正是通过网页中的超链接信息不断获得网络上的其它页面。正因如此，网
+络数据采集的过程就像一个爬虫或者蜘蛛在网络上漫游，所以才被形象的称为网络爬虫或者
+网络蜘蛛。
+
+
+#### 爬虫的应用领域
+
+1. 搜索引擎
+2. 新闻聚合
+3. 社交应用
+4. 舆情监控
+5. 行业数据
+
+
+* Urllib 与 URLError
+  
+ request,error,parse 
+  
+* scrapy
+** 简介 
+   制作 Scrapy 爬虫 一共需要 4 步：
+   - 1.新建项目 (scrapy startproject xxx)：新建一个新的爬虫项目
+   - 2.明确目标 （编写 items.py）：明确你想要抓取的目标
+   - 3.制作爬虫 （spiders/xxspider.py）：制作爬虫开始爬取网页
+   - 4.存储内容 （pipelines.py）：设计管道存储爬取内容
+** 二、明确目标(mySpider/items.py)
+   我们打算抓取 http://www.itcast.cn/channel/teacher.shtml 网站里的所有讲师的姓名、职称和个人信息。
+
+   打开 mySpider 目录下的 items.py。
+
+   Item 定义结构化数据字段，用来保存爬取到的数据，有点像 Python 中的 dict，但是提供了一些额外的保护减少错误。
+
+   可以通过创建一个 scrapy.Item 类， 并且定义类型为 scrapy.Field 的类属性来定义一个 Item（可以理解成类似于 ORM 的映射关系）。
+
+   接下来，创建一个 ItcastItem 类，和构建 item 模型（model）。
+
+   import scrapy
+
+   class ItcastItem(scrapy.Item):
+   name = scrapy.Field()
+   title = scrapy.Field()
+   info = scrapy.Field()
+   
+** 三、制作爬虫 （spiders/itcastSpider.py）
+   爬虫功能要分两步：
+
+   1. 爬数据
+
+   在当前目录下输入命令，将在 mySpider/spider 目录下创建一个名为 itcast 的爬虫，并指定爬取域的范围：
+
+   scrapy genspider itcast "itcast.cn"
+
+   打开 mySpider/spider 目录里的 itcast.py，默认增加了下列代码:
+
+   import scrapy
+
+   class ItcastSpider(scrapy.Spider):
+   name = "itcast"
+   allowed_domains = ["itcast.cn"]
+   start_urls = (
+   'http://www.itcast.cn/',
+   )
+
+   def parse(self, response):
+   pass
+        
+   其实也可以由我们自行创建 itcast.py 并编写上面的代码，只不过使用命令可以免去编写固定代码的麻烦
+
+   要建立一个 Spider， 你必须用 scrapy.Spider 类创建一个子类，并确定了三个强制的属性 和 一个方法。
+
+   name = "" ：这个爬虫的识别名称，必须是唯一的，在不同的爬虫必须定义不同的名字。
+
+   allow_domains = [] 是搜索的域名范围，也就是爬虫的约束区域，规定爬虫只爬取这个域名下的网页，不存在的 URL 会被忽略。
+
+   start_urls = () ：爬取的 URL 元祖/列表。爬虫从这里开始抓取数据，所以，第一次下载的数据将会从这些 urls 开始。其他子 URL 将会从这些起始 URL 中继承性生成。
+
+   parse(self, response) ：解析的方法，每个初始 URL 完成下载后将被调用，调用的时候传入从每一个 URL 传回的 Response 对象来作为唯一参数，主要作用如下：
+
+   负责解析返回的网页数据(response.body)，提取结构化数据(生成 item)
+   生成需要下一页的 URL 请求。
+   将 start_urls 的值修改为需要爬取的第一个 url
+
+   start_urls = ("http://www.itcast.cn/channel/teacher.shtml",)
+   修改 parse()方法
+
+   def parse(self, response):
+   filename = "teacher.html"
+   open(filename, 'wb').write(response.body)
+   然后运行一下看看，在 mySpider 目录下执行：
+
+   scrapy crawl itcast
+   是的，就是 itcast，看上面代码，它是 ItcastSpider 类的 name 属性，也就是使用 scrapy genspider 命令的唯一爬虫名。
+
+   运行之后，如果打印的日志出现 [scrapy] INFO: Spider closed (finished)，代表执行完
+   成。 之后当前文件夹中就出现了一个 teacher.html 文件，里面就是我们刚刚要爬取的网
+   页的全部源代码信息。
+
+   注意: Python2.x 默认编码环境是 ASCII，当和取回的数据编码格式不一致时，可能会造成
+   乱码；我们可以指定保存内容的编码格式，一般情况下，我们可以在代码最上方添加
+
+   import sys
+   reload(sys)
+   sys.setdefaultencoding("utf-8")
+
+   这三行代码是 Python2.x 里解决中文编码的万能钥匙，经过这么多年的吐槽后 Python3 学
+   乖了，默认编码是 Unicode 了...(祝大家早日拥抱 Python3)
+
+** 2. 取数据
+
+   爬取整个网页完毕，接下来的就是的取过程了，首先观察页面源码：
+
+   <div class="li_txt">
+   <h3>  xxx  </h3>
+   <h4> xxxxx </h4>
+   <p> xxxxxxxx </p>
+   这里给出一些 XPath 表达式的例子及对应的含义:
+
+   /html/head/title: 选择 HTML 文档中 <head> 标签内的 <title> 元素
+   /html/head/title/text(): 选择上面提到的 <title> 元素的文字
+   //td: 选择所有的 <td> 元素
+   //div[@class="mine"]: 选择所有具有 class="mine" 属性的 div 元素
+   举例我们读取网站 http://www.itcast.cn/ 的网站标题，修改 itcast.py 文件代码如下：：
+
+   # -*- coding: utf-8 -*-
+   import scrapy
+
+   # 以下三行是在 Python2.x 版本中解决乱码问题，Python3.x 版本的可以去掉
+   import sys
+   reload(sys)
+   sys.setdefaultencoding("utf-8")
+
+   class Opp2Spider(scrapy.Spider):
+   name = 'itcast'
+   allowed_domains = ['itcast.com']
+   start_urls = ['http://www.itcast.cn/']
+
+   def parse(self, response):
+   # 获取网站标题
+   context = response.xpath('/html/head/title/text()')   
+       
+   # 提取网站标题
+   title = context.extract_first()  
+   print(title) 
+   pass
+   执行以下命令：
+
+   $ scrapy crawl itcast
+   ...
+   ...
+   传智播客官网-好口碑 IT 培训机构,一样的教育,不一样的品质
+   ...
+   ...
+   我们之前在 mySpider/items.py 里定义了一个 ItcastItem 类。 这里引入进来:
+
+   from mySpider.items import ItcastItem
+   然后将我们得到的数据封装到一个 ItcastItem 对象中，可以保存每个老师的属性：
+
+   from mySpider.items import ItcastItem
+
+   def parse(self, response):
+   #open("teacher.html","wb").write(response.body).close()
+
+   # 存放老师信息的集合
+   items = []
+
+   for each in response.xpath("//div[@class='li_txt']"):
+   # 将我们得到的数据封装到一个 `ItcastItem` 对象
+   item = ItcastItem()
+   #extract()方法返回的都是 unicode 字符串
+   name = each.xpath("h3/text()").extract()
+   title = each.xpath("h4/text()").extract()
+   info = each.xpath("p/text()").extract()
+
+   #xpath 返回的是包含一个元素的列表
+   item['name'] = name[0]
+   item['title'] = title[0]
+   item['info'] = info[0]
+
+   items.append(item)
+
+   # 直接返回最后数据
+   return items
+
+
+保存数据
+scrapy 保存信息的最简单的方法主要有四种，-o 输出指定格式的文件，命令如下：
+
+scrapy crawl itcast -o teachers.json
+json lines 格式，默认为 Unicode 编码
+
+scrapy crawl itcast -o teachers.jsonl
+csv 逗号表达式，可用 Excel 打开
+
+scrapy crawl itcast -o teachers.csv
+xml 格式
+
+scrapy crawl itcast -o teachers.xml
+思考
+如果将代码改成下面形式，结果完全一样。
+
+请思考 yield 在这里的作用(Python yield 使用浅析)：
+
+# -*- coding: utf-8 -*-
+import scrapy
+from mySpider.items import ItcastItem
+
+# 以下三行是在 Python2.x 版本中解决乱码问题，Python3.x 版本的可以去掉
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+class Opp2Spider(scrapy.Spider):
+    name = 'itcast'
+    allowed_domains = ['itcast.com']
+    start_urls = ("http://www.itcast.cn/channel/teacher.shtml",)
+
+    def parse(self, response):
+        #open("teacher.html","wb").write(response.body).close()
+
+        # 存放老师信息的集合
+        items = []
+
+        for each in response.xpath("//div[@class='li_txt']"):
+            # 将我们得到的数据封装到一个 `ItcastItem` 对象
+            item = ItcastItem()
+            #extract()方法返回的都是 unicode 字符串
+            name = each.xpath("h3/text()").extract()
+            title = each.xpath("h4/text()").extract()
+            info = each.xpath("p/text()").extract()
+
+            #xpath 返回的是包含一个元素的列表
+            item['name'] = name[0]
+            item['title'] = title[0]
+            item['info'] = info[0]
+
+            items.append(item)
+
+        # 直接返回最后数据
+        return items
+
+** 命令
+全局命令   
+ - fetch  显示爬虫爬取过程 (scrapy fetch http://www.baidu.com)
+ - scrapy fetch -h 显示参数说明
+ - runspider 直接运行爬虫文件
+ - settings 查看配置信息 (scrapy settings --get BOT_NAME)
+ - shell 进入交互模式 (scrapy shell http://www.baidu.com --nolog)
+ - startproject 创建项目
+ - view 下载某个网页并用浏览器查看
+
+   项目命令
+   
+   - bench 测试本地硬件性能 (scrapy bench)
+   - genspider 创建爬虫文件
+   - scrapy genspider -l (显示爬虫模板)
+   - scrapy genspider  -d crawl (查看模板内容)
+   - check 测试 ( scrapy check 爬虫名)
+   - crawl 启动爬虫  (scrapy crawl 爬虫名)
+   - list 列出可使用的爬虫
+   - edit 用编辑器打开爬虫
+   - parse 分析链接 (scrapy parse http://www.baidu.com --nolog)
+
+** Items (结构化数据 )
