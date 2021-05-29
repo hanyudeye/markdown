@@ -633,11 +633,7 @@
 30. 指定包含其它的配置文件，可以在同一主机上多个 Redis 实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件
 
     include /path/to/local.conf
-* mongodb
-
 * redis 
-  内存数据结构存储，用作数据库，缓存和消息代理
-  
 #+begin_src sh
   # 查看所有的配置
   config get *
