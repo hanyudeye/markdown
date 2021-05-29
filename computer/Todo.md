@@ -24,3 +24,8 @@ https://jingyan.baidu.com/article/b87fe19e362d77521835680b.html
 
 ## 农作物图标
 https://www.iconfont.cn/collections/detail?spm=a313x.7781069.1998910419.dc64b3430&cid=21867
+
+# 看源码，不能看文档，
+
+源码 直观显示做什么
+文档 解释 源码做什么

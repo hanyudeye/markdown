@@ -1,44 +1,29 @@
-#+TITLE: jQuery
-#+DESCRIPTION: jQuery简介
-#+TAGS[]: jQuery
-#+CATEGORIES[]: 技术
-#+DATE: 2020-02-11T20:46:44+08:00
-#+draft: true
 
 用于简化javascript 对 Dom 的操作方式。
-* jquery
-** 使用
-*** 引入 
-    #+begin_src html
-      <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
-    #+end_src
-*** 初始化
-    #+begin_src js
-      $(document).ready(function(){
-      });
-    #+end_src
 
-    简写
-    #+begin_src js
-      $(function(){
-      })
-    #+end_src
+# jquery
+## 使用
+### 初始化
+```
+$(document).ready(function(){
+});
+```
 
-** 选择器 
-   #+begin_src js
-     $(document)//选择整个文档对象
-     $('#myId')//选择ID为myId的网页元素  
-     $('div.myClass')//选择class为myClass的div元素    
-     $('input[name=first]')//选择name属性等于first的input元素
-     $('a:first')//选择网页中第一个a元素  
-     $('tr:odd')//选择表格的奇数行  
-     $('#myForm :input')//选择表单中的input元素  
-     $('div:visible') //选择可见的div元素  
-     $('div:gt(2)')//选择所有的div元素，除了前三个  
-     $('div:animated')//选择当前处于动画状态的div元素  
-   #+end_src
+## 选择器 
+```
+$(document)//选择整个文档对象
+$('#myId')//选择ID为myId的网页元素  
+$('div.myClass')//选择class为myClass的div元素    
+$('input[name=first]')//选择name属性等于first的input元素
+$('a:first')//选择网页中第一个a元素  
+$('tr:odd')//选择表格的奇数行  
+$('#myForm :input')//选择表单中的input元素  
+$('div:visible') //选择可见的div元素  
+$('div:gt(2)')//选择所有的div元素，除了前三个  
+$('div:animated')//选择当前处于动画状态的div元素  
+```  
 
-** 改变结果集
+## 改变结果集
    #+begin_src js
      $('div').has('p'); //选择包含p元素的div元素  
      $('div').not('.myClass'); //选择class不等于myClass的div元素  
@@ -56,7 +41,7 @@
      $('div').siblings(); //选择div的同级元素  
    #+end_src
 
-** 链式操作
+## 链式操作
    jQuery 允许将所有操作连接在一起，以链条的形式写出来，比如：
    
    #+begin_src js
@@ -85,7 +70,7 @@
          .html('World'); //将它的内容改为World  
    #+end_src
 
-** 元素的操作：取值和赋值
+## 元素的操作：取值和赋值
    操作网页元素，最常见的需求是取得它们的值，或者对它们进行赋值。
 
    jQuery 使用同一个函数，来完成取值(getter)和赋值(setter)。到底是取值还是赋值，由函数的参数决定。
@@ -108,7 +93,7 @@
    值的时候，则是只取出第一个元素的值(.text()例外，它取出所有元素的 text 内容)。
    #+end_quote
 
-** 元素的操作：移动
+## 元素的操作：移动
    如果要移动选中的元素，有两种方法：一种是直接移动该元素，另一种是移动其他元素，使得目标元素达到我们想要的位置。
 
    假定我们选中了一个 div 元素，需要把它移动到 p 元素后面。
@@ -135,7 +120,7 @@
    - .appendTo()和.append()：在现存元素的内部，从后面插入元素  
    - .prependTo()和.prepend() ：在现存元素的内部，从前面插入元素
 
-** 元素的操作：复制、删除和创建
+## 元素的操作：复制、删除和创建
 
      - 复制元素使用.clone()。
      - 删除元素使用.remove()和.detach()。两者的区别在于，前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。
@@ -170,7 +155,7 @@
      #+begin_src js
        var e = $("", { href: "#", class: "a-class another-class", title: "..." });
      #+end_src
-** 工具方法
+## 工具方法
    除了对选中的元素进行操作以外，jQuery 还提供一些工具方法(utility)，不必选中元素，就可以直接使用。
 
    如果你懂得 Javascript 语言的继承原理，那么就能理解工具方法的实质。它是定义在 jQuery 构造函数上的方法，即 jQuery.method()，所以可以直接使用。而那些操作元素的方法，是定义在构造函数的 prototype 对象上的方法，即 jQuery.prototype.method()，所以必须生成实例(即选中元素)后使用。如果不理解这种区别，问题也不大，只要把工具方法理解成，是像 javascript 原生函数那样，可以直接使用的方法就行了。
@@ -190,7 +175,7 @@
    - $.isPlainObject() 判断某个参数是否为用"{}"或"new Object"建立的对象。  
    - $.support() 判断浏览器是否支持某个特性。  
 
-** 事件操作
+## 事件操作
    jQuery 可以对网页元素绑定事件。根据不同的事件，运行相应的函数。
 
    目前，jQuery 主要支持以下事件：
@@ -284,7 +269,7 @@
        $('a').trigger('click');
      #+end_src
 
-** 特殊效果
+## 特殊效果
    jQuery 允许对象呈现某些特殊效果。
 
    #+begin_src js
@@ -332,10 +317,10 @@
 
    - .stop()和.delay()用来停止或延缓特效的执行。
    - $.fx.off 如果设置为 true，则关闭所有网页特效。
-** ajax  
-*** $.ajax
+## ajax  
+### $.ajax
     形式：$.ajax({name:val, name:val,...});
-**** 例子   
+#### 例子   
      #+begin_src js
        $.ajax({
            type: 'POST',
@@ -354,7 +339,7 @@
                    + ',\nError Thrown: ' + errorThrown);
        });
      #+end_src
-**** 可选字段：
+#### 可选字段：
  1）url：链接地址，字符串表示
  2）data：需发送到服务器的数据，GET与POST都可以，格式为{A: '...', B: '...'}
  3）type："POST" 或 "GET"，请求类型
@@ -368,7 +353,7 @@
  11）async：是否异步处理，bool表示，默认为true；设置该值为false后，JS不会向下执行，而是原地等待服务器返回数据，并完成相应的回调函数后，再向下执行
  12）username：访问认证请求中携带的用户名，字符串表示
  13）password：返回认证请求中携带的密码，字符串表示
-*** $.post
+### $.post
     该方法使用POST方式执行Ajax请求，从服务器加载数据。
 
     形式：$.post(url, data, func, dataType);
@@ -390,19 +375,19 @@
 );
     #+end_src
 
-*** $.get()
+### $.get()
     形式：$.get(url, data, func, dataType);
 
-*** $.getJSON()
+### $.getJSON()
 该方法使用GET方式执行Ajax请求，从服务器加载JSON格式数据。
 形式：$.getJSON(url, data, func);
 
-*** $.load()
+### $.load()
 该方法将服务器加载的数据直接插入到指定DOM中。
 形式：$.load(url, data, func);
 其中data如果存在则使用POST方式发送请求，不存在则使用GET方式发送请求。
 
-** Dom 对象 与 jQuery 对象转换
+## Dom 对象 与 jQuery 对象转换
    #+begin_src js
      var $v =$("#v");    //jQuery 对象
      var v=$v[0];       //DOM 对象 
