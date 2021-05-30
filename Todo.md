@@ -14,7 +14,7 @@ https://jingyan.baidu.com/article/b87fe19e362d77521835680b.html
 7 。看知乎，切断 youtube 视频
 
 ## TODO 博客
-1. 博客放个搜索
+1. 博客放个搜索,看了下,不需要 , 调用的是 google 的接口
 2. 在博客放个 todo 文章
 3. 修改博客样式
 4. 备份当前样式，然后改
