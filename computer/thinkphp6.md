@@ -32,13 +32,13 @@ think\facade\Config;
   
 ## 路由 (指针)
 ### 路由
-路由地址不能跨__应用__（除非采用重定向路由） 
+路由地址不能跨 __应用__（除非采用重定向路由） 
     
 路由定义文件
-![](image/computer/language/php/Snipaste_2021-05-27_16-18-39.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_16-18-39.png)
 
 路由定义     
-![](image/computer/language/php/Snipaste_2021-05-27_16-22-05.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_16-22-05.png)
 
 关闭路由
 ```
@@ -64,9 +64,9 @@ Route::rule(':user/:blog_id', 'Blog/read'); // 全动态地址
 ```
 ### 路由地址
 #### 路由到控制器/操作
-![](image/computer/language/php/Snipaste_2021-05-27_16-55-04.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_16-55-04.png)
 #### 路由到类的方法
-![](image/computer/language/php/Snipaste_2021-05-27_16-56-48.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_16-56-48.png)
 #### 重定向路由
 ```
 Route::redirect('blog/:id', 'http://blog.thinkphp.cn/read/:id', 302);
@@ -77,9 +77,8 @@ Route::redirect('blog/:id', 'http://blog.thinkphp.cn/read/:id', 302);
 Route::view('hello/:name', 'index/hello');
 ```
 
-
 ### 资源路由
-![](image/computer/language/php/Snipaste_2021-05-27_16-59-46.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_16-59-46.png)
 ### 路由绑定
   可以使用路由绑定简化 URL 或者路由规则的定义
 #### 绑定到控制器/操作
@@ -89,7 +88,7 @@ Route::view('hello/:name', 'index/hello');
 ## 控制器
 ### 控制器定义
 控制器后缀
-![](image/computer/language/php/Snipaste_2021-05-27_17-04-35.png)
+![](../image/computer/language/php/Snipaste_2021-05-27_17-04-35.png)
 
 渲染输出
 > halt('输出测试');
@@ -97,17 +96,17 @@ Route::view('hello/:name', 'index/hello');
 ### 资源控制器
 
 资源控制器可以让你轻松的创建RESTFul资源控制器，可以通过命令行生成需要的资源控制器，例如生成index应用的Blog资源控制器使用：
-
 php think make:controller index@Blog
+
 或者使用完整的命名空间生成
-
 php think make:controller app\index\controller\Blog
+
 如果只是用于接口开发，可以使用
-
 php think make:controller index@Blog --api
-然后你只需要为资源控制器注册一个资源路由：
 
+然后你只需要为资源控制器注册一个资源路由：
 Route::resource('blog', 'Blog');
+
 设置后会自动注册7个路由规则，对应资源控制器的7个方法，更多内容请参考资源路由章节。
 
 ## 请求
@@ -9686,3 +9685,8 @@ composer require topthink/think-multi-app
 ```
 ! tip: every module must contain a controller fold 
  
+### 跨域问题
+在 app\middleware.php 文件中，引入内置中间件即可
+```
+\think\middleware\AllowCrossDomain::class
+```
