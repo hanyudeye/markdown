@@ -27,7 +27,7 @@ $_SESSION["newsession"]=$value;
 ```
 ### $_REQUEST
 ### $_ENV
-! 在命令行中能够返回环境变量
+> 在命令行中能够返回环境变量
 ## 错误信息
 ini_set("display_errors","On");
 error_reporting(E_ALL); 
