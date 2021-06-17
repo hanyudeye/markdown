@@ -1,403 +1,853 @@
-[awesome-link]:  https://github.com/sindresorhus/awesome
-[awesome-badge]: https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg
-[travis-link]:   https://travis-ci.org/awesome-css-group/awesome-css
-[travis-badge]:  https://travis-ci.org/awesome-css-group/awesome-css.svg?branch=master
-[HitCounter-link]: http://hits.dwyl.io/awesome-css-group/awesome-css
-[HitCounter-badge]: http://hits.dwyl.io/awesome-css-group/awesome-css.svg
 
-# Awesome CSS [![Awesome][awesome-badge]][awesome-link] [![Travis Build Status][travis-badge]][travis-link] [![HitCount][HitCounter-badge]][HitCounter-link]
+# Table of Contents
 
-> /* A curated list of awesome frameworks, style guides, and other cool nuggets for writing amazing CSS. */
+1.  [css](#orgfb2e4f0)
+    1.  [视口概念](#org5534b43)
+        1.  [浏览器整个窗口](#org6e0e9bc)
+        2.  [浏览器窗口](#org321dda7)
+        3.  [视口设置](#orgfb6a72c)
+    2.  [选择器](#org347cd19)
+        1.  [标签](#orgac8e092)
+        2.  [id](#org5512e0a)
+        3.  [class](#org796e1f6)
+        4.  [属性](#org4c4dd76)
+        5.  [伪元素](#orgc6a328e)
+    3.  [样式](#org22448b6)
+        1.  [文本](#org3d2bd9c)
+        2.  [盒子 box](#org7a8c742)
+        3.  [链接](#org6bea205)
+        4.  [列表](#org0561efd)
+        5.  [图像](#orgfe5aa32)
+        6.  [布局](#orgdd75de4)
+    4.  [颜色值](#org6563687)
+    5.  [字体](#org8c0b8b9)
+    6.  [初始化样式](#org6760677)
+    7.  [高级功能](#org92cf15b)
+        1.  [flexbox 弹性布局 (为移动端设计的方便排版的技术)](#orged7c2ee)
+        2.  [媒体查询](#orgbc5ee53)
+        3.  [viewport (视窗)](#org71a1291)
+        4.  [transform 变换](#org7f3e49d)
+        5.  [过渡效果 动画](#orga35a918)
+        6.  [相对布局](#orgb15ba22)
+        7.  [移动优先](#orgd1ea164)
+        8.  [滚动条](#orgb19cd6c)
+2.  [伪类](#org2b14caa)
+    1.  [:nth-child](#orgc0495bc)
+3.  [faq](#org7d1a0dd)
+    1.  [解决子div设float后导致父div无法自动撑开(常用2种)](#org737ab64)
+4.  [Flex 布局教程：语法篇 - 阮一峰的网络日志](#orgf1b11f8):website:
+    1.  [Article](#org84c500a)
+        1.  [一、Flex 布局是什么？](#org74a2c2c)
+        2.  [二、基本概念](#org07b9a9c)
+        3.  [三、容器的属性](#orga867299)
 
-## Introduction
+对东西进行 大小 颜色 三维 边框 的修饰
 
-### Motivation
-
-This document is a curated list of frameworks, style guides, and cool nuggets of information for writing awesome CSS. It does not contain resources to learn CSS.
-
-### Complementary Resources
-
-If you're struggling with something CSS-related, look for answers within the following resources:
-
-- [CSS - MDN - Mozilla](https://developer.mozilla.org/en-US/docs/Web/CSS)
-- [Reddit (CSS)](https://www.reddit.com/r/css/)
-- [StackOverflow (CSS)](https://stackoverflow.com/questions/tagged/css)
-
-<!-- Used for the "back to top" links within the document -->
-<div id="contents"></div>
-
-## Table of Contents
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [CSS Working Group](#css-working-group)
-  - [Editor's Draft :black_nib:](#editors-draft-black_nib)
-- [Parsers :mag:](#parsers-mag)
-- [Preprocessors :pill:](#preprocessors-pill)
-- [Frameworks :art:](#frameworks-art)
-- [Toolkits :wrench:](#toolkits-wrench)
-- [CSS Structure](#css-structure)
-- [Reset and Normalize](#reset-and-normalize)
-- [CSS Development at Large-Scale Websites](#css-development-at-large-scale-websites)
-- [Code Style Guidelines :book:](#code-style-guidelines-book)
-- [Style Guide](#style-guide)
-- [Style Guide Generators :slot_machine:](#style-guide-generators-slot_machine)
-- [Naming conventions & Methodologies :bulb:](#naming-conventions--methodologies-bulb)
-- [CSS in JS](#css-in-js)
-- [CSS Polyfills](#css-polyfills)
-- [Miscellaneous](#miscellaneous)
-- [Podcasts :radio:](#podcasts-radio)
-- [Twitter :satellite:](#twitter-satellite)
-- [Videos :tv:](#videos-tv)
-  - [2019](#2019)
-  - [2016](#2016)
-  - [2015](#2015)
-- [Books :books:](#books-books)
-- [Tutorials :clapper:](#tutorials-clapper)
-- [Maintainers](#maintainers)
-- [Contribute](#contribute)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<a id="orgfb2e4f0"></a>
 
-## CSS Working Group
+# css
 
-The CSS Working Group creates and defines CSS specifications. These specifications are assigned [maturity levels](https://www.w3.org/2005/10/Process-20051014/tr#maturity-levels) as they move through the design process. If you would like to learn more, visit [CSS Working Group Page](https://www.w3.org/Style/CSS/).
-
-### Editor's Draft :black_nib:
-
-*Editor's drafts of CSS specifications*
-
-- [w3c/csswg-drafts](https://github.com/w3c/csswg-drafts) - Mirror of CSS WG Editor Draft repository.
-- [w3c/css-houdini-drafts](https://github.com/w3c/css-houdini-drafts) - Mirror of Houdini WG Editor repository.
-
-## Parsers :mag:
 
-* [CSSOM](https://github.com/NV/CSSOM) - CSS Object Model implemented in pure JavaScript.
-* [CSSTree](https://github.com/csstree/csstree) - Detailed CSS parser with syntax validator.
-* [Gonzales PE](https://github.com/tonyganch/gonzales-pe) - CSS parser with support for preprocessors.
-* [mensch](https://github.com/brettstimmerman/mensch) - A decent CSS parser.
-* [ParserLib](https://github.com/CSSLint/parser-lib) - CSSLint/parser-lib.
-* [PostCSS](https://github.com/postcss/postcss) - Transforming styles with JS plugins.
-* [Rework](https://github.com/reworkcss/rework) - Plugin framework for CSS preprocessing in Node.js.
-* [Stylecow](https://github.com/stylecow/stylecow) - Modern CSS for all browsers.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Preprocessors :pill:
+<a id="org5534b43"></a>
 
-*Write CSS faster*
-
-* [LESS](https://github.com/less/less.js) - Backwards compatible with CSS, and the extra features it adds use existing CSS syntax.
-* [PostCSS](https://github.com/postcss/postcss) - Transforming CSS with JS plugins.
-* [Sass](https://github.com/sass/sass) - Mature, stable, and powerful professional-grade CSS extension language.
-* [STYLIS](https://github.com/thysultan/stylis.js) - Light-weight CSS preprocessor.
-* [Stylus](http://learnboost.github.io/stylus/) - Expressive, robust, feature-rich CSS language built for NodeJs.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Frameworks :art:
-
-* [awsm.css](https://igoradamenko.github.io/awsm.css/) - Simple CSS library for semantic HTML markup.
-* [Bonsai](https://www.bonsaicss.com/) - A complete Utility First CSS Framework for less than 50kb.
-* [Bootstrap](https://getbootstrap.com/) - The most popular HTML, CSS, and JS framework.
-* [Bulma](http://bulma.io/) - A modern CSS framework based on Flexbox. Also has Sass import for modification.
-* [Butter Cake](http://getbuttercake.com/) - A Modern Lightweight Front End CSS framework for faster and easier web development.
-* [Chota](https://jenil.github.io/chota/) - A responsive, customizable micro-framework (3kb) with helpful utilities and a grid system.
-* [Cirrus](https://spiderpig86.github.io/Cirrus/) - A fully responsive and comprehensive CSS framework with beautiful controls and simplistic structure.
-* [eFrolic](https://efraa.github.io/eFrolic/) - CSS framework which without using JavaScript is interactive and animated.
-* [Foundation](http://foundation.zurb.com/) - advanced responsive front-end framework.
-* [Gralig](http://gralig.com/) - A modest, grayish CSS library.
-* [Halfmoon](https://www.gethalfmoon.com/) - A responsive front-end framework with a built-in dark mode.
-* [Hasser CSS](https://github.com/HeavenMercy/HasserCSS) - A lightweight (12k, not minified) but useful CSS framework with flexible Grid, Hero and more.
-* [inuit.css](http://inuitcss.com/) - Powerful, scalable, Sass-based, BEM, OOCSS framework.
-* [material-components-web](https://github.com/material-components/material-components-web) - Modular and customizable Material Design UI components for the web.
-* [Materialize](http://materializecss.com/) - A modern responsive front-end framework based on Material Design.
-* [Milligram](http://milligram.io) - A minimalist CSS framework.
-* [Numl](https://numl.design) - An HTML-based language and design system that lets you create responsive and accessible high-quality web interfaces with any look.
-* [Pure.css](http://purecss.io/) - A set of small, responsive CSS modules that you can use in every web project.
-* [Semantic UI](http://semantic-ui.com/) - Powerful framework that uses human-friendly HTML.
-* [Shorthand Framework](https://github.com/shorthandcss/shorthand) - Feature rich CSS framework for the new decade.
-* [Spectre.css](https://picturepan2.github.io/spectre/index.html) - A lightweight, responsive and modern CSS framework.
-* [Strawberry](https://github.com/jfet97/strawberry) - A set of common flexbox utilities focused on making your life easier and faster with nested flexboxes.
-* [Tachyons](http://tachyons.io/) - Functional CSS for humans.
-* [Tacit](https://yegor256.github.io/tacit/) - CSS framework for dummies with zero skills in graphic design.
-* [tailwindcss](https://github.com/tailwindcss/tailwindcss) - A utility-first CSS framework for rapid UI development.
-* [UIkit](http://getuikit.com/) - A lightweight and modular front-end framework.
-* [unsemantic](http://unsemantic.com/) - Fluid grid for mobile, tablet, and desktop.
-* [Wing](https://kbrsh.github.io/wing/) - A Minimal, Lightweight, Responsive framework.
-
-_[You can find more frameworks at "awesome-css-frameworks"](https://github.com/troxler/awesome-css-frameworks)_
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Toolkits :wrench:
-
-* [Bourbon](http://bourbon.io/) - A simple and lightweight mixin library for Sass.
-* [Susy](https://www.oddbird.net/susy/) - Responsive layout toolkit for Sass.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## CSS Structure
-
-- [RSCSS](https://github.com/rstacruz/rscss) - Reasonable Standard for CSS Stylesheet Structure.
-- [ITCSS](https://twitter.com/itcss_io) - A sane, scalable, managed CSS architecture for large UI projects.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Reset and Normalize
-
-- [Normalize](https://github.com/necolas/normalize.css) - A set of CSS rules that provide better cross-browser consistency in the default styling of HTML elements.
-- [Normalize-OpenType](https://github.com/kennethormandy/normalize-opentype.css) - Adds OpenType features—ligatures, kerning, and more—to Normalize.css.
-- [MiniReset.css](https://github.com/jgthms/minireset.css) - A tiny modern CSS reset.
-- [sanitize.css](https://github.com/jonathantneal/sanitize.css/) - A set of CSS rules that style with today’s best practices out-of-the-box.
-- [unstyle.css](https://github.com/Martin-Pitt/css-unstyle) - Specialised stylesheet for removing user agent styles, style the web with your baseline.
-- [reset.css](https://meyerweb.com/eric/tools/css/reset/) - CSS Tools: Reset CSS.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## CSS Development at Large-Scale Websites
-
-* [Bugsnag's CSS Architecture](http://blog.bugsnag.com/bugsnags-css-architecture) by [Max Luster](https://twitter.com/maxluster)
-* [CSS at BBC Sport](https://medium.com/@shaunbent/css-at-bbc-sport-part-1-bab546184e66) by Shaun Bent
-* [CSS AT HOOTSUITE](http://code.hootsuite.com/css-at-hootsuite/) by Steve Mynett
-* [GitHub's CSS](http://markdotto.com/2014/07/23/githubs-css/) by [Mark Otto](https://twitter.com/mdo)
-* [How we do CSS at Ghost](https://dev.ghost.org/css-at-ghost/) by Paul Davis
-* [Lonely Planet](http://ianfeather.co.uk/css-at-lonely-planet/) by [Ian Feather](https://twitter.com/ianfeather)
-* [Medium’s CSS is actually pretty good.](https://medium.com/@fat/mediums-css-is-actually-pretty-fucking-good-b8e2a6c78b06) by [Jacob Thornton](https://twitter.com/fat)
-* [scalable-css-reading-list](https://github.com/davidtheclark/scalable-css-reading-list)
-* [Refining The Way We Structure Our CSS At Trello](http://blog.trello.com/refining-the-way-we-structure-our-css-at-trello/) by [Bobby Grace](https://twitter.com/bobbygrace)
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Code Style Guidelines :book:
-
-* [idiomatic CSS](https://github.com/necolas/idiomatic-css) by [Nicolas Gallagher](https://twitter.com/necolas)
-* [CSS Styleguide](https://github.com/grvcoelho/css) by [Guilherme Rv Coelho](https://github.com/grvcoelho)
-* [CSS Guidelines](http://cssguidelin.es/) by [Harry Roberts](https://twitter.com/csswizardry)
-* [Sass Guidelines](https://sass-guidelin.es/) by [Hugo Giraudel](https://twitter.com/HugoGiraudel)
-* [Code Guide](http://codeguide.co/) by [Mark Otto](https://twitter.com/mdo)
-* [ThinkUp CSS Style Guide](https://github.com/ThinkUpLLC/ThinkUp/wiki/Code-Style-Guide:-CSS) by ThinkUp
-* [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html) by Google
-* [WordPress CSS Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/css/) by WorldPress
+## 视口概念
 
-<sub>[⇧ back to top](#contents)</sub>
 
-## Style Guide
+<a id="org6e0e9bc"></a>
 
-* [AUI](http://docs.atlassian.com/aui/latest/docs) by Atlassian Design
-* [Design Elements](http://rizzo.lonelyplanet.com/styleguide/design-elements/colours) by lonely planet
-* [Dropbox (S)CSS Style Guide](https://github.com/dropbox/css-style-guide) by Dropbox
-* [Fluent UI](https://github.com/microsoft/fluentui) by Microsoft
-* [GitHub CSS Style Guide](https://primer.github.io/) by Github
-* [Official Trello CSS Guide](https://gist.github.com/bobbygrace/9e961e8982f42eb91b80) by Bobby Grace
-* [Solid](http://solid.buzzfeed.com/) by BuzzFeed
-* [Patterns](https://ux.mailchimp.com/patterns) by MailChimp
-* [Lighting Design System](https://www.lightningdesignsystem.com/) by Salesforce
-* [SASS Style Guide](http://sass-lang.com/styleguide) by Sass team
-* [Style Guide](https://www.starbucks.com/static/reference/styleguide/) by Starbucks
-* [Website Style Guide Resources](http://styleguides.io/examples.html) by Awesome people
+### 浏览器整个窗口
 
-View more style guides at [Website Style Guide Resources](http://styleguides.io/)
+window.screen.width 
 
-<sub>[⇧ back to top](#contents)</sub>
 
+<a id="org321dda7"></a>
 
-## Style Guide Generators :slot_machine:
+### 浏览器窗口
 
-- [Hologram](https://github.com/trulia/hologram)
-- [mdcss](https://github.com/jonathantneal/mdcss)
-- [Source](https://github.com/sourcejs/Source)
-- [styledoc](https://github.com/Joony/styledoc/)
-- [styledocco](https://github.com/jacobrask/styledocco)
-- [styledown](https://github.com/styledown/styledown)
-- [sc5-styleguide](https://github.com/SC5/sc5-styleguide)
-
-<sub>[⇧ back to top](#contents)</sub>
-
-
-## Naming conventions & Methodologies :bulb:
-
-* [Atomic OOBEMITSCSS](https://www.sitepoint.com/atomic-oobemitscss/)
-* [BEM](https://en.bem.info/)
-* [Point North](http://pointnorth.io/#base-browser-styling)
-* [ITCSS](http://itcss.io/)
-* [OOCSS](https://www.smashingmagazine.com/2011/12/an-introduction-to-object-oriented-css-oocss/)
-* [Title CSS](https://www.sitepoint.com/title-css-simple-approach-css-class-naming/)
-* [idiomatic-css](https://github.com/necolas/idiomatic-css)
-* [Atomic Design](http://patternlab.io/resources.html)
-* [SUIT CSS](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#u-utilityname)
-* [Kickoff CSS](http://trykickoff.com/learn/css.html#namingscheme)
-* [MaintainableCSS](http://maintainablecss.com)
-* [NCSS](https://ncss.io)
-* [RSCSS](https://rscss.io/)
-
-<sub>[⇧ back to top](#contents)</sub>
-
-
-## CSS in JS
-
-* [aphrodite](https://github.com/Khan/aphrodite)
-* [babel-plugin-css-in-js](https://github.com/martinandert/babel-plugin-css-in-js)
-* [classy](https://github.com/inturn/classy)
-* [csjs](https://github.com/rtsao/csjs)
-* [css-loader](https://github.com/webpack/css-loader)
-* [JSS](https://github.com/cssinjs/jss)
-* [react-styled](https://github.com/bloodyowl/react-styled)
-* [react-with-styles](https://github.com/airbnb/react-with-styles)
-* [styled-jsx](https://github.com/zeit/styled-jsx)
-* [styled-components](https://github.com/styled-components/styled-components)
-
-Here is a [CSS in JS techniques comparison](https://github.com/MicheleBertoli/css-in-js)
-
-<sub>[⇧ back to top](#contents)</sub>
-
-
-## CSS Polyfills
-
-* [polyfill.js](https://github.com/philipwalton/polyfill/) - A library to make creating CSS polyfills much easier.
-* [prefixfree](https://github.com/LeaVerou/prefixfree) - Break free from CSS prefix hell.
-* [fixed-sticky](https://github.com/filamentgroup/fixed-sticky) - A CSS position:sticky polyfill.
-* [selectivizr](https://github.com/keithclark/selectivizr) - A JavaScript utility that emulates CSS3 pseudo-classes and attribute selectors in Internet Explorer 6-8.
-* [PIE](https://github.com/lojjic/PIE) - Allows Internet Explorer to recognize and render various CSS3 box decoration properties.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-
-## Miscellaneous
-
-* [Single Div Project](https://github.com/ManrajGrover/SingleDivProject) - One `<div>`. Many possibilities.
-* [Can I use](https://caniuse.com/) - Browser support for CSS, HTML5 and other front-end web technologies.
-* [Live editor for CSS and LESS](https://github.com/webextensions/live-css-editor) - Magic CSS extension for Chrome, Firefox and Edge.
-* [You Might Not Need JS](http://youmightnotneedjs.com/) - CSS alternatives for common JS UI components.
-* [RevengeCSS](https://github.com/Heydon/REVENGE.CSS) - A CSS bookmarklet that uses selectors to find bad markup, displaying ugly pink error messages in comic sans serif wherever you write bad HTML
-* [xpath-to-selector](https://github.com/steambap/xpath-to-selector) - Convert xpath to css selector.
-
-
-<sub>[⇧ back to top](#contents)</sub>
-
-## Podcasts :radio:
-
-*Something to listen to while programming.*
-
-* [CSS Podcast](https://thecsspodcast.libsyn.com/) - Una Kravets and Adam Argyle, Developer Advocates from Google, gleefully breakdown complex aspects of CSS into digestible episodes covering everything from accessibility to z-index.
-* [Shop Talk Show](http://shoptalkshow.com/) - A live podcast with Chris Coyier and Dave Rupert about front-end web design, development, and UX.
-* [Style Guide Podcast](http://styleguides.io/podcast/index.html) - A small batch series of interviews on style guides, hosted by Anna Debenham and Brad Frost.
-* [The Big Web Show](http://5by5.tv/bigwebshow/) - Topics like web publishing, art direction, content strategy, typography, web technology, and more. It's everything web that matters.
-* [The Web Ahead](http://5by5.tv/webahead/) - Conversations with world experts on changing technologies and future of the web.
-* [Non Breaking Space Show](http://goodstuff.fm/nbsp) - Seeking out the best, brightest, and smartest creative people on digital art, design, and development.
-* [The Changelog](https://changelog.com/) - The tagline for the Changelog says it all: “Open Source moves fast. Keep up.” This podcast, and the accompanying blog, is all about keeping you updated with the latest in Open Source Technology.
-* [Syntax](https://syntax.fm/) - A Tasty Treats Podcast for Web Developers.
-
-<sub>[⇧ back to top](#contents)</sub>
-
-
-## Twitter :satellite:
+document.documentElement.clientWidth
+window.innerWidth
 
-*Active accounts to follow.*
 
-* [CSS Animation](https://twitter.com/cssanimation)
-* [Andrey Sitnik](https://twitter.com/andreysitnik) - Author of @Autoprefixer, http://easings.net  and @PostCSS.
-* [Evangelina Ferreira](https://twitter.com/evaferreira92) - Web Designer. Professor at @multimedial_utn HTML5 & CSS Freak. Ocassional Translator.
-* [Sara Soueidan](https://twitter.com/SaraSoueidan) - Author of the @Codrops CSS Reference & Co-author of the Smashing Book #5.
-* [Hugo Giraudel](https://twitter.com/HugoGiraudel) - CSS goblin & Sass hacker at @edenspiekermann.
-* [Guy Routledge](https://twitter.com/guyroutledge) - Front-end dev, Teacher @GA_London, Screencaster at http://www.atozcss.com, property snob, Foodie.
-* [Heydon Pickering](https://twitter.com/heydonworks) - Moderate consumer of rice. Also a UX designer, author, @smashingmag editor and programmer.
-* [Adam Morse](https://twitter.com/mrmrs_) - Advocate for users and open-source.
-* [Donovan Hutchinson](https://twitter.com/donovanh) - Designer, developer, writer. Occasionally blogs at http://Hop.ie, and currently building @cssanimation.
-* [CSS Commits](https://twitter.com/CSScommits) - Latest commits to @CSSWG’s public Mercurial repository.
-* [Scott Jehl](https://twitter.com/scottjehl) - Author of @responsiblerwd, now on sale from @abookapart.
-* [Dudley Storey](https://twitter.com/dudleystorey) - Web development writer, teacher, and speaker.
-* [Zoe M. Gillenwater](https://twitter.com/zomigi) - Web designer/developer specializing in CSS, RWD, UX, & accessibility.
-* [Ben Briggs](https://twitter.com/ben_eb) - Final year web technologies student. node.js, javascript, open source modules, client side optimisation, web performance.
-* [Paul Lewis](https://twitter.com/aerotwist) - Googler who noodles with code and design.
-* [Nicolas Gallagher](https://twitter.com/necolas) - Software Engineer at @twitter.
-* [Harry Roberts](https://twitter.com/csswizardry)- Consultant Front-end Architect: @google, @Etsy, @kickstarter, @BBC, @Deloitte, @FT, more.
-* [Phil Walton](https://twitter.com/philwalton) - Engineer at Google • Open Source Advocate • Developer • Designer • Writer.
-* [Lea Verou](https://twitter.com/LeaVerou) - Research Assistant @MIT_CSAIL, @CSSWG IE, @OReillyMedia author, Ex @W3C staff.
-* [Manoela Ilic](https://twitter.com/crnacura) - ...aka Mary Lou @codrops ༶ CSS & HTML are my crayons ༶ Interested in Cognitive Science, AI, HCI, UI Design & Astrophysics ༶ Digital nomad.
-* [Una Kravets](https://twitter.com/Una) - Front-end @IBMDesign. Sassvocate, community builder, & handcrafter. STEMinist :) Open source all the things.
-* [Chris Coyier](https://twitter.com/chriscoyier) - Designer @CodePen. Writer @Real_CSS_Tricks.
-* [Nicole Sullivan](https://twitter.com/stubbornella) - GEEK.
-* [Eric Bidelman](https://twitter.com/ebidel) - Engineer at Google working on Chrome, web components, and Polymer.
-* [Patrick Hamann](https://twitter.com/patrickhamann) - Lover of mountains, craft beers and discovering new food.
-* [Dave McFarland](https://twitter.com/davemcfarland) - Web developer, author of CSS: The Missing Manual, JavaScript & jQuery.
-* [L. David Baron](https://twitter.com/davidbaron) - Mozilla developer, CSS and W3C standards diplomat.
-* [Daniel Glazman](https://twitter.com/glazou) - W3C CSS Working Group Co-chairman, entrepreneur, software engineer, geek, father of two, polyglot, duck lover. Nah. Tweets are strictly mine.
-* [The Chris Eppstein](https://twitter.com/chriseppstein) - Loves love. Hates hate. Has a kick-ass family. Writes code. Leads stylesheet tech @LinkedIn.
-* [앗킨스 탭](https://twitter.com/tabatkins) - Literally Jenn Schiffer's Mom.
-* [Natalie Weizenbaum](https://twitter.com/nex3) - Trans coder lady. Lead designer/developer of @SassCSS, working for @google on @dart_lang.
-* [Brad Frost](https://twitter.com/brad_frost) - Web designer, speaker, writer, consultant, musician.
-* [Maxime Thirouin](https://twitter.com/MoOx) - Freelance front-end vigilante, UI/UX developer.
-* [Mark Otto](https://twitter.com/mdo) - GitHub and Bootstrap. Formerly at Twitter. Huge nerd.
-* [Simon](https://twitter.com/simurai) - UI designer, CSS doodler.
-* [Connor Sears](https://twitter.com/connors) - Designer at GitHub.
-* [Remy Sharp](https://twitter.com/rem) - All about CSS sizing units.
-* [Jonathan Snook](https://twitter.com/snookca) - Designer, Developer, Writer, Speaker. I make stuff on the web. I wrote SMACSS.
-* [Rachel Andrew](https://twitter.com/rachelandrew) - Web Developer, half of @grabaperch CMS, CSS Working Group Invited Expert.
+<a id="orgfb6a72c"></a>
 
-<sub>[⇧ back to top](#contents)</sub>
+### 视口设置
 
+利用 \`meta\` 的标签的 \`viewport\` 来进行设置，除此之外，还可以进行页面的缩放等操作。
 
-## Videos :tv:
+<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 
-*Good study videos from CSS Must Watch Videos. Some items are quoted from [AllThingsSmitty/must-watch-css](https://github.com/AllThingsSmitty/must-watch-css).
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-[I told him on Twitter](https://twitter.com/sota0805/status/527635856031375360). I appreciate his valuable efforts.*
 
-### 2019
+<colgroup>
+<col  class="org-left" />
 
-1. [Next-Generation Web Styling](https://www.youtube.com/watch?v=-oyeaIirVC0) - Una Kravets & Adam Argyle @ Chrome Dev Summit 2019.
+<col  class="org-left" />
 
-### 2016
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">属性</td>
+<td class="org-left">值</td>
+<td class="org-left">描述</td>
+</tr>
 
-1. [Component-Based Style Reuse](https://www.youtube.com/watch?v=_70Yp8KPXH8) :page_facing_up: [transcript](https://2016.cssconf.com/) :watch: `37:24` - Pete Hunt @ CSS conf 2016.
-1. [CSS4 Grid: True Layout Finally Arrives](https://www.youtube.com/watch?v=jl164y-Vb5E) :page_facing_up: [transcript](https://2016.cssconf.com/) :watch: `29:27` - Jen Kramer @ CSS conf 2016.
-1. [Houdini: Demystifying the Future of CSS](https://www.youtube.com/watch?v=sE3ttkP15f8) :watch: `36:58` @ Google I/O 2016.
 
-### 2015
+<tr>
+<td class="org-left">---</td>
+<td class="org-left">---</td>
+<td class="org-left">---</td>
+</tr>
 
-1. [mdo-ular CSS](http://jqueryuk.com/2015/videos.php?s=mdo-ular-css) :watch: `30:06` - Mark Otto @ jQuery UK.
-1. [CSS Architecture with SMACSS](https://www.youtube.com/watch?v=6co781JgoqQ) :watch: `30:15` - Caleb Meredith @ DevTips channel.
-1. [CSS Workflow from the Ground Up](https://www.youtube.com/watch?v=ZVk3GQHfkbU) :watch: `46:06` - Jonathan Snook @ Generate conf 2015.
 
-<sub>[⇧ back to top](#contents)</sub>
+<tr>
+<td class="org-left">width</td>
+<td class="org-left">正整数 或 device-width</td>
+<td class="org-left">以像素为单位，定义布局视口的宽度</td>
+</tr>
 
-## Books :books:
 
-* [CSS Secrets](http://shop.oreilly.com/product/0636920031123.do) – Better Solutions to Everyday Web Design Problems
-* [CSS: The Missing Manual](http://shop.oreilly.com/product/0636920036357.do) – Really Helpful in Advancing your Design Skills to a whole new Level
-* [CSS: The Definitive Guide, 4th Edition](http://shop.oreilly.com/product/0636920012726.do)  - Visual Presentation for the Web
-* [Every Layout: Relearn CSS Layout](https://every-layout.dev/) – Solving responsive layout problems using algorithmic design.
+<tr>
+<td class="org-left">height</td>
+<td class="org-left">正整数 或 device-height</td>
+<td class="org-left">以像素为单位，定义布局视口的高度</td>
+</tr>
 
-<sub>[⇧ back to top](#contents)</sub>
 
-## Tutorials :clapper:
+<tr>
+<td class="org-left">initial-scale</td>
+<td class="org-left">允许是小数</td>
+<td class="org-left">定义页面初始缩放比例</td>
+</tr>
 
-* [CSS Diner](https://flukeout.github.io/) – Interactive gamified tutorial for learning selection with CSS.
-* [CSS Grid PlayGround](https://mozilladevelopers.github.io/playground/) - Simple tutorial to learn CSS Grid from Mozilla.
-* [Work With Animations](https://developer.mozilla.org/en-US/docs/Tools/Page_Inspector/How_to/Work_with_animations) - Inspecting animations.
-* [Community Curated CSS Resources](https://hackr.io/tutorials/learn-css) - Top Recommended Resources.
-* [30 Seconds of CSS](https://www.30secondsofcode.org/css/p/1) -  A curated collection of useful CSS snippets you can understand in 30 seconds or less.
-* [Organize CSS with a Modular Architecture: OOCSS, BEM, SMACSS](https://snipcart.com/blog/organize-css-modular-architecture) - In-depth intro to OOCSS, BEM, SMACSS, with examples.
-* [Flexbox video tutorial](https://flexbox.io/) - Free video course by Wes Bos to learn flexbox.
-* [CSS Grids videos tutorial](https://cssgrid.io/) - Free video course by Wes Bos to learn CSS Grids.
 
-<sub>[⇧ back to top](#contents)</sub>
+<tr>
+<td class="org-left">minimum-scale</td>
+<td class="org-left">0.0 - 10.0</td>
+<td class="org-left">定义缩放的最小值</td>
+</tr>
 
-## Maintainers
 
-[sotayamashita]: https://github.com/sotayamashita
-[Rishabh04-02]:  https://github.com/Rishabh04-02
+<tr>
+<td class="org-left">maximum-scale</td>
+<td class="org-left">允许是小数</td>
+<td class="org-left">定义缩放的最大值（ios10 &amp; ios10+无效）</td>
+</tr>
 
-[@sotayamashita][sotayamashita], [@Rishabh04-02][Rishabh04-02] and You!
 
+<tr>
+<td class="org-left">user-scalable</td>
+<td class="org-left">yes / no</td>
+<td class="org-left">设置是否允许缩放，同上无效</td>
+</tr>
+</tbody>
+</table>
 
-## Contribute
 
-[contributor-covenant]: https://www.contributor-covenant.org/version/1/3/0/code-of-conduct/
+<a id="org347cd19"></a>
 
-Feel free to dive in! Open an issue or submit PRs.
+## 选择器
 
-Awesome CSS follows the [Contributor Covenant][contributor-covenant] Code of Conduct.
+
+<a id="orgac8e092"></a>
+
+### 标签
+
+    div p  {text-align:center;}
+
+
+<a id="org5512e0a"></a>
+
+### id
+
+    #red {color:red;}
+
+
+<a id="org796e1f6"></a>
+
+### class
+
+    .center {text-align: center}
+
+
+<a id="org4c4dd76"></a>
+
+### 属性
+
+    input [title="value"] {text-align: center}
+
+
+<a id="orgc6a328e"></a>
+
+### 伪元素
+
+-   :first-line                   向文本的首行设置特殊样式
+-   :first-letter                 向文本的首字母设置特殊样式
+-   :before                       在元素的内容前面插入新内容
+-   :link	               选择所有未访问链接
+-   :visited	a:visited           选择所有访问过的链接
+-   :active	a:active             选择正在活动链接
+-   :hover	a:hover               把鼠标放在链接上的状态
+-   :focus	input:focus           选择元素输入后具有焦点
+-   :first-letter 元素的第一个字母
+-   :first-line	元素的第一行
+-   :first-child	  选择器匹配属于元素的第一个子元素
+-   :before	在元素之前插入内容
+-   :after	在元素之后插入内容
+-   :lang(language) 为元素的 lang 属性选择一个开始值          
+    
+    内容
+    
+        p::before {
+          content: "Read this: ";
+        }
+
+
+<a id="org22448b6"></a>
+
+## 样式
+
+
+<a id="org3d2bd9c"></a>
+
+### 文本
+
+-   文本的大小和字型(font-size / font-family)
+-   粗细、样式、拉伸和装饰(font-weight / font-style / font-stretch / text-decoration)
+-   行间距(line-height)、字母间距(letter-spacing)和单词间距(word-spacing)
+-   对齐(text-align)方式和缩进(text-ident)
+-   链接样式（:link / :visited / :active / :hover）
+-   阴影效果 - text-shadow
+-   首字母和首行文本(:first-letter / :first-line)
+-   响应用户
+
+
+<a id="org7a8c742"></a>
+
+### 盒子 box
+
+-   盒子大小的控制（width / height）
+-   盒子的边框、外边距和内边距（border /  margin / padding）
+-   盒子的显示和隐藏（display / visibility）
+-   CSS3 新属性
+    -   边框图像（border-image）
+    -   投影（border-shadow）
+    -   圆角（border-radius）
+
+
+<a id="org6bea205"></a>
+
+### 链接
+
+-   a:link  普通的、未被访问的链接
+-   a:visited  用户已访问的链接
+-   a:hover -鼠标指针位于链接的上方
+-   a:active  链接被点击的时刻
+
+
+<a id="org0561efd"></a>
+
+### 列表
+
+-   列表的项目符号（list-style）
+-   表格的边框和背景（border-collapse）
+
+
+<a id="orgfe5aa32"></a>
+
+### 图像
+
+-   控制图像的大小（display: inline-block）
+-   对齐图像
+-   背景图像（background / background-image / background-repeat / background-position）
+
+
+<a id="orgdd75de4"></a>
+
+### 布局
+
+-   控制元素的位置（position / z-index）
+    -   普通流
+    -   相对定位
+    -   绝对定位
+    -   固定定位
+    -   浮动元素（float / clear）
+-   网站布局
+
+
+<a id="org6563687"></a>
+
+## 颜色值
+
+颜色值的设定可以有好几种方式 
+
+1.  关键字  red , yellow  用颜色的英文单词表示
+2.  rgb(0,100,100) 用十进制的 rgb 混色模式
+3.  \#ffffff 用十六进制的 rgb 混色模式
+4.  hsl(0,100%,50%) 用色相(0-360)，饱和度，明度的混色模式表示
+5.  透明 opacity
+
+
+<a id="org8c0b8b9"></a>
+
+## 字体
+
+font-family  字体类型 
+
+-   sans-serif  无衬线 (字体边缘平滑，比较好看)
+-   serif 衬线 (字体突兀)
+-   monospace 等宽字体 (一般用在代码编辑器)
+-   cursive 草书
+-   fantasy
+-   system-ui
+    
+    常用字体族
+    
+        .serif {
+          font-family: Times, Times New Roman, Georgia, serif;
+        }
+        
+        .sansserif {
+          font-family: Verdana, Arial, Helvetica, sans-serif;
+        }
+        
+        .monospace {
+          font-family: Lucida Console, Courier, monospace;
+        }
+        
+        .cursive {
+          font-family: cursive;
+        }
+        
+        .fantasy {
+          font-family: fantasy;
+        }
+
+
+<a id="org6760677"></a>
+
+## 初始化样式
+
+    body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,legend,button,form,fieldset,input,textarea,p,blockquote,th,td {   
+      　　padding: 0;   
+      　　margin: 0;   
+    }
+    /* 酌情修改 */
+    body {
+      background:#fff;color:#333;font-size:12px; margin-top:5px;font-family:"SimSun","宋体","Arial Narrow";
+    }
+    
+    /* 短引用的内容可取值：''或"" */
+    q:before,q:after {content:”;}  
+    
+    /* 缩写，图片等无边框 */
+    fieldset,img,abbr,acronym {border: 0 none;}
+    abbr,acronym {font-variant: normal;}
+    legend {color:#000;}
+    
+    /* 清除特殊标记的字体和字号 */
+    address,caption,cite,code,dfn,em,strong,th,var {   
+      　　font-weight: normal;   
+      　　font-style: normal;   
+    }
+    
+    /* 上下标 */
+    sup {vertical-align: text-top;}
+    sub {vertical-align: text-bottom;}
+    
+    /* 设置表格的边框被合并为一个单一的边框, 指定分隔边框模型中单元格边界之间的距离为 0*/
+    table {   
+      　　border-collapse: collapse;   
+      　　border-spacing: 0;   
+    }   
+    
+    /* 表格标题及内容居左显示 */
+    caption,th {text-align: left;}
+    input,img,select {vertical-align:middle;}
+    
+    /* 清除列表样式 */
+    ol,ul {list-style: none;}  
+    
+    /* 输入控件字体 */
+    input,button,textarea,select,optgroup,option {
+      font-family:inherit;
+      font-size:inherit;
+      font-style:inherit;
+      font-weight:inherit;
+    }
+    
+    /* 标题元素样式清除 */ 
+    h1,h2,h3,h4,h5,h6 {   
+      　　font-weight: normal;   
+      　　font-size: 100%;   
+    }   
+    
+    /* 链接样式，颜色可酌情修改 */
+    del,ins,a {text-decoration:none;}
+    a:link {color:#009;}
+    a:visited {color:#800080;}
+    a:hover,a:active,a:focus {color:#c00; text-decoration:underline;} 
+    
+    /* 鼠标样式 */
+    input[type="submit"] {cursor: pointer;}
+    button {cursor: pointer;}
+    input::-moz-focus-inner { border: 0; padding: 0;}
+    
+    .clear {clear:both;}
+
+
+<a id="org92cf15b"></a>
+
+## 高级功能
+
+
+<a id="orged7c2ee"></a>
+
+### flexbox 弹性布局 (为移动端设计的方便排版的技术)
+
+    /* 设置 Flex 模式 */
+    display: flex;
+    
+    /* 决定元素是横排还是竖着排，要不要倒序 */
+    flex-direction: column;
+    
+    /* 决定元素换行格式，一行排不下的时候如何排 */
+    flex-wrap: wrap;
+    
+    /* flex-flow = flex-direction + flex-wrap */
+    flex-flow: column wrap;
+    
+    /* 同一排下对齐方式，空格如何隔开各个元素 */
+    justify-content: space-between;
+    
+    /* 同一排下元素如何对齐，顶部对齐、中部对齐还是其他 */
+    align-items: center;
+    
+    /* 多行对齐方式 */
+    align-content: space-between;
+
+
+<a id="orgbc5ee53"></a>
+
+### 媒体查询
+
+三个逻辑操作符，分别是 and、not 和 only。
+
+    @media all and (min-width: 800px) and (max-width: 1024px) {
+      ...;
+    }
+
+
+<a id="org71a1291"></a>
+
+### viewport (视窗)
+
+1.  禁用缩放(手机默认会启用缩放)
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+2.  设备无关像素(dip device-independent pixel )
+
+    width=device-width 可指示网页与屏幕宽度（以设备无关像素为单位）进行匹配。这样，网页就可以重排内容以匹配不同的屏幕尺寸。
+
+
+<a id="org7f3e49d"></a>
+
+### transform 变换
+
+-   transform:
+    -   translate(X,Y) 平移多少位置
+    -   rotate() 旋转多少角度 ( 30deg )  多少圈 (0.5turn 半圈)
+    -   scale(2,4) 缩放
+    -   skew(30deg,20deg) 倾斜
+    -   matrix() 需要六个参数，包含数学函数，旋转、缩放、移动以及倾斜
+    -   transform-origin 	允许你改变被转换元素的位置
+
+
+<a id="orga35a918"></a>
+
+### 过渡效果 动画
+
+    div{transition:width 2s;}
+    div:hover{width:300px;}
+
+-   transition-property 	规定应用过渡的 CSS 属性的名称
+-   transition-duration 	定义过渡效果花费的时间
+-   transition-timing-function 	规定过渡效果的时间曲线
+-   transition-delay 	规定过渡效果何时开始
+
+
+<a id="orgb15ba22"></a>
+
+### 相对布局
+
+一般而言，对于响应式网站，水平方向为流体网格布局，那宽度、左右间距和左右内边距的长度自然采用百分比。像高度、上下间距，还有字体大小等与垂直方向相关的属性则应该使用 em 或者 rem 单位。
+
+
+<a id="orgd1ea164"></a>
+
+### 移动优先
+
+当用手机打开网页的时候，默认打开的只是相对比较简单的手机版样式，而复杂一些的桌面版的相应样式都在 media-query 中包裹着，所以不会加载，那么这样页面访问速度是最佳的。 参考下面代码
+
+    .content {
+      /* 一些简单的样式，专门为手机而生 */
+    }
+    
+    @media screen and (min-width: 400px) {
+      .content {
+        /* 为大屏设备设计的比较复杂的样式 */
+      }
+    }
+
+
+<a id="orgb19cd6c"></a>
+
+### 滚动条
+
+用 max-width 代替 width 可以防止窗口太小时出现滚动条
+
+
+<a id="org2b14caa"></a>
+
+# 伪类
+
+mis
+
+
+<a id="orgc0495bc"></a>
+
+## :nth-child
+
+:nth-child(an+b) 这个 CSS 伪类首先找到所有当前元素的兄弟元素，然后按照位置先后顺序从1开始排序，选择的结果为CSS伪类:nth-child括号中表达式（an+b）匹配到的元素集合（n=0，1，2，3&#x2026;）。
+
+
+<a id="org7d1a0dd"></a>
+
+# faq
+
+
+<a id="org737ab64"></a>
+
+## 解决子div设float后导致父div无法自动撑开(常用2种)
+
+原因：内部的DIV因为float:left之后，就丢失了clear:both和display:block的样式，所以外部的DIV不会被撑开。
+1)直接给父div设置"display: inline-block;"
+
+2)在最后添加一个sub<sub>div用来清除浮动</sub>：<div style="clear:both;"></div>; 
+
+
+<a id="orgf1b11f8"></a>
+
+# [Flex 布局教程：语法篇 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)     :website:
+
+<span class="timestamp-wrapper"><span class="timestamp">[2020-12-22 二 14:56]</span></span>
+
+
+<a id="org84c500a"></a>
+
+## Article
+
+网页布局（layout）是 CSS 的一个重点应用。
+
+![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071001.gif)
+
+布局的传统解决方案，基于 [盒状模型](https://developer.mozilla.org/en-US/docs/Web/CSS/box_model)，依赖 [`display`](https://developer.mozilla.org/en-US/docs/Web/CSS/display) 属性 + [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position)属性 + [`float`](https://developer.mozilla.org/en-US/docs/Web/CSS/float)属性。它对于那些特殊布局非常不方便，比如， [垂直居中](https://css-tricks.com/centering-css-complete-guide/)就不容易实现。
+
+![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071002.png)
+
+2009年，W3C 提出了一种新的方案-&#x2014;Flex 布局，可以简便、完整、响应式地实现各种页面布局。目前，它已经得到了所有浏览器的支持，这意味着，现在就能很安全地使用这项功能。
+
+![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071003.jpg)
+
+Flex 布局将成为未来布局的首选方案。本文介绍它的语法， [下一篇文章](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)给出常见布局的 Flex 写法。网友 [JailBreak](http://vgee.cn/) 为本文的所有示例制作了 [Demo](http://static.vgee.cn/static/index.html)，也可以参考。
+
+以下内容主要参考了下面两篇文章： [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 和 [A Visual Guide to CSS3 Flexbox Properties](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties)。
+
+
+<a id="org74a2c2c"></a>
+
+### 一、Flex 布局是什么？
+
+Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型提供最大的灵活性。
+
+任何一个容器都可以指定为 Flex 布局。
+
+>     
+>     .box{
+>       display: flex;
+>     }
+
+行内元素也可以使用 Flex 布局。
+
+>     
+>     .box{
+>       display: inline-flex;
+>     }
+
+Webkit 内核的浏览器，必须加上 =-webkit=前缀。
+
+>     
+>     .box{
+>       display: -webkit-flex; /* Safari */
+>       display: flex;
+>     }
+
+注意，设为 Flex 布局以后，子元素的 =float=、 =clear=和 =vertical-align=属性将失效。
+
+
+<a id="org07b9a9c"></a>
+
+### 二、基本概念
+
+采用 Flex 布局的元素，称为 Flex 容器（flex container），简称"容器"。它的所有子元素自动成为容器成员，称为 Flex 项目（flex item），简称"项目"。
+
+![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071004.png)
+
+容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做 =main start=，结束位置叫做 =main end=；交叉轴的开始位置叫做 =cross start=，结束位置叫做 =cross end=。
+
+项目默认沿主轴排列。单个项目占据的主轴空间叫做 =main size=，占据的交叉轴空间叫做 =cross size=。
+
+
+<a id="orga867299"></a>
+
+### 三、容器的属性
+
+以下6个属性设置在容器上。
+
+> 
+> 
+> -   flex-direction
+> -   flex-wrap
+> -   flex-flow
+> -   justify-content
+> -   align-items
+> -   align-content
+
+1.  3.1 flex-direction属性
+
+    =flex-direction=属性决定主轴的方向（即项目的排列方向）。
+    
+    >     
+    >     .box {
+    >       flex-direction: row | row-reverse | column | column-reverse;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071005.png)
+    
+    它可能有4个值。
+    
+    > 
+    > 
+    > -   =row=（默认值）：主轴为水平方向，起点在左端。
+    > -   =row-reverse=：主轴为水平方向，起点在右端。
+    > -   =column=：主轴为垂直方向，起点在上沿。
+    > -   =column-reverse=：主轴为垂直方向，起点在下沿。
+
+2.  3.2 flex-wrap属性
+
+    默认情况下，项目都排在一条线（又称"轴线"）上。 =flex-wrap=属性定义，如果一条轴线排不下，如何换行。
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071006.png)
+    
+    >     
+    >     .box{
+    >       flex-wrap: nowrap | wrap | wrap-reverse;
+    >     }
+    
+    它可能取三个值。
+    
+    （1） =nowrap=（默认）：不换行。
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071007.png)
+    
+    （2） =wrap=：换行，第一行在上方。
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071008.jpg)
+    
+    （3） =wrap-reverse=：换行，第一行在下方。
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071009.jpg)
+
+3.  3.3 flex-flow
+
+    =flex-flow=属性是 =flex-direction=属性和 =flex-wrap=属性的简写形式，默认值为 =row nowrap=。
+    
+    >     
+    >     .box {
+    >       flex-flow:  || ;
+    >     }
+
+4.  3.4 justify-content属性
+
+    =justify-content=属性定义了项目在主轴上的对齐方式。
+    
+    >     
+    >     .box {
+    >       justify-content: flex-start | flex-end | center | space-between | space-around;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071010.png)
+    
+    它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。
+    
+    > 
+    > 
+    > -   =flex-start=（默认值）：左对齐
+    > -   =flex-end=：右对齐
+    > -   =center=： 居中
+    > -   =space-between=：两端对齐，项目之间的间隔都相等。
+    > -   =space-around=：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+
+5.  3.5 align-items属性
+
+    =align-items=属性定义项目在交叉轴上如何对齐。
+    
+    >     
+    >     .box {
+    >       align-items: flex-start | flex-end | center | baseline | stretch;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071011.png)
+    
+    它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。
+    
+    > 
+    > 
+    > -   =flex-start=：交叉轴的起点对齐。
+    > -   =flex-end=：交叉轴的终点对齐。
+    > -   =center=：交叉轴的中点对齐。
+    > -   `baseline`: 项目的第一行文字的基线对齐。
+    > -   =stretch=（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+6.  3.6 align-content属性
+
+    =align-content=属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+    
+    >     
+    >     .box {
+    >       align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071012.png)
+    
+    该属性可能取6个值。
+    
+    > 
+    > 
+    > -   =flex-start=：与交叉轴的起点对齐。
+    > -   =flex-end=：与交叉轴的终点对齐。
+    > -   =center=：与交叉轴的中点对齐。
+    > -   =space-between=：与交叉轴两端对齐，轴线之间的间隔平均分布。
+    > -   =space-around=：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+    > -   =stretch=（默认值）：轴线占满整个交叉轴。
+
+7.  四、项目的属性
+
+    以下6个属性设置在项目上。
+    
+    > 
+    > 
+    > -   `order`
+    > -   `flex-grow`
+    > -   `flex-shrink`
+    > -   `flex-basis`
+    > -   `flex`
+    > -   `align-self`
+
+8.  4.1 order属性
+
+    =order=属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+    
+    >     
+    >     .item {
+    >       order: ;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071013.png)
+
+9.  4.2 flex-grow属性
+
+    =flex-grow=属性定义项目的放大比例，默认为 =0=，即如果存在剩余空间，也不放大。
+    
+    >     
+    >     .item {
+    >       flex-grow: ; /* default 0 */
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071014.png)
+    
+    如果所有项目的 =flex-grow=属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的 =flex-grow=属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。
+
+10. 4.3 flex-shrink属性
+
+    =flex-shrink=属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+    
+    >     
+    >     .item {
+    >       flex-shrink: ; /* default 1 */
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071015.jpg)
+    
+    如果所有项目的 =flex-shrink=属性都为1，当空间不足时，都将等比例缩小。如果一个项目的 =flex-shrink=属性为0，其他项目都为1，则空间不足时，前者不缩小。
+    
+    负值对该属性无效。
+
+11. 4.4 flex-basis属性
+
+    =flex-basis=属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为 =auto=，即项目的本来大小。
+    
+    >     
+    >     .item {
+    >       flex-basis:  | auto; /* default auto */
+    >     }
+    
+    它可以设为跟 =width=或 =height=属性一样的值（比如350px），则项目将占据固定空间。
+
+12. 4.5 flex属性
+
+    `flex=属性是 =flex-grow`, `flex-shrink` 和 =flex-basis=的简写，默认值为 =0 1 auto=。后两个属性可选。
+    
+    >     
+    >     .item {
+    >       flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+    >     }
+    
+    该属性有两个快捷值： `auto` ( `1 1 auto`) 和 none ( `0 0 auto`)。
+    
+    建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。
+
+13. 4.6 align-self属性
+
+    =align-self=属性允许单个项目有与其他项目不一样的对齐方式，可覆盖 =align-items=属性。默认值为 =auto=，表示继承父元素的 =align-items=属性，如果没有父元素，则等同于 =stretch=。
+    
+    >     
+    >     .item {
+    >       align-self: auto | flex-start | flex-end | center | baseline | stretch;
+    >     }
+    
+    ![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071016.png)
+    
+    该属性可能取6个值，除了auto，其他都与align-items属性完全一致。
+
+## text-size-adjust
+
+在小屏幕手机上，受到缩放，文字会很小。这里可以对文字显示大小进行调整
+
+有点适配的意思
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+```
+ -webkit-text-size-adjust
+ -ms-text-size-adjust
+```
+## text-rendering 文本渲染
+optimizeSpeed  速度优先
+optimizeLegibility 易读性优先
+geometricPrecision 精度优先
+
+
