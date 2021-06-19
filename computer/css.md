@@ -52,134 +52,28 @@
 <a id="org5534b43"></a>
 
 ## 视口概念
-
-
-<a id="org6e0e9bc"></a>
-
-### 浏览器整个窗口
-
-window.screen.width 
-
-
-<a id="org321dda7"></a>
-
-### 浏览器窗口
-
-document.documentElement.clientWidth
-window.innerWidth
-
-
-<a id="orgfb6a72c"></a>
-
 ### 视口设置
 
 利用 \`meta\` 的标签的 \`viewport\` 来进行设置，除此之外，还可以进行页面的缩放等操作。
 
 <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">属性</td>
-<td class="org-left">值</td>
-<td class="org-left">描述</td>
-</tr>
-
-
-<tr>
-<td class="org-left">---</td>
-<td class="org-left">---</td>
-<td class="org-left">---</td>
-</tr>
-
-
-<tr>
-<td class="org-left">width</td>
-<td class="org-left">正整数 或 device-width</td>
-<td class="org-left">以像素为单位，定义布局视口的宽度</td>
-</tr>
-
-
-<tr>
-<td class="org-left">height</td>
-<td class="org-left">正整数 或 device-height</td>
-<td class="org-left">以像素为单位，定义布局视口的高度</td>
-</tr>
-
-
-<tr>
-<td class="org-left">initial-scale</td>
-<td class="org-left">允许是小数</td>
-<td class="org-left">定义页面初始缩放比例</td>
-</tr>
-
-
-<tr>
-<td class="org-left">minimum-scale</td>
-<td class="org-left">0.0 - 10.0</td>
-<td class="org-left">定义缩放的最小值</td>
-</tr>
-
-
-<tr>
-<td class="org-left">maximum-scale</td>
-<td class="org-left">允许是小数</td>
-<td class="org-left">定义缩放的最大值（ios10 &amp; ios10+无效）</td>
-</tr>
-
-
-<tr>
-<td class="org-left">user-scalable</td>
-<td class="org-left">yes / no</td>
-<td class="org-left">设置是否允许缩放，同上无效</td>
-</tr>
-</tbody>
-</table>
-
-
-<a id="org347cd19"></a>
-
 ## 选择器
-
-
-<a id="orgac8e092"></a>
 
 ### 标签
 
     div p  {text-align:center;}
 
-
-<a id="org5512e0a"></a>
-
 ### id
-
     #red {color:red;}
-
-
-<a id="org796e1f6"></a>
 
 ### class
 
     .center {text-align: center}
 
-
-<a id="org4c4dd76"></a>
-
 ### 属性
 
     input [title="value"] {text-align: center}
-
-
-<a id="orgc6a328e"></a>
 
 ### 伪元素
 
@@ -204,13 +98,7 @@ window.innerWidth
           content: "Read this: ";
         }
 
-
-<a id="org22448b6"></a>
-
 ## 样式
-
-
-<a id="org3d2bd9c"></a>
 
 ### 文本
 
@@ -223,9 +111,6 @@ window.innerWidth
 -   首字母和首行文本(:first-letter / :first-line)
 -   响应用户
 
-
-<a id="org7a8c742"></a>
-
 ### 盒子 box
 
 -   盒子大小的控制（width / height）
@@ -237,8 +122,6 @@ window.innerWidth
     -   圆角（border-radius）
 
 
-<a id="org6bea205"></a>
-
 ### 链接
 
 -   a:link  普通的、未被访问的链接
@@ -246,16 +129,11 @@ window.innerWidth
 -   a:hover -鼠标指针位于链接的上方
 -   a:active  链接被点击的时刻
 
-
-<a id="org0561efd"></a>
-
 ### 列表
 
 -   列表的项目符号（list-style）
 -   表格的边框和背景（border-collapse）
 
-
-<a id="orgfe5aa32"></a>
 
 ### 图像
 
@@ -263,8 +141,6 @@ window.innerWidth
 -   对齐图像
 -   背景图像（background / background-image / background-repeat / background-position）
 
-
-<a id="orgdd75de4"></a>
 
 ### 布局
 
@@ -276,9 +152,6 @@ window.innerWidth
     -   浮动元素（float / clear）
 -   网站布局
 
-
-<a id="org6563687"></a>
-
 ## 颜色值
 
 颜色值的设定可以有好几种方式 
@@ -288,9 +161,6 @@ window.innerWidth
 3.  \#ffffff 用十六进制的 rgb 混色模式
 4.  hsl(0,100%,50%) 用色相(0-360)，饱和度，明度的混色模式表示
 5.  透明 opacity
-
-
-<a id="org8c0b8b9"></a>
 
 ## 字体
 
@@ -325,8 +195,6 @@ font-family  字体类型
           font-family: fantasy;
         }
 
-
-<a id="org6760677"></a>
 
 ## 初始化样式
 
@@ -398,12 +266,7 @@ font-family  字体类型
     .clear {clear:both;}
 
 
-<a id="org92cf15b"></a>
-
 ## 高级功能
-
-
-<a id="orged7c2ee"></a>
 
 ### flexbox 弹性布局 (为移动端设计的方便排版的技术)
 
@@ -429,8 +292,6 @@ font-family  字体类型
     align-content: space-between;
 
 
-<a id="orgbc5ee53"></a>
-
 ### 媒体查询
 
 三个逻辑操作符，分别是 and、not 和 only。
@@ -439,8 +300,6 @@ font-family  字体类型
       ...;
     }
 
-
-<a id="org71a1291"></a>
 
 ### viewport (视窗)
 
@@ -453,8 +312,6 @@ font-family  字体类型
     width=device-width 可指示网页与屏幕宽度（以设备无关像素为单位）进行匹配。这样，网页就可以重排内容以匹配不同的屏幕尺寸。
 
 
-<a id="org7f3e49d"></a>
-
 ### transform 变换
 
 -   transform:
@@ -465,8 +322,6 @@ font-family  字体类型
     -   matrix() 需要六个参数，包含数学函数，旋转、缩放、移动以及倾斜
     -   transform-origin 	允许你改变被转换元素的位置
 
-
-<a id="orga35a918"></a>
 
 ### 过渡效果 动画
 
@@ -479,14 +334,10 @@ font-family  字体类型
 -   transition-delay 	规定过渡效果何时开始
 
 
-<a id="orgb15ba22"></a>
-
 ### 相对布局
 
 一般而言，对于响应式网站，水平方向为流体网格布局，那宽度、左右间距和左右内边距的长度自然采用百分比。像高度、上下间距，还有字体大小等与垂直方向相关的属性则应该使用 em 或者 rem 单位。
 
-
-<a id="orgd1ea164"></a>
 
 ### 移动优先
 
@@ -503,33 +354,19 @@ font-family  字体类型
     }
 
 
-<a id="orgb19cd6c"></a>
-
 ### 滚动条
 
 用 max-width 代替 width 可以防止窗口太小时出现滚动条
 
 
-<a id="org2b14caa"></a>
-
 # 伪类
-
-mis
-
-
-<a id="orgc0495bc"></a>
-
 ## :nth-child
 
 :nth-child(an+b) 这个 CSS 伪类首先找到所有当前元素的兄弟元素，然后按照位置先后顺序从1开始排序，选择的结果为CSS伪类:nth-child括号中表达式（an+b）匹配到的元素集合（n=0，1，2，3&#x2026;）。
 
 
-<a id="org7d1a0dd"></a>
-
 # faq
 
-
-<a id="org737ab64"></a>
 
 ## 解决子div设float后导致父div无法自动撑开(常用2种)
 
@@ -539,14 +376,10 @@ mis
 2)在最后添加一个sub<sub>div用来清除浮动</sub>：<div style="clear:both;"></div>; 
 
 
-<a id="orgf1b11f8"></a>
-
 # [Flex 布局教程：语法篇 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)     :website:
 
 <span class="timestamp-wrapper"><span class="timestamp">[2020-12-22 二 14:56]</span></span>
 
-
-<a id="org84c500a"></a>
 
 ## Article
 
@@ -566,8 +399,6 @@ Flex 布局将成为未来布局的首选方案。本文介绍它的语法， [�
 
 以下内容主要参考了下面两篇文章： [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 和 [A Visual Guide to CSS3 Flexbox Properties](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties)。
 
-
-<a id="org74a2c2c"></a>
 
 ### 一、Flex 布局是什么？
 
@@ -598,8 +429,6 @@ Webkit 内核的浏览器，必须加上 =-webkit=前缀。
 注意，设为 Flex 布局以后，子元素的 =float=、 =clear=和 =vertical-align=属性将失效。
 
 
-<a id="org07b9a9c"></a>
-
 ### 二、基本概念
 
 采用 Flex 布局的元素，称为 Flex 容器（flex container），简称"容器"。它的所有子元素自动成为容器成员，称为 Flex 项目（flex item），简称"项目"。
@@ -610,8 +439,6 @@ Webkit 内核的浏览器，必须加上 =-webkit=前缀。
 
 项目默认沿主轴排列。单个项目占据的主轴空间叫做 =main size=，占据的交叉轴空间叫做 =cross size=。
 
-
-<a id="orga867299"></a>
 
 ### 三、容器的属性
 
@@ -693,7 +520,6 @@ Webkit 内核的浏览器，必须加上 =-webkit=前缀。
     
     它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。
     
-    > 
     > 
     > -   =flex-start=（默认值）：左对齐
     > -   =flex-end=：右对齐
