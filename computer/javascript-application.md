@@ -345,3 +345,8 @@
         });
     });
 #+END_EXAMPLE
+
+## 置顶
+```
+<a href="javascript:;" onclick="$('html,body').animate({scrollTop: '0px'}, 800)" class="btn_top">TOP ↑</a>
+```
