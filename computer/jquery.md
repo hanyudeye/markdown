@@ -387,6 +387,8 @@ $('div:animated')//选择当前处于动画状态的div元素
 形式：$.load(url, data, func);
 其中data如果存在则使用POST方式发送请求，不存在则使用GET方式发送请求。
 
+### $(selector).serialize()
+
 ## Dom 对象 与 jQuery 对象转换
    #+begin_src js
      var $v =$("#v");    //jQuery 对象
