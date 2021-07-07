@@ -12,7 +12,6 @@ fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学�
 登录密码是 123456
 ## 命令行
 ### 一键生成CURD
-<<<<<<< HEAD
 ![](../image/computer/fastadmin/Snipaste_2021-06-15_16-03-57.png)
 =======
 > 在Fast
@@ -44,4 +43,3 @@ php think crud -t test --db=v_phealth_db2
 ## 数据库
 这里提供的是数据库表字段规则在你创建表时使用，当按如下的规则进行字段命名、类型设置和备注时
 使用php think crud -t 表名生成CRUD时会自动生成对应的HTML元素和组件
->>>>>>> 21240bab3fa946c5f8624c47202930488735dd6a
