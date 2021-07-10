@@ -12,11 +12,9 @@ fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学�
 登录密码是 123456
 ## 命令行
 ### 一键生成CURD
-![](../image/computer/fastadmin/Snipaste_2021-06-15_16-03-57.png)
-=======
-> 在Fast
 
 常用命令
+```
 //生成fa_test表的CRUD
 php think crud -t test
 //生成fa_test表的CRUD且一键生成菜单
@@ -39,6 +37,7 @@ php think crud -t test --imagefield=image --imagefield=img
 php think crud -t test --relation=category --relation=admin --relationforeignkey=category_id --relationforeignkey=admin_id
 //生成v_phealth_db2数据库下的fa_test表的CRUD
 php think crud -t test --db=v_phealth_db2
+```
 
 ## 数据库
 这里提供的是数据库表字段规则在你创建表时使用，当按如下的规则进行字段命名、类型设置和备注时
