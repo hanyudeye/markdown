@@ -69,7 +69,7 @@ h1{
 -   文本的大小和字型(font-size / font-family)
 -   粗细、样式、拉伸和装饰(font-weight / font-style / font-stretch / text-decoration)
 -   行间距(line-height)、字母间距(letter-spacing)和单词间距(word-spacing)
--   对齐(text-align)方式和缩进(text-ident)
+-   对齐(text-align)方式和缩进(text-indent)
 -   链接样式（:link / :visited / :active / :hover）
 -   阴影效果 - text-shadow
 -   首字母和首行文本(:first-letter / :first-line)
