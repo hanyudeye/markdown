@@ -1,14 +1,10 @@
-* 数据库设置
-|数据|长度|
-|email(邮箱)| 254|
-
-* [[http://www.runoob.com/redis/redis-commands.html][Redis]]
-** 安装 
+# 数据库设置
+## 安装 
    sudo apt-get install redis-server
    启动 redis-server
-** 命令行 ( redis-cli )
+## 命令行 ( redis-cli )
     ping 
-    获取配置  CONFIG GET *
+    获取配置  CONFIG GET #
     
     设置  set name "yiibai.com"
     获取 get name 
@@ -250,7 +246,7 @@
        System.out.println("Connection to server sucessfully"); 
        //store data in redis list 
        // Get the stored data and print it 
-       List<String> list = jedis.keys("*"); 
+       List<String> list = jedis.keys("#"); 
 
        for(int i = 0; i<list.size(); i++) { 
           System.out.println("List of stored keys:: "+list.get(i)); 
@@ -317,7 +313,7 @@
     $redis->connect('127.0.0.1', 6379); 
     echo "Connection to server sucessfully"; 
     // Get the stored keys and print it 
-    $arList = $redis->keys("*"); 
+    $arList = $redis->keys("#"); 
     echo "Stored keys in redis:: " 
     print_r($arList); 
  ?>
@@ -463,10 +459,10 @@
 
          }
 
-         /*
+         /#
          sorted set 是 set 的一个升级版本，它在 set 的基础上增加了一个顺序的属性，这一属性在添加修改.元素的时候可以指定，
-         * 每次指定后，zset(表示有序集合)会自动重新按新的值调整顺序。可以理解为有列的表，一列存 value,一列存顺序。操作中 key 理解为 zset 的名字.
-         */
+         # 每次指定后，zset(表示有序集合)会自动重新按新的值调整顺序。可以理解为有列的表，一列存 value,一列存顺序。操作中 key 理解为 zset 的名字.
+         #/
          private static void AddSetSorted(RedisClient client)
          {
              if (client == null) throw new ArgumentNullException("client");
@@ -508,15 +504,15 @@
          public int Age { get; set; }
      }
      C#如何要想查看自己操作是否成功，也可以像 MongoDB 那样下载一个客户端工具，这里推荐一款 Redis Desktop Manager。这个工具就相当于 SQL Server 的客户端工具一样。通过这款工具可以查看 Redis 服务器中保存的数据和对应格式。其使用也非常简单，只需要添加一个 Redis 服务连接即可。该工具的下载地址为：http://pan.baidu.com/s/1sjp55Ul
-* Redis (REmote DIctionary Server,key-value 非关系型数据库)
-** 启动 Redis
+# Redis (REmote DIctionary Server,key-value 非关系型数据库)
+## 启动 Redis
    sudo serveer redis-server start
    redis-cli 客户端
-** 配置
-*** 配置文件 /etc/redis/redis.conf 
-*** 获取所有配置 config get *
-*** 设置 confit set Name Value
-*** 参数说明
+## 配置
+### 配置文件 /etc/redis/redis.conf 
+### 获取所有配置 config get #
+### 设置 confit set Name Value
+### 参数说明
 1. Redis 默认不是以守护进程的方式运行，可以通过该配置项修改，使用 yes 启用守护进程
     daemonize no
 
@@ -633,10 +629,10 @@
 30. 指定包含其它的配置文件，可以在同一主机上多个 Redis 实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件
 
     include /path/to/local.conf
-* redis 
+# redis 
 #+begin_src sh
   # 查看所有的配置
-  config get *
+  config get #
   config get dir
   # 清空所有的数据
   flushall
@@ -645,7 +641,7 @@
   # Redis 会在后台异步进行快照操作，快照同时还可以响应客户端请求
   BGSAVE
   # 查看所有的键
-  KEYS *
+  KEYS #
   # 操作集合
   SADD 键 值 # 向一个集合中添加一个值
   SCARD 键  # 返回该集合的基数

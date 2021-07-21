@@ -1,54 +1,57 @@
-# Table of Contents
+# css (Cascading Style Sheets)
+> 又称 串样式列表、级联样式表、串接样式表
 
-1.  [css](#orgfb2e4f0)
-    1.  [视口概念](#org5534b43)
-        1.  [浏览器整个窗口](#org6e0e9bc)
-        2.  [浏览器窗口](#org321dda7)
-        3.  [视口设置](#orgfb6a72c)
-    2.  [选择器](#org347cd19)
-        1.  [标签](#orgac8e092)
-        2.  [id](#org5512e0a)
-        3.  [class](#org796e1f6)
-        4.  [属性](#org4c4dd76)
-        5.  [伪元素](#orgc6a328e)
-    3.  [样式](#org22448b6)
-        1.  [文本](#org3d2bd9c)
-        2.  [盒子 box](#org7a8c742)
-        3.  [链接](#org6bea205)
-        4.  [列表](#org0561efd)
-        5.  [图像](#orgfe5aa32)
-        6.  [布局](#orgdd75de4)
-    4.  [颜色值](#org6563687)
-    5.  [字体](#org8c0b8b9)
-    6.  [初始化样式](#org6760677)
-    7.  [高级功能](#org92cf15b)
-        1.  [flexbox 弹性布局 (为移动端设计的方便排版的技术)](#orged7c2ee)
-        2.  [媒体查询](#orgbc5ee53)
-        3.  [viewport (视窗)](#org71a1291)
-        4.  [transform 变换](#org7f3e49d)
-        5.  [过渡效果 动画](#orga35a918)
-        6.  [相对布局](#orgb15ba22)
-        7.  [移动优先](#orgd1ea164)
-        8.  [滚动条](#orgb19cd6c)
-2.  [伪类](#org2b14caa)
-    1.  [:nth-child](#orgc0495bc)
-3.  [faq](#org7d1a0dd)
-    1.  [解决子div设float后导致父div无法自动撑开(常用2种)](#org737ab64)
-4.  [Flex 布局教程：语法篇 - 阮一峰的网络日志](#orgf1b11f8):website:
-    1.  [Article](#org84c500a)
-        1.  [一、Flex 布局是什么？](#org74a2c2c)
-        2.  [二、基本概念](#org07b9a9c)
-        3.  [三、容器的属性](#orga867299)
+结构
+``` css
+h1{
+    color:white;
+    background:orange
+}
+```
+## 主要内容
+### 选择器
+选择器的强大筛选功能 `能方便的` 定位到元素 
 
-对东西进行 大小 颜色 三维 边框 的修饰
+#### 属性选择 
 
 
-<a id="orgfb2e4f0"></a>
+| 代码                                 | 说明                                                 |
+| ------------------------------------ | ---------------------------------------------------- |
+| [attribute]                          | 元素有attribute的属性。                              |
+| [attribute="value"]                  | 属性attribute里是value                               |
+| [attribute~="value"]                 | 属性attribute里使用空白分开的字符串里其中一个是value |
+| [attribute          &#124;= "value"] | 属性attribute里是value或者以value-开头的字符串       |
+| [attribute^="value"]                 | 属性attribute里最前的是value                         |
+| [attribute$="value"]                 | 属性attribute里最后的是value                         |
+| [attribute*="value"]                 | 属性attribute里有value出现过至少一次                 |
+#### 组合选择器
+| 符号  | 说明                                                     |
+| ----- | -------------------------------------------------------- |
+| A > B | 子代选择器，选择A下一层的元素B                           |
+| A ~ B | 兄弟选择器，选择与A同层的元素B                           |
+| A + B | 相邻兄弟选择器，选择与A相邻的元素B（不能被任何元素相隔） |
+| A B   | 后代选择器，包含选择符                                   |
 
-# css
+#### 其他 (伪元素)
 
-
-<a id="org5534b43"></a>
+| 符号               | 说明                             |
+| ------------------ | -------------------------------- |
+| :link              | 选择所有未访问链接               |
+| :visited	a:visited | 选择所有访问过的链接             |
+| :active	a:active   | 选择正在活动链接                 |
+| :hover	a:hover     | 把鼠标放在链接上的状态           |
+| :focus	input:focus | 选择元素输入后具有焦点           |
+| :first-letter      | 元素的第一个字母                 |
+| :first-line        | 元素的第一行                     |
+| :first-child       | 选择器匹配属于元素的第一个子元素 |
+| :before            | 在元素之前插入内容               |
+| :after             | 在元素之后插入内容               |
+| :lang(language)    | 为元素的 lang 属性选择一个开始值 |
+ 
+### 引入规则
+### 行级元素与块级元素
+### 方盒模型
+### 浮动与定位
 
 ## 视口概念
 ### 视口设置
@@ -57,46 +60,8 @@
 
 <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 
-## 选择器
 
-### 标签
-
-    div p  {text-align:center;}
-
-### id
-    #red {color:red;}
-
-### class
-
-    .center {text-align: center}
-
-### 属性
-
-    input [title="value"] {text-align: center}
-
-### 伪元素
-
--   :first-line                   向文本的首行设置特殊样式
--   :first-letter                 向文本的首字母设置特殊样式
--   :before                       在元素的内容前面插入新内容
--   :link	               选择所有未访问链接
--   :visited	a:visited           选择所有访问过的链接
--   :active	a:active             选择正在活动链接
--   :hover	a:hover               把鼠标放在链接上的状态
--   :focus	input:focus           选择元素输入后具有焦点
--   :first-letter 元素的第一个字母
--   :first-line	元素的第一行
--   :first-child	  选择器匹配属于元素的第一个子元素
--   :before	在元素之前插入内容
--   :after	在元素之后插入内容
--   :lang(language) 为元素的 lang 属性选择一个开始值          
-    
-    内容
-    
-        p::before {
-          content: "Read this: ";
-        }
-
+   
 ## 样式
 
 ### 文本

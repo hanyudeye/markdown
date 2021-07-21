@@ -1,4 +1,4 @@
-# The Millionaire Fastlane
+# The Millionaire Fastlane (百万财富)
 
 [The Millionaire Fastlane](http://www.amazon.com/The-Millionaire-Fastlane-Wealth-Lifetime/dp/0984358102) is a book written by MJ DeMarco about how to become rich.
 

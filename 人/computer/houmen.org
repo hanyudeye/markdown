@@ -1,81 +1,14 @@
 * 寻找 PHP（网站）挂马，后门
-一
-
+  
 php 后门木马常用的函数大致上可分为四种类型：
-
-
-
 1. 执行系统命令: system, passthru, shell_exec, exec, popen, proc_open
-
-
 2. 代码执行与加密: eval, assert, call_user_func,base64_decode, gzinflate, gzuncompress, gzdecode, str_rot13
-
-
 3. 文件包含与生成: require, require_once, include, include_once, file_get_contents, file_put_contents, fputs, fwrite
-
-
 4. .htaccess: SetHandler, auto_prepend_file, auto_append_file
 
-
 二
-
 想找一个 关键词是“hellow word” 在哪些文件中有，我们用 grep 命令
-
-
 grep --color -i -r -n "hellow word"  /data/www/
-
-这样就能搜索出来 文件中包含关键词的文件
-
---color 是关键词标红
-
--i 是不区分大小写
--r 是包含子目录的搜索
--d skip 忽略子目录
-
-可以用以上命令查找网站项目里的带有挂马的文件
-
-
-三
-
-.两个查后门的实用 linux 命令：
-find /data/web/website/ -iname *.php -mtime -35 找出/data/web/website/目录下 35 分钟前新建的 php
-find /data/web/website/ -name “*.php” | xargs grep “eval($_POST[” 找出/data/web/website/ 里面源码包含 eval($_POST[的 php 文件  (注意：POST 后面可能需要转义符“\”，否则有可能不能执行）
-
-四.
-
-例如
-
-注入漏洞 eval(base64_decode
-
-grep --color -i -r -n "eval"  /data/www/   找出来对比以前正常的代码，看是否正常。然后用 stat 查看这个木马文件的修改时间，最后去寻找 WEB 日志，找出木马从哪里进来的
-
-eg: grep --color -i -r -n 'eval($_POST'  cncar/ 
-
-
-五：
-
-实用查找 PHP 木马命令：
-
-查找 PHP 木马
-
-# find ./ -name "*.php" |xargs egrep "phpspy|c99sh|milw0rm|eval\(gunerpress|eval\(base64_decoolcode|spider_bc"> /tmp/php.txt
- 
-# grep -r --include=*.php  '[^a-z]eval($_POST' . > /tmp/eval.txt
- 
-# grep -r --include=*.php  'file_put_contents(.*$_POST
-.∗
-);' . > /tmp/file_put_contents.txt
- 
-# find ./ -name "*.php" -type f -print0 | xargs -0 egrep "(phpspy|c99sh|milw0rm|eval\(gzuncompress\(base64_decoolcode|eval\(base64_decoolcode|spider_bc|gzinflate)" | awk -F: '{print $1}' | sort | uniq
-查找最近一天被修改的 PHP 文件
-
-#   find -mtime -1 -type f -name \*.php
-修改网站的权限
-
-# find -type f -name \*.php -exec chmod 444 {} \;
- 
-# find ./ -type d -exec chmod 555{} \;
-
 
 假设最后更新是 10 天前我们可以查找 10 天内生成的可以 php 文件:
 
@@ -111,21 +44,6 @@ grep ‘eval’ * -R 全盘搜索当前目录所有文件（包含子目录）�
 关于 eval，请自行 google 一句话 php 代码。
 
 2，查看日志。
-
-不到这个时候不知道日志的可贵啊。
-
-还是以 grep 命令为主。
-
-思路：负责的站点是 Linux，只开了 2 个端口，一个 22 和 80，外部的执行命令是由从 80 端口进来，Selinux 报 httpd 访问/boot 文件，确认被挂马。而所有的命令执行必须 POST 提交给执行的文件。所以，查找日志中所有的 POST 记录。
-
-cat access_log_20120823.log | grep ‘POST’ | grep -v ‘反向查找’ | less，通过 grep -v 排除正常 post，egrep 也支持正则，但是太复杂了，看懂不知道怎么运用。
-
-（这里不建议用 cat，用 tail 可以追加一个文件来看）
-这可以防患于未然，防止不知道哪天又被人黑进来了。每天看一眼日志。
-
-3，对于网页目录，只给 apache 用户 rx 权限，不要给 w 权限，目录设置要加上 rx，不要给 w，个别文件除外。所以，配合 2 使用，Linux 下可以快速过滤刷选出来不规则的 POST 请求。
-
-综合 1，2 其实就可以快速查找被黑的页面，被修改的文件替换干净的代码。
 
 * 捡了一个非常淫荡的 PHP 后门，给跪了
   <?php
