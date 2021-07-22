@@ -1,18 +1,6 @@
-一小时记诵 (先做)
-半小时视频 (后做)
+## TODO
+小程序路径 https://jingyan.baidu.com/article/f3ad7d0f4c39aa09c3345bf1.html
 
-如何看书有味道，像小时候一样，拿书啃
-
-TODO 重要的事情 (必做)
-- 学习用鼠标操作 (删除)
-- 调整椅子的高度(用旧椅子)，使人向前倾 (放个柜子)
-
-## Todo 学习
-1. 约方毅 跑步
-4 . 可以不直播，开视频
-2. feh
-3. 开直播 https://iliu.org/3735.html ，要买摄像头 ，慢做
-5 接公司官网 https://www.zhoujiangshou.com/
 
 
 ## 天天看 

@@ -1,3 +1,8 @@
+## javascript有效方法
+
+
+## 事件
+
 鼠标滚轮事件
 window.onmousewheel
 
