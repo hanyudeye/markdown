@@ -1,17 +1,5 @@
-一小时记诵 (先做)
-半小时视频 (后做)
-
-如何看书有味道，像小时候一样，拿书啃
-
-TODO 重要的事情 (必做)
-- 学习用鼠标操作 (删除)
-- 调整椅子的高度(用旧椅子)，使人向前倾 (放个柜子)
-- 整理学习目录
-
-
-## Todo 学习
-5 接公司官网 https://www.zhoujiangshou.com/
-
+## TODO
+小程序路径 https://jingyan.baidu.com/article/f3ad7d0f4c39aa09c3345bf1.html
 
 ## 天天看 
 https://github.com/521xueweihan/HelloGitHub/blob/master/content/01/HelloGitHub01.md
