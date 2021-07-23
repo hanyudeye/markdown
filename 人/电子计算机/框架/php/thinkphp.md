@@ -14,26 +14,9 @@
 
 ## 完全开发手册
 
-官方权威开发手册全部（并且只有）托管在看云文档平台，下面的各个版本的开发手册都可以导出`PDF`/`EPUB`到本地离线阅读，并支持发送到`Kindle`阅读，开发手册经常会保持更新，建议收藏随时以备查询。由于手册内容庞杂，不建议新手上来就看完全开发手册，容易摸不到北，最好通读下官方出品的[快速入门系列教程](https://www.kancloud.cn/special/thinkphp5_quickstart)。
-
 * 6.0版本：https://www.kancloud.cn/manual/thinkphp6_0
 * 5.1版本：https://www.kancloud.cn/manual/thinkphp5_1
 * 5.0版本：https://www.kancloud.cn/manual/thinkphp5
-
-## 官方教程
-
-手册只是作为使用参考性质，不具备新手引导和教学作用。因此除了完全开发手册之外，官方还出品了一系列官方快速入门教程，作为完全开发手册的补充，这些都是对新手或者希望深入了解和学习框架细节的不可或缺，同时也是一种抛砖引玉，希望更多的第三方优秀教程涌现出来。
-
-官方教程需要付费阅读（都是不到一杯咖啡的费用），写作不易请支持正版，主要包括：
-
-* 《[ThinkPHP5快速入门](https://www.kancloud.cn/thinkphp/thinkphp5_quickstart)》
-* 《[ThinkPHP5路由完全指南](https://www.kancloud.cn/thinkphp/route-master)》
-* 《[ThinkPHP5.0控制器从入门到精通](https://www.kancloud.cn/thinkphp/controller-in-detail)》
-* 《[掌握ThinkPHP5.0数据库和模型](https://www.kancloud.cn/thinkphp/master-database-and-model)》
-* 《[笨办法学ThinkPHP5.1](https://www.kancloud.cn/thinkphp/thinkphp-the-hard-way)》
-* 《[ThinkPHP6入门必读](https://www.kancloud.cn/thinkphp/thinkphp6-quickstart)》
-
-这些入门系列教程，有些虽然是为ThinkPHP5而写，但很多思想和用法，在后续版本中仍然适用，能够帮你更快速的入门和掌握ThinkPHP的精髓。
 
 ## API速查表
 
