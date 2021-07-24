@@ -1,5 +1,7 @@
+做行业的经营 (高级软件工程师)
 ## TODO
-小程序路径 https://jingyan.baidu.com/article/f3ad7d0f4c39aa09c3345bf1.html
+- 查看i3快捷键，打印，自己设置一套，并打印
+- emacs 快捷键也一样，特殊文档，如markdown ,org 打印快捷键
 
 ## 天天看 
 https://github.com/521xueweihan/HelloGitHub/blob/master/content/01/HelloGitHub01.md
