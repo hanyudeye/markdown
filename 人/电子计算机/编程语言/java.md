@@ -1,5 +1,3 @@
-## 优点
-移植性好，工作多
 
 ## 对象
 ### 小段字符串拼接 StringBuilder
@@ -89,5 +87,3 @@ java -classpath /home/user/classdir:.:/home/user/archives/archive.jar MyProg
 - ensureCapacity(100) 分配空间100 
 - trimToSize (销减尺寸，注意空间不会增长)
 
-
-# POM( Project Object Model，项目对象模型 ) 

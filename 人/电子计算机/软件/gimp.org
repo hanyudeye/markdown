@@ -3,7 +3,6 @@
 #+TAGS[]: gimp 
 #+CATEGORIES[]: 技术
 #+DATE: 2020-01-25T06:56:22+08:00
-#+draft: true
 
 gimp 用于解决平面设计中的问题。
 文档地址: https://docs.gimp.org/2.10/zh_CN/

@@ -1,22 +1,3 @@
-# java program design
-javascript 本来是一个简单的浏览器脚本，现在因为网页做的像App，所以脚本越来越长。
-
-javascript 的发展 其实就是 web 浏览器的发展.. ,程序语言的发展,也是 语言 对应编译器的发展
-
-HTML 中 <script> 等资源的加载顺序要  顺序加载,不来用什么方法呢? .
-
-
-## 面向对象
-简单应用,不需要复用,就不用创建类,直接对象就好了.
-
-
-## 函数表达式
-## BOM/DOM与事件
-## Canvas 对象
-## XML 对象
-## 错误对象
-## Ajax
-## 离线应用
 # Awesome JavaScript 
 A collection of awesome browser-side [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) libraries, resources and shiny things.
 

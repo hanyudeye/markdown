@@ -34,3 +34,17 @@ live修改默认端口
 
 ## 插件
 ### layui
+
+## 设置快捷键
+### 删除HTML标记对
+```
+{
+    "key": "ctrl+shift+k","command": "editor.emmet.action.removeTag"
+}
+```
+
+## 快速插入一段文字 lorem 或下载 chinese Lorem 插件
+jw200 200个中文
+## TranslationToolbox 翻译
+> 使用快捷键 ctrl+alt+t or cmd+alt+t 启用TranslationToolbox扩展
+> 选中想要翻译的文本，并将鼠标移至其上，即可显示翻译结果

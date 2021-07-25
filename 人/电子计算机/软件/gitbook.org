@@ -30,8 +30,6 @@
   把上面的 =NAME-FROM-DISQUS=修改为你在Disqus上的项目名即可。
   
 ** 使用Gitbook发布电子书
-
-
    上次说到 [[http://www.ituring.com.cn/article/127645][用GitBook制作电子书]]，侧重在使用gitbook这个命令行工具，今天要说的重点是GitBook这个平台。当你把书放到GitBook上后，可以设置书的价格（每笔交易GitBook抽走20%作为佣金），也可以设置为免费，以及接受捐赠。如果你要收费或接受捐赠，则需要一个PayPal账户。在开始前，我要友情提示一句，在国内访问GitBook的速度很慢，通过VPN访问才好。
 
    *第-1步* 用git这个源代码管理工具来管理你的Markdown文件。最好有个GitHub账户，这样每次push到GitHub时，GitBook都会自动为你的更新build新的版本（同时生成HTML、PDF、ePUB、MOBI这4个版本）。

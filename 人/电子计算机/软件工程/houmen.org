@@ -30,15 +30,6 @@ find /var/www/ -name “*.php” |xargs grep “passthru” |more
 查找最近一天被修改的 PHP 文件
 # find -mtime -1 -type f -name *.php
 
-六
-
-以下其实是多余的操作了其实，但是还是有值得看的地方
-
-
-，检查代码。
-
-肯定不是一个文件一个文件的检查，Linxu 有强悍的命令
-
 grep ‘eval’ * -R 全盘搜索当前目录所有文件（包含子目录）中带有 eval 的文件，这条可以快速查找到被挂马的文件。
 
 关于 eval，请自行 google 一句话 php 代码。
@@ -180,8 +171,7 @@ $s();
 
 这个是用来查打流量的函数 ddos 之类
 
-
-* [[https://www.cnblogs.com/chenpingzhao/p/6562415.html][PHP安全之webshell和后门检测 - 踏雪无痕SS - 博客园]] :website:
+* [[https://www.cnblogs.com/chenpingzhao/p/6562415.html][PHP安全之webshell和后门检测 - 踏雪无痕SS - 博客园]]                 :website:
 
 ** Article
 
