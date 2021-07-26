@@ -51,7 +51,42 @@ Vue.component('buttonclicked', {
 NPM
 > 大型项目中使用，可以与 webpack 或 Browserify 配合使用
 
-## 双向绑定
+## 表单数据与应用状态的双向绑定
 ``` html
 <input v-model="name">
+<span v-bind:title="message">鼠标悬停 title 属性显示</span>
+
+```
+
+## 条件与循环
+``` html
+<p v-if="seen">现在你看到我了</p>
+
+<ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+```
+
+
+
+## vue对象操作 [直接数据操作]
+``` js
+app4.todos.push({ text: '新项目' })
+```
+
+## 处理用户输入
+``` html
+<!-- 反转消息 -->
+<p>{{ message }}</p>
+<button v-on:click="reverseMessage">反转消息</button>
+```
+
+``` js
+ methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+    }
+  }
 ```

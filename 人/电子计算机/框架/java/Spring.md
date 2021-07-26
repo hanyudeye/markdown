@@ -1,6 +1,6 @@
 ## java 编译
 
-![](../image/java/2021-05-01_10-00.png)
+![](../../../../resource/image/java/2021-05-01_10-00.png)
 
 直接在文件目录执行编译，就不会报错
 
@@ -9,7 +9,7 @@ javac *.java
 ```
 
 ## java执行
-![](../image/java/2021-05-01_10-03.png)
+![](../../../../resource/image/java/2021-05-01_10-03.png)
 
 进入包最外层的目录,执行指定的类，类中必须要有 **main**  函数 
 
@@ -21,7 +21,7 @@ java 包名.类名
 
 在maven仓库中，搜索 Spring 关键词，选择 spring-context 依赖，拷贝到 pom.xml 文件的dependency 节点下面即可
 
-![](image/java/2021-05-01_20-59.png)
+![](../../../../resource/image/java/2021-05-01_20-59.png)
 
 ## Spring 核心 API 
 * ApplicationContext 
