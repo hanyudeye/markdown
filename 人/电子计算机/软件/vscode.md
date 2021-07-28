@@ -48,3 +48,16 @@ jw200 200个中文
 ## TranslationToolbox 翻译
 > 使用快捷键 ctrl+alt+t or cmd+alt+t 启用TranslationToolbox扩展
 > 选中想要翻译的文本，并将鼠标移至其上，即可显示翻译结果
+
+## 多光标编辑 
+按住Option(win Alt),然后用鼠标点，鼠标点在哪里哪里就会出现一个光标
+
+## 定义(definition)和实现(implementation)处
+f12跳到函数的定义处
+
+Cmd+f12(win Ctrl+f12)跳转到函数的实现处
+
+引用跳转  (shift+f12)
+
+## 代码重构
+F2
