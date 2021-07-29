@@ -259,7 +259,6 @@ IN | 指定针对某个列的多个可能值 例如: in (5000,3000,1500);
 SELECT column_name(s) FROM table_name WHERE column_name LIKE pattern;
 ```
 
-
 #### 通配符
 
 通配符可用于替代字符串中的任何其他字符。在 SQL 中，通配符与 SQL LIKE 操作符一起使用。
