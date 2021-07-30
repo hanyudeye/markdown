@@ -1,9 +1,14 @@
+挣钱开刀做手术
 
 做行业的经营 (高级软件工程师)
 心平气和，事后思考
 - 每天有规律
+- 好好看掘金 (基础打好，再看杂文)
+- 看看远程兼职
 
 
+手机投屏
+- https://blog.csdn.net/qq_43901693/article/details/102962698
 ## TODO
 - 时间规划，控制自己
 - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
