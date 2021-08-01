@@ -1,43 +1,11 @@
 * [[https://www.emacswiki.org/emacs?search=%22ElispCookbook%22][Elisp Cookbook]]
 ** Strings
-   The empty string (zero-length string, null string, ...):
 
-   #+BEGIN_EXAMPLE
-   (string-equal  ""  "")
-   ==> t
-   #+END_EXAMPLE
-
-   #+BEGIN_EXAMPLE
-   (equal  ""  "")
-   ==> t
-   #+END_EXAMPLE
-
-   #+BEGIN_EXAMPLE
-           (zerop (length  ""))
-           ==> t
-   #+END_EXAMPLE
-
-   #+BEGIN_EXAMPLE
-            ;; ` string-empty-p' was added in 24.4.
-           ( eval-when-compile ( require ' subr-x))
-           (string-empty-p  "")
-           ==> t
-   #+END_EXAMPLE
-
-   As a (very minor) space and performance optimization, starting with Emacs 23, Emacs keeps an interned copy of the empty string as a single object
-
-   #+BEGIN_EXAMPLE
-           (eq  ""  "")
-           ==> t  ; nil prior to Emacs 23
-   #+END_EXAMPLE
-
-   #+BEGIN_EXAMPLE
-           (eq  "" (purecopy  ""))
-           ==> t  ; nil prior to Emacs 23
-   #+END_EXAMPLE
-
-   #+BEGIN_EXAMPLE
-           (eq  "" (propertize  "" 'face 'italic))
+   - string-equal
+   - length
+   - string-empty-p
+   - 
+          (eq  "" (propertize  "" 'face 'italic))
            ==> t  ; nil prior to Emacs 23
    #+END_EXAMPLE
 
