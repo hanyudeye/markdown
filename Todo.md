@@ -9,6 +9,9 @@
 
 手机投屏
 - https://blog.csdn.net/qq_43901693/article/details/102962698
+- https://zhuanlan.zhihu.com/p/165983566
+- https://github.com/barrer/tampermonkey-script
+
 ## TODO
 - 时间规划，控制自己
 - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
