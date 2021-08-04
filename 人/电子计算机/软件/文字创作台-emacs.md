@@ -1,4 +1,4 @@
-Emacs -智能工作台
+Emacs - 文字书写器
 
 # spacemacs 快捷键
 spacemacs 是 emacs 的一套配置，使emacs 的使用更方便，功能更强大
