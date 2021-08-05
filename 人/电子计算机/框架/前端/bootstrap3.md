@@ -9,7 +9,10 @@ Bootstrap 包的内容
 4)JavaScript 插件：Bootstrap 包含了十几个自定义的 jQuery 插件。您可以直接包含所有的插件，也可以逐个包含这些插件
 5)定制：您可以定制 Bootstrap 的组件、LESS 变量和 jQuery 插件来得到您自己的版本。
 
-
+## 引入链接
+``` html
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+```
 ## 表单
 
 ### 输入框 ###
