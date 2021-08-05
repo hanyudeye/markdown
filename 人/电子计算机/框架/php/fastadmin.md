@@ -1,4 +1,5 @@
 ## fastadmin
+https://doc.fastadmin.net/doc/178.html
 
 fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学，开发文档看完，跟着操作一遍，多写写API接口；
 
@@ -42,3 +43,9 @@ php think crud -t test --db=v_phealth_db2
 ## 数据库
 这里提供的是数据库表字段规则在你创建表时使用，当按如下的规则进行字段命名、类型设置和备注时
 使用php think crud -t 表名生成CRUD时会自动生成对应的HTML元素和组件
+
+
+## 关联搜索
+``` php
+protected $relationSearch=true;
+```

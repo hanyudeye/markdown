@@ -1,5 +1,6 @@
 挣钱开刀做手术
 
+
 查找人家做的手册
 
 做行业的经营 (高级软件工程师)
@@ -14,7 +15,10 @@
 - https://zhuanlan.zhihu.com/p/165983566
 - https://github.com/barrer/tampermonkey-script
 
+
 ## TODO
+- 逼自己一把，给自己尊严
+- 多看github 中的大神
 - 时间规划，控制自己
 - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
 - emacs 快捷键也一样，特殊文档，如markdown ,org 打印快捷键
