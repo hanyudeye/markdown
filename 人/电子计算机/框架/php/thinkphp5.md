@@ -689,3 +689,25 @@ break;
 }
 
 ```
+
+### 设置session 时间 (在配置文件中)
+ROOT\application\config.php
+
+添加个字段  expire
+
+``` php
+
+ 'session'                => [
+        'id'             => '',
+        // SESSION_ID的提交变量,解决flash上传跨域
+        'var_session_id' => '',
+        // SESSION 前缀
+        'prefix'         => 'think',
+        // 驱动方式 支持redis memcache memcached
+        'type'           => '',
+        // 是否自动开启 SESSION
+        'auto_start'     => true,
+        //设置session 时间
+        'expire'             => 86400,
+    ],
+```
