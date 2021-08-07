@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Css 元素排版及样式</title>
+	<style>
+		.p1 {
+			text-align: center;
+			line-height: 1em;
+			background-color: rgba(33, 33, 33, 0.2);
+			/* text-shadow: 0.1em 0.1em 0.1em #333; */
+		}
+
+		.p2 {
+			line-height: 3em;
+			background-color: rgba(33, 33, 33, 0.2);
+			text-shadow: 1px 1px 2px red, -1px -1px 2px blue;
+
+		}
+
+		.overflow1 {
+			width: 10em;
+			height: 3em;
+			overflow: hidden;
+			text-overflow: clip;
+			border: 1px solid #333;
+		}
+
+		.overflow2 {
+			width: 10em;
+			height: 3em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			border: 1px solid #333;
+			/* white-space: nowrap; */
+
+			/* 省略号 针对chrome 生效 */
+			/* 只能首行生效 */
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			/* 限制在一个块元素显示的文本的行数 */
+			-webkit-box-orient: vertical;
+			/* 垂直排列 */
+			word-break: break-all;
+			/* 内容自动换行 */
+		}
+
+		.overflow3 {
+			width: 10em;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+
+		}
+
+		/* 文字换行 */
+
+		.wordwrap1 {
+			white-space: nowrap;
+		}
+
+		.wordwrap2 {
+			white-space: normal;
+		}
+
+	</style>
+</head>
+
+<body>
+	<section>
+		<legend>
+			<h1>文本样式</h1>
+		</legend>
+		<p class="p1">
+			段落1
+			<br>
+
+			text-align: center;
+			<br>
+			line-height: 1em;
+			<br>
+			阴影 相对位置+大小+颜色 text-shadow: 0.1em 0.1em 0.1em #333;
+			<br>
+
+		</p>
+
+		<p class="p2">
+			段落2 <br />
+
+			line-height: 3em; 3行文字
+			<br>
+
+			多个阴影叠加 text-shadow: 1px 1px 2px red,-1px -1px 2px blue;
+		</p>
+	</section>
+
+	<section>
+		<legend>
+			<h1>省略号</h1>
+		</legend>
+
+		<div class="overflow1"> 中文语言20em是20个(中英文)的宽度 width:20em;text-overflow: clip; 截断
+			必须 和 一起使用 overflow: hidden;
+
+		</div>
+
+		<div class="overflow2">
+			hello world nice to meet you fs 中文语言20em是20个中文的宽度 width:20em;text-overflow: 省略号; 截断
+			必须 和 一起使用 overflow: hidden;
+			没有效果么
+		</div>
+		<div class="overflow3">单行文本省略号 单行文本省略号</div>
+	</section>
+
+	<section>
+		<legend>
+			<h1>文字换行</h1>
+		</legend>
+
+		<div class="wordwrap1"><strong>不换行 </strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam reiciendis
+			accusamus a in maiores. Ullam fugiat veniam expedita sequi rerum non sunt error ipsum, vitae,
+			tempore architecto optio nostrum quis?</div>
+		<div class="wordwrap2"><strong>换行 </strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam reiciendis
+			accusamus a in maiores. Ullam fugiat veniam expedita sequi rerum non sunt error ipsum, vitae,
+			tempore architecto optio nostrum quis?</div>
+	</section>
+</body>
+
+</html>

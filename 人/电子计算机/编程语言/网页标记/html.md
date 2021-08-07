@@ -4,12 +4,13 @@
 
 ## 标签分类
 ### 结构性标签 (控制富文本组织结构)
-- section
-- header
-- footer
-- nav
-- article
-- aside
+- header 头部
+- section 章节
+- footer 脚步
+- nav 导航
+- article 文章，主栏
+- aside 侧栏
+- legend 着重部分 
 
 ### 行内语义标签 (具体对象)
 - meter 表示特定范围内的数值，用于数量，百分比

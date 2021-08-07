@@ -1517,3 +1517,10 @@
   手机号 VARCHAR(11)
   地址url  VARCHAR(100)
   时间 DATE
+
+* 设置远程
+登录：mysql -u root -h -p
+打开数据库：use mysql
+添加所有IP都可以访问的用户：grant all on *.* to '用户名'@'%' identified by '密码';
+或者也可以给root用户设置为所有ip都可访问：update user set host='%' where user='root' and host='localhost';
+刷新权限：flush privileges;
