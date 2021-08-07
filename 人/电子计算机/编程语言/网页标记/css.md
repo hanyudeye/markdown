@@ -1,15 +1,8 @@
-# css (Cascading Style Sheets)
-> 又称 串样式列表、级联样式表、串接样式表 
-> 不属于语言
 
 
-结构
-``` css
-h1{
-    color:white;
-    background:orange
-}
-```
+# css (Cascading Style Sheets)  单纯为 HTML 使用的
+为了表示盒子样式，我们要设置一种方式，根据富文本(HTML)中标签的类型，或标签名，用选择器(删选表达式)的方式进行样式说明。
+
 ## 主要内容
 ### 选择器
 选择器的强大筛选功能 `能方便的` 定位到元素 
