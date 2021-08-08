@@ -1,0 +1,562 @@
+#+TITLE: laravel 简介 
+#+DESCRIPTION: laravel 简介 
+#+TAGS[]: laravel 
+#+CATEGORIES[]: 技术
+#+DATE: 2020-02-14T20:58:44+08:00
+#+draft: true
+
+服务器(apache/nginx) ->/public/index.php 加载器
+
+
+** 基础功能
+*** 安装   
+**** 安装 Laravel installer (laravel 安装器)
+     composer global require "laravel/installer"
+     添加环境变量 $HOME/.composer/vendor/bin
+     
+    创建Laravel 项目 laravel new blog
+**** 通过 Composer 创建项目
+     composer create-project --prefer-dist laravel/laravel blog "5.5.*"
+**** 启动应用
+     php artisan serve 或  apache (推荐)
+     
+     对于本地开发来说，最好的选择还是 Homestead 和 Valet。
+
+*** 配置 
+    - 配置文件都在 */config* 目录里面
+    - 目录权限 */storage* 和 */bootstrap/cache* 目录都要可写
+    - APP_KEY 设置随机秘钥 php artisan key: generate
+
+    - app.php 配置   
+      - app.php aliases 段可定义别名
+      - 'debug' => env('APP_DEBUG', true) 调试模式
+      - 'log' => env('APP_LOG', 'daily') 日志记录 ingle, daily, syslog, errorlog
+      - 'log_level' => env('APP_LOG_LEVEL', 'error') 错误等级 debug, info, notice, warning, error, critical, alert, emergency
+*** 路由
+    /routes/web.php 路由配置文件
+    
+    use App\Http\Controllers\UserController;
+    Route::get('/user', [UserController::class, 'index']);
+**** 基本结构
+     #+begin_src php
+       Route::get($url, $callback);
+       Route::post($url, $callback);
+       Route::put($url, $callback);
+       Route::patch($url, $callback);
+       Route::delete($url, $callback);
+       Route::option($url, $callback);
+     #+end_src
+**** 多个请求
+     #+begin_src php
+       Route::get(['get', post], '/', function () { });
+       Route::any('/', function () { });
+     #+end_src
+**** 路由参数
+     - 必选参数 Route::get('/test/{id}', function ($id) { });
+     - 可选参数 Route::get('/test/{id?}', function ($id) { });
+       
+**** 命名路由
+     - name(NAME) 给路由定义起个名字，在以后的程序中可以用 route(NAME) 的形式调用
+**** 路由群组
+     - Route::group 把路由条目归归类，好区分
+       
+*** 控制器
+    - app/Http/Controllers  控制器定义目录
+**** 控制器结构
+     #+begin_src php
+       <?php
+       namespace App\Http\Controllers;
+
+       use Illuminate\Http\Request;
+
+       class UserController extends Controller
+       {
+           public function __construct() {}
+       }
+     #+end_src
+     
+     - 控制器文件名为驼峰结构 如：UserController
+     - 控制器路由方法 Route::get('路由表达式', '控制器类名@方法');
+**** 单一行为控制器
+     如果类中只有一个方法，就可以用 *__invoke* 定义一个单一行为。 
+     
+     #+begin_src php
+       // 路由中不用指定类名
+       Route::get('user/{id}', 'ShowProfile');
+     #+end_src
+
+**** 中间件
+     连续的操作可以用中间件表示，一般定义在 *__construct* 里面。
+     #+begin_src php
+       public function __construct()
+       {
+           $this->middleware('auth');
+           $this->middleware('log')->only('index');
+           $this->middleware('subscribed')->except('store');
+       }
+     #+end_src
+    
+**** 资源控制器 
+     就是对图片那些东西，我们不想单独路由，就可以创建一个通用的路由
+     #+begin_src shell
+       php artisan make:controller PhotoController --resource
+     #+end_src
+     路由方式 
+     #+begin_src php
+       // 注册单个
+       Route::resource('photos', 'PhotoController');
+
+       // 注册多个
+       Route::resources([
+           'photos' => 'PhotoController',
+           'posts' => 'PostController'
+       ]);
+     #+end_src
+
+
+     | Verb      | URI                  | Action  | Route          Name |
+     | GET       | /photos              | index   | photos.index        |
+     | GET       | /photos/create       | create  | photos.create       |
+     | POST      | /photos              | store   | photos.store        |
+     | GET       | /photos/{photo}      | show    | photos.show         |
+     | GET       | /photos/{photo}/edit | edit    | photos.edit         |
+     | PUT/PATCH | /photos/{photo}      | update  | photos.update       |
+     | DELETE    | /photos/{photo}      | destroy | photos.destroy      |
+
+*** 获取 URL 参数     
+**** Input
+     使用 * Illuminate\Support\Facades\Input* 方法获取 *url* 参数
+   
+     - URL 结构  test1?id=232
+     - Input::get()
+     - Input::all()
+     - Input::only([])
+     - Input::except([])  除了
+     - Input::has() 是否存在
+
+**** Request
+     跟 Input 用法一样
+
+*** 门面( Facades )
+    门面提供了静态方法，定义在 *Illuminate\Support\Facades* 中(在 laravel 内部) 。
+    
+*** 对数据库操作
+    #+begin_quote
+    支持四个数据库 MySQL , PostgreSQL, SQLite, SQL Server
+    #+end_quote
+    
+**** 配置  
+     - config/database.php  配置文件 
+     - .env   环境变量配置文件
+     - use DB; 使用 DB 类  
+***** 对 SQLite 的配置
+
+      #+begin_example
+      DB_CONNECTION=sqlite
+      DB_DATABASE=/absolute/path/to/database.sqlite
+      #+end_example
+
+***** 读写连接
+      #+begin_quote
+      对数据库的不同功能使用不同的配置
+      #+end_quote
+      
+      #+begin_src php
+        'mysql' => [
+            'read' => [
+                'host' => ['192.168.1.1'],
+            ],
+            'write' => [
+                'host' => ['196.168.1.2'],
+            ],
+            'sticky'    => true,
+        ]...
+      #+end_src
+***** sticky 选项
+      *sticky* 可用于允许立即读取在当前请求周期中写入数据库的记录，为了安全一般关闭。
+***** 使用多个连接
+      - 通过连接方法 $users = DB::connection('foo')->select(...);
+      - 通过底层 PDO $pdo = DB::connection()->getPdo();
+**** 原生操作
+***** 增删改查
+      - 查(参数绑定) DB::select('select * from users where active = ?', [1]);
+      - 查(命名绑定) $results = DB::select('select * from users where id = :id', ['id' => 1]);
+      - 增 DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+      - 改 $affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+      - 删 $deleted = DB::delete('delete from users');
+      - 执行语句 DB::statement('drop table users');
+***** 数据库事务
+
+      #+begin_src php
+        DB::transaction(function () {
+            DB::table('users')->update(['votes' => 1]);
+
+            DB::table('posts')->delete();
+        });
+      #+end_src
+***** 处理死锁 (设定重新尝试的次数)
+      #+begin_src  php
+        DB::transaction(function () {
+            DB::table('users')->update(['votes' => 1]);
+
+            DB::table('posts')->delete();
+        }, 5);
+      #+end_src
+***** 手动使用事务
+      #+begin_src php
+        DB::beginTransaction();
+
+        // 回滚
+        DB::rollBack();
+        DB::commit();
+      #+end_src
+**** laravel 骚操作
+     跟 *thinkphp* 一样的方式  
+     #+begin_example
+     DB::table(表名)->insert()->update()->delete()->get()->where()->orwhere()->
+first()->value()->orderBy()->limit()->offset(); 
+     #+end_example
+*** 视图
+    视图就是你在浏览器看到的外观， *laravel*  基于 *MVC* 的设计方法，把它们概念化成视图 。关于外观所使用到的技术就不讲了，这里讲下 *laravel* 如何将外观技术与视图技术合起来的。
+    
+    - resources/views  视图存储目录
+**** 视图结构 
+     #+begin_src html
+       <!-- 文件名为 blade.php 后缀 -->
+       <!-- View stored in resources/views/greeting.blade.php -->
+       <html>
+         <body>
+           <h1>Hello, {{ $name }}</h1>
+         </body>
+       </html>
+     #+end_src
+     
+     #+begin_quote
+     blade 结构可以识别 *{{}}* 语法
+     #+end_quote
+***** 循环分支
+      #+begin_example
+      @foreach ($expression as $key=>$value) 
+      循环体
+       @endforeach   
+      #+end_example
+      #+begin_example
+      @if()
+      @elseif()
+      @endif
+      #+end_example
+***** 继承 (公共页)
+      
+      #+begin_example
+      @include()
+      @extends('')
+      @section(区块名称)
+      @endsection
+      #+end_example
+      调用
+      #+begin_example
+      @yield('')
+      #+end_example
+***** 引入外部静态文件
+      原生(简单) 
+      #+begin_src html
+        <link rel="stylesheet" href="/css/app.css}" type="text/css" media="screen" />
+      #+end_src
+        
+      asset() 处理网站目录
+      #+begin_src html
+        <link rel="stylesheet" href="{{asset('css)}/app.css}" type="text/css" media="screen" />
+      #+end_src
+
+**** 连接视图
+     *view* 会去找 *blade.php* 后缀视图文件，找不到再找 'php' 后缀的
+     #+begin_src php
+       Route::get('/', function () {
+           return view('greeting', ['name' => 'James']);
+       });
+       // 视图在  admin目录下，用 ‘/’ 分割木兰也可以
+       return view('admin.profile', $data);
+     #+end_src
+**** 视图是否存在
+     #+begin_src php
+       use Illuminate\Support\Facades\View;
+
+       if (View::exists('emails.customer')) {
+           //
+       }
+     #+end_src
+**** 第一个可用视图
+     #+begin_src php
+       return view()->first(['custom.admin', 'admin'], $data);
+     #+end_src
+**** 与所有视图共享数据
+     使用 *AppServiceProvider* 服务提供者
+     #+begin_src php
+  <?php
+namespace App\Providers;
+use Illuminate\Support\Facades\View;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        View::share('key', 'value');
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+}
+    #+end_src
+**** 视图作曲家
+     
+** artisan 
+   - 显示路由列表  php artisan route:list
+   - 创建控制器 php artisan make:controller [ [ 目录名/ ]控制器名 + Controller ]
+     -  --resource 资源
+** 调试
+*** 格式化输出
+    dump+die 的作用 
+    #+begin_src php
+      dd();
+    #+end_src
+** 安全    
+*** CSRF (跨站请求伪造攻击)
+    表单数据提交 的验证 (session)
+    
+    获取 csrf_token
+    #+begin_src html
+      csrf_token();
+    #+end_src
+
+    #+begin_quote
+    表单中推介使用，因为默认开启了
+    #+end_quote
+#+begin_src html
+  <input type="hidden" name="_token" value="{{csrf_token()}}" />
+
+  <!-- 简化 -->
+  {{csrf_field()}}
+  #+end_src
+
+排除路由
+app/Http/Middleware/VerifyCsrfToken.php  白名单
+
+单个
+  #+begin_src php
+    protected $except = [
+       '/home/test/test7',
+    ];
+  #+end_src
+
+  全部 
+    #+begin_src php
+    protected $except = [
+       '*',
+    ];
+  #+end_src
+
+** 教程
+*** 渲染页面
+app/Http/Controllers/SiteController.php 添加以下代码：
+
+     #+begin_src php
+     public function index()
+     {
+         return view('site/index');
+     }
+
+     public function login()
+     {
+         return view('site/login');
+     }
+
+     public function register()
+     {
+         return view('site/register');
+     }
+     #+end_src
+ 
+*** 创建相应的视图文件
+
+ LaravelStudy/resources/views/site/index.blade.php
+
+ #+begin_src html
+ <!doctype html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>Document</title>
+ </head>
+ <body>
+     我是主页
+ </body>
+ </html>
+ #+end_src
+ LaravelStudy/resources/views/site/login.blade.php
+
+ #+begin_src html
+ <!doctype html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>Document</title>
+ </head>
+ <body>
+     登录页
+ </body>
+ </html>
+ #+end_src
+ LaravelStudy/resources/views/site/register.blade.php
+
+
+ #+begin_src html
+ <!doctype html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>Document</title>
+ </head>
+ <body>
+     注册页
+ </body>
+ </html>
+ #+end_src
+
+这三个视图的代码有大量的重复，我们可以定义一个公共的模板文件，再让视图文件共享模板
+
+*** 定义公共模板文件
+新建文件：LaravelStudy/resources/views/layouts/default.blade.php
+
+#+begin_src html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@yield('title', 'Laravel 实战')--跟章鱼喵学 laravel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        @yield('content')
+    </div>
+</body>
+</html>
+#+end_src
+使用 bootstrap4 作为前端框架
+
+修改原来的视图文件：
+
+#+begin_src php
+  LaravelStudy/resources/views/site/index.blade.php
+
+  @extends('layouts.default')
+  @section('content')
+  @stop
+    
+#+end_src
+  LaravelStudy/resources/views/site/login.blade.php
+
+  #+begin_src php
+    @extends('layouts.default')
+        @section('title', '登录')
+        @section('content')
+        <h3>登录页<h3>
+    @stop
+
+  #+end_src
+  LaravelStudy/resources/views/site/index.blade.php
+  
+  #+begin_src php
+    @extends('layouts.default')
+        @section('content')
+        @stop
+  #+end_src
+ #+end_src
+  LaravelStudy/resources/views/site/register.blade.php
+
+  #+begin_src php
+    @extends('layouts.default')
+    @section('title', '注册')
+    @section('content')
+        <h3>注册页<h3>
+    @stop
+#+end_src
+
+*** 公共头部和底部
+网站需要有公共的头部和底部，同样，作为公共的模板文件，依然是放在 layouts 目录下
+
+新建头部导航：LaravelStudy/resources/views/layouts/_header.blade.php
+
+#+begin_src html
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <h3 class="text-light text-center col-md-10">laravel 教程实战</h3>
+    <ul class="navbar-nav col-md-2">
+        <li class="nav-item">
+            <!--使用命名路由-->
+            <a class="nav-link text-info" href="{{ route('login') }}">登录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{{ route('register') }}">注册</a>
+        </li>
+    </ul>
+</nav>
+#+end_src
+
+头部导航中的 a 标签链接使用了命名路由，可以理解为给路由起了个别名，这个便于扩展，
+比如，现在登录业务对应的是 SiteController@login，以后可能随着业务的改变，要改为
+UserControoler@login，如果是以硬编码的形式写路由，要修改就很麻烦。
+
+使用命名路由只需要改路由配置文件即可。
+
+LaravelStudy/routes/web.php
+
+#+begin_src php
+Route::get('login', 'SiteController@login')->name('login'); // 命名路由
+Route::get('register', 'SiteController@register')->name('register');
+#+end_src
+
+新建底部导航：LaravelStudy/resources/views/layouts/_footer.blade.php
+
+#+begin_src html
+<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-bottom">
+    <a class="navbar-brand" href="https://www.jianshu.com/u/f9338eda7dda" target="_blank">
+        <img src="https://upload.jianshu.io/users/upload_avatars/1864602/07f1bc01-66e5-4ff4-b683-79681856dad3.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/40/h/40" alt="">
+    </a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            来简书跟着章鱼喵一起学 laravel...
+        </li>
+    </ul>
+</nav>
+#+end_src
+由于头部和底部是局部视图，以下划线作为开头命名，便于区分
+
+在公共模板中引入头部和底部：
+
+LaravelStudy/resources/views/layouts/default.blade.php
+
+    #+begin_src html
+    @include('layouts._header')
+    <div class="container-fluid">
+        @yield('content')
+        @include('layouts._footer')
+    </div>
+    #+end_src
+
+

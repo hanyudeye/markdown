@@ -1,0 +1,61 @@
+<!DocType html>
+<html lang="zh-cn">
+
+<head>
+    <title>HTML 5 富文本 书写</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <section>
+        <h1>文字</h1>
+        <p>
+            普通字 normal <i>斜体 italiy</i> <strong>着重 Strong</strong><del>删除 delete</del>
+        </p>
+    </section>
+
+    <hr>
+
+    <section>
+        <header>
+            <h1>表单</h1>
+        </header>
+        <form action="a.php" id="form1">
+            <div> <label for="username" form="form1">text</label><input type="text" name="username" id=""> </div>
+            <div><label for="tel" form="form1">tel</label><input type="tel" name="tel" id=""></div>
+            <div><label>date</label> <input type="date" name="date" id="" required></div>
+            <div><label>month</label> <input type="month" name="m" id=""></div>
+            <div><label>datetime-local</label> <input type="datetime-local" name="d-time" id=""></div>
+            <div><label>datetime</label> <input type="datetime" name="dt" id=""></div>
+            <div><label>time</label> <input type="time" name="time" id=""></div>
+            <div><label>range</label> <input type="range" name="hk" id=""></div>
+
+
+
+            <div><input type="submit" form="form1" value="提交"></div>
+        </form>
+    </section>
+    <section>
+        <h1>多媒体</h1>
+        <div>
+            <label for="">图片
+                <img src="./resource/一生所爱.jpeg" alt="" srcset="">
+            </label>
+        </div>
+        <div>
+            <label>音频
+                <audio src="./resource/一生所爱.mp3" controls></audio>
+            </label>
+        </div>
+        <div>
+            <label>视频
+                <video src="./resource/一生所爱.mp4" controls></video>
+            </label>
+        </div>
+    </section>
+    <hr>
+</body>
+
+</html>
