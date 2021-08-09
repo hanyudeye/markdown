@@ -56,6 +56,34 @@
 text-align
 line-height
 text-decoration
+## 颜色
+### 透明度 opacity
+``` css
+		opacity: 0.6;
+```
+
+### HSLA 和 RGBA
+色调，饱和度，亮度
+
+hsl(127,80%,80%)
+
+渐变
+background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
+
+``` css
+/* 从上到下，蓝色渐变到红色 */
+linear-gradient(blue, red);
+ 
+/* 渐变轴为45度，从蓝色渐变到红色 */
+linear-gradient(45deg, blue, red);
+ 
+/* 从右下到左上、从蓝色渐变到红色 */
+linear-gradient(to left top, blue, red);
+ 
+/* 从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束 */
+linear-gradient(0deg, blue, green 40%, red);
+
+```
 ## 长度单位
 ### 绝对长度 (不介意，尺寸不固定)
 
@@ -134,6 +162,14 @@ box-shadow: h-shadow v-shadow blur spread color inset;
     -   投影（border-shadow）
     -   圆角（border-radius）
 
+盒倒影 box-reflect
+
+box-reflect：none | <direction> <offset>? <mask-box-image>?
+<direction> = above | below | left | right
+<offset> = <length> | <percentage>
+<mask-box-image> = none | <url> | <linear-gradient> | <radial-gradient> | <repeating-linear-gradient> | <repeating-radial-gradient>
+
+-webkit-box-reflect:below 0 -webkit-linear-gradient(transparent,transparent 50%,rgba(255,255,255,.3));
 
 ### 链接
 
@@ -279,6 +315,13 @@ font-family  字体类型
     .clear {clear:both;}
 
 
+## 背景
+### 多背景
+background: url() left top no-repeat ,url() right bottom no-repeat;
+
+### 遮罩
+mask-box-image:url() 75 stretch;
+mask-image:linear-gradient(left,rgba(0,0,0,1,rgba(0,0,0,0))
 ## 高级功能
 
 ### flexbox 弹性布局 (为移动端设计的方便排版的技术)
