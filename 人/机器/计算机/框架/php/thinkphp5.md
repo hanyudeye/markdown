@@ -188,8 +188,12 @@ Db::table('think_user')->field('title,email,content')->insert($data);
 Db::table('think_article')->page('1,10')->select();
 
 ```
-
+闭包
+``` php
+$list = Db::name('user')->where('status',1)->paginate()->each(function($item, $ key){$item['nickname'] = 'think'; return $item; });
+```
 #### group
+
 ``` php
 Db::table('think_user')
 ->field('user_id,username,max(score)')
