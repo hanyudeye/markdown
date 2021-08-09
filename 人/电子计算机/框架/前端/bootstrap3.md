@@ -671,3 +671,222 @@ Bootstrap3登录框自适应水平居中+垂直居中
 </html>
 
 ```
+
+## float
+
+.pull-right
+.pull-left
+
+注意，在导航条中，应该使用 .navbar-left或.navbar-right来对齐组件，而不是 .pull-left 或 .pull-right 。
+
+
+## 弹出框
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Bootstrap 实例 - 弹出框（Popover）插件</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="padding: 100px 50px 10px;" >
+	<button type="button" class="btn btn-default" title="Popover title"  
+			data-container="body" data-toggle="popover" data-placement="left" 
+			data-content="左侧的 Popover 中的一些内容">
+		左侧的 Popover
+	</button>
+	<button type="button" class="btn btn-primary" title="Popover title"  
+			data-container="body" data-toggle="popover" data-placement="top" 
+			data-content="顶部的 Popover 中的一些内容">
+		顶部的 Popover
+	</button>
+	<button type="button" class="btn btn-success" title="Popover title"  
+			data-container="body" data-toggle="popover" data-placement="bottom" 
+			data-content="底部的 Popover 中的一些内容">
+		底部的 Popover
+	</button>
+	<button type="button" class="btn btn-warning" title="Popover title"  
+			data-container="body" data-toggle="popover" data-placement="right" 
+			data-content="右侧的 Popover 中的一些内容">
+		右侧的 Popover
+	</button>
+</div>
+<script>
+$(function () { 
+	$("[data-toggle='popover']").popover();
+});
+</script>
+
+</body>
+</html>
+
+```
+
+![h](../../../../resource/image/computer/front/bootstrap3/popover.png "l")
+
+
+## toastr
+添加组件 
+ 
+（1）、引入js和css
+
+1 <link href="~/Content/toastr/toastr.css" rel="stylesheet" />
+2 <script src="~/Content/toastr/toastr.min.js"></script>
+（2）、js初始化
+
+1 <script type="text/javascript">
+2         toastr.options.positionClass = 'toast-bottom-right';
+3 </script>
+将这个属性值设置为不同的值就能让提示信息显示在不同的位置，如toast-bottom-right表示下右、toast-bottom-center表示下中、toast-top-center表示上中等，更过位置信息请查看文档。
+
+（3）、使用
+
+ 1 //初始化编辑按钮
+ 2 $("#btn_edit").click(function () {
+ 3      var arrselections = $("#tb_departments").bootstrapTable('getSelections');
+ 4      if (arrselections.length > 1) {
+ 5         toastr.warning('只能选择一行进行编辑');
+ 6 
+ 7         return;
+ 8      }
+ 9      if (arrselections.length <= 0) {
+10         toastr.warning('请选择有效数据');
+11 
+12        return;
+13     }
+14             
+15     $('#myModal').modal();
+16 });
+使用起来就如下一句：
+
+1 toastr.warning('只能选择一行进行编辑');
+是不是很简单~~这里的有四种方法分别对应四种不同颜色的提示框。
+
+1 toastr.success('提交数据成功');
+1 toastr.error('Error');
+1 toastr.warning('只能选择一行进行编辑');
+1 toastr.info('info');
+分别对应上图中的四种颜色的提示框。
+
+
+## 列表
+
+### ul.list-group/li.list-group-item
+``` html
+<ul class="list-group">
+<li class="list-group-item">免费域名注册</li>
+<li class="list-group-item">免费 Window 空间托管</li>
+<li class="list-group-item">图像的数量</li>
+<li class="list-group-item">24*7 支持</li>
+<li class="list-group-item">每年更新成本</li>
+</ul>
+```
+
+![列表1](../../../../resource/image/computer/front/bootstrap3/list1.png)
+
+
+### 列表加提醒 span.badge
+``` html
+<ul class="list-group">
+<li class="list-group-item">免费域名注册</li>
+<li class="list-group-item">免费 Window 空间托管</li>
+<li class="list-group-item">图像的数量</li>
+<li class="list-group-item">
+<span class="badge">新</span>
+24*7 支持
+</li>
+<li class="list-group-item">每年更新成本</li>
+<li class="list-group-item">
+<span class="badge">新</span>
+折扣优惠
+</li>
+</ul>
+
+```
+
+![列表2](../../../../resource/image/computer/front/bootstrap3/list2.png)
+
+### 列表链接
+``` html
+<a href="#" class="list-group-item active">
+免费域名注册
+</a>
+<a href="#" class="list-group-item">24*7 支持</a>
+<a href="#" class="list-group-item">免费 Window 空间托管</a>
+<a href="#" class="list-group-item">图像的数量</a>
+<a href="#" class="list-group-item">每年更新成本</a>
+```
+
+
+![列表2](../../../../resource/image/computer/front/bootstrap3/list3.png)
+
+### 链接下带参数说明
+``` html
+<div class="list-group">
+<a href="#" class="list-group-item active">
+<h4 class="list-group-item-heading">
+入门网站包
+</h4>
+</a>
+<a href="#" class="list-group-item">
+<h4 class="list-group-item-heading">
+免费域名注册
+</h4>
+<p class="list-group-item-text">
+您将通过网页进行免费域名注册。
+</p>
+</a>
+<a href="#" class="list-group-item">
+<h4 class="list-group-item-heading">
+247 支持
+</h4>
+<p class="list-group-item-text">
+我们提供 247 支持。
+</p>
+</a>
+</div>
+<div class="list-group">
+<a href="#" class="list-group-item active">
+<h4 class="list-group-item-heading">
+商务网站包
+</h4>
+</a>
+<a href="#" class="list-group-item">
+<h4 class="list-group-item-heading">
+免费域名注册
+</h4>
+<p class="list-group-item-text">
+您将通过网页进行免费域名注册。
+</p>
+</a>
+<a href="#" class="list-group-item">
+<h4 class="list-group-item-heading">247 支持</h4>
+<p class="list-group-item-text">我们提供 247 支持。</p>
+</a>
+</div>
+```
+
+![列表4](../../../../resource/image/computer/front/bootstrap3/list4.png)
+
+### 表格
+表格样式
+- 1.基础样式.table
+- 2.带背条纹表格.table-striped
+- 3.带边框.table-bordered
+- 4.悬停.table-hover
+- 5.紧凑.table-condensed
+- 6.行样式 .active .success .info
+
+## 颜色
+Bootstrap自带颜色：class = "bg-xxx"
+
+![颜色1](../../../../resource/image/computer/front/bootstrap3/bgcolor1.png)
+
+
+![颜色2](../../../../resource/image/computer/front/bootstrap3/bgcolor2.png)
+
+![颜色3](../../../../resource/image/computer/front/bootstrap3/bgcolor3.png)

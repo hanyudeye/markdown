@@ -338,6 +338,61 @@ jQuery 使用同一个函数，来完成取值(getter)和赋值(setter)。到底
                    + ',\nError Thrown: ' + errorThrown);
        });
      ```
+     
+    ``` js
+    
+    $.ajax({
+      url: file.url,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      headers: {
+        'X-File-Name': encodeURIComponent(file.name)
+      },
+      xhr: function() {
+        var req;
+        req = $.ajaxSettings.xhr();
+        if (req) {
+          req.upload.onprogress = (function(_this) {
+            return function(e) {
+              return _this.progress(e);
+            };
+          })(this);
+        }
+        return req;
+      },
+      progress: (function(_this) {
+        return function(e) {
+          if (!e.lengthComputable) {
+            return;
+          }
+          return _this.trigger('uploadprogress', [file, e.loaded, e.total]);
+        };
+      })(this),
+      error: (function(_this) {
+        return function(xhr, status, err) {
+          return _this.trigger('uploaderror', [file, xhr, status]);
+        };
+      })(this),
+      success: (function(_this) {
+        return function(result) {
+          _this.trigger('uploadprogress', [file, file.size, file.size]);
+          _this.trigger('uploadsuccess', [file, result]);
+          return $(document).trigger('uploadsuccess', [file, result, _this]);
+        };
+      })(this),
+      complete: (function(_this) {
+        return function(xhr, status) {
+          return _this.trigger('uploadcomplete', [file, xhr.responseText]);
+        };
+      })(this)
+    });
+  };
+
+
+    
+    ``` 
 #### 可选字段：
  1）url：链接地址，字符串表示
  2）data：需发送到服务器的数据，GET与POST都可以，格式为{A: '...', B: '...'}
@@ -1158,3 +1213,77 @@ document.getElementById("#id").checked = true
    | .get()                        | 取得与匹配元素对应的 dom 节点的数组                    |
    | .get(index)                   | 取得匹配元素中与传入的索引值对应的 dom 节点            |
    | .index(element)               | 取得给定 dom 节点在匹配元素集合中的索引值              |
+
+## 获取表单数据
+``` js 
+ var form = new FormData();
+  form.append("username","zxj");
+  form.append("password",123456);
+```
+
+还能提交文件
+
+``` js  
+var form = new FormData(document.getElementById("tf"));
+```
+
+## ajax 提交的两种方式
+``` html
+   <form id="formAddHandlingFee" name="formAddHandlingFee" enctype="multipart/form-data" onsubmit="AddHandlingFeeToRefund()">
+```
+
+方法1
+``` js 
+function AddHandlingFeeToRefund()
+        {
+            var AjaxURL= "../OrderManagement/AjaxModifyOrderService.aspx";      
+            alert($('#formAddHandlingFee').serialize());
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: AjaxURL + '?Action=' + 'SubmitHandlingFee' + '&OrderNumber=' + $.trim($("#<%=this.txtOrderNumber.ClientID %>").val()),
+                    data: $('#formAddHandlingFee').serialize(),
+                    success: function (result) {
+                        var strresult=result;
+                        alert(strresult);
+                        //加载最大可退金额
+                        $("#spanMaxAmount").html(strresult);
+                    },
+                    error: function(data) {
+                        alert("error:"+data.responseText);
+                     }
+
+                });
+        }
+
+```
+
+方法2
+
+``` js 
+        //ajax提交form表单的方式
+        $('#formAddHandlingFee').submit(function() {
+            var AjaxURL= "../OrderManagement/AjaxModifyOrderService.aspx";      
+            alert($('#formAddHandlingFee').serialize());
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: AjaxURL + '?Action=' + 'SubmitHandlingFee' + '&OrderNumber=' + $.trim($("#<%=this.txtOrderNumber.ClientID %>").val()),
+                    data: $('#formAddHandlingFee').serialize(),
+                    success: function (data) {
+                        var strresult=data;
+                        alert(strresult);
+                        //加载最大可退金额
+                        $("#spanMaxAmount").html(strresult);
+                    },
+                    error: function(data) {
+                        alert("error:"+data.responseText);
+                     }
+                });
+
+               //非常重要
+               return false;
+        }
+
+    );
+```
