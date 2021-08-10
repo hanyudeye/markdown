@@ -20,7 +20,7 @@ Bootstrap 包的内容
 
 ### 输入框 ###
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619163848317.png)
+![](images/bootstrap3/20190619163848317.png)
 
 ``` html
 <form>
@@ -32,7 +32,7 @@ Bootstrap 包的内容
 </form>
 ```
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619163918308.png)
+![](images/bootstrap3/20190619163918308.png)
 
 ``` html
 <div class="form-group">
@@ -48,7 +48,7 @@ Bootstrap 包的内容
 
 水平排列表单(栅格化)
 
-![](../../../../resource/image/computer/front/bootstrap3/2019061916393833.png)
+![](images/bootstrap3/2019061916393833.png)
 
 ``` html
 <form class="form-horizontal">
@@ -65,7 +65,7 @@ Bootstrap 包的内容
 ```
 静态控件
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619163958840.png)
+![](images/bootstrap3/20190619163958840.png)
 
 ``` html
 <form class="form-horizontal">
@@ -86,7 +86,7 @@ Bootstrap 包的内容
 ```
 校验控件
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164017322.png)
+![](images/bootstrap3/20190619164017322.png)
 
 ``` html
 <div class="form-group has-success has-feedback">
@@ -119,7 +119,7 @@ Bootstrap 包的内容
 
 ```
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164037894.png)
+![](images/bootstrap3/20190619164037894.png)
 ``` html
 <textarea class="form-control"></textarea>
 
@@ -128,7 +128,7 @@ Bootstrap 包的内容
 复选框 & 单选框
 
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164055689.png)
+![](images/bootstrap3/20190619164055689.png)
 
 ``` html
 <div class="checkbox">
@@ -171,7 +171,7 @@ Bootstrap 包的内容
 <button type="button" class="btn btn-link">（链接）Link</button>
 
 ```
-![](../../../../resource/image/computer/front/bootstrap3/20190619164115548.png)
+![](images/bootstrap3/20190619164115548.png)
 按钮尺寸
 
 ``` html
@@ -180,7 +180,7 @@ Bootstrap 包的内容
 <button class="btn btn-ms">超小按钮</button>
 
 ```
-![](../../../../resource/image/computer/front/bootstrap3/20190619164133402.png)
+![](images/bootstrap3/20190619164133402.png)
 块级按钮
 
 ``` html
@@ -188,7 +188,7 @@ Bootstrap 包的内容
 将把按钮的宽度拉伸到 父级元素的100% 
 ```
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164149357.png)
+![](images/bootstrap3/20190619164149357.png)
 禁用按钮
 
 ``` html
@@ -198,10 +198,10 @@ Bootstrap 包的内容
 直接在a的class中加入disabled类即可
 
 ```
-![](../../../../resource/image/computer/front/bootstrap3/20190619164208889.png)
+![](images/bootstrap3/20190619164208889.png)
 2. 图片
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164224301.png)
+![](images/bootstrap3/20190619164224301.png)
 
 ``` html
 <img src="" class="img-rounded">
@@ -211,7 +211,7 @@ Bootstrap 包的内容
 ```
 3. 文本
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164241164.png)
+![](images/bootstrap3/20190619164241164.png)
 
 ``` html
 <p class="text-muted">...</p>
@@ -224,7 +224,7 @@ Bootstrap 包的内容
 ```
 4. 颜色
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164255841.png)
+![](images/bootstrap3/20190619164255841.png)
 
 ``` html
 @brand-primary: darken(#428bca, 6.5%); // #337ab7
@@ -236,7 +236,7 @@ Bootstrap 包的内容
 ```
 5. alert 警告框
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164310792.png)
+![](images/bootstrap3/20190619164310792.png)
 
 ``` html
 <div class="container">
@@ -250,7 +250,7 @@ Bootstrap 包的内容
 ```
 6.下拉菜单框
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164326838.png)
+![](images/bootstrap3/20190619164326838.png)
 ``` html
 <div class="dropdown">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -281,7 +281,7 @@ Bootstrap 包的内容
 ```
 8. 按钮组下拉框
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164357858.png)
+![](images/bootstrap3/20190619164357858.png)
 ``` html
 <div class="btn-group">
   <button type="button" class="btn btn-danger">Action</button>
@@ -301,7 +301,7 @@ Bootstrap 包的内容
 ```
 9. nav Tab页
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164412950.png)
+![](images/bootstrap3/20190619164412950.png)
 ``` html
 <ul class="nav nav-tabs">
 <li class="active"><a href="#moodTab" data-toggle="tab">发现</a></li>
@@ -312,7 +312,7 @@ Bootstrap 包的内容
 </div>
 
 ```
-![](../../../../resource/image/computer/front/bootstrap3/20190619164427252.png)
+![](images/bootstrap3/20190619164427252.png)
 ``` html
 <ul class="nav nav-pills">
 <li class="active"><a href="#moodTab" data-toggle="tab">发现</a></li>
@@ -324,7 +324,7 @@ Bootstrap 包的内容
 
 ```
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164446228.png)
+![](images/bootstrap3/20190619164446228.png)
 ``` html 
 <ul class="nav nav-pills nav-stacked">
 <li class="active"><a href="#moodTab" data-toggle="tab">发现</a></li>
@@ -337,7 +337,7 @@ Bootstrap 包的内容
 ```
 10. navbar 导航条
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164502546.png)
+![](images/bootstrap3/20190619164502546.png)
 ``` html
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -396,7 +396,7 @@ Bootstrap 包的内容
 ```
 11. breadcrumb 面包屑
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164550238.png)
+![](images/bootstrap3/20190619164550238.png)
 ``` html
 <ol class="breadcrumb">
     <li><a href="#">Home</a></li>
@@ -405,7 +405,7 @@ Bootstrap 包的内容
 ```
 12. 分页
 
-![](../../../../resource/image/computer/front/bootstrap3/2019061916460464.png)
+![](images/bootstrap3/2019061916460464.png)
 
 ``` html
 <nav aria-label="Page navigation">
@@ -432,10 +432,10 @@ Bootstrap 包的内容
 
 13. label 标签
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164621164.png)
+![](images/bootstrap3/20190619164621164.png)
 14. badge 徽章
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164634799.png)
+![](images/bootstrap3/20190619164634799.png)
 ``` html
 <button class="btn btn-primary" type="button">
   Messages <span class="badge">4</span>
@@ -444,7 +444,7 @@ Bootstrap 包的内容
 ```
 15. progress 进度条
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164650386.png)
+![](images/bootstrap3/20190619164650386.png)
 ``` html
 <div class="progress">
   <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
@@ -454,7 +454,7 @@ Bootstrap 包的内容
 通过更改progress-bar的style的width来调整进度
 
 ```
-![](../../../../resource/image/computer/front/bootstrap3/20190619164702755.png)
+![](images/bootstrap3/20190619164702755.png)
 ``` html
 <div class="progress">
   <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
@@ -480,7 +480,7 @@ Bootstrap 包的内容
 ```
 16. list-group 列表组
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164721543.png)
+![](images/bootstrap3/20190619164721543.png)
 ``` html
 <div class="list-group">
   <a href="#" class="list-group-item active">
@@ -496,7 +496,7 @@ Bootstrap 包的内容
 ```
 17. panel 面板
 
-![](../../../../resource/image/computer/front/bootstrap3/20190619164833128.png)
+![](images/bootstrap3/20190619164833128.png)
 ``` html
 <div class="panel panel-primary">
 	<div class="panel-heading"></div>
@@ -726,7 +726,7 @@ $(function () {
 
 ```
 
-![h](../../../../resource/image/computer/front/bootstrap3/popover.png "l")
+![h](images/bootstrap3/popover.png "l")
 
 
 ## toastr
@@ -786,7 +786,7 @@ $(function () {
 </ul>
 ```
 
-![列表1](../../../../resource/image/computer/front/bootstrap3/list1.png)
+![列表1](images/bootstrap3/list1.png)
 
 
 ### 列表加提醒 span.badge
@@ -808,7 +808,7 @@ $(function () {
 
 ```
 
-![列表2](../../../../resource/image/computer/front/bootstrap3/list2.png)
+![列表2](images/bootstrap3/list2.png)
 
 ### 列表链接
 ``` html
@@ -822,7 +822,7 @@ $(function () {
 ```
 
 
-![列表2](../../../../resource/image/computer/front/bootstrap3/list3.png)
+![列表2](images/bootstrap3/list3.png)
 
 ### 链接下带参数说明
 ``` html
@@ -870,7 +870,7 @@ $(function () {
 </div>
 ```
 
-![列表4](../../../../resource/image/computer/front/bootstrap3/list4.png)
+![列表4](images/bootstrap3/list4.png)
 
 ### 表格
 表格样式
@@ -884,9 +884,9 @@ $(function () {
 ## 颜色
 Bootstrap自带颜色：class = "bg-xxx"
 
-![颜色1](../../../../resource/image/computer/front/bootstrap3/bgcolor1.png)
+![颜色1](images/bootstrap3/bgcolor1.png)
 
 
-![颜色2](../../../../resource/image/computer/front/bootstrap3/bgcolor2.png)
+![颜色2](images/bootstrap3/bgcolor2.png)
 
-![颜色3](../../../../resource/image/computer/front/bootstrap3/bgcolor3.png)
+![颜色3](images/bootstrap3/bgcolor3.png)

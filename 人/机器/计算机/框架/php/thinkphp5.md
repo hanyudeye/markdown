@@ -161,6 +161,7 @@ Db::getTableInfo('think_user', 'pk');
 #### 表达式
 ``` php
 where('id','between','1,8');
+$map['id'] = array('not between','1,8');
 where('id','not in','1,5,8');
 where('name','not null');
 where('id','exp',' IN (1,3,8) ');
@@ -715,3 +716,28 @@ ROOT\application\config.php
         'expire'             => 86400,
     ],
 ```
+
+## sql 日志
+
+第一步：在Database.php文件中将数据库debug设置为true，（默认是true）
+``` php
+// 数据库调试模式
+'debug'           => true,
+```
+第二步：在Config.php文件中写如下代码
+
+``` php
+  'log' => [
+        // 日志记录方式，内置 file socket 支持扩展
+        'type'  => 'File',
+        // 日志保存目录
+        'path'  => LOG_PATH,
+        // 日志记录级别
+        'level' => ['sql'],
+    ],
+```
+一班这样设置之后就可以开启SQL日志记录了。
+
+## 时间转time
+
+strtotime
