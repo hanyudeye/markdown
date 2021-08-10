@@ -22,6 +22,12 @@ let num=15;
 let translate1 = num.toString()
 // console.log(translate1)
 
+
+//正则表达式
+var str = "Visit Runoob!"; 
+var n = str.search(/Runoob/i);
+// console.log(n)
+
 // 函数
 // 返回逻辑与 ，true,false
 const and = (a, b) => a && b;
