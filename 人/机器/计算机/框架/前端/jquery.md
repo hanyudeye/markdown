@@ -1,22 +1,17 @@
 
 用于简化javascript 对 Dom 的操作方式。
 
-# jquery
-## 使用
-### 初始化
-```
-$(document).ready(function(){
-});
-```
-
+# jQuery
 ## 选择器 
-```
+``` js
 $(document)//选择整个文档对象
 $('#myId')//选择ID为myId的网页元素  
 $('div.myClass')//选择class为myClass的div元素    
+$('tagA,tagB,tagC')//选择3个
 $('input[name=first]')//选择name属性等于first的input元素
 $('a:first')//选择网页中第一个a元素  
 $('tr:odd')//选择表格的奇数行  
+$('tag:nth-child(n)')
 $('#myForm :input')//选择表单中的input元素  
 $('div:visible') //选择可见的div元素  
 $('div:gt(2)')//选择所有的div元素，除了前三个  

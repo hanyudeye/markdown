@@ -18,13 +18,12 @@ let person = {
 // person.say('nihao')
 
 // 数据转换
-let num=15;
-let translate1 = num.toString()
+let num = 15;
+let translate1 = num.toString();
 // console.log(translate1)
 
-
 //正则表达式
-var str = "Visit Runoob!"; 
+var str = "Visit Runoob!";
 var n = str.search(/Runoob/i);
 // console.log(n)
 
@@ -33,3 +32,6 @@ var n = str.search(/Runoob/i);
 const and = (a, b) => a && b;
 // console.log(and(true,false))
 // console.log(and(false,false))
+
+
+
