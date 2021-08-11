@@ -51,3 +51,6 @@ php think crud -t test --db=v_phealth_db2
 ``` php
 protected $relationSearch=true;
 ```
+
+## fastadmin 登录方案
+https://blog.csdn.net/GhostWHS/article/details/110085937

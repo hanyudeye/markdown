@@ -1,6 +1,5 @@
 # HTML (markup language)
 表示富文本的一种结构
-
 ## 标签分类
 ### 结构性标签 (控制富文本组织结构)
 - header 头部
@@ -48,3 +47,6 @@
 ## 拖放 Drag & Drop API
 
 ## 能力检测 modernizr.com
+## button
+<button type="button">Click Me!</button>
+<button type="submit">提交</button>

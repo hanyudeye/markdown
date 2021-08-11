@@ -221,6 +221,12 @@ Bootstrap 包的内容
 <p class="text-warning">...</p>
 <p class="text-danger">...</p>
 
+<p class="bg-primary">...</p>
+<p class="bg-success">...</p>
+<p class="bg-info">...</p>
+<p class="bg-warning">...</p>
+<p class="bg-danger">...</p>
+
 ```
 4. 颜色
 
@@ -884,8 +890,8 @@ $(function () {
 ## 颜色
 Bootstrap自带颜色：class = "bg-xxx"
 
-![颜色1](images/bootstrap3/bgcolor1.png)
-
+![颜色1](images/bootstrap3/bgcolor1.png)s
+s
 
 ![颜色2](images/bootstrap3/bgcolor2.png)
 

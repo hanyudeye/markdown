@@ -6,101 +6,26 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Css 元素排版及样式</title>
-	<style>
-		.p1 {
-			text-align: center;
-			line-height: 1em;
-			background-color: rgba(33, 33, 33, 0.2);
-			/* text-shadow: 0.1em 0.1em 0.1em #333; */
-		}
 
-		.p2 {
-			line-height: 3em;
-			background-color: rgba(33, 33, 33, 0.2);
-			text-shadow: 1px 1px 2px red, -1px -1px 2px blue;
-
-		}
-
-		.overflow1 {
-			width: 10em;
-			height: 3em;
-			overflow: hidden;
-			text-overflow: clip;
-			border: 1px solid #333;
-		}
-
-		.overflow2 {
-			width: 10em;
-			height: 3em;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			border: 1px solid #333;
-			/* white-space: nowrap; */
-
-			/* 省略号 针对chrome 生效 */
-			/* 只能首行生效 */
-			display: -webkit-box;
-			-webkit-line-clamp: 1;
-			/* 限制在一个块元素显示的文本的行数 */
-			-webkit-box-orient: vertical;
-			/* 垂直排列 */
-			word-break: break-all;
-			/* 内容自动换行 */
-		}
-
-		.overflow3 {
-			width: 10em;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-
-		}
-
-		/* 文字换行 */
-
-		.wordwrap1 {
-			white-space: nowrap;
-		}
-
-		.wordwrap2 {
-			white-space: normal;
-		}
-
-		/* 颜色 */
-		.yanse span {
-			color: red;
-			opacity: 0.6;
-		}
-
-		/* 颜色渐变 */
-		.jianbian {
-
-			width: 50em;
-			height: 8em;
-			/* background: linear-gradient(45deg, blue, red); */
-			background: linear-gradient(0deg, blue, green 40%, red);
-
-		}
-
-		/* 倒影 */
-		.daoyin {
-			/* -webkit-box-reflect: below 1px linear-gradient(top, transparent, transparent 70%, rgba(0xff, 0xff, 0xff, 0.4)); */
-
-			-webkit-box-reflect: below 0 -webkit-linear-gradient(transparent, transparent 50%, rgba(255, 255, 255, .3));
-		}
-
-		.beijing {
-			width: 800px;
-			height: 500px;
-			background: url(./resource/1.png) left bottom no-repeat, url(./resource/2.png) right top no-repeat;
-/* //悬停效果 */
-
-
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+	<section>
+		<legend>
+			<h1>选择器</h1>
+		</legend>
+		<div class="weizhi">
+			<test-tag>标签选择器</test-tag>
+			<div attribute="high1">属性选择1</div>
+			<div attribute="high2">属性选择2</div>
+			<div>位置选择1</div>
+		</div>
+		<div>
+			位置选择2
+		</div>
+
+	</section>
 	<section>
 		<legend>
 			<h1>文本样式</h1>

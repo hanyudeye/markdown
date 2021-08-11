@@ -741,3 +741,112 @@ ROOT\application\config.php
 ## 时间转time
 
 strtotime
+
+## session
+这是因为第一次登录时框架自动生成了session，你换个浏览器或者做个退出按钮清理session
+
+## 登录方案
+### controller\Login.php
+``` php
+
+namespace app\admin\controller;
+
+use think\Controller;
+
+use app\admin\model\Login as Log;
+
+class Login extends Controller
+
+{
+
+    public function index()
+
+    {
+
+        // $linkres= \think\Db::name('link')->paginate(3);
+
+        // $this->assign('linkres',$linkres);
+
+        if(request()->isPost()){
+
+            $login=new Log;
+
+            $status=$login->login(input('username'),input('password'));
+
+            if($status==1){
+
+                return $this->success('登录成功，正在跳转！','Index/index');
+
+            }elseif($status==2){
+
+                return $this->error('账号或者密码错误!');
+
+            }else{
+
+                return $this->error('用户不存在!');
+
+            }
+
+        }
+
+        return $this->fetch('login');
+
+    }
+
+  
+
+    public function logout(){
+        session(null);
+        return $this->success('退出成功！',url('index'));
+
+    }
+
+}
+
+```
+
+### model\Login.php
+``` php
+
+namespace app\admin\model;
+
+use think\Model;
+
+class Login extends Model
+
+{
+
+    public function login($username,$password){
+
+        $admin= \think\Db::name('admin')->where('username','=',$username)->find();
+
+        if($admin){
+
+            if($admin['password']==md5($password)){
+
+                \think\Session::set('id',$admin['id']);
+
+                \think\Session::set('username',$admin['username']);
+
+                return 1;
+
+            }else{
+
+                return 2;
+
+            }
+
+  
+
+        }else{
+
+            return 3;
+
+        }
+
+    }
+
+}
+```
+### login.html
+

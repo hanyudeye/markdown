@@ -1,12 +1,9 @@
 # css (Cascading Style Sheets)  
 为了表示每个元素的样式，我们要设置一种方式，根据富文本(HTML)中标签的类型，或标签名，用选择器(筛选表达式)的方式进行样式说明。
 
-## 主要内容
-### 选择器
-选择器的强大筛选功能 `能方便的` 定位到元素 
-
-#### 属性选择 
-
+## 选择器 ##
+### 标签选择器
+### 属性选择器 ###
 
 | 代码                                 | 说明                                                 |
 | ------------------------------------ | ---------------------------------------------------- |
@@ -17,7 +14,9 @@
 | [attribute^="value"]                 | 属性attribute里最前的是value                         |
 | [attribute$="value"]                 | 属性attribute里最后的是value                         |
 | [attribute*="value"]                 | 属性attribute里有value出现过至少一次                 |
-#### 组合选择器
+
+### 位置选择器 ###
+
 | 符号  | 说明                                                     |
 | ----- | -------------------------------------------------------- |
 | A > B | 子代选择器，选择A下一层的元素B                           |
@@ -25,42 +24,83 @@
 | A + B | 相邻兄弟选择器，选择与A相邻的元素B（不能被任何元素相隔） |
 | A B   | 后代选择器，包含选择符                                   |
 
-#### 其他 (伪元素)
+### 其他 (伪元素) ###
+包含特定的内容
 
-| 符号               | 说明                             |
-| ------------------ | -------------------------------- |
-| :link              | 选择所有未访问链接               |
-| :visited	a:visited | 选择所有访问过的链接             |
-| :active	a:active   | 选择正在活动链接                 |
-| :hover	a:hover     | 把鼠标放在链接上的状态           |
-| :focus	input:focus | 选择元素输入后具有焦点           |
-| :first-letter      | 元素的第一个字母                 |
-| :first-line        | 元素的第一行                     |
-| :first-child       | 选择器匹配属于元素的第一个子元素 |
-| :before            | 在元素之前插入内容               |
-| :after             | 在元素之后插入内容               |
-| :lang(language)    | 为元素的 lang 属性选择一个开始值 |
+| 符号                  | 说明                                             |
+| ------------------    | --------------------------------                 |
+| :link                 | 选择所有未访问链接                               |
+| :visited	a:visited | 选择所有访问过的链接                             |
+| :active	a:active   | 选择正在活动链接                                 |
+| :hover	a:hover     | 把鼠标放在链接上的状态                           |
+| :focus	input:focus | 选择元素输入后具有焦点                           |
+| :first-letter         | 元素的第一个字母                                 |
+| :first-line           | 元素的第一行                                     |
+| :first-child          | 选择器匹配属于元素的第一个子元素                 |
+| :before               | 在元素之前插入内容                               |
+| :after                | 在元素之后插入内容                               |
+| :lang(language)       | 为元素的 lang 属性选择一个开始值                 |
+| :nth-child            | 第几个，从1开始 :nth-child(an+b)或 :nth-child(n) |
+|                       |                                                  |
+
  
-### 引入规则
-### 行级元素与块级元素
-### 方盒模型
-### 浮动与定位
+## 样式
 
-## 浏览器特殊前缀
+### 浏览器特殊前缀 ###
 - -o- Opera 
 - -webkit- safari 和 chrome
 - -moz- mozilla
-## 文字模块 
+
+### 文字模块 ###
+
 text-align
 line-height
 text-decoration
-## 颜色
-### 透明度 opacity
+
+### 字体 ###
+
+font-family  字体类型 
+
+-   sans-serif  无衬线 (字体边缘平滑，比较好看)
+-   serif 衬线 (字体突兀)
+-   monospace 等宽字体 (一般用在代码编辑器)
+-   cursive 草书
+-   fantasy
+-   system-ui
+    
+    常用字体族
+    
+        .serif {
+          font-family: Times, Times New Roman, Georgia, serif;
+        }
+        
+        .sansserif {
+          font-family: Verdana, Arial, Helvetica, sans-serif;
+        }
+        
+        .monospace {
+          font-family: Lucida Console, Courier, monospace;
+        }
+        
+        .cursive {
+          font-family: cursive;
+        }
+        
+        .fantasy {
+          font-family: fantasy;
+        }
+
+
+### 颜色 ###
+
+#### 透明度 opacity ####
+
 ``` css
 		opacity: 0.6;
 ```
 
-### HSLA 和 RGBA
+#### HSLA 和 RGBA ####
+
 色调，饱和度，亮度
 
 hsl(127,80%,80%)
@@ -82,8 +122,20 @@ linear-gradient(to left top, blue, red);
 linear-gradient(0deg, blue, green 40%, red);
 
 ```
-## 长度单位
-### 绝对长度 (不介意，尺寸不固定)
+
+#### 颜色值 ####
+
+颜色值的设定可以有好几种方式 
+
+1.  关键字  red , yellow  用颜色的英文单词表示
+2.  rgb(0,100,100) 用十进制的 rgb 混色模式
+3.  \#ffffff 用十六进制的 rgb 混色模式
+4.  hsl(0,100%,50%) 用色相(0-360)，饱和度，明度的混色模式表示
+5.  透明 opacity
+
+### 长度单位 ###
+
+#### 绝对长度 (不介意，尺寸不固定) ####
 
 | 单位 | 描述                       |
 |------+----------------------------|
@@ -98,7 +150,7 @@ linear-gradient(0deg, blue, green 40%, red);
 
 
 
-### 相对长度
+#### 相对长度 ####
 
 | 单位 | 描述                                                             |
 |------+------------------------------------------------------------------|
@@ -114,16 +166,6 @@ linear-gradient(0deg, blue, green 40%, red);
 
 提示：em 和 rem 单元可用于创建完美的可扩展布局！
 * 视口（Viewport）= 浏览器窗口的尺寸。如果视口宽 50 里面，则 1vw = 0.5cm。
-
-## 视口概念
-### 视口设置
-
-利用 \`meta\` 的标签的 \`viewport\` 来进行设置，除此之外，还可以进行页面的缩放等操作。
-
-<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-
-
-   
 
 ## 样式
 
@@ -198,50 +240,6 @@ box-reflect：none | <direction> <offset>? <mask-box-image>?
     -   固定定位
     -   浮动元素（float / clear）
 -   网站布局
-
-## 颜色值
-
-颜色值的设定可以有好几种方式 
-
-1.  关键字  red , yellow  用颜色的英文单词表示
-2.  rgb(0,100,100) 用十进制的 rgb 混色模式
-3.  \#ffffff 用十六进制的 rgb 混色模式
-4.  hsl(0,100%,50%) 用色相(0-360)，饱和度，明度的混色模式表示
-5.  透明 opacity
-
-## 字体
-
-font-family  字体类型 
-
--   sans-serif  无衬线 (字体边缘平滑，比较好看)
--   serif 衬线 (字体突兀)
--   monospace 等宽字体 (一般用在代码编辑器)
--   cursive 草书
--   fantasy
--   system-ui
-    
-    常用字体族
-    
-        .serif {
-          font-family: Times, Times New Roman, Georgia, serif;
-        }
-        
-        .sansserif {
-          font-family: Verdana, Arial, Helvetica, sans-serif;
-        }
-        
-        .monospace {
-          font-family: Lucida Console, Courier, monospace;
-        }
-        
-        .cursive {
-          font-family: cursive;
-        }
-        
-        .fantasy {
-          font-family: fantasy;
-        }
-
 
 ## 初始化样式
 
@@ -413,15 +411,17 @@ mask-image:linear-gradient(left,rgba(0,0,0,1,rgba(0,0,0,0))
 用 max-width 代替 width 可以防止窗口太小时出现滚动条
 
 
-# 伪类
-## :nth-child
+## 视口概念
+### 视口设置
 
-:nth-child(an+b) 这个 CSS 伪类首先找到所有当前元素的兄弟元素，然后按照位置先后顺序从1开始排序，选择的结果为CSS伪类:nth-child括号中表达式（an+b）匹配到的元素集合（n=0，1，2，3&#x2026;）。
+利用 \`meta\` 的标签的 \`viewport\` 来进行设置，除此之外，还可以进行页面的缩放等操作。
 
+<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+
+   
 
 # faq
-
-
 ## 解决子div设float后导致父div无法自动撑开(常用2种)
 
 原因：内部的DIV因为float:left之后，就丢失了clear:both和display:block的样式，所以外部的DIV不会被撑开。

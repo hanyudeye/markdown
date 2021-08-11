@@ -63,6 +63,14 @@ gron 将 JSON 文本转换为离散的赋值语句，以便查找。我特别喜
 ## explainshell，解释命令
 如果你手头有一行很复杂的命令，想要了解它做了什么，又不想一个个查 man 或 tldr，那么你可以使用 explainshell
 ## tig 交互式地浏览 git 仓库
+## 在线工具
+1. CodeIf ：                     https://unbug.github.io/codelf
+2. DocsChina ：            https://www.docschina.org
+3. any-rule：                  http://github.com/any86/any-rule
+4. tool.lu：                      https://tool.lu
+5. baomitu：                  https://cdn.baomitu.com
+6. typora：                      https://www.typora.io
+7. 549.tv：                       http://www.549.tv
 # on-my-Zsh 插件
 ``` config
 plugins=(git autojump fd shell-proxy wd web-search history history-substring-search ssh-agent tmux extract gitignore zsh-autosuggestions fzf)
