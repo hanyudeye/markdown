@@ -33,10 +33,16 @@
 		<p class="p1">
 			段落1
 			<br>
-
 			text-align: center;
 			<br>
 			line-height: 1em;
+			<br>
+			文字颜色+透明度 color:rgba(0,0,0,0.9);
+			<br>
+			整体透明度，前景，背景 opacity:0.5;
+			<br>
+			划线，或闪烁 text-decoration: overline;
+
 			<br>
 			阴影 相对位置+大小+颜色 text-shadow: 0.1em 0.1em 0.1em #333;
 			<br>
@@ -51,6 +57,44 @@
 
 			多个阴影叠加 text-shadow: 1px 1px 2px red,-1px -1px 2px blue;
 		</p>
+	</section>
+	<section>
+		<legend>
+			<h1>flex 弹性容器</h1>
+		</legend>
+		<div class="flex1">
+			<span>hello</span>
+			<span>world</span>
+			<span>
+				flex-direction:row-reverse;
+				排列方向：从右往左
+				justify-content:center;
+				对齐方式
+				align-items:center;
+				纵向对齐方式
+
+			</span>
+		</div>
+		<hr>
+		<div class="flex2">
+			<span>
+				换行方式 flex-wrap:wrap-reverse;
+			</span>
+			<span>
+				hello,world
+			</span>
+			你好, 我是你的朋友
+		</div>
+		<hr>
+		<div id="flex3">
+			<div style="background-color:coral;">1</div>
+			<div style="background-color:lightblue;">2</div>
+			<div style="background-color:khaki;">3</div>
+			<div style="background-color:pink;">flex-grow: 4;</div>
+			<div style="background-color:lightgrey;">1</div>
+
+		</div>
+		<q>注意：如果东西太大，则缩放会失效</q>
 	</section>
 
 	<section>
