@@ -1,9 +1,5 @@
 # Vue.js
-用于构建交互式的 Web 界面的库 [提供了外观组件]
-对于外观中的动态内容，提供了数据绑定模板
-
 ## 组件
-
 ``` js
 // 定义一个名为 button-counter 的新组件
 Vue.component('button-counter', {

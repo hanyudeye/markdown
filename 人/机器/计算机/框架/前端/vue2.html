@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue2的学习</title>
+</head>
+
+<body>
+	<section>
+		<h1>选择器与数据的绑定</h1>
+		<!-- 数据绑定 -->
+		<div class="app1" :id="app1_id">{{name|upper}}
+			<br>
+			链接： {{html_output}}
+
+			<br>
+			v-html渲染 才能正常显示：
+			<span v-html="html_output"></span>
+			<br>
+			或者使用链接的方式：
+			<a :href="link">链接</a>
+
+			<form action="">
+				<label for="">输入框</label>
+				<input type="text" :placeholder="name">
+				<br>
+				<label class="" for=""> 复选框 </label>
+				<input type="checkbox" name="" id="" v-model="checked">
+				<br>
+				<label class="" for=""> 单选框 </label>
+				<input type="radio" value="one" v-model="picked">
+				<br>
+				<select v-model="selected">
+					<option value="">选择</option>
+					<option value="red">红色</option>
+					<option value="green">绿色</option>
+
+				</select>
+				<span>选中的颜色是:{{selected}}</span>
+				<br>
+
+			</form>
+
+		</div>
+
+	</section>
+
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<script src="vue2.js"></script>
+</body>
+
+</html>

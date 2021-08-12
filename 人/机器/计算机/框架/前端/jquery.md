@@ -34,7 +34,7 @@ $('div:animated')//选择当前处于动画状态的div元素
      $('div').closest('form'); //选择离div最近的那个form父元素  
      $('div').children(); //选择div的所有子元素  
      $('div').siblings(); //选择div的同级元素  
-  ```
+```
 
 ## 链式操作
    jQuery 允许将所有操作连接在一起，以链条的形式写出来，比如：
