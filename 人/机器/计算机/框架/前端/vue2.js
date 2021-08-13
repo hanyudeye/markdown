@@ -1,4 +1,16 @@
-let vm = new Vue({
+let app=new Vue({
+  el:"#app",
+  data:{
+    name:"明哥",
+    html_output:'<a href="http://example.com">链接</a>',
+    style1:'color:red',
+    use:true,
+  }
+})
+
+
+
+let app1= new Vue({
   el: ".app1",
   data: {
     name: "hello,阿明",

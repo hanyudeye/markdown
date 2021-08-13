@@ -10,6 +10,21 @@
 
 <body>
 	<section>
+		<h2>模板</h2>
+		<div id="app">
+			<h3>插值</h3>
+			插入文本: {{name}} <br>
+			插入html文本: <span v-html="html_output"></span> <br>
+			插入属性: <span v-bind:style="style1">hello</span> <br>
+			插入表达式： {{5+5}} <br>
+
+
+
+		</div>
+
+
+	</section>
+	<section>
 		<h1>选择器与数据的绑定</h1>
 		<!-- 数据绑定 -->
 		<div class="app1" :id="app1_id">{{name|upper}}
