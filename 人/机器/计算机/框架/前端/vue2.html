@@ -17,7 +17,9 @@
 			插入html文本: <span v-html="html_output"></span> <br>
 			插入属性: <span v-bind:style="style1">hello</span> <br>
 			插入表达式： {{5+5}} <br>
-
+      数据与表单形成关联 : <input v-model="message"> 输入的值是: {{message}} <br>
+      与事件绑定: <button v-on:click="reverseMessage">翻转字符串</button><br>
+      过滤: 前面的返回值作为后面函数的参数  {{style1|upper}}  <br>
 
 
 		</div>
@@ -29,15 +31,6 @@
 		<!-- 数据绑定 -->
 		<div class="app1" :id="app1_id">{{name|upper}}
 			<br>
-			链接： {{html_output}}
-
-			<br>
-			v-html渲染 才能正常显示：
-			<span v-html="html_output"></span>
-			<br>
-			或者使用链接的方式：
-			<a :href="link">链接</a>
-
 			<form action="">
 				<label for="">输入框</label>
 				<input type="text" :placeholder="name">

@@ -37,7 +37,7 @@ let vm= new Vue({
 ``` html
  <div v-html="message"></div>
 ```
-#### 属性
+#### 属性 
 ``` html
 插入属性: <span v-bind:style="style1">hello</span> <br>
 ```
@@ -50,26 +50,38 @@ let vm= new Vue({
 
 ```
 
-### 指令 带有 v- 前缀的特殊属性
+### 指令 
+判断
 ``` html
 <p v-if="seen">现在你看到我了</p>
 ```
-### 用户输入
+### 数据与表单形成关联
 ``` html
 <input v-model="message">
 ```
-看到这里  https://www.runoob.com/vue2/vue-template-syntax.html
-### 过滤器
-### 缩写
 
-## 数据操作 (Vue实例的数据使用 )  {{}}
-直接数据绑定  {{dataname}}  ==  v-bind (用于标签节点类型中，简写 :) 
-
-## filters 删选  {{dataname |upper }}
-## 输出 Raw HTML
-## 表单绑定
+v-model与 input ,select ,textarea,checkbox,radio 等表单形成关联
+### 与事件属性关联 v-on
+方法放在 methods 中
+### 过滤filters  {{ a | b}}
 
 
+
+
+## 条件
+### v-if  等价于后台模板的写法 {{#if }} {{/if}}
+### v-else
+``` html
+<div id="app">
+    <div v-if="Math.random() > 0.5">
+      Sorry
+    </div>
+    <div v-else>
+      Not sorry
+    </div>
+</div>
+
+```
 ## vue-cli
 ``` shell
 vue init webpack my-project

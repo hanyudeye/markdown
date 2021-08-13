@@ -33,5 +33,6 @@ const and = (a, b) => a && b;
 // console.log(and(true,false))
 // console.log(and(false,false))
 
-
-
+//分割，翻转，合并
+let t="hello".split('').reverse().join('')
+// console.log(t)

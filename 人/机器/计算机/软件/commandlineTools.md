@@ -72,7 +72,22 @@ gron 将 JSON 文本转换为离散的赋值语句，以便查找。我特别喜
 5. baomitu：                  https://cdn.baomitu.com
 6. typora：                      https://www.typora.io
 7. 549.tv：                       http://www.549.tv
+
+## ftp 命令行文件传输
+- ftp ftp.oreilly.com
+- 匿名登录 anonymous
+- pwd /cd /ls
+- binary (对于二进制文件，需要切换传输模式)
+- 获取文件 get filename
+- 退出
+
+## 压缩解压
+### gz 文件 
+``` shell
+gzip -dc file.tar.gz | tar -xvf -
+``` 
 # on-my-Zsh 插件
 ``` config
 plugins=(git autojump fd shell-proxy wd web-search history history-substring-search ssh-agent tmux extract gitignore zsh-autosuggestions fzf)
 ``` 
+

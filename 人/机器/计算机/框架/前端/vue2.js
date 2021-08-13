@@ -1,12 +1,22 @@
-let app=new Vue({
-  el:"#app",
-  data:{
-    name:"明哥",
-    html_output:'<a href="http://example.com">链接</a>',
-    style1:'color:red',
-    use:true,
+let app = new Vue({
+  el: "#app",
+  data: {
+    name: "明哥",
+    html_output: '<a href="http://example.com">链接</a>',
+    style1: "color:red",
+    use: true,
+    message:"数据关联",
+  },
+  methods:{
+    reverseMessage:function(){
+      this.message=this.message.split('').reverse().join('')
+    }
+  },filters:{
+    upper:function(value){
+		  return value.toUpperCase();
+    }
   }
-})
+});
 
 
 
