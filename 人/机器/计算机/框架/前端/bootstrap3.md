@@ -683,101 +683,6 @@ Bootstrap3登录框自适应水平居中+垂直居中
 注意，在导航条中，应该使用 .navbar-left或.navbar-right来对齐组件，而不是 .pull-left 或 .pull-right 。
 
 
-### 弹出框 ###
-
-``` html
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"> 
-	<title>Bootstrap 实例 - 弹出框（Popover）插件</title>
-	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<div class="container" style="padding: 100px 50px 10px;" >
-	<button type="button" class="btn btn-default" title="Popover title"  
-			data-container="body" data-toggle="popover" data-placement="left" 
-			data-content="左侧的 Popover 中的一些内容">
-		左侧的 Popover
-	</button>
-	<button type="button" class="btn btn-primary" title="Popover title"  
-			data-container="body" data-toggle="popover" data-placement="top" 
-			data-content="顶部的 Popover 中的一些内容">
-		顶部的 Popover
-	</button>
-	<button type="button" class="btn btn-success" title="Popover title"  
-			data-container="body" data-toggle="popover" data-placement="bottom" 
-			data-content="底部的 Popover 中的一些内容">
-		底部的 Popover
-	</button>
-	<button type="button" class="btn btn-warning" title="Popover title"  
-			data-container="body" data-toggle="popover" data-placement="right" 
-			data-content="右侧的 Popover 中的一些内容">
-		右侧的 Popover
-	</button>
-</div>
-<script>
-$(function () { 
-	$("[data-toggle='popover']").popover();
-});
-</script>
-
-</body>
-</html>
-
-```
-
-![h](images/bootstrap3/popover.png "l")
-
-
-### toastr ###
-
-添加组件 
- 
-（1）、引入js和css
-
-1 <link href="~/Content/toastr/toastr.css" rel="stylesheet" />
-2 <script src="~/Content/toastr/toastr.min.js"></script>
-（2）、js初始化
-
-1 <script type="text/javascript">
-2         toastr.options.positionClass = 'toast-bottom-right';
-3 </script>
-将这个属性值设置为不同的值就能让提示信息显示在不同的位置，如toast-bottom-right表示下右、toast-bottom-center表示下中、toast-top-center表示上中等，更过位置信息请查看文档。
-
-（3）、使用
-
- 1 //初始化编辑按钮
- 2 $("#btn_edit").click(function () {
- 3      var arrselections = $("#tb_departments").bootstrapTable('getSelections');
- 4      if (arrselections.length > 1) {
- 5         toastr.warning('只能选择一行进行编辑');
- 6 
- 7         return;
- 8      }
- 9      if (arrselections.length <= 0) {
-10         toastr.warning('请选择有效数据');
-11 
-12        return;
-13     }
-14             
-15     $('#myModal').modal();
-16 });
-使用起来就如下一句：
-
-1 toastr.warning('只能选择一行进行编辑');
-是不是很简单~~这里的有四种方法分别对应四种不同颜色的提示框。
-
-1 toastr.success('提交数据成功');
-1 toastr.error('Error');
-1 toastr.warning('只能选择一行进行编辑');
-1 toastr.info('info');
-分别对应上图中的四种颜色的提示框。
-
-
 ### 列表 ###
 #### ul.list-group/li.list-group-item ####
 
@@ -889,17 +794,6 @@ $(function () {
 - 4.悬停.table-hover
 - 5.紧凑.table-condensed
 - 6.行样式 .active .success .info
-
-### 颜色 ###
-
-Bootstrap自带颜色：class = "bg-xxx"
-
-![颜色1](images/bootstrap3/bgcolor1.png)s
-s
-
-![颜色2](images/bootstrap3/bgcolor2.png)
-
-![颜色3](images/bootstrap3/bgcolor3.png)
 
 ## Bootstrap 布局组件
 ### 字体图标(Glyphicons)
@@ -1395,3 +1289,4 @@ $('#identifier').on('slid.bs.carousel', function () {
 //当轮播完成幻灯片过渡效果时触发该事件。	
 })
 ```
+

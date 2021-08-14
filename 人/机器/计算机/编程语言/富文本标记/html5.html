@@ -328,13 +328,58 @@
                                     <use xlink:href="#6" y="6.513" />
                                     <use xlink:href="#7" y="8.684" />
                                     <use xlink:href="#1" y="10.855" />
-                                </svg></svg></g>
+                                </svg></svg>
+                        </g>
                     </g>
                 </svg>
             </svg>
         </div>
     </section>
     <hr>
+
+    <section>
+        <legend>
+            <h2>事件处理</h2>
+        </legend>
+        <div>
+            <form action="">
+                <input type="file" id="file1"> 文件上传
+
+            </form>
+        </div>
+    </section>
+    <script>
+
+        // 测试表单事件
+        document.getElementById("file1").addEventListener("focus", function () {
+            console.log("focus");
+        });
+
+        document.getElementById("file1").addEventListener("mousedown", function () {
+            console.log("mousedown");
+        });
+
+        document.getElementById("file1").addEventListener("mouseup", function () {
+            console.log("mouseup");
+        });
+
+        document.getElementById("file1").addEventListener("input", function () {
+            console.log("input");
+        });
+
+        document.getElementById("file1").addEventListener("change", function () {
+            console.log("change");
+        });
+
+        document.getElementById("file1").addEventListener("blur", function () {
+            console.log("blur");
+        });
+
+        document.getElementById("file1").addEventListener("click", function () {
+            console.log("click");
+        });
+
+    </script>
 </body>
 
 </html>

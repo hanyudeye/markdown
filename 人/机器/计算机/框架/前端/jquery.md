@@ -1282,3 +1282,10 @@ function AddHandlingFeeToRefund()
 
     );
 ```
+## 获取文件上传内容
+``` js
+$("#fileUpload").change(function () {
+    console.log($("#fileUpload")[0].files);
+});
+
+```

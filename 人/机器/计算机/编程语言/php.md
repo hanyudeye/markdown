@@ -1,6 +1,4 @@
 # php
-
-
 ## 服务器相关信息
 ### $_SERVER 
 服务器与执行环境的信息
@@ -156,11 +154,6 @@ header('Content-Type: text/html; charset=UTF-8');
 ```
 
 # 依赖注入 (解耦的设计模式)
-
-# 数据库
-
-# 使用模板 (前后台分离了，现在 用 REST 了)
-
 # 错误与异常
 
 ```
@@ -273,3 +266,6 @@ is_object():            // 检测变量是否是一个对象
 is_array():            // 检测变量是否是数组
 is_null():            // 检测变量是否为 NULL 值是否是NULL大小写敏感
 ```
+
+## 时间转time
+strtotime

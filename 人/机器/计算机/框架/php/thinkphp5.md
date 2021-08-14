@@ -1,3 +1,4 @@
+
 ## thinkphp5 网站程序框架
 ### 架构
 基于 MVC (模型-视图-控制器)的方式来组织
@@ -357,11 +358,17 @@ Case标签还有一个break属性,表示是否需要break,默认是会自动添�
 ```
 
 ### 验证
+### 安全
+#### 输入安全
+#### 上传安全 
+
+
+### 文件上传
 ### 杂项
-- 缓存
+#### 缓存
 Cache::set('name',$value,3600);
 
-- session
+#### session
 Session::set('name','thinkphp');
 Session::get('name');
 
@@ -407,7 +414,7 @@ Cookie::prefix('think_');
 'setcookie' => true,
 ```
 
-多语言
+#### 多语言
 
 ``` php
 // 开启语言切换
@@ -420,7 +427,7 @@ Cookie::prefix('think_');
 Lang::setAllowLangList(['zh-cn','en-us']);
 ```
 
-分页
+#### 分页
 ``` php
 // 查询状态为1的用户数据 并且每页显示10条数据
 $list = Db::name('user')->where('status',1)->paginate(10);
@@ -462,7 +469,7 @@ return $this->fetch();
 
 ```
 
-上传
+#### 文件上传
 
 ``` html
 <form action="/index/index/upload" enctype="multipart/form-data" method="post">
@@ -496,7 +503,7 @@ echo $file->getError();
 move 方法成功的话返回的是一个 \think\File 对象,你可以对上传后的文件进行后续操作。
 
 
-多文件上传
+#### 多文件上传
 
 ``` html
 <form action="/index/index/upload" enctype="multipart/form-data" method="post">
@@ -530,7 +537,7 @@ echo $file->getError();
 
 ```
 
-上传验证
+#### 上传验证
 ``` php
 $info = $file->validate(['size'=>15678,'ext'=>'jpg,png,gif'])->move(ROOT_PA
 TH . 'public' . DS . 'uploads');
@@ -568,7 +575,7 @@ $file->rule('md5')->move('/home/www/upload/');
 
 rule 后可自定义函数调用
 
-验证码
+#### 验证码
 
 模版内验证码的显示
 
@@ -737,10 +744,6 @@ ROOT\application\config.php
     ],
 ```
 一班这样设置之后就可以开启SQL日志记录了。
-
-## 时间转time
-
-strtotime
 
 ## session
 这是因为第一次登录时框架自动生成了session，你换个浏览器或者做个退出按钮清理session
