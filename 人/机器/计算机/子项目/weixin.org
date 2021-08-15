@@ -554,7 +554,7 @@
      tap 事件会冒泡到 middle view，而middle view 阻止了 tap 事件冒泡，不再向父节点
      传递)，点击 middle view会触发=handleTap2=，点击 outer view 会触发=handleTap1=。
 
-     #+BEGIN_EXAMPLE
+     #+begin_src html
          <view id="outer" bindtap="handleTap1">
            outer view
            <view id="middle" catchtap="handleTap2">
@@ -564,9 +564,7 @@
              </view>
            </view>
          </view>
-     #+END_EXAMPLE
-
-
+     #+end_src
 **** 互斥事件绑定
      自基础库版本 [[../../compatibility.html][2.8.2]] 起，除 =bind= 和=catch= 外，还可以使用 =mut-bind= 来绑定事
      件。一个 =mut-bind=触发后，如果事件冒泡到其他节点上，其他节点上的 =mut-bind=绑
@@ -1398,13 +1396,14 @@
 
 * 组件和 api
 ** 组件
-*** view 视图
+*** 标签
     - view
       - hover-class 指定按下去的样式类 (点击效果)
       - hover-start-time 按住后多久出现点击态，单位毫秒 50
       - hover-stay-time	number	手指松开后点击态保留时间，单位毫秒	400		
-    - [scroll-view](https://mp.weixin.qq.com/debug/wxadoc/dev/component/scroll-view.html)
+    - scroll-view(https://mp.weixin.qq.com/debug/wxadoc/dev/component/scroll-view.html)
     - [swiper](https://mp.weixin.qq.com/debug/wxadoc/dev/component/swiper.html)
+    滑块视图容器。其中只可放置swiper-item组件，否则会导致未定义的行为
 
     - [icon](https://mp.weixin.qq.com/debug/wxadoc/dev/component/icon.html)
     - [text](https://mp.weixin.qq.com/debug/wxadoc/dev/component/text.html)
