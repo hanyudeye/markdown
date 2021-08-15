@@ -17,10 +17,24 @@
 			插入html文本: <span v-html="html_output"></span> <br>
 			插入属性: <span v-bind:style="style1">hello</span> <br>
 			插入表达式： {{5+5}} <br>
-      数据与表单形成关联 : <input v-model="message"> 输入的值是: {{message}} <br>
-      与事件绑定: <button v-on:click="reverseMessage">翻转字符串</button><br>
-      过滤: 前面的返回值作为后面函数的参数  {{style1|upper}}  <br>
+			数据与表单形成关联 : <input v-model="message"> 输入的值是: {{message}} <br>
+			与事件绑定: <button v-on:click="reverseMessage">翻转字符串</button><br>
+			过滤: 前面的返回值作为后面函数的参数 {{style1|upper}} <br>
+			<hr>
+			条件判断,如果为真，则显示，如果为假，则隐藏 <div v-if="weizhen">这是真，显示</div>
+			<div v-else>为假</div>
 
+			<hr>
+			循环使用 <div v-for="(value,key) in shuzu">{{key}}:{{value}}</div>
+			<hr>
+			迭代整数: <div v-for="n in 10">{{n}}</div>
+			<hr>
+			计算属性 :显示函数处理后的值 {{ reversedMessage }} <br>
+			<small>计算属性的功能和方法的区别是 计算属性 会有缓存，所以性能更好，不希望缓存，可以用 methods
+			</small>
+			<hr>
+
+			样式绑定 : <div v-bind:class="{ 'active': isActive }">样式绑定 </div>
 
 		</div>
 

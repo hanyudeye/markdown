@@ -24,7 +24,9 @@
 
 清单相当于菜单，按照菜单按部就班，不浪费时间。是一种很好的人生规划。
 
-
-
+## 插入引用字符
+- quoted-insert  快捷键 C-q  默认是8进制
+- 设置其他进制   (setq read-quoted-char-radix 10) 或者16进制
+(setq read-quoted-char-radix 16)
 
 

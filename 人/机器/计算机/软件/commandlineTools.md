@@ -86,6 +86,14 @@ gron 将 JSON 文本转换为离散的赋值语句，以便查找。我特别喜
 ``` shell
 gzip -dc file.tar.gz | tar -xvf -
 ``` 
+
+## 计划任务
+``` crontab
+crontab -e
+#insert this line to execute the script every 10 min
+*/10 * * * *   DISPLAY=:0 path/to/ng_wallpaper.py > /tmp/ng_wpp
+```
+
 # on-my-Zsh 插件
 ``` config
 plugins=(git autojump fd shell-proxy wd web-search history history-substring-search ssh-agent tmux extract gitignore zsh-autosuggestions fzf)

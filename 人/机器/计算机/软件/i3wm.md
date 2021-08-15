@@ -5,7 +5,7 @@
 1. 多用SHELL 
 2. 少开窗口
 
-## 快捷键
+## 文档
 ### 鼠标绑定 ###
 
 i3支持在容器里按下特定的鼠标按钮时执行命令。 和键盘的绑定一样，使用bindsym命令。
@@ -255,3 +255,9 @@ bindsym $mod+b bar mode hide bar-1
 # bar-1的i3bar始终隐藏
 bindsym $mod+Shift+b bar mode invisible bar-1
 ```
+
+## 快捷键设置
+
+
+
+# rofi

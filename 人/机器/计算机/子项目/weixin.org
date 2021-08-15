@@ -1,4 +1,5 @@
 * 小程序 
+** 简介  
 微信内应用，主要提供给企业、政府、媒体、其他组织或个人的开发者在微信平台上提供服务。
 小程序属于微信注册账号，每个账号可以有5个小程序。
 
@@ -15,6 +16,15 @@
 - 组件化开发；具备特定功能效果的代码集合
 - 适配方案 rpx(responsive pixel 响应式像素单位) 750rpx [全是手机屏幕,电脑上也是]
 
+** 开发流程  
+   1. 有一个邮箱
+   2. 用邮箱注册小程序账号，并且获取微信小程序AppID
+   3. 用注册的小程序账号登录微信公众平台
+   4. 完善小程序信息并且添加开发者（至少一个）
+   5. 在微信web开发者工具上开发小程序
+   6. 微信公众号与微信小程序绑定
+   7. 发布小程序代码
+   8. 提交绑定
 * 小程序配置
 ** sitemap.json 页面索引文件 
  配置小程序及其页面是否允许被微信索引
@@ -33,27 +43,35 @@
 
 * 小程序
 ** 框架
-*** 逻辑层 App Service
-**** 注册小程序
+*** 逻辑层 app 对象 (就是 js 对象)
+    js 对象对页面内容修改，页面样式渲染
+    
+**** 注册app 对象 
+     
   #+BEGIN_EXAMPLE
        // app.js
        App({
          onLaunch (options) {
            // Do something initial when launch.
+           //启动事件
          },
          onShow (options) {
            // Do something when show.
+           // 页面显示事件
          },
          onHide () {
            // Do something when hide.
+           //隐藏事件
          },
          onError (msg) {
            console.log(msg)
+           // 发生错误事件
          },
+         // app 对象包含的数据 
          globalData: 'I am global data'
        })
    #+END_EXAMPLE
-**** 注册页面
+**** 注册page对象
 ***** 使用 Page
    #+BEGIN_EXAMPLE
        //index.js
@@ -111,7 +129,7 @@
          }
        })
    #+END_EXAMPLE
-***** 在页面中使用 behaviors
+***** 在页面中使用行为 behaviors
    #+BEGIN_EXAMPLE
        // my-behavior.js
        module.exports = Behavior({
@@ -137,7 +155,7 @@
        })
    #+END_EXAMPLE
 
-***** 使用 Component
+***** 使用组件 Component
    #+BEGIN_EXAMPLE
        Component({
          data: {
@@ -203,26 +221,24 @@
      可以将一些公共的代码抽离成为一个单独的 js 文件，作为一个模块。模块只有通过 module.exports 或者 exports 才能对外暴露接口。
 
      注意：
+     - =exports= 是 module.exports 的一个引用，因此在模块里边随意更改 =exports= 的指向会造成未知的错误。所以更推荐开发者采用 =module.exports= 来暴露模块接口，除非你已经清晰知道这两者的关系。
+     - 小程序目前不支持直接引入 =node_modules= , 开发者需要使用到 =node_modules= 时候建议拷贝出相关的代码到小程序的目录中，或者使用小程序支持的npm 功能。
+#+begin_src js
+  // common.js
+  function sayHello(name) {
+      console.log(`Hello ${name} !`)
+  }
+  function sayGoodbye(name) {
+      console.log(`Goodbye ${name} !`)
+  }
+  
+  module.exports.sayHello = sayHello
+  exports.sayGoodbye = sayGoodbye
+  #+end_src
 
-     -  =exports= 是 module.exports 的一个引用，因此在模块里边随意更改 =exports= 的指向会造成未知的错误。所以更推荐开发者采用 =module.exports= 来暴露模块接口，除非你已经清晰知道这两者的关系。
-     -  小程序目前不支持直接引入 =node_modules= , 开发者需要使用到 =node_modules= 时候建议拷贝出相关的代码到小程序的目录中，或者使用小程序支持的npm 功能。
+在需要使用这些模块的文件中，使用 =require= 将公共代码引入
 
-     #+BEGIN_EXAMPLE
-         // common.js
-         function sayHello(name) {
-           console.log(`Hello ${name} !`)
-         }
-         function sayGoodbye(name) {
-           console.log(`Goodbye ${name} !`)
-         }
-
-         module.exports.sayHello = sayHello
-         exports.sayGoodbye = sayGoodbye
-     #+END_EXAMPLE
-
-     在需要使用这些模块的文件中，使用 =require= 将公共代码引入
-
-     #+BEGIN_EXAMPLE
+#+begin_src js
          var common = require('common.js')
          Page({
            helloMINA: function() {
@@ -232,38 +248,33 @@
              common.sayGoodbye('MINA')
            }
          })
-     #+END_EXAMPLE
-
+#+end_src
 **** 文件作用域
      在 JavaScript文件中声明的变量和函数只在该文件中有效；不同的文件中可以声明相同名字的变量和函数，不会互相影响。
 
      通过全局函数 =getApp= 可以获取全局的应用实例，如果需要全局的数据可以在=App()= 中设置，如：
 
-     #+BEGIN_EXAMPLE
-         // app.js
-         App({
-           globalData: 1
-         })
-     #+END_EXAMPLE
-
-     #+BEGIN_EXAMPLE
-         // a.js
-         // The localValue can only be used in file a.js.
-         var localValue = 'a'
-         // Get the app instance.
-         var app = getApp()
-         // Get the global data and change it.
-         app.globalData++
-     #+END_EXAMPLE
-
-     #+BEGIN_EXAMPLE
-         // b.js
-         // You can redefine localValue in file b.js, without interference with the localValue in a.js.
-         var localValue = 'b'
-         // If a.js it run before b.js, now the globalData shoule be 2.
-         console.log(getApp().globalData)
-     #+END_EXAMPLE
-
+#+begin_src js
+  // app.js
+  App({
+    globalData: 1
+  })
+  
+  // a.js
+  // The localValue can only be used in file a.js.
+  var localValue = 'a'
+  // Get the app instance.
+  var app = getApp()
+  // Get the global data and change it.
+  app.globalData++
+  
+  // b.js
+  // You can redefine localValue in file b.js, without interference with the localValue in a.js.
+  var localValue = 'b'
+  // If a.js it run before b.js, now the globalData shoule be 2.
+  console.log(getApp().globalData)
+  
+#+end_src
 **** API
 ***** 事件监听 API
       我们约定，以 =on= 开头的 API用来监听某个事件是否触发，如：wx.onSocketOpen， wx.onCompassChange等。
@@ -345,19 +356,21 @@
 *** 视图层 View
 **** WXML
 ***** 数据绑定
-      #+BEGIN_EXAMPLE
+
+          #+begin_src html
           <!--wxml-->
           <view> {{message}} </view>
-      #+END_EXAMPLE
+          #+end_src
 
-      #+BEGIN_EXAMPLE
-          // page.js
-          Page({
-            data: {
-              message: 'Hello MINA!'
-            }
-          })
-      #+END_EXAMPLE
+
+          #+begin_src js
+            // page.js
+            Page({
+                data: {
+                    message: 'Hello MINA!'
+                }
+            })
+          #+end_src
 
 ***** 列表渲染
 
@@ -393,7 +406,7 @@
       #+END_EXAMPLE
 
 ***** 模板
-      #+BEGIN_EXAMPLE
+#+begin_src html
           <!--wxml-->
           <template name="staffName">
             <view>
@@ -404,43 +417,52 @@
           <template is="staffName" data="{{...staffA}}"></template>
           <template is="staffName" data="{{...staffB}}"></template>
           <template is="staffName" data="{{...staffC}}"></template>
-      #+END_EXAMPLE
+#+end_src
+#+begin_src js
+  // page.js
+  Page({
+      data: {
+          staffA: {firstName: 'Hulk', lastName: 'Hu'},
+          staffB: {firstName: 'Shang', lastName: 'You'},
+          staffC: {firstName: 'Gideon', lastName: 'Lin'}
+      }
+  })
+#+end_src
 
-      #+BEGIN_EXAMPLE
-          // page.js
-          Page({
-            data: {
-              staffA: {firstName: 'Hulk', lastName: 'Hu'},
-              staffB: {firstName: 'Shang', lastName: 'You'},
-              staffC: {firstName: 'Gideon', lastName: 'Lin'}
-            }
-          })
-      #+END_EXAMPLE
+***** 引用模板
+      #+begin_src html
+        <!-- item.wxml -->
+        <!-- 模板定义在一个文件中 -->
+        <template name="item">
+          <text>{{text}}</text>
+        </template>
+      #+end_src
+      
+      #+begin_src html
+        <!-- 引用在另一个文件中引用 -->
+        <import src="item.wxml"/>
+        <template is="item" data="{{text: 'forbar'}}"/>
+      #+end_src
 
 **** WXSS
+     为了定义设备的一致性，微信设定死的固定宽度 为 750rpx (响应式像素单位)，在不同宽度要进行换算.
+     
 ***** 样式导入
       使用 =@import= 语句可以导入外联样式表， =@import= 后跟需要导入的外联样式表的相对路径，用 =;= 表示语句结束。
 
-      #+BEGIN_EXAMPLE
-          /** common.wxss **/
-          .small-p {
+      #+begin_src css
+        /** common.wxss **/
+        .small-p {
             padding:5px;
-          }
-      #+END_EXAMPLE
-
-      #+BEGIN_EXAMPLE
-          /** app.wxss **/
-          @import "common.wxss";
-          .middle-p {
+        }
+        
+        /** app.wxss **/
+        @import "common.wxss";
+        .middle-p {
             padding:15px;
-          }
-      #+END_EXAMPLE
+        }
+      #+end_src
 
-***** 内联样式
-      #+BEGIN_EXAMPLE
-          <view style="color:{{color}};" />
-          <view class="normal_view" />
-      #+END_EXAMPLE
 ***** 选择器
       | 选择器           | 样例             | 样例描述                                           |
       |------------------+------------------+----------------------------------------------------|
@@ -926,7 +948,6 @@
      -  Bug： Android 微信版本 6.7.3 中， =live-pusher=
        组件在屏幕旋转时方向异常。
 
- 
 *** 动画
 **** 界面动画的常见方式
      在小程序中，通常可以使用 CSS渐变和CSS动画 来创建简易的界面动画。
@@ -1377,8 +1398,11 @@
 
 * 组件和 api
 ** 组件
-*** view 
-    - [view](https://mp.weixin.qq.com/debug/wxadoc/dev/component/view.html)
+*** view 视图
+    - view
+      - hover-class 指定按下去的样式类 (点击效果)
+      - hover-start-time 按住后多久出现点击态，单位毫秒 50
+      - hover-stay-time	number	手指松开后点击态保留时间，单位毫秒	400		
     - [scroll-view](https://mp.weixin.qq.com/debug/wxadoc/dev/component/scroll-view.html)
     - [swiper](https://mp.weixin.qq.com/debug/wxadoc/dev/component/swiper.html)
 
@@ -1406,6 +1430,11 @@
     - [image](https://mp.weixin.qq.com/debug/wxadoc/dev/component/image.html)
     - [video](https://mp.weixin.qq.com/debug/wxadoc/dev/component/video.html)
 
+      #+begin_src html
+      	<image class="" src="{{imagePath}}" mode="aspectFill" lazy-load="false" binderror="" bindload="">
+      #+end_src
+       mode 指定图片的显示模式 
+       
 *** 地图
     - [map](https://mp.weixin.qq.com/debug/wxadoc/dev/component/map.html%20#map)
 
@@ -1839,3 +1868,9 @@
     <view wx:for="{{[1,2,3] + ' '}}" >
     {{item}}
     </view>
+
+
+   
+* 页面内容 wxml    
+** 文本 <view>
+** 图片 <img>  

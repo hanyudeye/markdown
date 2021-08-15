@@ -6,6 +6,12 @@ let app = new Vue({
     style1: "color:red",
     use: true,
     message:"数据关联",
+    //为真
+    weizhen:true,
+    weijia:false,
+    shuzu:[1,3,5,7,9],
+    isActive:true,
+
   },
   methods:{
     reverseMessage:function(){
@@ -14,6 +20,10 @@ let app = new Vue({
   },filters:{
     upper:function(value){
 		  return value.toUpperCase();
+    }
+  },computed:{
+    reversedMessage:function(){
+      return this.message.split('').reverse().join('')
     }
   }
 });
