@@ -507,8 +507,7 @@
 
 
 ### 居中 ###
-
-一、Bootstrap水平居中
+#### Bootstrap水平居中
 
 1、 文本：class ="text-center"
 2、 图片居中：class = "center-block"
@@ -518,23 +517,38 @@
  bootstrap4水平居中：class = "m-auto"
  
 
-二、Bootstrap垂直居中
+#### Bootstrap垂直居中
 
 bootstrap3 如何让div内部垂直居中：
 
 Bootstrap的栅格系统使用的是float：left的浮动方式，vertical-align属性不起作用，故把内部div的float属性清除，添加display属性，如下：
-
+``` css
 .middle {
 float: none;
 display: inline-block;
 vertical-align: middle;
 }
 
- 
+ ```
 
 Bootstrap3登录框自适应水平居中+垂直居中
 
- 
+方法2 
+
+``` css
+.middle {
+ display: flex; 
+ flex-direction: column;
+ justify-content: center;
+ border: 1px solid #ccc;
+ height:100px;
+ width: 100px;
+ text-align: center;
+}
+
+ ```
+
+
 ### 验证身份证和手机号 ###
 
 ``` hmtl
@@ -951,7 +965,7 @@ Bootstrap3登录框自适应水平居中+垂直居中
 </div>
 ```
 
-##  插件 (依赖jQuery)
+## 插件 (依赖jQuery)
 ### 插件概览
 
 关闭插件
@@ -1290,3 +1304,18 @@ $('#identifier').on('slid.bs.carousel', function () {
 })
 ```
 
+
+## 其它内容
+### 修改 input里file的样式
+``` html
+<div class="form-group">
+    <label class="col-sm-2 control-label"><img src="index.png"alt=""></label>
+    <div class="col-sm-2 ">
+        <label for="file"class=" btn btn-default">更换头像</label>
+        <input id="file"type="file"style="display:none">
+    </div>
+</div>
+```
+
+> 使用 label for 作指向，隐藏 input file
+> label 中的样式可以对应 button 的样式
