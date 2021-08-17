@@ -10,6 +10,14 @@
 #+DOWNLOADED: screenshot @ 2021-01-14 10:45:19
 [[file:../../../资源/images/2021-01-14_10-45-19_screenshot.png]]
 
+# 虚拟化技术 
+如果你是在 Windows 下开发, 线上环境是 Linux (或者别的非 Windows 系统) 的话, 或者团队协同开发的时候, 建议使用虚拟机.
+## Docker
+
+下面的命令, 会下载一个功能齐全的 Apache 和 最新版本的 PHP, 并会设置 WEB 目录 /path/to/your/php/files 运行在 http://localhost:8080:
+
+> docker run -d --name my-php-webserver -p 8080:80 -v /path/to/your/php/files:/var/www/html/ php:apache
+
 * docker 
 ** [[https://www.cnblogs.com/CloudMan6/p/6763789.html][架构]]
  - client
