@@ -1,5 +1,24 @@
 # php
-## 服务器相关信息
+## "静"物
+- String（字符串）
+- Integer（整型）
+- Float（浮点型）
+- Boolean（布尔型）
+- Array（数组）
+- Object（对象）
+- NULL（空值）
+
+## "动"物
+### String
+- strlen
+- strpos
+
+### Array
+- count 长度
+- sort 升序 rsort 降序 asort,arsort 值排序 ksor,krsort 键排序
+
+## 服务器
+
 ### $_SERVER 
 服务器与执行环境的信息
 ### $_GET
@@ -269,3 +288,23 @@ is_null():            // 检测变量是否为 NULL 值是否是NULL大小写敏
 
 ## 时间转time
 strtotime
+## 手册
+Array 函数
+Calendar 函数
+cURL 函数
+Date 函数
+Directory 函数
+Error 函数
+Filesystem 函数
+Filter 函数
+FTP 函数
+HTTP 函数
+LibXML 函数
+Mail 函数
+Math 函数
+Misc 函数
+MySQLi 函数
+SimpleXML 函数
+String 函数
+XML Parser 函数
+Zip 函数
