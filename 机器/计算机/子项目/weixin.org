@@ -1,20 +1,11 @@
-* 小程序 
+* 微信小程序 
 ** 简介  
-微信内应用，主要提供给企业、政府、媒体、其他组织或个人的开发者在微信平台上提供服务。
-小程序属于微信注册账号，每个账号可以有5个小程序。
+   微信，作为小型DOM 解析器，解析类 VUE 代码
+   每个微信开发者账号可以有5个小程序
 
-平台规则:
-
-费用:
-
-企业、政府、媒体、其他组织注册小程序需要进行微信认证，认证费用为300元，如该企业已有微信公众号，则可以用微信公众号快速创建小程序账号，以此创建的小程序无需认证。
-个人注册主体无法认证，故无需缴纳300元认证费用，但会有功能限制。
-
-
- 特点  
-- 没有DOM
-- 组件化开发；具备特定功能效果的代码集合
-- 适配方案 rpx(responsive pixel 响应式像素单位) 750rpx [全是手机屏幕,电脑上也是]
+   - 没有DOM
+   - 组件化开发
+   - 适配方案 rpx(responsive pixel 响应式像素单位) 750rpx [全是手机屏幕,电脑上也是]
 
 ** 开发流程  
    1. 有一个邮箱
@@ -25,31 +16,27 @@
    6. 微信公众号与微信小程序绑定
    7. 发布小程序代码
    8. 提交绑定
-* 小程序配置
-** sitemap.json 页面索引文件 
- 配置小程序及其页面是否允许被微信索引
-*** 配置 path/to/page 页面被索引，其余页面不被索引
-   #+BEGIN_EXAMPLE
-       {
-         "rules":[{
-           "action": "allow",
-           "page": "path/to/page"
-         }, {
-           "action": "disallow",
-           "page": "*"
-         }]
-       }
-   #+END_EXAMPLE
+** 配置
+*** 配置文件   
+*** 索引文件 sitemap.json 
+   > 配置小程序及其页面是否允许被微信索引
+**** 配置 path/to/page 页面被索引，其余页面不被索引
+     #+begin_src json
+        {
+          "rules":[{
+            "action": "allow",
+            "page": "path/to/page"
+          }, {
+            "action": "disallow",
+            "page": "*"
+          }]
+        }
+    #+end_src
 
-* 小程序
 ** 框架
-*** 逻辑层 app 对象 (就是 js 对象)
-    js 对象对页面内容修改，页面样式渲染
-    
-**** 注册app 对象 
-     
-  #+BEGIN_EXAMPLE
-       // app.js
+*** 逻辑层 
+    > js 文件处理逻辑代码
+#+begin_src js
        App({
          onLaunch (options) {
            // Do something initial when launch.
@@ -70,153 +57,114 @@
          // app 对象包含的数据 
          globalData: 'I am global data'
        })
-   #+END_EXAMPLE
-**** 注册page对象
-***** 使用 Page
-   #+BEGIN_EXAMPLE
-       //index.js
-       Page({
-         data: {
-           text: "This is page data."
-         },
-         onLoad: function(options) {
-           // 页面创建时执行
-         },
-         onShow: function() {
-           // 页面出现在前台时执行
-         },
-         onReady: function() {
-           // 页面首次渲染完毕时执行
-         },
-         onHide: function() {
-           // 页面从前台变为后台时执行
-         },
-         onUnload: function() {
-           // 页面销毁时执行
-         },
-         onPullDownRefresh: function() {
-           // 触发下拉刷新时执行
-         },
-         onReachBottom: function() {
-           // 页面触底时执行
-         },
-         onShareAppMessage: function () {
-           // 页面被用户分享时执行
-         },
-         onPageScroll: function() {
-           // 页面滚动时执行
-         },
-         onResize: function() {
-           // 页面尺寸变化时执行
-         },
-         onTabItemTap(item) {
-           // tab 点击时执行
-           console.log(item.index)
-           console.log(item.pagePath)
-           console.log(item.text)
-         },
-         // 事件响应函数
-         viewTap: function() {
-           this.setData({
-             text: 'Set some data for updating view.'
-           }, function() {
-             // this is setData callback
-           })
-         },
-         // 自由数据
-         customData: {
-           hi: 'MINA'
-         }
-       })
-   #+END_EXAMPLE
-***** 在页面中使用行为 behaviors
-   #+BEGIN_EXAMPLE
-       // my-behavior.js
-       module.exports = Behavior({
-         data: {
-           sharedText: 'This is a piece of data shared between pages.'
-         },
-         methods: {
-           sharedMethod: function() {
-             this.data.sharedText === 'This is a piece of data shared between pages.'
-           }
-         }
-       })
-   #+END_EXAMPLE
+#+end_src
 
-   #+BEGIN_EXAMPLE
-       // page-a.js
-       var myBehavior = require('./my-behavior.js')
-       Page({
-         behaviors: [myBehavior],
-         onLoad: function() {
-           this.data.sharedText === 'This is a piece of data shared between pages.'
-         }
-       })
-   #+END_EXAMPLE
+#+begin_src js
+  Page({
+      data: {
+          text: "This is page data."
+      },
+      onLoad: function(options) {
+          // 页面创建时执行
+      },
+      onShow: function() {
+          // 页面出现在前台时执行
+      },
+      onReady: function() {
+          // 页面首次渲染完毕时执行
+      },
+      onHide: function() {
+          // 页面从前台变为后台时执行
+      },
+      onUnload: function() {
+          // 页面销毁时执行
+      },
+      onPullDownRefresh: function() {
+          // 触发下拉刷新时执行
+      },
+      onReachBottom: function() {
+          // 页面触底时执行
+      },
+      onShareAppMessage: function () {
+          // 页面被用户分享时执行
+      },
+      onPageScroll: function() {
+          // 页面滚动时执行
+      },
+      onResize: function() {
+          // 页面尺寸变化时执行
+      },
+      onTabItemTap(item) {
+          // tab 点击时执行
+          console.log(item.index)
+          console.log(item.pagePath)
+          console.log(item.text)
+      },
+      // 事件响应函数
+      viewTap: function() {
+          this.setData({
+              text: 'Set some data for updating view.'
+          }, function() {
+              // this is setData callback
+          })
+      },
+      // 自由数据
+      customData: {
+          hi: 'MINA'
+      }
+  })
 
-***** 使用组件 Component
-   #+BEGIN_EXAMPLE
-       Component({
-         data: {
-           text: "This is page data."
-         },
-         methods: {
-           onLoad: function(options) {
-             // 页面创建时执行
-           },
-           onPullDownRefresh: function() {
-             // 下拉刷新时执行
-           },
-           // 事件响应函数
-           viewTap: function() {
-             // ...
-           }
-         }
-       })
-   #+END_EXAMPLE
+#+end_src
 
-**** 页面路由
-***** 页面栈
-      | 路由方式   | 页面栈表现                        |
-      |------------+-----------------------------------|
-      | 初始化     | 新页面入栈                        |
-      | 打开新页面 | 新页面入栈                        |
-      | 页面重定向 | 当前页面出栈，新页面入栈          |
-      | 页面返回   | 页面不断出栈，直到目标返回页      |
-      | Tab 切换   | 页面全部出栈，只留下新的 Tab 页面 |
-      | 重加载     | 页面全部出栈，只留下新的页面      |
+**** 在页面中使用行为 behaviors
+#+begin_src js
+  // my-behavior.js
+  module.exports = Behavior({
+      data: {
+          sharedText: 'This is a piece of data shared between pages.'
+      },
+      methods: {
+          sharedMethod: function() {
+              this.data.sharedText === 'This is a piece of data shared between pages.'
+          }
+      }
+  })
 
-      开发者可以使用 =getCurrentPages()= 函数获取当前页面栈。
+  #+end_src
 
-***** 路由方式
-      <navigator url="/pages/home/home">home</navigator>
-          
-      | 打开新页面 | wx.navigateTo        | 组件 <navigator open-type="navigateTo"/>     |
-      | 页面重定向 | wx.redirectTo        | 组件 <navigator open-type="redirectTo"/>     |
-      | 页面返回   | wx.navigateBack      | 使用组件<navigator open-type="navigateBack"> |
-      | Tab 切换   | wx.switchTab         | 使用组件 <navigator open-type="switchTab"/>  |
-      | 重启动     | 调用 API wx.reLaunch | 使用组件 <navigator open-type="reLaunch"/>   |
+#+begin_src js
+  // page-a.js
+  var myBehavior = require('./my-behavior.js')
+  Page({
+      behaviors: [myBehavior],
+      onLoad: function() {
+          this.data.sharedText === 'This is a piece of data shared between pages.'
+      }
+  })
 
-      Tab 切换对应的生命周期（以 A、B 页面为 Tabbar 页面，C 是从 A 页面打开的页面，D 页面是从 C 页面打开的页面为例）：
-  
-      | 当前页面          | 路由后页面      | 触发的生命周期（按顺序）                             |
-      |-------------------+-----------------+------------------------------------------------------|
-      | A                 | A               | Nothing happend                                      |
-      | A                 | B               | A.onHide(), B.onLoad(), B.onShow()                   |
-      | A                 | B（再次打开）   | A.onHide(), B.onShow()                               |
-      | C                 | A               | C.onUnload(), A.onShow()                             |
-      | C                 | B               | C.onUnload(), B.onLoad(), B.onShow()                 |
-      | D                 | B               | D.onUnload(), C.onUnload(), B.onLoad(), B.onShow()   |
-      | D（从转发进入）   | A               | D.onUnload(), A.onLoad(), A.onShow()                 |
-      | D（从转发进入）   | B               | D.onUnload(), B.onLoad(), B.onShow()                 |
+       #+end_src
 
-      - =navigateTo=, =redirectTo= 只能打开非 tabBar 页面。
-      - =switchTab= 只能打开 tabBar 页面。
-      - =reLaunch= 可以打开任意页面。
-      - 页面底部的 tabBar 由页面决定，即只要是定义为 tabBar 的页面，底部都有tabBar。
-      - 调用页面路由带的参数可以在目标页面的=onLoad=中获取。
-
+**** 使用组件 Component
+  #+begin_src js
+    Component({
+        data: {
+            text: "This is page data."
+        },
+        methods: {
+            onLoad: function(options) {
+                // 页面创建时执行
+            },
+            onPullDownRefresh: function() {
+                // 下拉刷新时执行
+            },
+            // 事件响应函数
+            viewTap: function() {
+                // ...
+            }
+        }
+    })
+      #+end_src
+      
 **** 模块化
      可以将一些公共的代码抽离成为一个单独的 js 文件，作为一个模块。模块只有通过 module.exports 或者 exports 才能对外暴露接口。
 
@@ -1873,3 +1821,44 @@
 * 页面内容 wxml    
 ** 文本 <view>
 ** 图片 <img>  
+
+**** 页面路由
+***** 页面栈
+      | 路由方式   | 页面栈表现                        |
+      |------------+-----------------------------------|
+      | 初始化     | 新页面入栈                        |
+      | 打开新页面 | 新页面入栈                        |
+      | 页面重定向 | 当前页面出栈，新页面入栈          |
+      | 页面返回   | 页面不断出栈，直到目标返回页      |
+      | Tab 切换   | 页面全部出栈，只留下新的 Tab 页面 |
+      | 重加载     | 页面全部出栈，只留下新的页面      |
+
+      开发者可以使用 =getCurrentPages()= 函数获取当前页面栈。
+
+***** 路由方式
+      <navigator url="/pages/home/home">home</navigator>
+          
+      | 打开新页面 | wx.navigateTo        | 组件 <navigator open-type="navigateTo"/>     |
+      | 页面重定向 | wx.redirectTo        | 组件 <navigator open-type="redirectTo"/>     |
+      | 页面返回   | wx.navigateBack      | 使用组件<navigator open-type="navigateBack"> |
+      | Tab 切换   | wx.switchTab         | 使用组件 <navigator open-type="switchTab"/>  |
+      | 重启动     | 调用 API wx.reLaunch | 使用组件 <navigator open-type="reLaunch"/>   |
+
+      Tab 切换对应的生命周期（以 A、B 页面为 Tabbar 页面，C 是从 A 页面打开的页面，D 页面是从 C 页面打开的页面为例）：
+  
+      | 当前页面          | 路由后页面      | 触发的生命周期（按顺序）                             |
+      |-------------------+-----------------+------------------------------------------------------|
+      | A                 | A               | Nothing happend                                      |
+      | A                 | B               | A.onHide(), B.onLoad(), B.onShow()                   |
+      | A                 | B（再次打开）   | A.onHide(), B.onShow()                               |
+      | C                 | A               | C.onUnload(), A.onShow()                             |
+      | C                 | B               | C.onUnload(), B.onLoad(), B.onShow()                 |
+      | D                 | B               | D.onUnload(), C.onUnload(), B.onLoad(), B.onShow()   |
+      | D（从转发进入）   | A               | D.onUnload(), A.onLoad(), A.onShow()                 |
+      | D（从转发进入）   | B               | D.onUnload(), B.onLoad(), B.onShow()                 |
+
+      - =navigateTo=, =redirectTo= 只能打开非 tabBar 页面。
+      - =switchTab= 只能打开 tabBar 页面。
+      - =reLaunch= 可以打开任意页面。
+      - 页面底部的 tabBar 由页面决定，即只要是定义为 tabBar 的页面，底部都有tabBar。
+      - 调用页面路由带的参数可以在目标页面的=onLoad=中获取。

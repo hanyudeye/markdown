@@ -4,7 +4,7 @@
 
 ### ICON图标
 
-*   [Fontello](http://hao.importnew.com/fontello/)：图标字体生成器
+*   [Fontello](http://hao.importnew.com/fontello/)：图标字体生成器  [打不开]
 *   [The Noun Project](http://hao.importnew.com/the-noun-project/)：免费提供高度可辨识符号图标
 *   [IconArchive](http://hao.importnew.com/iconarchive/)：专业图标搜索引擎
 *   [iConify](http://hao.importnew.com/iconify/)：Mac平台的苹果应用图标自动化生成工具
