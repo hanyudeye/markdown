@@ -30,3 +30,31 @@
 (setq read-quoted-char-radix 16)
 
 
+
+## google-translate
+### 设置默认要翻译的语言
+- google-translate-default-source-language
+- google-translate-default-target-language
+
+> 支持 C-u 前缀参数
+
+### 翻译 ###
+
+- google-translate-query-translate
+- google-translate-query-translate-reverse 反向翻译
+
+### 输出方向 google-translate-output-destination ###
+
+- nil  弹出
+- echo-area
+- current-buffer
+- popup
+- kill-ring
+
+### 发音监听 google-translate-listen-program 
+
+
+## go-translate
+https://github.com/lorniu/go-translate/blob/master/README-zh.md
+
+

@@ -94,6 +94,11 @@ crontab -e
 */10 * * * *   DISPLAY=:0 path/to/ng_wallpaper.py > /tmp/ng_wpp
 ```
 
+## ranger
+### rifle
+ranger 通过 rifle 打开文件 ，配置文件为下，默认用第一个匹配的打开
+> ~/.config/ranger/rifle.conf
+
 # on-my-Zsh 插件
 ``` config
 plugins=(git autojump fd shell-proxy wd web-search history history-substring-search ssh-agent tmux extract gitignore zsh-autosuggestions fzf)
