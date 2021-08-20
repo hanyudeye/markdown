@@ -69,8 +69,6 @@
 
 像素（px）是相对于观看设备的。对于低 dpi 的设备，1px 是显示器的一个设备像素（点）。对于打印机和高分辨率屏幕，1px 表示多个设备像素。
 
-
-
 #### 相对长度 ####
 
 | 单位 | 描述                                                             |
@@ -275,6 +273,19 @@ src:url(http://www.examples.com/fonts/Calibri.ttf);
 }
 ```
 ### 媒体查询 (根据不同设备适配不同样式)
+``` css
+ .my-class {
+   width: 40px;
+ }
+
+ @media (min-width: 480px) {
+   /* 仅在 480px 或更宽的屏幕上生效的样式规则 */
+   .my-class {
+     width: 200px;
+   }
+ }
+ 
+```
 
 ``` css
     @media all and (min-width: 800px) and (max-width: 1024px) {
