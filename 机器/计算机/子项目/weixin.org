@@ -1,3 +1,4 @@
+
 * 微信小程序 
 ** 简介  
    微信，作为小型DOM 解析器，解析类 VUE 代码
@@ -17,7 +18,23 @@
    7. 发布小程序代码
    8. 提交绑定
 ** 配置
-*** 配置文件   
+*** 配置文件 app.json  
+    #+begin_src json
+      "window": {
+          "backgroundTextStyle": "light",
+          "navigationBarBackgroundColor": "#fff",
+          "navigationBarTitleText": "Weixin",
+          "navigationBarTextStyle": "black",
+          //允许下拉刷新
+          "enablePullDownRefresh": true,
+          //允许上拉加载，然后内容够多，能够溢出 "height:100vh"
+          "onReachBottomDistance": 50 ,//默认值是50
+          // 屏幕旋转 landscape 横屏
+          "pageOrientation": "auto"
+          //在ipad 上启用屏幕旋转支持 
+          "resizable": true
+      },
+    #+end_src
 *** 索引文件 sitemap.json 
    > 配置小程序及其页面是否允许被微信索引
 **** 配置 path/to/page 页面被索引，其余页面不被索引
@@ -34,8 +51,7 @@
     #+end_src
 
 ** 框架
-*** 逻辑层 
-    > js 文件处理逻辑代码
+*** 逻辑层 js
 #+begin_src js
        App({
          onLaunch (options) {
@@ -198,9 +214,8 @@
          })
 #+end_src
 **** 文件作用域
-     在 JavaScript文件中声明的变量和函数只在该文件中有效；不同的文件中可以声明相同名字的变量和函数，不会互相影响。
-
-     通过全局函数 =getApp= 可以获取全局的应用实例，如果需要全局的数据可以在=App()= 中设置，如：
+     通过全局函数 =getApp= 可以获取全局的应用实例，如果需要全局的数据可以在
+     =App()= 中设置，如：
 
 #+begin_src js
   // app.js
@@ -304,90 +319,51 @@
 *** 视图层 View
 **** WXML
 ***** 数据绑定
-
-          #+begin_src html
-          <!--wxml-->
-          <view> {{message}} </view>
-          #+end_src
-
-
-          #+begin_src js
-            // page.js
-            Page({
-                data: {
-                    message: 'Hello MINA!'
-                }
-            })
-          #+end_src
-
+      #+begin_src html
+        <view> {{message}} </view>
+      #+end_src
 ***** 列表渲染
-
-      #+BEGIN_EXAMPLE
-          <!--wxml-->
-          <view wx:for="{{array}}"> {{item}} </view>
-      #+END_EXAMPLE
-
-      #+BEGIN_EXAMPLE
-          // page.js
-          Page({
-            data: {
-              array: [1, 2, 3, 4, 5]
-            }
-          })
-      #+END_EXAMPLE
+      #+begin_src html
+        <view wx:for="{{array}}"> {{item}} </view>
+      #+end_src
 ***** 条件渲染
-
-      #+BEGIN_EXAMPLE
-          <!--wxml-->
-          <view wx:if="{{view == 'WEBVIEW'}}"> WEBVIEW </view>
-          <view wx:elif="{{view == 'APP'}}"> APP </view>
-          <view wx:else="{{view == 'MINA'}}"> MINA </view>
-      #+END_EXAMPLE
-
-      #+BEGIN_EXAMPLE
-          // page.js
-          Page({
-            data: {
-              view: 'MINA'
-            }
-          })
-      #+END_EXAMPLE
+      #+begin_src html
+        <view wx:if="{{view == 'WEBVIEW'}}"> WEBVIEW </view>
+        <view wx:elif="{{view == 'APP'}}"> APP </view>
+        <view wx:else="{{view == 'MINA'}}"> MINA </view>
+      #+end_src
 
 ***** 模板
-#+begin_src html
-          <!--wxml-->
-          <template name="staffName">
-            <view>
-              FirstName: {{firstName}}, LastName: {{lastName}}
-            </view>
-          </template>
+      #+begin_src html
+        <template name="staffName">
+          <view>
+            FirstName: {{firstName}}, LastName: {{lastName}}
+          </view>
+        </template>
 
-          <template is="staffName" data="{{...staffA}}"></template>
-          <template is="staffName" data="{{...staffB}}"></template>
-          <template is="staffName" data="{{...staffC}}"></template>
-#+end_src
-#+begin_src js
-  // page.js
-  Page({
-      data: {
-          staffA: {firstName: 'Hulk', lastName: 'Hu'},
-          staffB: {firstName: 'Shang', lastName: 'You'},
-          staffC: {firstName: 'Gideon', lastName: 'Lin'}
-      }
-  })
-#+end_src
+        <template is="staffName" data="{{...staffA}}"></template>
+        <template is="staffName" data="{{...staffB}}"></template>
+        <template is="staffName" data="{{...staffC}}"></template>
+      #+end_src
+      #+begin_src js
+        Page({
+            data: {
+                staffA: {firstName: 'Hulk', lastName: 'Hu'},
+                staffB: {firstName: 'Shang', lastName: 'You'},
+                staffC: {firstName: 'Gideon', lastName: 'Lin'}
+            }
+        })
+      #+end_src
 
 ***** 引用模板
       #+begin_src html
         <!-- item.wxml -->
-        <!-- 模板定义在一个文件中 -->
         <template name="item">
           <text>{{text}}</text>
         </template>
       #+end_src
       
       #+begin_src html
-        <!-- 引用在另一个文件中引用 -->
         <import src="item.wxml"/>
         <template is="item" data="{{text: 'forbar'}}"/>
       #+end_src
@@ -396,14 +372,12 @@
      为了定义设备的一致性，微信设定死的固定宽度 为 750rpx (响应式像素单位)，在不同宽度要进行换算.
      
 ***** 样式导入
-      使用 =@import= 语句可以导入外联样式表， =@import= 后跟需要导入的外联样式表的相对路径，用 =;= 表示语句结束。
-
       #+begin_src css
         /** common.wxss **/
         .small-p {
             padding:5px;
         }
-        
+
         /** app.wxss **/
         @import "common.wxss";
         .middle-p {
@@ -422,9 +396,9 @@
       | ::before         | =view::before=   | 在 view 组件前边插入内容                           |
 
 **** WXS
-     WXS（WeiXin Script）是小程序的一套脚本语言，结合=WXML=，可以构建出页面的结构。
+     WXS（WeiXin Script）是小程序的一套脚本语言，结合 =WXML= ，可以构建出页面的结构。
 ***** 页面渲染
-      #+BEGIN_EXAMPLE
+#+begin_src html
           <!--wxml-->
           <wxs module="m1">
           var msg = "hello world";
@@ -433,48 +407,40 @@
           </wxs>
 
           <view> {{m1.message}} </view>
-      #+END_EXAMPLE
+#+end_src
 
-      页面输出：
-
-      #+BEGIN_EXAMPLE
-          hello world
-      #+END_EXAMPLE
+页面输出： hello world
 
 ***** 数据处理
-
-      #+BEGIN_EXAMPLE
-          // page.js
+#+begin_src js
           Page({
             data: {
               array: [1, 2, 3, 4, 5, 1, 2, 3, 4]
             }
           })
-      #+END_EXAMPLE
+#+end_src
 
-      #+BEGIN_EXAMPLE
-          <!--wxml-->
-          <!-- 下面的 getMax 函数，接受一个数组，且返回数组中最大的元素的值 -->
-          <wxs module="m1">
+      #+begin_src html
+        <!-- 下面的 getMax 函数，接受一个数组，且返回数组中最大的元素的值 -->
+        <wxs module="m1">
           var getMax = function(array) {
-            var max = undefined;
-            for (var i = 0; i < array.length; ++i) {
-              max = max === undefined ?
-                array[i] :
-                (max >= array[i] ? max : array[i]);
+          var max = undefined;
+          for (var i = 0; i < array.length; ++i) {
+                              max = max === undefined ?
+                              array[i] :
+                              (max >= array[i] ? max : array[i]);
             }
             return max;
-          }
+            }
 
-          module.exports.getMax = getMax;
-          </wxs>
+            module.exports.getMax = getMax;
+        </wxs>
 
-          <!-- 调用 wxs 里面的 getMax 函数，参数为 page.js 里面的 array -->
-          <view> {{m1.getMax(array)}} </view>
-      #+END_EXAMPLE
-
-      页面输出：
-      5
+        <!-- 调用 wxs 里面的 getMax 函数，参数为 page.js 里面的 array -->
+        <view> {{m1.getMax(array)}} </view>
+          #+end_src
+      
+      页面输出： 5
 
 *** 事件详解
 **** 事件分类
@@ -567,104 +533,60 @@
 
 *** 简易双向绑定
 **** 双向绑定语法
-     在 WXML 中，普通的属性的绑定是单向的。例如：
-
-     #+BEGIN_EXAMPLE
-         <input value="{{value}}" />
-     #+END_EXAMPLE
-
-     如果使用 =this.setData({ value: 'leaf' })= 来更新 =value=，=this.data.value=
-     和输入框的中显示的值都会被更新为 =leaf=；但如果用户修改了输入框里的值，却不会
-     同时改变 =this.data.value= 。
-
-     如果需要在用户输入的同时改变 =this.data.value=，需要借助简易双向绑定机制。此时，
-     可以在对应项目之前加入 =model:= 前缀：
-
-     #+BEGIN_EXAMPLE
+      #+begin_src html
          <input model:value="{{value}}" />
-     #+END_EXAMPLE
-
-     这样，如果输入框的值被改变了， =this.data.value= 也会同时改变。同时，WXML 中所
-     有绑定了 =value= 的位置也会被一同更新，[[../custom-component/observer.html][数据监听器]] 也会被正常触发。
-
-     用于双向绑定的表达式有如下限制：
-
-     1. 只能是一个单一字段的绑定，如
-
-     #+BEGIN_EXAMPLE
-         <input model:value="值为 {{value}}" />
-         <input model:value="{{ a + b }}" />
-     #+END_EXAMPLE
-
-     都是非法的；
-
-     2. 目前，尚不能 data 路径，如
-     #+BEGIN_EXAMPLE
-         <input model:value="{{ a.b }}" />
-     #+END_EXAMPLE
-
-     这样的表达式目前暂不支持。
+      #+end_src
 
 **** 在自定义组件中传递双向绑定
-
      双向绑定同样可以使用在自定义组件上。如下的自定义组件：
-
-     #+BEGIN_EXAMPLE
+     #+begin_src js
          // custom-component.js
          Component({
            properties: {
              myValue: String
            }
          })
-     #+END_EXAMPLE
-
-     #+BEGIN_EXAMPLE
-         <!-- custom-component.wxml -->
-         <input model:value="{{myValue}}" />
-     #+END_EXAMPLE
-
+     #+end_src
+#+begin_src html
+  <!-- custom-component.wxml -->
+  <input model:value="{{myValue}}" />
+#+end_src
      这个自定义组件将自身的 =myValue= 属性双向绑定到了组件内输入框的 =value=属性上。
      这样，如果页面这样使用这个组件：
-
-     #+BEGIN_EXAMPLE
-         <custom-component model:my-value="{{pageValue}}" />
-     #+END_EXAMPLE
-
-     当输入框的值变更时，自定义组件的 =myValue= 属性会同时变更，这样，页面的
-     =this.data.pageValue= 也会同时变更，页面 WXML 中所有绑定了 =pageValue=的位置也
-     会被一同更新。
+#+begin_src html
+  <custom-component model:my-value="{{pageValue}}" />
+#+end_src
 
 **** 在自定义组件中触发双向绑定更新
 
-     自定义组件还可以自己触发双向绑定更新，做法就是：使用 setData设置自身的属性。例
-     如：
-     #+BEGIN_EXAMPLE
-         // custom-component.js
-         Component({
-           properties: {
-             myValue: String
-           },
-           methods: {
-             update: function() {
-               // 更新 myValue
-               this.setData({
-                 myValue: 'leaf'
-               })
-             }
-           }
-         })
-     #+END_EXAMPLE
+     自定义组件还可以自己触发双向绑定更新，做法就是：使用 setData设置自身的属性。
+#+begin_src js
+  // custom-component.js
+  Component({
+      properties: {
+          myValue: String
+      },
+      methods: {
+          update: function() {
+              // 更新 myValue
+              this.setData({
+                  myValue: 'leaf'
+              })
+          }
+      }
+  })
+  #+end_src
 
-     如果页面这样使用这个组件：
+如果页面这样使用这个组件：
 
-     #+BEGIN_EXAMPLE
-         <custom-component model:my-value="{{pageValue}}" />
-     #+END_EXAMPLE
+#+begin_src html
+  <custom-component model:my-value="{{pageValue}}" />
+#+end_src
 
      当组件使用 =setData= 更新 =myValue= 时，页面的 =this.data.pageValue=也会同时变
      更，页面 WXML 中所有绑定了 =pageValue= 的位置也会被一同更新。
 
-*** 基础组件
+*** 组件属性
 
     | 属性名         | 类型         | 描述           | 注解                                     |
     |----------------+--------------+----------------+------------------------------------------|
@@ -682,8 +604,7 @@
      最常见的用法是使用这个接口来查询某个节点的当前位置，以及界面的滚动位置。
 
      *示例代码：*
-
-     #+BEGIN_EXAMPLE
+#+begin_src js
          const query = wx.createSelectorQuery()
          query.select('#the-id').boundingClientRect(function(res){
            res.top // #the-id 节点的上边界坐标（相对于显示区域）
@@ -692,7 +613,7 @@
            res.scrollTop // 显示区域的竖直滚动位置
          })
          query.exec()
-     #+END_EXAMPLE
+#+end_src
 
      上述示例中， =#the-id= 是一个节点选择器，与 CSS的选择器相近但略有区别，请参见
      [[../../api/wxml/SelectorQuery.select.html][SelectorQuery.select]]的相关说明。
@@ -721,23 +642,22 @@
      指定）每次进入或离开页面显示区域时，触发回调函数。
 
      *示例代码：*
-
-     #+BEGIN_EXAMPLE
-         Page({
-           onLoad: function(){
-             wx.createIntersectionObserver().relativeToViewport().observe('.target-class', (res) => {
-               res.id // 目标节点 id
-               res.dataset // 目标节点 dataset
-               res.intersectionRatio // 相交区域占目标节点的布局区域的比例
-               res.intersectionRect // 相交区域
-               res.intersectionRect.left // 相交区域的左边界坐标
-               res.intersectionRect.top // 相交区域的上边界坐标
-               res.intersectionRect.width // 相交区域的宽度
-               res.intersectionRect.height // 相交区域的高度
-             })
-           }
-         })
-     #+END_EXAMPLE
+#+begin_src js
+  Page({
+      onLoad: function(){
+          wx.createIntersectionObserver().relativeToViewport().observe('.target-class', (res) => {
+              res.id // 目标节点 id
+              res.dataset // 目标节点 dataset
+              res.intersectionRatio // 相交区域占目标节点的布局区域的比例
+              res.intersectionRect // 相交区域
+              res.intersectionRect.left // 相交区域的左边界坐标
+              res.intersectionRect.top // 相交区域的上边界坐标
+              res.intersectionRect.width // 相交区域的宽度
+              res.intersectionRect.height // 相交区域的高度
+          })
+      }
+  })
+         #+end_src
 
      以下示例代码可以在目标节点（用选择器 =.target-class=指定）与参照节点（用选择器
      =.relative-class=指定）在页面显示区域内相交或相离，且相交或相离程度达到目标节
@@ -769,130 +689,6 @@
      在自定义组件或包含自定义组件的页面中，推荐使用
      =this.createIntersectionObserver= 来代替[[../../api/wxml/wx.createIntersectionObserver.html][wx.createIntersectionObserver]]，这样可
      以确保在正确的范围内选择节点。
-
-*** 响应显示区域变化
-**** 显示区域尺寸
-     显示区域指小程序界面中可以自由布局展示的区域。在默认情况下，小程序显示区域的尺
-     寸自页面初始化起就不会发生变化。但以下两种方式都可以改变这一默认行为。
-
-***** 在手机上启用屏幕旋转支持
-
-      从小程序基础库版本 [[../compatibility.html][2.4.0]]开始，小程序在手机上支持屏幕旋转。使小程序中的页面支持
-      屏幕旋转的方法是：在=app.json= 的 =window= 段中设置 ="pageOrientation":
-      "auto"= ，或在页面json 文件中配置 ="pageOrientation": "auto"= 。
-
-      以下是在单个页面 json 文件中启用屏幕旋转的示例。
-
-      *代码示例：*
-
-      #+BEGIN_EXAMPLE
-          {
-            "pageOrientation": "auto"
-          }
-      #+END_EXAMPLE
-
-
-      如果页面添加了上述声明，则在屏幕旋转时，这个页面将随之旋转，显示区域尺寸也会随着屏幕旋转而变化。
-
-      从小程序基础库版本 [[../compatibility.html][2.5.0]] 开始，=pageOrientation= 还可以被设置为 =landscape= ，
-      表示固定为横屏显示。
-
-***** [[index_u26.html#在-iPad-上启用屏幕旋转支持][#]] 在 iPad
-      上启用屏幕旋转支持
-
-
-  
- 
-
-      从小程序基础库版本 [[../compatibility.html][2.3.0]] 开始，在 iPad
-      上运行的小程序可以支持屏幕旋转。使小程序支持 iPad 屏幕旋转的方法是：在
-      =app.json= 中添加 ="resizable": true= 。
-
-      *代码示例：*
-
-
-
-
-
-      #+BEGIN_EXAMPLE
-          {
-            "resizable": true
-          }
-      #+END_EXAMPLE
-
-
-
-
-
-      如果小程序添加了上述声明，则在屏幕旋转时，小程序将随之旋转，显示区域尺寸也会随着屏幕旋转而变化。注意：在
-      iPad 上不能单独配置某个页面是否支持屏幕旋转。
-
-**** Media Query
-     有时，对于不同尺寸的显示区域，页面的布局会有所差异。此时可以使用 media query
-     来解决大多数问题。
-
-     *代码示例：*
-     #+BEGIN_EXAMPLE
-         .my-class {
-           width: 40px;
-         }
-
-         @media (min-width: 480px) {
-           /* 仅在 480px 或更宽的屏幕上生效的样式规则 */
-           .my-class {
-             width: 200px;
-           }
-         }
-     #+END_EXAMPLE
-
-     在 WXML 中，可以使用 [[../../component/match-media.html][match-media]]组件来根据 media query 匹配状态展示、隐藏节
-     点。
-
-     此外，可以在页面或者自定义组件 JS 中使用=this.createMediaQueryObserver()=
-     方法来创建一个[[../../api/wxml/MediaQueryObserver.html][=MediaQueryObserver=]]对象，用于监听指定的 media query 的匹配状
-     态。
-
-**** 屏幕旋转事件
-     有时，仅仅使用 media query 无法控制一些精细的布局变化。此时可以使用 js作为
-     辅助。
-
-     在 js 中读取页面的显示区域尺寸，可以使用[[../../api/wxml/SelectorQuery.selectViewport.html][selectorQuery.selectViewport]]。
-
-     页面尺寸发生改变的事件，可以使用页面的 =onResize=来监听。对于自定义组件，可
-     以使用 resize生命周期来监听。回调函数中将返回显示区域的尺寸信息。（从基础库
-     版本[[../compatibility.html][2.4.0]] 开始支持。）
-
-     *代码示例：*
-
-     #+BEGIN_EXAMPLE
-         Page({
-           onResize(res) {
-             res.size.windowWidth // 新的显示区域宽度
-             res.size.windowHeight // 新的显示区域高度
-           }
-         })
-     #+END_EXAMPLE
-
-     #+BEGIN_EXAMPLE
-         Component({
-           pageLifetimes: {
-             resize(res) {
-               res.size.windowWidth // 新的显示区域宽度
-               res.size.windowHeight // 新的显示区域高度
-             }
-           }
-         })
-     #+END_EXAMPLE
-
-
-     此外，还可以使用
-     [[../../api/ui/window/wx.onWindowResize.html][wx.onWindowResize]]
-     来监听（但这不是推荐的方式）。
-
-     *Bug & tips:*
-
-     -  Bug： Android 微信版本 6.7.3 中， =live-pusher=
-       组件在屏幕旋转时方向异常。
 
 *** 动画
 **** 界面动画的常见方式
@@ -1022,158 +818,33 @@
      #+END_EXAMPLE
 
 *** 初始渲染缓存
-**** 初始渲染缓存工作原理
-
-     小程序页面的初始化分为两个部分。
-
-     -  逻辑层初始化：载入必需的小程序代码、初始化页面 this对象（也包括它涉及到的所
-       有自定义组件的 this对象）、将相关数据发送给视图层。
-     -  视图层初始化：载入必需的小程序代码，然后等待逻辑层初始化完毕并接收逻辑层发
-       送的数据，最后渲染页面。
-
-     在启动页面时，尤其是小程序冷启动、进入第一个页面时，逻辑层初始化的时间较长。在页面初始化过程中，用户将看到小程序的标准载入画面（冷启动时）或可能看到轻微的白屏现象（页面跳转过程中）。
-
-     启用初始渲染缓存，可以使视图层不需要等待逻辑层初始化完毕，而直接提前将页面初始
-     data
-     的渲染结果展示给用户，这可以使得页面对用户可见的时间大大提前。它的工作原理如下：
-
-     -  在小程序页面第一次被打开后，将页面初始数据渲染结果记录下来，写入一个持久化的缓存区域（缓存可长时间保留，但可能因为小程序更新、基础库更新、储存空间回收等原因被清除）；
-     -  在这个页面被第二次打开时，检查缓存中是否还存有这个页面上一次初始数据的渲染结果，如果有，就直接将渲染结果展示出来；
-     -  如果展示了缓存中的渲染结果，这个页面暂时还不能响应用户事件，等到逻辑层初始化完毕后才能响应用户事件。
-
-     利用初始渲染缓存，可以：
-
-     -  快速展示出页面中永远不会变的部分，如导航栏；
-     -  预先展示一个骨架页，提升用户体验；
-     -  展示自定义的加载提示；
-     -  提前展示广告，等等。
-
 **** 支持的组件
-     在初始渲染缓存阶段中，复杂组件不能被展示或不能响应交互。
-
-     目前支持的内置组件：
-
-     -  =<view />=
-     -  =<text />=
-     -  =<button />=
-     -  =<image />=
-     -  =<scroll-view />=
-     -  =<rich-text />=
-
-     自定义组件本身可以被展示（但它们里面用到的内置组件也遵循上述限制）。
+     - view 
+     - text
+     - button
+     - image
+     - scroll-view
+     - rich-text 
 
 **** 静态初始渲染缓存
-     若想启用初始渲染缓存，最简单的方法是在页面的 =json= 文件中添加配置项 ="initialRenderingCache": "static"= ：
-     #+BEGIN_EXAMPLE
-         {
-           "initialRenderingCache": "static"
-         }
-     #+END_EXAMPLE
-     
-     如果想要对所有页面启用，可以在 =app.json= 的 =window= 配置段中添加这个配置：
-     
-     #+BEGIN_EXAMPLE
-         {
+     #+begin_src js
+        {
            "window": {
              "initialRenderingCache": "static"
            }
          }
-     #+END_EXAMPLE
+     #+end_src
 
-     添加这个配置项之后，在手机中预览小程序首页，然后杀死小程序再次进入，就会通过初始渲染缓存来渲染首页。
-
-     注意：这种情况下，初始渲染缓存记录的是页面 data 应用在页面 WXML
-     上的结果，不包含任何 setData 的结果。
-
-     例如，如果想要在页面中展示出“正在加载”几个字，这几个字受到 =loading=
-     数据字段控制：
-
-
-
-
-
-     #+BEGIN_EXAMPLE
-         <view wx:if="{{loading}}">正在加载</view>
-     #+END_EXAMPLE
-
-
-
-
-
-     这种情况下， =loading= 应当在 =data= 中指定为 =true= ，如：
-
-
-
-
-
-     #+BEGIN_EXAMPLE
-         // 正确的做法
-         Page({
-           data: {
-             loading: true
-           }
-         })
-     #+END_EXAMPLE
-
-
-
-
-
-     而不能通过 =setData= 将 =loading= 置为 =true= ：
-
-
-
-
-
-     #+BEGIN_EXAMPLE
-         // 错误的做法！不要这么做！
-         Page({
-           data: {},
-           onLoad: function() {
-             this.setData({
-               loading: true
-             })
-           }
-         })
-     #+END_EXAMPLE
-
-
-
-
-
-     换而言之，这种做法只包含页面 =data= 的渲染结果，即页面的纯静态成分。
-
-**** [[index_u95.html#在初始渲染缓存中添加动态内容][#]] 在初始渲染缓存中添加动态内容
-     有些场景中，只是页面 =data=
-     的渲染结果会比较局限。有时会想要额外展示一些可变的内容，如展示的广告图片
-     URL 等。
-
-     这种情况下可以使用“动态”初始渲染缓存的方式。首先，配置
-     ="initialRenderingCache": "dynamic"= ：
-
-
-
-
-
-     #+BEGIN_EXAMPLE
-         {
+**** 在初始渲染缓存中添加动态内容(开销相对较大)
+     #+begin_src js
+        {
            "initialRenderingCache": "dynamic"
          }
-     #+END_EXAMPLE
+     #+end_src
 
-
-
-
-
-     此时，初始渲染缓存不会被自动启用，还需要在页面中调用
-     =this.setInitialRenderingCache(dynamicData)= 才能启用。其中，
+     此时，初始渲染缓存不会被自动启用，还需要在页面中调用 =this.setInitialRenderingCache(dynamicData)= 才能启用。其中，
      =dynamicData= 是一组数据，与 =data= 一起参与页面 WXML 渲染。
-
-
-
-
-
-     #+BEGIN_EXAMPLE
+     #+begin_src js
          Page({
            data: {
              loading: true
@@ -1184,104 +855,34 @@
              })
            }
          })
-     #+END_EXAMPLE
+     #+end_src
 
-
-
-
-
-
-
-
-
-     #+BEGIN_EXAMPLE
+#+begin_src html
          <view wx:if="{{loading}}">{{loadingHint}}</view>
-     #+END_EXAMPLE
+#+end_src
 
-
-
-
-
-     从原理上说，在动态生成初始渲染缓存的方式下，页面会在后台使用动态数据重新渲染一次，因而开销相对较大。因而要尽量避免频繁调用
-     =this.setInitialRenderingCache=
-     ，如果在一个页面内多次调用，仅最后一次调用生效。
-
-     注意：
-
-     -  =this.setInitialRenderingCache= 调用时机不能早于 =Page= 的 =onReady=
-       或 =Component= 的 =ready= 生命周期，否则可能对性能有负面影响。
+     -  =this.setInitialRenderingCache= 调用时机不能早于 =Page= 的 =onReady= 或 =Component= 的 =ready= 生命周期，否则可能对性能有负面影响。
      -  如果想禁用初始渲染缓存，调用 =this.setInitialRenderingCache(null)= 。
 
-
-
-
-
-
-
-
-
-
-
-
-
-     --------------
-
-
-     [[https://developers.weixin.qq.com/miniprogram/dev/framework/view/initial-rendering-cache.html]]
-
-     \\
-     \\
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-     --------------
-
 ** 实现页面跳转
-   和通常的 web 开发一样，小程序页面跳转页分 2 中，wxml 中的 vavigator 标签，以
-   及 js 的 navigator 相关的 api。
+   #+begin_src  js
+     // js跳转页面
+     wx.navigateTo({
+         url: `/pages/my/appointDetail/index?_id=${ this .data.marker.id}`
+     }) 
 
-   #+BEGIN_EXAMPLE
-       wx.navigateTo，重定向 wx.redirectTo等等，具体的请看官方文档。这里强调一下路由传参，很简单： 
-       1、少量数据。直接问号传参。然后在目标页面的onLoad方法中通过options参数接收。 
-       2、大量数据。直接塞到全局变量里面。
-   #+END_EXAMPLE
+     //路由传参如何接收 
+     onLoad: function (options) {
+         　　 console.log(options)
+     },
 
-   #+BEGIN_EXAMPLE
-        //  wxml跳转页面
-             {{item.name}}
+   #+end_src
 
-        // js跳转页面
-        wx.navigateTo({
-             url: `/pages/my/appointDetail/index?_id=${ this .data.marker.id}`
-           }) 
-
-       //路由传参如何接收 
-   onLoad: function (options) {
-   　　 console.log(options)
-   },
-
-   #+END_EXAMPLE
-
-** wx.request 的封装
-   在 utils 中新建 request.js，简单封装了一下，一些数据要全局配置的都引进来，然后做了些错误的统一处理，没什么难度， 不过要特别注意一下 cookie 的携带。具体代码如
-   下：
-
-   #+BEGIN_EXAMPLE
+* wx.request 的封装
+   在 utils 中新建 request.js，简单封装了一下，一些数据要全局配置的都引进来，然
+   后做了些错误的统一处理，没什么难度， 不过要特别注意一下 cookie 的携带。具体代
+   码如下：
+#+begin_src js
        const app =  getApp()
        export  default  function request(url, options =  {}) {
           return  new Promise( function  (resolve, reject) {
@@ -1322,11 +923,10 @@
            })
          })
        }
-   #+END_EXAMPLE
-
+       
+#+end_src
    然后我们使用的时候直接使用封装好的 request 方法，这样所有的 api 就封装成一个个函数。我们在页面中直接 import 引入调用即可。
-
-   #+BEGIN_EXAMPLE
+#+begin_src js
        import request from "../utils/request" ;
        import { stringify } from "../utils/util" 
 
@@ -1340,7 +940,7 @@
        export  function  testGet(data) {
           return request(`/api/test/get`)
        }
-   #+END_EXAMPLE
+#+end_src
 
 * 组件和 api
 ** 组件
@@ -1660,12 +1260,24 @@
 
 * 事件
 ** 事件类型 
-   -  tap：触摸后马上离开。
-   -  longpress：触摸后，超过 350ms 再离开。如果指定了该事件的回调函数并触发了该事件，tap事件将不被触发。
-   -  touchstart：触摸开始。
-   -  touchmove：触摸后移动。
-   -  touchcancel：触摸动作被打断，如来电提醒，弹窗等。
-   -  touchend：触摸结束。
+   - tap：触摸后马上离开。
+   - longpress：触摸后，超过 350ms 再离开。如果指定了该事件的回调函数并触发了该事件，tap事件将不被触发。
+   - touchstart：触摸开始。
+   - touchmove：触摸后移动。
+   - touchcancel：触摸动作被打断，如来电提醒，弹窗等。
+   - touchend：触摸结束。
+   - 
+   -
+** 屏幕旋转事件     
+  #+begin_src js
+    Page({
+        onResize(res) {
+            res.size.windowWidth // 新的显示区域宽度
+            res.size.windowHeight // 新的显示区域高度
+        }
+    })
+  #+end_src
+
 ** 事件属性
    - capture-bind：捕获阶段触发。
    - capture-catch：捕获阶段触发，并中断事件，不再向下传播，即中断捕获阶段，并取消随后的冒泡阶段。
@@ -1695,28 +1307,33 @@
     在组件上使用 wx:for 控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件。
 
     默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item
-
+#+begin_src html
     <view wx:for="{{array}}">
     {{index}}: {{item.message}}
     </view>
-    Page({
-    data: {
-    array: [{
-    message: 'foo',
-    }, {
-    message: 'bar'
-    }]
-    }
-    })
-    使用 wx:for-item 可以指定数组当前元素的变量名，
+#+end_src
+#+begin_src js
+  Page({
+      data: {
+          array: [{
+              message: 'foo',
+          }, {
+              message: 'bar'
+          }]
+      }
+  })
+
+    #+end_src
+使用 wx:for-item 可以指定数组当前元素的变量名，
 
     使用 wx:for-index 可以指定数组当前下标的变量名：
-
+#+begin_src html
     <view wx:for="{{array}}" wx:for-index="idx" wx:for-item="itemName">
     {{idx}}: {{itemName.message}}
     </view>
+#+end_src
     wx:for 也可以嵌套，下边是一个九九乘法表
-
+    #+begin_src html
     <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i">
     <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
     <view wx:if="{{i <= j}}">
@@ -1724,13 +1341,15 @@
     </view>
     </view>
     </view>
+    #+end_src
     block wx:for
     类似 block wx:if，也可以将 wx:for 用在<block/>标签上，以渲染一个包含多节点的结构块。例如：
-
+#+begin_src html
     <block wx:for="{{[1, 2, 3]}}">
     <view> {{index}}: </view>
     <view> {{item}} </view>
     </block>
+#+end_src
 *** wx:key
     如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目
     保持自己的特征和状态（如 input 中的输入内容，switch 的选中状态），需要使用
@@ -1747,118 +1366,145 @@
     如不提供 wx:key，会报一个 warning， 如果明确知道该列表是静态，或者不必关注其顺序，可以选择忽略。
 
     示例代码：
-
+#+begin_src html
     <switch wx:for="{{objectArray}}" wx:key="unique" style="display: block;"> {{item.id}} </switch>
     <button bindtap="switch"> Switch </button>
     <button bindtap="addToFront"> Add to the front </button>
 
     <switch wx:for="{{numberArray}}" wx:key="*this" style="display: block;"> {{item}} </switch>
     <button bindtap="addNumberToFront"> Add to the front </button>
-    Page({
-    data: {
-    objectArray: [
-    {id: 5, unique: 'unique_5'},
-    {id: 4, unique: 'unique_4'},
-    {id: 3, unique: 'unique_3'},
-    {id: 2, unique: 'unique_2'},
-    {id: 1, unique: 'unique_1'},
-    {id: 0, unique: 'unique_0'},
-    ],
-    numberArray: [1, 2, 3, 4]
-    },
-    switch: function(e) {
-    const length = this.data.objectArray.length
-    for (let i = 0; i < length; ++i) {
-    const x = Math.floor(Math.random() * length)
-    const y = Math.floor(Math.random() * length)
-    const temp = this.data.objectArray[x]
-    this.data.objectArray[x] = this.data.objectArray[y]
-    this.data.objectArray[y] = temp
-    }
-    this.setData({
-    objectArray: this.data.objectArray
-    })
-    },
-    addToFront: function(e) {
-    const length = this.data.objectArray.length
-    this.data.objectArray = [{id: length, unique: 'unique_' + length}].concat(this.data.objectArray)
-    this.setData({
-    objectArray: this.data.objectArray
-    })
-    },
-    addNumberToFront: function(e){
-    this.data.numberArray = [ this.data.numberArray.length + 1 ].concat(this.data.numberArray)
-    this.setData({
-    numberArray: this.data.numberArray
-    })
-    }
-    })
+#+end_src
+#+begin_src js
+  Page({
+      data: {
+          objectArray: [
+              {id: 5, unique: 'unique_5'},
+              {id: 4, unique: 'unique_4'},
+              {id: 3, unique: 'unique_3'},
+              {id: 2, unique: 'unique_2'},
+              {id: 1, unique: 'unique_1'},
+              {id: 0, unique: 'unique_0'},
+          ],
+          numberArray: [1, 2, 3, 4]
+      },
+      switch: function(e) {
+          const length = this.data.objectArray.length
+          for (let i = 0; i < length; ++i) {
+              const x = Math.floor(Math.random() * length)
+              const y = Math.floor(Math.random() * length)
+              const temp = this.data.objectArray[x]
+              this.data.objectArray[x] = this.data.objectArray[y]
+              this.data.objectArray[y] = temp
+          }
+          this.setData({
+              objectArray: this.data.objectArray
+          })
+      },
+      addToFront: function(e) {
+          const length = this.data.objectArray.length
+          this.data.objectArray = [{id: length, unique: 'unique_' + length}].concat(this.data.objectArray)
+          this.setData({
+              objectArray: this.data.objectArray
+          })
+      },
+      addNumberToFront: function(e){
+          this.data.numberArray = [ this.data.numberArray.length + 1 ].concat(this.data.numberArray)
+          this.setData({
+              numberArray: this.data.numberArray
+          })
+      }
+  })
+
+    #+end_src
     注意：
 
     当 wx:for 的值为字符串时，会将字符串解析成字符串数组
-
+#+begin_src html
     <view wx:for="array">
     {{item}}
     </view>
+#+end_src
     等同于
 
+#+begin_src html
     <view wx:for="{{['a','r','r','a','y']}}">
     {{item}}
     </view>
+#+end_src
     注意： 花括号和引号之间如果有空格，将最终被解析成为字符串
 
+#+begin_src html
     <view wx:for="{{[1,2,3]}} ">
     {{item}}
     </view>
+    
+#+end_src
     等同于
 
-    <view wx:for="{{[1,2,3] + ' '}}" >
+#+begin_src html
+  <view wx:for="{{[1,2,3] + ' '}}" >
     {{item}}
-    </view>
+  </view>
+#+end_src
 
-
-   
 * 页面内容 wxml    
 ** 文本 <view>
 ** 图片 <img>  
 
-**** 页面路由
-***** 页面栈
-      | 路由方式   | 页面栈表现                        |
-      |------------+-----------------------------------|
-      | 初始化     | 新页面入栈                        |
-      | 打开新页面 | 新页面入栈                        |
-      | 页面重定向 | 当前页面出栈，新页面入栈          |
-      | 页面返回   | 页面不断出栈，直到目标返回页      |
-      | Tab 切换   | 页面全部出栈，只留下新的 Tab 页面 |
-      | 重加载     | 页面全部出栈，只留下新的页面      |
+* 页面路由
+** 页面栈
+   | 路由方式   | 页面栈表现                        |
+   |------------+-----------------------------------|
+   | 初始化     | 新页面入栈                        |
+   | 打开新页面 | 新页面入栈                        |
+   | 页面重定向 | 当前页面出栈，新页面入栈          |
+   | 页面返回   | 页面不断出栈，直到目标返回页      |
+   | Tab 切换   | 页面全部出栈，只留下新的 Tab 页面 |
+   | 重加载     | 页面全部出栈，只留下新的页面      |
 
-      开发者可以使用 =getCurrentPages()= 函数获取当前页面栈。
+   开发者可以使用 =getCurrentPages()= 函数获取当前页面栈。
 
-***** 路由方式
-      <navigator url="/pages/home/home">home</navigator>
+** 路由方式
+   <navigator url="/pages/home/home">home</navigator>
           
-      | 打开新页面 | wx.navigateTo        | 组件 <navigator open-type="navigateTo"/>     |
-      | 页面重定向 | wx.redirectTo        | 组件 <navigator open-type="redirectTo"/>     |
-      | 页面返回   | wx.navigateBack      | 使用组件<navigator open-type="navigateBack"> |
-      | Tab 切换   | wx.switchTab         | 使用组件 <navigator open-type="switchTab"/>  |
-      | 重启动     | 调用 API wx.reLaunch | 使用组件 <navigator open-type="reLaunch"/>   |
+   | 打开新页面 | wx.navigateTo        | 组件 <navigator open-type="navigateTo"/>     |
+   | 页面重定向 | wx.redirectTo        | 组件 <navigator open-type="redirectTo"/>     |
+   | 页面返回   | wx.navigateBack      | 使用组件<navigator open-type="navigateBack"> |
+   | Tab 切换   | wx.switchTab         | 使用组件 <navigator open-type="switchTab"/>  |
+   | 重启动     | 调用 API wx.reLaunch | 使用组件 <navigator open-type="reLaunch"/>   |
 
-      Tab 切换对应的生命周期（以 A、B 页面为 Tabbar 页面，C 是从 A 页面打开的页面，D 页面是从 C 页面打开的页面为例）：
+   Tab 切换对应的生命周期（以 A、B 页面为 Tabbar 页面，C 是从 A 页面打开的页面，D 页面是从 C 页面打开的页面为例）：
   
-      | 当前页面          | 路由后页面      | 触发的生命周期（按顺序）                             |
-      |-------------------+-----------------+------------------------------------------------------|
-      | A                 | A               | Nothing happend                                      |
-      | A                 | B               | A.onHide(), B.onLoad(), B.onShow()                   |
-      | A                 | B（再次打开）   | A.onHide(), B.onShow()                               |
-      | C                 | A               | C.onUnload(), A.onShow()                             |
-      | C                 | B               | C.onUnload(), B.onLoad(), B.onShow()                 |
-      | D                 | B               | D.onUnload(), C.onUnload(), B.onLoad(), B.onShow()   |
-      | D（从转发进入）   | A               | D.onUnload(), A.onLoad(), A.onShow()                 |
-      | D（从转发进入）   | B               | D.onUnload(), B.onLoad(), B.onShow()                 |
+   | 当前页面          | 路由后页面      | 触发的生命周期（按顺序）                             |
+   |-------------------+-----------------+------------------------------------------------------|
+   | A                 | A               | Nothing happend                                      |
+   | A                 | B               | A.onHide(), B.onLoad(), B.onShow()                   |
+   | A                 | B（再次打开）   | A.onHide(), B.onShow()                               |
+   | C                 | A               | C.onUnload(), A.onShow()                             |
+   | C                 | B               | C.onUnload(), B.onLoad(), B.onShow()                 |
+   | D                 | B               | D.onUnload(), C.onUnload(), B.onLoad(), B.onShow()   |
+   | D（从转发进入）   | A               | D.onUnload(), A.onLoad(), A.onShow()                 |
+   | D（从转发进入）   | B               | D.onUnload(), B.onLoad(), B.onShow()                 |
 
-      - =navigateTo=, =redirectTo= 只能打开非 tabBar 页面。
-      - =switchTab= 只能打开 tabBar 页面。
-      - =reLaunch= 可以打开任意页面。
-      - 页面底部的 tabBar 由页面决定，即只要是定义为 tabBar 的页面，底部都有tabBar。
-      - 调用页面路由带的参数可以在目标页面的=onLoad=中获取。
+   - =navigateTo=, =redirectTo= 只能打开非 tabBar 页面。
+   - =switchTab= 只能打开 tabBar 页面。
+   - =reLaunch= 可以打开任意页面。
+   - 页面底部的 tabBar 由页面决定，即只要是定义为 tabBar 的页面，底部都有tabBar。
+   - 调用页面路由带的参数可以在目标页面的=onLoad=中获取。
+
+* 引入组件      
+** 1. component 引入
+
+     #+begin_src json
+       {
+           "navigationBarTitleText": "结算",
+           "usingComponents": {
+               "goods-form":"/components/order/order-submit/goods-form/goods-form"
+           }
+       }
+ #+end_src
+ 再使用
+ #+begin_src html
+ <goods-form></goods-form>
+ #+end_src
+** 2.
