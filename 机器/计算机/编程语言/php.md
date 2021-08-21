@@ -740,7 +740,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 ## 响应 ##
 
 - cookie setcookie("user", "runoob", time()+3600);
-   setcookie(name, value, expire, path, domain);
+- setcookie(name, value, expire, path, domain);
 - 重定向
 ```
 // Redirect to login page
@@ -750,10 +750,10 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 - 404 header('HTTP/1.1 400 Bad request');
 
 ## 错误信息 ##
-
+``` php
 ini_set("display_errors","On");
 error_reporting(E_ALL); 
-
+```
 ## 验证 ##
 
 ### 验证Email ###
@@ -774,9 +774,70 @@ if ($isEmail !== false) {
 ### Memcached ###
 
 ### redis ###
+#### php.ini配置 
+``` config
+[redis]
+extension = redis.so
+```
+重启服务器，然后测试  
+``` php
+phpinfi();
+```
+有 redis 内容则配置成功
 
+#### 连接到 Redis 服务器
+``` php
+<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //check whether server is running or not 
+    echo "Server is running: ".$redis->ping(); 
+```
+#### $Redis PHP 字符串示例
+``` php
+<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //set the data in redis string 
+    $redis->set("tutorial-name", "Redis tutorial"); 
+    // Get the stored data and print it 
+    echo "Stored string in redis:: " .$redis→get("tutorial-name"); 
+```
 
+#### Redis php 列表示例
+``` php
+<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    //store data in redis list 
+    $redis->lpush("tutorial-list", "Redis"); 
+    $redis->lpush("tutorial-list", "Mongodb"); 
+    $redis->lpush("tutorial-list", "Mysql");  
 
+    // Get the stored data and print it 
+    $arList = $redis->lrange("tutorial-list", 0 ,5); 
+    echo "Stored string in redis:: "; 
+    print_r($arList); 
+```
+#### Redis php 键示例
+``` php
+<?php 
+    //Connecting to Redis server on localhost 
+    $redis = new Redis(); 
+    $redis->connect('127.0.0.1', 6379); 
+    echo "Connection to server sucessfully"; 
+    // Get the stored keys and print it 
+    $arList = $redis->keys("#"); 
+    echo "Stored keys in redis:: " 
+    print_r($arList); 
+ ?>
+```
 # 问题
 ## Ajax 跨域问题
 ### 允许单个域名访问
