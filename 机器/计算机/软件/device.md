@@ -45,7 +45,7 @@ xsetwacom -s --set "Wacom Intuos5 touch M Pen pad" Button 12 "button 0"
 xsetwacom -s --set "Wacom Intuos5 touch M Pen pad" Button 13 "button 0"
 
 # 声音处理
-
+## establishing connection to pulseaudio.please wait
 显示设备 
 cat /proc/asound/cards
 
