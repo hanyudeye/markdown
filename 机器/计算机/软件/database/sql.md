@@ -974,8 +974,6 @@ SELECT SUM(column_name) FROM table_name;
 
 
 ## Scalar
-
-
 ### UCASE()
 
 UCASE() 函数把字段的值转换为大写。
@@ -1049,11 +1047,7 @@ SELECT FORMAT(column_name,format) FROM table_name;
 * column_name	必需。要格式化的字段。
 * format	必需。规定格式。
 
-
-
 ## Date
-
-
 ### Date 函数
 
 * MySQL Date 函数
@@ -1098,36 +1092,139 @@ SELECT FORMAT(column_name,format) FROM table_name;
     
 # Sql 快速参考手册
 
-SQL 语句 | 语法
---------|-----------
-AND / OR | SELECT column_name(s) FROM table_name WHERE condition AND|OR condition
-ALTER TABLE | ALTER TABLE table_name  ADD column_name datatype or ALTER TABLE table_name  DROP COLUMN column_name
-AS (alias) | SELECT column_name AS column_alias FROM table_name or SELECT column_name FROM table_name AS table_alias
-BETWEEN | SELECT column_name(s) FROM table_name WHERE column_name BETWEEN value1 AND value2
-CREATE DATABASE | CREATE DATABASE database_name
-CREATE TABLE | CREATE TABLE table_name (column_name1 data_type,column_name2 data_type,column_name2 data_type,...)
-CREATE INDEX | CREATE INDEX index_name ON table_name (column_name) or CREATE UNIQUE INDEX index_name ON table_name (column_name)
-CREATE VIEW | CREATE VIEW view_name AS SELECT column_name(s) FROM table_name WHERE condition
-DELETE | DELETE FROM table_name WHERE some_column=some_value or DELETE FROM table_name (Note: Deletes the entire table!!) DELETE * FROM table_name (Note: Deletes the entire table!!)
-DROP DATABASE | DROP DATABASE database_name
-DROP INDEX | DROP INDEX table_name.index_name (SQL Server) DROP INDEX index_name ON table_name (MS Access) DROP INDEX index_name (DB2/Oracle) ALTER TABLE table_name DROP INDEX index_name (MySQL)
-DROP TABLE | DROP TABLE table_name
-GROUP BY | SELECT column_name, aggregate_function(column_name) FROM table_name WHERE column_name operator value GROUP BY column_name
-HAVING | SELECT column_name, aggregate_function(column_name) FROM table_name WHERE column_name operator value GROUP BY column_name HAVING aggregate_function(column_name) operator value
-IN | SELECT column_name(s) FROM table_name WHERE column_name IN (value1,value2,..)
-INSERT INTO | INSERT INTO table_name VALUES (value1, value2, value3,....) or INSERT INTO table_name (column1, column2, column3,...) VALUES (value1, value2, value3,....)
-INNER JOIN | SELECT column_name(s) FROM table_name1 INNER JOIN table_name2 ON table_name1.column_name=table_name2.column_name
-LEFT JOIN | SELECT column_name(s) FROM table_name1 LEFT JOIN table_name2 ON table_name1.column_name=table_name2.column_name
-RIGHT JOIN | SELECT column_name(s) FROM table_name1 RIGHT JOIN table_name2 ON table_name1.column_name=table_name2.column_name
-FULL JOIN | SELECT column_name(s) FROM table_name1 FULL JOIN table_name2 ON table_name1.column_name=table_name2.column_name
-LIKE | SELECT column_name(s) FROM table_name WHERE column_name LIKE pattern
-ORDER BY | SELECT column_name(s) FROM table_name ORDER BY column_name [ASC|DESC]
-SELECT | SELECT column_name(s) FROM table_name
-SELECT * | SELECT * FROM table_name
-SELECT DISTINCT | SELECT DISTINCT column_name(s) FROM table_name
-SELECT INTO | SELECT * INTO new_table_name [IN externaldatabase] FROM old_table_name or SELECT column_name(s) INTO new_table_name [IN externaldatabase] FROM old_table_name
-SELECT TOP | SELECT TOP number|percent column_name(s) FROM table_name
-TRUNCATE TABLE | TRUNCATE TABLE table_name
-UNION | SELECT column_name(s) FROM table_name1 UNION SELECT column_name(s) FROM table_name2
-UNION ALL | SELECT column_name(s) FROM table_name1 UNION ALL SELECT column_name(s) FROM table_name2
-UPDATE | UPDATE table_name SET column1=value, column2=value,... WHERE some_colu
+| SQL 语句        | 语法                                                                                                                                                                                                                                          |
+|-----------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AND / OR        | SELECT column_name(s) FROM table_name WHERE condition AND                                                                                                                             / OR condition                                          |
+| ALTER TABLE     | ALTER TABLE table_name  ADD column_name datatype or ALTER TABLE table_name  DROP COLUMN column_name                                                                                                                                           |
+| AS (alias)      | SELECT column_name AS column_alias FROM table_name or SELECT column_name FROM table_name AS table_alias                                                                                                                                       |
+| BETWEEN         | SELECT column_name(s) FROM table_name WHERE column_name BETWEEN value1 AND value2                                                                                                                                                             |
+| CREATE DATABASE | CREATE DATABASE database_name                                                                                                                                                                                                                 |
+| CREATE TABLE    | CREATE TABLE table_name (column_name1 data_type,column_name2 data_type,column_name2 data_type,...)                                                                                                                                            |
+| CREATE INDEX    | CREATE INDEX index_name ON table_name (column_name) or CREATE UNIQUE INDEX index_name ON table_name (column_name)                                                                                                                             |
+| CREATE VIEW     | CREATE VIEW view_name AS SELECT column_name(s) FROM table_name WHERE condition                                                                                                                                                                |
+| DELETE          | DELETE FROM table_name WHERE some_column=some_value or DELETE FROM table_name (Note: Deletes the entire table!!) DELETE * FROM table_name (Note: Deletes the entire table!!)                                                                  |
+| DROP DATABASE   | DROP DATABASE database_name                                                                                                                                                                                                                   |
+| DROP INDEX      | DROP INDEX table_name.index_name (SQL Server) DROP INDEX index_name ON table_name (MS Access) DROP INDEX index_name (DB2/Oracle) ALTER TABLE table_name DROP INDEX index_name (MySQL)                                                         |
+| DROP TABLE      | DROP TABLE table_name                                                                                                                                                                                                                         |
+| GROUP BY        | SELECT column_name, aggregate_function(column_name) FROM table_name WHERE column_name operator value GROUP BY column_name                                                                                                                     |
+| HAVING          | SELECT column_name, aggregate_function(column_name) FROM table_name WHERE column_name operator value GROUP BY column_name HAVING aggregate_function(column_name) operator value                                                               |
+| IN              | SELECT column_name(s) FROM table_name WHERE column_name IN (value1,value2,..)                                                                                                                                                                 |
+| INSERT INTO     | INSERT INTO table_name VALUES (value1, value2, value3,....) or INSERT INTO table_name (column1, column2, column3,...) VALUES (value1, value2, value3,....)                                                                                    |
+| INNER JOIN      | SELECT column_name(s) FROM table_name1 INNER JOIN table_name2 ON table_name1.column_name=table_name2.column_name                                                                                                                              |
+| LEFT JOIN       | SELECT column_name(s) FROM table_name1 LEFT JOIN table_name2 ON table_name1.column_name=table_name2.column_name                                                                                                                               |
+| RIGHT JOIN      | SELECT column_name(s) FROM table_name1 RIGHT JOIN table_name2 ON table_name1.column_name=table_name2.column_name                                                                                                                              |
+| FULL JOIN       | SELECT column_name(s) FROM table_name1 FULL JOIN table_name2 ON table_name1.column_name=table_name2.column_name                                                                                                                               |
+| LIKE            | SELECT column_name(s) FROM table_name WHERE column_name LIKE pattern                                                                                                                                                                          |
+| ORDER BY        | SELECT column_name(s) FROM table_name ORDER BY column_name [ASC/ DESC]                                                                                                                                                                        |
+| SELECT          | SELECT column_name(s) FROM table_name                                                                                                                                                                                                         |
+| SELECT *        | SELECT * FROM table_name                                                                                                                                                                                                                      |
+| SELECT DISTINCT | SELECT DISTINCT column_name(s) FROM table_name                                                                                                                                                                                                |
+| SELECT INTO     | SELECT * INTO new_table_name [IN externaldatabase] FROM old_table_name or SELECT column_name(s) INTO new_table_name [IN externaldatabase] FROM old_table_name                                                                                 |
+| SELECT TOP      | SELECT TOP number                                                                                                                                                                                    / percent column_name(s) FROM table_name |
+| TRUNCATE TABLE  | TRUNCATE TABLE table_name                                                                                                                                                                                                                     |
+| UNION           | SELECT column_name(s) FROM table_name1 UNION SELECT column_name(s) FROM table_name2                                                                                                                                                           |
+| UNION ALL       | SELECT column_name(s) FROM table_name1 UNION ALL SELECT column_name(s) FROM table_name2                                                                                                                                                       |
+| UPDATE          | UPDATE table_name SET column1=value, column2=value,... WHERE some_colu                                                                                                                                                                        |
+
+
+# 设置  
+## 设置远程
+ 登录：mysql -u root -h -p
+ 打开数据库：use mysql
+ 添加所有IP都可以访问的用户：grant all on *.* to '用户名'@'%' identified by '密码';
+ 或者也可以给root用户设置为所有ip都可访问：update user set host='%' where user='root' and host='localhost';
+ 刷新权限：flush privileges;
+
+## 通用类型设计
+   id  char(32)
+  标题　varchar(100) 
+  名称　VARCHAR(200) 
+  描述　varchar(100)
+  内容　varchar(1000) ／text
+
+   用户信息
+   身份证号　CHAR(18)
+   卡的名称　VARCHAR(100)
+   手机号 VARCHAR(11)
+   地址url  VARCHAR(100)
+   时间 DATE
+
+## 引擎 
+### 存储引擎
+#### InnoDB
+      是 MySQL 默认的事务型存储引擎，只有在需要它不支持的特性时，才考虑使用其它存储引擎。
+
+      实现了四个标准的隔离级别，默认级别是可重复读（REPEATABLE READ）。在可重复读
+      隔离级别下，通过多版本并发控制（MVCC）+ 间隙锁（Next-Key Locking）防止幻影读。
+
+      主索引是聚簇索引，在索引中保存了数据，从而避免直接读取磁盘，因此对查询性能有很大的提升。
+
+      内部做了很多优化，包括从磁盘读取数据时采用的可预测性读、能够加快读操作并且自动创建的自适应哈希索引、能够加速插入操作的插入缓冲区等。
+
+      支持真正的在线热备份。其它存储引擎不支持在线热备份，要获取一致性视图需要停止对所有表的写入，而在读写混合场景中，停止写入可能也意味着停止读取。
+#### MyISAM
+      设计简单，数据以紧密格式存储。对于只读数据，或者表比较小、可以容忍修复操作，则依然可以使用它。
+
+      提供了大量的特性，包括压缩表、空间数据索引等。
+
+      不支持事务。
+
+      不支持行级锁，只能对整张表加锁，读取时会对需要读到的所有表加共享锁，写入时则
+      对表加排它锁。但在表有读取操作的同时，也可以往表中插入新的记录，这被称为并发
+      插入（CONCURRENT INSERT）。
+
+      可以手工或者自动执行检查和修复操作，但是和事务恢复以及崩溃恢复不同，可能导致一些数据丢失，而且修复操作是非常慢的。
+
+      如果指定了 DELAY_KEY_WRITE 选项，在每次修改执行完成时，不会立即将修改的索引
+      数据写入磁盘，而是会写到内存中的键缓冲区，只有在清理键缓冲区或者关闭表的时候
+      才会将对应的索引块写入磁盘。这种方式可以极大的提升写入性能，但是在数据库或者
+      主机崩溃时会造成索引损坏，需要执行修复操作。
+#### 比较
+      - 事务：InnoDB 是事务型的，可以使用 Commit 和 Rollback 语句。
+      - 并发：MyISAM 只支持表级锁，而 InnoDB 还支持行级锁。
+      - 外键：InnoDB 支持外键。
+      - 备份：InnoDB 支持在线热备份。
+      - 崩溃恢复：MyISAM 崩溃后发生损坏的概率比 InnoDB 高很多，而且恢复的速度也更慢。
+      - 其它特性：MyISAM 支持压缩表和空间数据索引。
+### 切分
+#### 水平切分
+       水平切分又称为 Sharding，它是将同一个表中的记录拆分到多个结构相同的表中。
+       当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
+#### 垂直切分
+       垂直切分是将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分，也
+       可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
+
+       在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如将
+       原来的电商数据库垂直切分成商品数据库、用户数据库等。
+#### Sharding 策略
+       - 哈希取模：hash(key) % N；
+       - 范围：可以是 ID 范围也可以是时间范围；
+       - 映射表：使用单独的一个数据库来存储映射关系。
+##### Sharding 存在的问题
+######  事务问题
+        使用分布式事务来解决，比如 XA 接口。
+###### 连接
+        可以将原来的连接分解成多个单表查询，然后在用户程序中进行连接。
+######  ID 唯一性
+        - 使用全局唯一 ID（GUID）
+        - 为每个分片指定一个 ID 范围
+        - 分布式 ID 生成器 (如 Twitter 的 Snowflake 算法)
+#### 复制
+##### 主从复制
+        主要涉及三个线程：binlog 线程、I/O 线程和 SQL 线程。
+        -  **binlog 线程** ：负责将主服务器上的数据更改写入二进制日志（Binary log）中。
+        -  **I/O 线程** ：负责从主服务器上读取二进制日志，并写入从服务器的重放日志（Replay log）中。
+        -  **SQL 线程** ：负责读取重放日志并重放其中的 SQL 语句。
+##### 读写分离
+
+        主服务器处理写操作以及实时性要求比较高的读操作，而从服务器处理读操作。
+        读写分离能提高性能的原因在于：
+
+        - 主从服务器负责各自的读和写，极大程度缓解了锁的争用；
+        - 从服务器可以使用 MyISAM，提升查询性能以及节约系统开销；
+        - 增加冗余，提高可用性。
+        
+        读写分离常用代理方式来实现，代理服务器接收应用层传来的读写请求，然后决定转发到哪个服务器。
+### 时间戳
+   常量 CURRENT_TIMESTAMP 
+   

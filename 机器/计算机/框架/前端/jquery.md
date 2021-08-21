@@ -20,35 +20,35 @@ $('div:animated')//选择当前处于动画状态的div元素
 
 ## 改变结果集
 ``` js
-     $('div').has('p'); //选择包含p元素的div元素  
-     $('div').not('.myClass'); //选择class不等于myClass的div元素  
-     $('div').filter('.myClass'); //选择class等于myClass的div元素  
-     $('div').first(); //选择第1个div元素  
-     $('div').eq(5); //选择第6个div元素  
+$('div').has('p'); //选择包含p元素的div元素  
+$('div').not('.myClass'); //选择class不等于myClass的div元素  
+$('div').filter('.myClass'); //选择class等于myClass的div元素  
+$('div').first(); //选择第1个div元素  
+$('div').eq(5); //选择第6个div元素  
 ```
 
-   有一些时候，我们需要从结果集出发，移动到附近的相关元素，jQuery 也提供了在 DOM 树上的移动方法：
+有一些时候，我们需要从结果集出发，移动到附近的相关元素，jQuery 也提供了在 DOM 树上的移动方法：
 ``` js
-     $('div').next('p'); //选择div元素后面的第一个p元素  
-     $('div').parent(); //选择div元素的父元素  
-     $('div').closest('form'); //选择离div最近的那个form父元素  
-     $('div').children(); //选择div的所有子元素  
-     $('div').siblings(); //选择div的同级元素  
+$('div').next('p'); //选择div元素后面的第一个p元素  
+$('div').parent(); //选择div元素的父元素  
+$('div').closest('form'); //选择离div最近的那个form父元素  
+$('div').children(); //选择div的所有子元素  
+$('div').siblings(); //选择div的同级元素  
 ```
 
 ## 链式操作
-   jQuery 允许将所有操作连接在一起，以链条的形式写出来，比如：
-   
+jQuery 允许将所有操作连接在一起，以链条的形式写出来，比如：
+
    ``` js
      $('div').find('h3').eq(2).html('Hello');  
    ```
 
-   我们可以这样拆封开来，就是下面这样：
+我们可以这样拆封开来，就是下面这样：
    ``` js
-     $('div')//找到div元素  
-         .find('h3')//选择其中的h3元素  
-         .eq(2)//选择第3个h3元素  
-         .html('Hello'); //将它的内容改为Hello  
+   $('div')//找到div元素  
+   .find('h3')//选择其中的h3元素  
+   .eq(2)//选择第3个h3元素  
+   .html('Hello'); //将它的内容改为Hello  
    ```
    这是 jQuery 最令人称道、最方便的特点。它的原理在于每一步的 jQuery 操作，返回的都是
    一个 jQuery 对象，所以不同操作可以连在一起。
@@ -1289,3 +1289,14 @@ $("#fileUpload").change(function () {
 });
 
 ```
+
+## 代码小片段
+### 置顶
+``` html
+<a href="javascript:;" onclick="$('html,body').animate({scrollTop: '0px'}, 800)" class="btn_top">TOP ↑</a>
+```
+
+
+
+## 方法
+### animate 动画
