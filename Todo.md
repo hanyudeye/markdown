@@ -1,18 +1,8 @@
 
-手机投屏
-- https://blog.csdn.net/qq_43901693/article/details/102962698
-- https://zhuanlan.zhihu.com/p/165983566
-- https://github.com/barrer/tampermonkey-script
-
+小土豆西交大软件高才生到美国绝对没错。我孩子20号刚结束夏天实习，家里干很轻松还50美元一小时，公司也马上给他工作offer了，13万的基本工资加奖金股票年收入能到18万，在西雅图，还不是谷歌微软亚马逊那种公司。他也就是一般州立大学硕士生。
 
 ## TODO
-- 反思一周 (8月6日至8月10日)
 - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
-- emacs 快捷键也一样，特殊文档，如markdown ,org 打印快捷键
-- 利用碎片时间学习
-- 睡前两小时，轻松，背东西
-- 周末，互补法
-- 逼自己一把，给自己尊严
 - 多看github 中的大神
 - 挣钱开刀做手术
 
