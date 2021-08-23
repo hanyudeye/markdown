@@ -1,7 +1,36 @@
 
 用于简化javascript 对 Dom 的操作方式。
+http://hemin.cn/jq/
 
 # jQuery
+## 核心
+- jQuery 核心函数
+- jQuery([sel,[context]])
+- jQuery(html,[ownerDoc])1.8*
+- jQuery(callback)
+- jQuery.holdReady(hold)
+- jQuery 对象访问
+- each(callback)
+- size()
+- length
+- selector
+- context
+- get([index])
+- index([selector|element])
+- 数据缓存
+- data([key],[value])
+- removeData([name|list])1.7*
+- $.data(ele,[key],[val])1.8-
+- 队列控制
+- queue(e,[q])
+- dequeue([queueName])
+- clearQueue([queueName])
+- 插件机制
+- jQuery.fn.extend(object)
+- jQuery.extend(object)
+- 多库共存
+- jQuery.noConflict([ex])
+
 ## 选择器 
 ``` js
 $(document)//选择整个文档对象
@@ -18,6 +47,79 @@ $('div:gt(2)')//选择所有的div元素，除了前三个
 $('div:animated')//选择当前处于动画状态的div元素  
 ```  
 
+
+### 基本
+- #id
+- element
+- .class
+- *
+- selector1,selector2,selectorN
+### 层级
+- ancestor(祖先) descendant(后代)
+- parent > child
+- prev + next
+- prev ~ siblings(兄弟)
+### 基本筛选器
+- :first
+- :not(selector)
+- :even
+- :odd
+- :eq(index)
+- :gt(index)
+- :lang1.9+
+- :last
+- :lt(index)
+- :header
+- :animated
+- :focus
+- :root1.9+
+- :target1.9+
+### 内容
+- :contains(text)
+- :empty
+- :has(selector)
+- :parent
+### 可见性
+- :hidden
+- :visible
+### 属性
+- [attribute]
+- [attribute=value]
+- [attribute!=value]
+- [attribute^=value]
+- [attribute$=value]
+- [attribute*=value]
+- [attrSel1][attrSel2][attrSelN]
+### 子元素
+- :first-child
+- :first-of-type1.9+
+- :last-child
+- :last-of-type1.9+
+- :nth-child
+- :nth-last-child()1.9+
+- :nth-last-of-type()1.9+
+- :nth-of-type()1.9+
+- :only-child
+- :only-of-type1.9+
+### 表单
+- :input
+- :text
+- :password
+- :radio
+- :checkbox
+- :submit
+- :image
+- :reset
+- :button
+- :file
+### 表单对象属性
+- :enabled
+- :disabled
+- :checked
+- :selected
+### 混淆选择器
+- $.escapeSelector(selector)
+- 
 ## 改变结果集
 ``` js
 $('div').has('p'); //选择包含p元素的div元素  
