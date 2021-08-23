@@ -1,9 +1,7 @@
 # 命令行基础
-学习方法 : 通读手册页
 ## 基础
 ### 管道| 与重定向 <> 的使用，标准输入输出 stdin,stdout ，文件
 ### 任务管理： &、ctrl-z、ctrl-c、jobs、fg、bg、kill
-
 ### 熟悉 ssh, 并且知道如何通过 ssh-agent， ssh-add等实现无密码认证。
 ### 文件管理命令
 ls 和 ls -l (特别地， 你得知道ls -l 结果中的每一列是什么意思)，less, head, tail 和 tail -f(最好也弄清楚 less +F 是嘛意思)， ln 和 ln -s (了解硬链接和软连接的区别和优缺点), chown, chmod, du (磁盘使用情况: du -hk *)。对文件系统来说， df, mount, fdisk, mkfs,lsblk。
