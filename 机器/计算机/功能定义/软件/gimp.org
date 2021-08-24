@@ -148,7 +148,6 @@
   Ctrl + Mouse Button  缩放窗口 
   Ctrl + Shift + J   最大化图像
    
-
 * 扩展
 **  GIMP Paint Shop
    http://code.google.com/p/gps-gimp-paint-studio/

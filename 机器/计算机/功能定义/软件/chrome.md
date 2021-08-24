@@ -1,3 +1,5 @@
+# chrome 插件制作
+
 ## Chrome API
   - 书签控制；
   - 下载控制；
@@ -1346,3 +1348,61 @@
   - [[https://developer.chrome.com/extensions/api_index][chrome.xxx.api文档]]
   - [[https://developer.chrome.com/extensions/match_patterns][模糊匹配规则语法详解]]
 
+
+# chrome 插件
+## Vimium ##
+
+网页快速导航，主要是省去鼠标中键的滚动功能  
+
+对网页的操作用键盘快捷键的方式比鼠标去点击要迅速  
+历史记录的前进后退，标签的切换，很方便。  
+
+## Dualsub ##
+
+让 YouTube 显示双语字幕，翻译的大略准确，现在看外国视频也能看的懂了
+> 只能用在 YouTube 上
+
+## Proxy SwitchyOmega ##
+
+切换代理
+
+## Video Speed Controlle ##
+
+用快捷键操作视频的播放速率很方便
+
+## 彩云小译 - 网页翻译插件 ##
+
+可以双语对照，翻译也很精确
+
+## 眼睛护航 ##
+
+可以更改网页颜色
+
+## google 翻译 ##
+
+本来一直用的，自从用了上面的翻译插件就放在旁边凉快了
+
+## Read Aloud ##
+
+文本语音朗读助理
+
+## Tampermonkey ##
+
+油猴脚本
+
+## similarsites ##
+
+发现相关网站
+
+## 同步书签 ##
+
+1.架梯子
+2.地址栏输入：chrome://sync-internals
+3.中间那列中下方，点击“Stop Sync (Keep Data)”，之后点击“Request Start”
+4.两个设备上的Chrome都进行一次这个操作
+
+## 网页截长图 ##
+
+1. 在想要截取长图的页面上右击-检查，弹出代码页。
+2. 在代码页按住Ctrl+shift+P，打开输入命令查找文件的窗口。
+3. 在窗口中输入Capture full size screenshot 命令，抓取全网页面
