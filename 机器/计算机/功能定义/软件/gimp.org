@@ -7,6 +7,8 @@
 图片处理软件
 
 文档地址: https://docs.gimp.org/2.10/zh_CN/
+https://teliute.org/linux/gimp/index.html
+
 # more
 
 * gimp
@@ -58,71 +60,59 @@
  - CTRL+SHIFT+J：缩放图像到适配窗口
  - CTRL+I：选择反向
    
-** 帮助  
-*** 帮助 F1 帮助
-*** Shift F1 上下文帮助
 ** 工具
-   - r 矩形选择
-   - e 椭圆形选择
-   - f 自由选择
-   - u 模糊选取
-   - Shift o 按颜色选取
-   - i 剪刀
-   - b 路径  (勾画路径，回车，可以创建选取)
-   - o 颜色拾取器
-   - m 移动
-   - Shift c 剪切
-   - Shift r 旋转
-   - Shift t 变换
-   - Shift s 缩放
-   - Shift p 透视
-   - Shift f 翻转
-   - t 文本
-   - Shift b 油漆桶
-   - n 铅笔
-   - p 刷子
-   - Shift e 橡皮
-   - a 喷枪
-   - k 墨水
-   - c 克隆
-   - Shift u 模糊/锐化
-   - s 涂抹
-   - Shift d 减淡/加深
-   - x 交换颜色
-   - d 默认颜色
+  | 键      | 功能                                 |
+  |---------+--------------------------------------|
+  | r       | 矩形选择                             |
+  | e       | 椭圆形选择                           |
+  | f       | 自由选择                             |
+  | u       | 模糊选取                             |
+  | Shift o | 按颜色选取                           |
+  | i       | 剪刀                                 |
+  | b       | 路径  (勾画路径，回车，可以创建选取) |
+  | o       | 颜色拾取器                           |
+  | m       | 移动                                 |
+  | Shift c | 剪切                                 |
+  | Shift r | 旋转                                 |
+  | Shift t | 变换                                 |
+  | Shift s | 缩放                                 |
+  | Shift p | 透视                                 |
+  | Shift f | 翻转                                 |
+  | t       | 文本                                 |
+  | Shift b | 油漆桶                               |
+  | n       | 铅笔                                 |
+  | p       | 刷子                                 |
+  | Shift e | 橡皮                                 |
+  | a       | 喷枪                                 |
+  | k       | 墨水                                 |
+  | c       | 克隆                                 |
+  | Shift u | 模糊/锐化                            |
+  | s       | 涂抹                                 |
+  | Shift d | 减淡/加深                            |
+  | x       | 交换颜色                             |
+  | d       | 默认颜色                             |
 ** 文件
-   - Ctrl N 新图像
-   - Ctrl O 打开图像
-   - Ctrl Alt O 作为新图层打开图像
-   - Ctrl D 复制图像
-   - Ctrl 1 打开最近图像 01
-   - Ctrl 2 打开最近图像 02
-   - Ctrl 3 打开最近图像 03
-   - Ctrl 4 打开最近图像 04
-   - Ctrl 5 打开最近图像 05
-   - Ctrl 6 打开最近图像 06
-   - Ctrl 7 打开最近图像 07
-   - Ctrl 8 打开最近图像 08
-   - Ctrl 9 打开最近图像 09
-   - Ctrl 0 打开最近图像 10
-   - Ctrl S 保存图像
-   - Shift Ctrl S 另存为
-   - Ctrl E Export to
-   - Shift Ctrl E Export ...
-   - Ctrl Q 退出
+   
+  | 键           | 功能               |
+  |--------------+--------------------|
+  | Ctrl N       | 新图像             |
+  | Ctrl O       | 打开图像           |
+  | Ctrl Alt O   | 作为新图层打开图像 |
+  | Ctrl D       | 复制图像           |
+  | Ctrl S       | 保存图像           |
+  | Ctrl E       | 导出        |
 ** 对话
-   - Ctrl L 图层
-   - Shift Ctrl B 刷子
-   - Shift Ctrl P 仿照
-   - Ctrl G 渐变
-   - Shift Ctrl T 工具选项
-   - Ctrl P 调色板
-   - Shift Ctrl I 信息窗口
-   - Shift Ctrl N 浏览窗口
-** 编辑
-   - 撤销/ 重做 
-   - Ctrl Z 撤销 
-   - Ctrl Y 重做
+   
+  | 键           | 功能     |
+  |--------------+----------|
+  | Ctrl L       | 图层     |
+  | Shift Ctrl B | 刷子     |
+  | Shift Ctrl P | 仿照     |
+  | Ctrl G       | 渐变     |
+  | Shift Ctrl T | 工具选项 |
+  | Ctrl P       | 调色板   |
+  | Shift Ctrl I | 信息窗口 |
+  | Shift Ctrl N | 浏览窗口 |
 ** 剪贴板
    - Ctrl C 复制选择部分
    - Ctrl X 剪切选中部分
@@ -130,10 +120,6 @@
    - Shift Ctrl C Named copy selection
    - Shift Ctrl X Named cut selection
    - Shift Ctrl V Named paste clipboard
-** 填充
-   - Ctrl D 用前景色填充
-   - Ctrl D 用背景色填充
-   - Ctrl D Fill with Pattern
 ** 图层
    - PgUp , Ctrl Tab 选中上一层
    - PgDn Shift , Ctrl Tab 选中下一层
@@ -147,16 +133,18 @@
 
   Ctrl + Mouse Button  缩放窗口 
   Ctrl + Shift + J   最大化图像
-   
+  
 * 扩展
 **  GIMP Paint Shop
    http://code.google.com/p/gps-gimp-paint-studio/
 ** 更多
    http://registry.gimp.org/
-
+   
 * 工具 
-  说明：大多数工具是基于光栅的
 ** 选择工具 (创建可编辑的选区)
+   - 勾画选区（画轮廓 )
+   - 填充
+   - 渐变 （各种渐变形式）
 ** 路径工具 (创建或编辑路径)
 ** 缩放工具(调整视图)
 ** 采色器
@@ -177,3 +165,23 @@
 ** 克隆工具 (克隆像素，按 CTRL 并单击鼠标(必须在同一图层))
 ** 模糊/锐化,减淡/加深
 ** 污迹 (想象你用手指在画布上划过未干的油漆)
+* 教程
+ 画像处理工具 
+ 
+** Basic Functions
+*** FILES AND PREFERENCES
+    
+*** SELECTIONS
+*** PAINT
+*** EDIT
+*** TRANSFORM
+*** TEXT
+*** BRUSHES AND OTHER DIALOGS
+** Pre-press Knowledge
+** More Gimp Functions
+** Filters
+** Miscellaneous Gimp Functions
+** Script-Fu
+** Perl-Fu
+** Advanced Installations
+** Appendixes

@@ -898,3 +898,43 @@ https://blog.csdn.net/GhostWHS/article/details/110085937
 密码盐(salt)：rpR6Bv
 登录密码是 123456
 
+# 上传图片
+``` js
+		function bjimg(i) {
+			// var obj = i[0].files[0];
+			// i.prev().attr("src", URL.createObjectURL(obj));
+			// 
+
+			// console.log(formdata);return;
+			// console.log(i[0].files)
+			// return;
+			// i.prev().attr("src", data.data.url);
+
+			let formdata = new FormData();
+			formdata.append('file', i[0].files[0]);
+
+
+			return;
+			//图片上传
+			$.ajax({
+				url: '{:Url("ajax/upload")}',
+				type: 'POST',
+				cache: false,
+				data: formdata,
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					if (data.code == 1) {
+						i.next().val(data.data.url)
+						i.prev().prev().attr("src", data.data.url)
+					} else {
+						alert(data.msg)
+						i.prev().prev().attr("src", '')
+					}
+
+				}
+			});
+		}
+
+	
+```
