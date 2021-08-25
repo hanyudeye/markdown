@@ -1,12 +1,11 @@
 # bootstrap3 ##
-
-内容组件，含对应的样式，与动画
+> web页 样式模板
 ## Bootstrap css
 ### 网格系统
 #### 媒体查询 (有条件的CSS规则)
-``` less
+``` css
 /* 超小设备（手机，小于 768px） */
-/* Bootstrap 中默认情况下没有媒体查询 */
+/* 在Bootstrap中默认情况下没有媒体查询 */
 
 /* 小型设备（平板电脑，768px 起） */
 @media (min-width: @screen-sm-min) { ... }
