@@ -938,3 +938,8 @@ https://blog.csdn.net/GhostWHS/article/details/110085937
 
 	
 ```
+
+> 上传登录权限 \application\api\controller\Common.php ，添加 upload
+``` php
+    protected $noNeedLogin = ['init','upload'];
+```

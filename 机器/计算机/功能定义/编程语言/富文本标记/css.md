@@ -1,6 +1,6 @@
 # css (Cascading Style Sheets)  
  **网页** 中的外观部分，用 {选择器+样式} 指明 内容对应的样式 。
-
+ 
 ## 选择器 ##
 ### 标签选择器
 ### 属性选择器 ###
@@ -123,7 +123,7 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 | color    | 可选。阴影的颜色。请参阅 CSS 颜色值。    |
 | inset    | 可选。将外部阴影 (outset) 改为内部阴影。 |
 
-
+核销
 ### 背景
 #### 渐变背景
 background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
@@ -137,6 +137,21 @@ linear-gradient(45deg, blue, red);
 linear-gradient(to left top, blue, red);
 /* 从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束 */
 linear-gradient(0deg, blue, green 40%, red);
+
+```
+
+``` css
+body{
+  width: 100%;
+  height: 100vh;
+  background: #63c0e1;
+  background: linear-gradient(-150deg, #4ad8c3, #83a2f1);
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+
+
 
 ```
 

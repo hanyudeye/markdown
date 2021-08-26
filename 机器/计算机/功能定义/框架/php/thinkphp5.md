@@ -257,6 +257,23 @@ $query->table('think_profile')->where('status',1)->field('id');
 ->select();
 
 ```
+#### with 连接两个表
+``` php
+   $list = $this->model
+                ->with('taocan,account')
+                ->where($where)
+                ->order($sort, $order)
+                ->paginate($limit);
+                
+                
+                //model
+  public function account()
+    {
+    
+        return $this->belongsTo("app\admin\model\ShopAccount"[关联表], "shop_account_id"[主表字段], 'id'[关联字段], [], 'LEFT')->setEagerlyType(0);
+    }
+                
+```
 ### 模型 (自动对应表对象)
 
 ``` php
