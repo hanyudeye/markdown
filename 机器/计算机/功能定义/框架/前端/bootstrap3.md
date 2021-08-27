@@ -267,8 +267,8 @@
 | .table-hover      | 在 <tbody> 内的任一行启用鼠标悬停状态 |
 | .table-condensed  | 让表格更加紧凑                        |
 | .table-responsive | 响应式，小型设备有滚动条              |
-|                   |                                       |
-#### <tr>, <th> 和 <td> 类 (单元格类)
+
+#### tr,th 和 td 类 (单元格类)
 
 | 类       | 描述                             |
 |----------+----------------------------------|
@@ -321,8 +321,14 @@
 ```
 
 #### 其它
-- 多选 <select multiple class="form-control">
-- 静态控件  <p class="form-control-static">email@example.com</p>
+- 多选 
+``` html
+ <select multiple class="form-control">
+```
+- 静态控件 
+``` html
+<p class="form-control-static">email@example.com</p>
+``` 
 #### 控件状态
 ``` html
 <form class="form-horizontal" role="form">
@@ -386,6 +392,7 @@
 ```
 ### 按钮 
 | 类           | 描述                                    |
+|--------------+-----------------------------------------|
 | .btn         | 为按钮添加基本样式                      |
 | .btn-default | 默认/标准按钮                           |
 | .btn-primary | 原始按钮样式（未被操作）                |
@@ -404,6 +411,7 @@
 #### 按钮大小 
 
 | 类         | 描述                     |
+|-------|-------|
 | .btn-lg    | 这会让按钮看起来比较大。 |
 | .btn-sm    | 这会让按钮看起来比较小。 |
 | .btn-xs    | 这会让按钮看起来特别小。 |
@@ -443,17 +451,18 @@
 </div>
 ```
 ### 图片
-| 类             | 描述                                          |
-| ---            | ---                                           |
-| .img-rounded   | 添加 border-radius:6px 来获得图片圆角。       |
-| .img-circle    | 添加 border-radius:50% 来让整个图片变成圆形。 |
-| .img-thumbnail | 添加一些内边距（padding）和一个灰色的边框。   |
-|.img-responsive| 将 max-width: 100%; 和 height: auto; 样式应用在图片上
+| 类              | 描述                                                  |
+|-----------------+-------------------------------------------------------|
+| .img-rounded    | 添加 border-radius:6px 来获得图片圆角。               |
+| .img-circle     | 添加 border-radius:50% 来让整个图片变成圆形。         |
+| .img-thumbnail  | 添加一些内边距（padding）和一个灰色的边框。           |
+| .img-responsive | 将 max-width: 100%; 和 height: auto; 样式应用在图片上 |
 
 ### 辅助类
 #### 文本
 #### 背景
 | 类          | 描述                             |
+|-------------+----------------------------------|
 | .bg-primary | 表格单元格使用了 "bg-primary" 类 |
 | .bg-success | 表格单元格使用了 "bg-success" 类 |
 | .bg-info    | 表格单元格使用了 "bg-info" 类    |
@@ -463,6 +472,7 @@
 #### 其它
 
 | 类                    | 描述                                                             |
+|-----------------------+------------------------------------------------------------------|
 | .pull-left            | 元素浮动到左边                                                   |
 | .pull-right           | 元素浮动到右边                                                   |
 | .center-block         | 设置元素为 display:block 并居中显示                              |
@@ -853,6 +863,7 @@ Bootstrap3登录框自适应水平居中+垂直居中
 ```
 
 | 类                   | 描述                                        |
+|----------------------+---------------------------------------------|
 | .dropdown            | 指定下拉菜单，下拉菜单都包裹在 .dropdown 里 |
 | .dropdown-menu       | 创建下拉菜单                                |
 | .dropdown-menu-right | 下拉菜单右对齐                              |
@@ -863,6 +874,7 @@ Bootstrap3登录框自适应水平居中+垂直居中
 
 ### 标签
 | 类                   | 描述                     |
+|----------------------+--------------------------|
 | .label label-default | 默认的灰色标签           |
 | .label label-primary | "primary" 类型的蓝色标签 |
 | .label label-success | "success" 类型的绿色标签 |
@@ -1062,7 +1074,6 @@ $('#identifier').modal('show')
 //手动隐藏模态框。	
 $('#identifier').modal('hide')
 ```
-
 
 #### 动态打开事件
 下表列出了模态框中要用到事件。这些事件可在函数中当钩子使用。
@@ -1318,3 +1329,4 @@ $('#identifier').on('slid.bs.carousel', function () {
 
 > 使用 label for 作指向，隐藏 input file
 > label 中的样式可以对应 button 的样式
+
