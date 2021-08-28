@@ -256,8 +256,9 @@ bindsym $mod+b bar mode hide bar-1
 bindsym $mod+Shift+b bar mode invisible bar-1
 ```
 
-## 快捷键设置
+# rofi 桌面运行程序
+# 设置屏幕不同背景
+feh --bg-scale cat2.jpeg cat3.jpeg
+# 显示屏幕按键 screenkey
 
 
-
-# rofi
