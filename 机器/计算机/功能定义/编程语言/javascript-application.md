@@ -1,26 +1,27 @@
-## javascript有效方法
 ## 事件
+### 鼠标事件
+| 名称                | 含义 |
+|---------------------+------|
+| window.onmousewheel | 滚轮 |
+|                     |      |
 
-鼠标滚轮事件
-window.onmousewheel
 
-## 表单啊，不要再提交啦，重复了么么多次了
-- 1、js禁掉提交按钮。
+### 键盘事件
+## 表单重复提交
+- 1、js禁掉提交按钮
 
  表单提交后使用Javascript使提交按钮disable。这种方法防止心急的用户多次点击按钮。
  但有个问题，如果客户端把Javascript给禁止掉，这种方法就无效了。
 
 - 2、使用 Post/Redirect/Get模式。
-
- 在提交后执行页面重定向，简言之，当用户提交了表单后，你去执行一个客户端的重定向，转到提交成功信息页面。
+在提交后执行页面重定向，简言之，当用户提交了表单后，你去执行一个客户端的重定向，转到提交成功信息页面。
  这能避免用户按F5导致的重复提交，而其也不会出现浏览器表单重复提交的警告，也能消除按浏览器前进和后退按导致的同样问题。
-- 3、在session中存放一个特殊标志。
+
+- 3、在session中存放一个特殊标志 (token)。
 
  在服务器端，生成一个唯一的标识符，将它存入session，同时将它写入表单的隐藏字段中，然后将表单页面发给浏览器，用户录入信息后点击提交，在服务器端，获取表单中隐藏字段的值，与session中的唯一标识符比较，相等说明是首次提交，就处理本次请求，然后将session中的唯一标识符移除；不相等说明是重复提交，就不再处理。
 
  这使你的web应用有了更高级的XSRF保护。
-
- 请见如下代码：
 
 - 4．使用header函数转向
 
@@ -38,23 +39,20 @@ window.onmousewheel
  在开发过程中，经常会出现表单出错而返回页面的时候填写的信息全部丢失的情况，为了支持页面回跳，可以通过以下两种方法实现。
 
  1．使用header头设置缓存控制头Cache-control。
-
+``` php
  header('Cache-control: private, must-revalidate'); //支持页面回跳
-
+```
  2．使用session_cache_limiter方法。
-
+``` php
  session_cache_limiter('private, must-revalidate'); //要写在session_start方法之前
-
+```
  下面的代码片断可以防止用户填写表单的时候，单击“提交”按钮返回时，刚刚在表单上填写的内容不会被清除：
-
+``` php
  session_cache_limiter('nocache');
-
  session_cache_limiter('private');
-
  session_cache_limiter('public');
-
  session_start();
-
+```
  //以下是表单内容，这样在用户返回该表单时，已经填写的内容不会被清空
 
  将该段代码贴到所要应用的脚本顶部即可。
@@ -65,7 +63,7 @@ window.onmousewheel
 原理：在原页面的基础上添加两个div，一个是弹出框，一个是弹出框后面的背景层（页面变灰）。首先这两个div是跟原页面的代码在一起存放的，只不过使用了 =display：none=这个css属性先将其隐藏不显示，在触发弹出框效果时再使用 =display：block=让这两个div显示出来即可。\\
 完整代码如下：
 
-#+BEGIN_EXAMPLE
+``` html
       
      < html>
      < head>
@@ -134,13 +132,7 @@ window.onmousewheel
 
      body>
      html>
-#+END_EXAMPLE
-
-效果图如下：\\
-原页面：\\
-[[https://img-blog.csdn.net/20150526141818539]]\\
-弹出框：\\
-[[https://img-blog.csdn.net/20150526142028403]]
+```
 
 其他需要注意事项：1、两个弹出层的上下位置；2、弹出的背景层的透明设置；\\
 首先，两个div都要使用 =position: absolute;=这个属性，然后使用z-index这个属性可以设置层的上下顺序，值越大越靠上显示；\\
@@ -352,4 +344,3 @@ window.onmousewheel
     });
 #+END_EXAMPLE
 
-## 置顶

@@ -1,14 +1,9 @@
-#+TITLE: Python 简介
-#+DESCRIPTION: Python 语言学习笔记
-#+CATEGORIES[]: 技术
-#+TAGS[]: Python
-#+DATE: 2019-11-29T21:57:09+08:00
-#+draft: true
+#+TITLE: Python 
+#+DATE: 2021-08-29T05:56:47+08:00
 
 
-* 语言语法
-** 数据类型 
-   查看数据类型 type
+* 物与动物
+** 物
 *** 数字 
 *** 字符串 
     - len()
@@ -44,9 +39,6 @@
     print([ n+1 for n in nums])
     #+end_src
 
-** 面向对象
-*** 类和对象
-*** 可访问性
 ** 进程  
 *** 创建进程
     Process([group [, target [, name [, args [, kwargs]]]]])
@@ -333,6 +325,13 @@
     写进 Queue 的值为：四点水
     从 Queue 读取的值为：四点水
     ```
+** 查看物的信息
+  > 查看物的信息 type
+* 系统  
+| 指令             | 功能     |
+|------------------+----------|
+| raise SystemExit | 退出程序 |
+|                  |          |
 * 语言配套工具
 ** 虚拟环境 virtualenv 管理包
    环境，就是用某个环境的工具执行代码喽，激活了环境记得关闭此环境哦
