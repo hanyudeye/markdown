@@ -1,8 +1,8 @@
-
-用于简化javascript 对 Dom 的操作方式。
 http://hemin.cn/jq/
 
 # jQuery
+> **JavaScript** 对 DOM 选择的语法糖 
+
 ## 核心
 - jQuery 核心函数
 - jQuery([sel,[context]])
