@@ -1,3 +1,8 @@
+
+# 产品
+## 办公表格处理
+### office
+
 # 日常处理
 | 命令                                   | 功能                                                        |
 | --------------                         | -----------                                                 |
@@ -9,6 +14,8 @@
 | printenv                               | 打印环境变量(在调试时或者脚本中很管用)                      |
 | look                                   | 找出以某字符串开头的英文单词(或者文件中的某一行)            |
 | cut, paste 和 join                     | 数据处理                                                    |
+| sort                                   | -b 忽略开头的空白 -f 不区分大小写                           |
+| uniq                                   | 重复行只显示一次                                            |
 | fmt                                    | 格式化文本段落                                              |
 | pr                                     | 将文本格式化为页数据或者列数据                              |
 | fold                                   | 封装文本中的行【比如 -w 指定宽度，不使用默认的80】          |
@@ -65,76 +72,65 @@
 | lsblk                                  | 列出块设备信息                                              |
 | lshw，lscpu，lspci，lsusb 和 dmidecode | 查看硬件信息，包括 CPU、BIOS、RAID、显卡、其他设备等        |
 
-# 办公
-office
-# 互联网
-## youtube-dl
-youtube-dl-gui 图形界面
+
+# 网络
+## 下载
+
+### youtube视频下载 ###
+
+youtube-dl-gui 图形界面  
 youtube-dl --proxy socks5://127.0.0.1:42428  https://www.youtube.com/watch?v=pKauTcfL-AE&feature=youtu.be
 
-## 网络
-### natapp 内网穿透
-``` shell
-./natapp -authtoken=e5eb817e91aeee83
-```
+## 内网穿透
+### natapp 
+natapp -authtoken=e5eb817e91aeee83  
 
 由于微信屏蔽了natapp的三级域名，所以如果需要进行微信支付或者微信小程序的联调时需要注册一个二级域名
 如果用于联调微信小程序的话，则需要注册带有SSL证书的，因为微信小程序仅支持https协议。
 
-## bt 网速
-github  trackerslist
-下载 qbittorrent
-# 多媒体
-## 视频
-- 视频编辑器	主要用途	类型
-- Kdenlive	通用视频编辑	自由开源
-- OpenShot	通用视频编辑	自由开源
-- Shotcut	通用视频编辑	自由开源
-- Flowblade	通用视频编辑	自由开源
-- Lightworks	专业级视频编辑	免费增值
-- Blender	专业级三维编辑	自由开源
-- Cinelerra	通用视频编辑	自由开源
-- DaVinci	专业级视频处理编辑	免费增值
-- VidCutter	简单视频拆分合并	自由开源
-## 稿定抠图
-https://www.gaoding.com/koutu?hmsr=zhongcao-kt_zh_xltx-koutu---pmzd-bdqd&utm_medium=&utm_source=zhongcao
-## 图像
-### 录制视频短片 peek
-``` shell
-sudo add-apt-repository ppa:peek-developers/stable
-sudo apt update
-sudo apt install peek
-```
-### 像素识别 pick-colour-picker
-``` shell
-sudo snap install pick-colour-picker 
-```
-### 屏幕录制 simplescreenrecorder
-``` shell
-sudo apt install simplescreenrecorder
-```
-## 视频
-### 迅捷视频剪辑软件
-https://link.zhihu.com/?target=https%3A//www.xunjieshipin.com/download-video-crop%3Fzhczk
 
-### 查看公网 IP
-    - curl cip.cc
-    - curl icanhazip.com
-    - curl ident.me
+## 查看公网 IP 
+- curl cip.cc
+- curl icanhazip.com
+- curl ident.me
+# 多媒体
+## 视频处理
+| 视频编辑器 | 主要用途           |
+|------------+--------------------|
+| Kdenlive   | 通用视频编辑       |
+| OpenShot   | 通用视频编辑       |
+| Shotcut    | 通用视频编辑       |
+| Flowblade  | 通用视频编辑       |
+| Lightworks | 专业级视频编辑     |
+| Blender    | 专业级三维编辑     |
+| Cinelerra  | 通用视频编辑       |
+| DaVinci    | 专业级视频处理编辑 |
+| VidCutter  | 简单视频拆分合并   |
+## 图片处理
+
+### 抠图 ###
+- [稿定抠图](https://www.gaoding.com/koutu?hmsr=zhongcao-kt_zh_xltx-koutu---pmzd-bdqd&utm_medium=&utm_source=zhongcao) 
+
+### 录制视频短片
+ - peek
+### 像素识别 
+- pick-colour-picker
+### 屏幕录制 
+- simplescreenrecorder
 ## 图片放大
-https://bigjpg.com/
+- https://bigjpg.com/
 ## 算法图表
-http://sorting.at/
-https://visualgo.net/zh
+- http://sorting.at/
+- https://visualgo.net/zh
 # 在线工具
-## 工具大全
-https://www.diycode.cc/sites
-## 正则
-[正则表达式在线工具](https://regexr.com/)
-## 谷歌开源
-https://github.com/google
-## zsh
-### zsh-proxy 
+- [工具大全](https://www.diycode.cc/sites)  
+- [正则表达式在线工具](https://regexr.com/)
+- [谷歌开源](https://github.com/google)
+
+# zsh插件 #
+
+## zsh-proxy ##
+
 - 首次使用需要初始化 init_proxy
 - 开启　proxy
 - 关闭　noproxy
@@ -142,10 +138,11 @@ https://github.com/google
 
 # 协作
 ## github
-热门  https://github.com/trending
-专题 https://github.com/topics
+- 热门  https://github.com/trending
+- 专题 https://github.com/topics
 
 搜索
+``` 
 优秀项目  Awesome + 关键字  
 stars: fork
 qt in:name：表示在项目名称中搜索 qt 关键字
@@ -155,9 +152,11 @@ qt in:USERNAME：表示在 USERNAME 中搜索 qt 关键字
 qt in:ORGNAME：表示在组织或机构名中搜索 qt 关键字
 size:>=5000 Qt ：搜索大小超过 5M 的包含 Qt 关键字项目
 language:C++ location:china 搜索国内的开发者，语言限定为 C++
-
+``` 
 后缀
+```
 stars:>20 extension:el language:elisp
+```
 
 # Tools
 ## 模糊跳转 z ##
