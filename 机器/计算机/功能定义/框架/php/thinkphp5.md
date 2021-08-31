@@ -494,12 +494,13 @@ return $this->fetch();
 <input type="submit" value="上传" />
 </form>
 ```
-然后在控制器中添加如下的代码:
+
+控制器:
 ``` php
 public function upload(){
 // 获取表单上传文件 例如上传了001.jpg
 $file = request()->file('image');
-}
+
 // 移动到框架应用根目录/public/uploads/ 目录下
 if($file){
 $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
@@ -569,7 +570,7 @@ echo $info->getFilename();
 }
 ```
 
-上传规则
+#### 上传规则
 
 默认情况下,会在上传目录下面生成以当前日期为子目录,以微秒时间的 md5 编码为文件名的文件,例如上面
 
@@ -584,11 +585,11 @@ $file = request()->file('image');
 $file->rule('md5')->move('/home/www/upload/');
 ```
 
-|  规则 | 描述  |
-|---|---|
-|   date |根据日期和微秒数生成 |
-|   md5 |   对文件使用md5_file散列生成 |
-|   sha1|   对文件使用sha1_file散列生成 |
+| 规则 | 描述                        |
+|------+-----------------------------|
+| date | 根据日期和微秒数生成        |
+| md5  | 对文件使用md5_file散列生成  |
+| sha1 | 对文件使用sha1_file散列生成 |
 
 rule 后可自定义函数调用
 

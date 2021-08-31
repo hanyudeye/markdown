@@ -1,5 +1,3 @@
-https://www.w3school.com.cn/tags/html_ref_eventattributes.asp
-
 # HTML (markup language)
 > 供浏览器展示的文本，与 CSS ，JavaScript 共同构建了网页。  
 > 文本中包含 用 xml 标签括起来的元素。  
@@ -77,14 +75,12 @@ https://www.w3school.com.cn/tags/html_ref_eventattributes.asp
 * rowspan 单元格跨行
 * align 内容对齐
 ### 表单
-#### 数据传输
+#### 表单编码 enctype
 - application/x-www-form-urlencoded
-- multipart/form-data   (多媒体)
+- multipart/form-data   (含有文件的表单)
 - application/x-www-form+xml  (xml 结构)
 
-
 #### 表单
-
 ``` html
 <form action="" id=""form_id" name="form_name" method="" autocomplete="" enctype="">
     <input type="text">文本 <br>
@@ -117,6 +113,28 @@ https://www.w3school.com.cn/tags/html_ref_eventattributes.asp
 
 - 小数  `<input type="number" min="0" max="100" step="0.01"/>`
 
+#### 文件上传
+表单结构
+```  html
+<form action="/index/index/upload" enctype="multipart/form-data" method="post">
+<input type="file" name=""  id="" accept="image/*" >
+
+```
+上传类型
+- audio 音频，视频
+- text 文本
+- image 图像
+- application 其它应用格式
+
+| 文件类型 | accept                 |
+|----------+------------------------|
+| *.3gpp   | audio/3gpp, video/3gpp |
+| .ac3     | audio/ac3              |
+| .mp3     | audio/mpeg             |
+| .mp4     | audio/mp4, video/mp4   |
+| .css     | text/css               |
+| .csv     | text/csv               |
+| .jpeg    | image/jpeg             |
 
 #### 表单限制
 ##### input number类型 长度限制
@@ -130,7 +148,7 @@ https://www.w3school.com.cn/tags/html_ref_eventattributes.asp
 <input type="text" oninput="value=value.replace(/[^\d]/g,'')">
 ``` 
 
-##### 手机号码输入验证：
+##### 手机号码输入验证
 ``` js
  function isPhoneNum(str) {
                 return /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(str)
@@ -164,200 +182,87 @@ if ($('#phone').val()!="")
 
 #### Form 事件
 
-| 属性         | 描述                             |
-|--------------+----------------------------------|
-| onblur       | 元素失去焦点时运行的脚本。       |
-| onchange     | 在元素值被改变时运行的脚本。     |
-| onfocus      | 当元素获得焦点时运行的脚本。     |
-| onformchange | 在表单改变时运行的脚本。         |
-| onforminput  | 当表单获得用户输入时运行的脚本。 |
-| oninput      | 当元素获得用户输入时运行的脚本。 |
-| onsubmit     | 在提交表单时触发。               |
+| 属性         | 描述                           |
+|--------------+--------------------------------|
+| onblur       | 元素失去焦点时运行的脚本       |
+| onchange     | 在元素值被改变时运行的脚本     |
+| onfocus      | 当元素获得焦点时运行的脚本     |
+| onformchange | 在表单改变时运行的脚本         |
+| onforminput  | 当表单获得用户输入时运行的脚本 |
+| oninput      | 当元素获得用户输入时运行的脚本 |
+| onsubmit     | 在提交表单时触发               |
 
+#### Keyboard事件
 
-### 文件上传
-input file 对象 用change 事件触发，用 ajax 提交
+| 属性       | 描述                 |
+|------------+----------------------|
+| onkeydown  | 在用户按下按键时触发 |
+| onkeypress | 在用户敲击按钮时触发 |
+| onkeyup    | 当用户释放按键时触发 |
 
-``` js
-   document.getElementById("input").addEventListener("focus",function () {
-        console.log("focus");
-    });
+触发顺序  
+> onkeydown onkeypress onkeyup
+
+ 在所有浏览器中 onkeypress 事件只能监听字母和数字，不能监听一些特殊按键（ALT、CTRL、SHIFT、ESC、箭头等）。监听一个用户是否按下按键请使用 onkeydown 事件,所有浏览器都支持 onkeydown 事件
  
-    document.getElementById("input").addEventListener("mousedown",function () {
-        console.log("mousedown");
-    });
- 
-    document.getElementById("input").addEventListener("mouseup",function () {
-        console.log("mouseup");
-    });
- 
-    document.getElementById("input").addEventListener("input",function () {
-        console.log("input");
-    });
- 
-    document.getElementById("input").addEventListener("change",function () {
-        console.log("change");
-    });
- 
-    document.getElementById("input").addEventListener("blur",function () {
-        console.log("blur");
-    });
- 
-    document.getElementById("input").addEventListener("click",function () {
-        console.log("click");
-    });
- 
-```
-
-### 文件类型
-```  html
-<!-- 全部图片 -->
-<input type="file" name=""  id="" accept="image/*" >
-
-```
-- audio 音频，视频
-- text 文本
-- image 图像
-- application 富文本
-
-| 文件类型 | accept                 |
-|----------+------------------------|
-| *.3gpp   | audio/3gpp, video/3gpp |
-| .ac3     | audio/ac3              |
-| .mp3     | audio/mpeg             |
-| .mp4     | audio/mp4, video/mp4   |
-| .css     | text/css               |
-| .csv     | text/csv               |
-| .jpeg    | image/jpeg             |
-
-###  ajax 文件上传
-这里简单的介绍一下FormData，有兴趣的朋友可以自己私下看看；
-
- 下面给大家介绍两种实现文件上传 
-
-1：没使用插件，单个文件的上传（注意：ajax实现文件上传的话用到的是：绝对路径）
-
-<!DOCTYPE html> 
-<html> 
-<head lang="en"> 
- <meta charset="UTF-8"> 
- <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script> 
- <title></title> 
-</head> 
-<body> 
-       <form id="uploadForm" enctype="multipart/form-data"> 
-             文件:<input id="file" type="file" name="file"/> 
-       </form> 
-            <button id="upload">上传文件</button> 
-</body> 
-      <script type="text/javascript"> 
-             $(function () { 
-               $("#upload").click(function () { 
-               var formData = new FormData($('#uploadForm')[0]); 
-                $.ajax({ 
-                type: 'post', 
-                url: "http://192.168.1.101:8080/springbootdemo/file/upload", //上传文件的请求路径必须是绝对路劲
-                data: formData, 
-                cache: false, 
-                processData: false, 
-                contentType: false, 
-            }).success(function (data) { 
-                alert(data); 
-           }).error(function () { 
-                alert("上传失败"); 
-       }); 
-    }); 
- }); 
-</script> 
-</html>
-2：Ajax实现多文件的上传 （这个是多选上传，关键是multiple="multiple"这个属性，另外使用的接口也是多文件上传的接口）
-
-<!DOCTYPE html> 
-<html> 
-<head lang="en"> 
- <meta charset="UTF-8"> 
- <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script> 
- <title></title> 
-</head> 
-<body> 
-        <form id="uploadForm" enctype="multipart/form-data"> 
-             文件:<input type="file" name="file" multiple="multiple"/><br> 
-        </form> 
-            <button id="upload">上传文件</button> 
-</body> 
-<script type="text/javascript"> 
-         $(function () { 
-             $("#upload").click(function () { 
-              var formData = new FormData($('#uploadForm')[0]); 
-          $.ajax({ 
-          type: 'post', 
-              url: "http://192.168.1.101:8080/springbootdemo/file/uploadFiles", 
-              data: formData, 
-              cache: false, 
-              processData: false, 
-              contentType: false, 
-         }).success(function (data) { 
-            alert(data); 
-         }).error(function () { 
-             alert("上传失败"); 
-          }); 
-     }); 
- }); 
-</script> 
-</html>
-这边都是前端代码，后台代码也之间简单的文件上传用法一样。
-
-## FormData使用方法详解
-FormData的主要用途有两个：
-1、将form表单元素的name与value进行组合，实现表单数据的序列化，从而减少表单元素的拼接，提高工作效率。
-2、异步上传文件
-
-### 一、创建formData对象
-1、创建一个空对象：
-``` js
-//通过FormData构造函数创建一个空对象
-var formdata=new FormData();
-//可以通过append()方法来追加数据
-formdata.append("name","laotie");
-//通过get方法对值进行读取
-console.log(formdata.get("name"));//laotie
-//通过set方法对值进行设置
-formdata.set("name","laoliu");
-console.log(formdata.get("name"));//laoliu
-```
-
-2、通过表单对formData进行初始化
-创建表单：
-``` js
-
-<form id="advForm">
-    <p>广告名称：<input type="text" name="advName"  value="xixi"></p>
-    <p>广告类别：<select name="advType">
-        <option value="1">轮播图</option>
-        <option value="2">轮播图底部广告</option>
-        <option value="3">热门回收广告</option>
-        <option value="4">优品精选广告</option>
-    </select></p>
-    <p><input type="button" id="btn" value="添加"></p>
-</form>
-```
-通过表单元素作为参数，实现对formData的初始化：
-
-``` js
-//获得表单按钮元素
-var btn=document.querySelector("#btn");
-//为按钮添加点击事件
-btn.onclick=function(){
-    //根据ID获得页面当中的form表单元素
-    var form=document.querySelector("#advForm");
-    //将获得的表单元素作为参数，对formData进行初始化
-    var formdata=new FormData(form);
-    //通过get方法获得name为advName元素的value值
-    console.log(formdata.get("advName"));//xixi
-    //通过get方法获得name为advType元素的value值
-    console.log(formdata.get("advType"));//1 
+ ``` js
+ document.addEventListener("keydown",keydown);
+//键盘监听，注意：在非ie浏览器和非ie内核的浏览器
+//参数1：表示事件，keydown:键盘向下按；参数2：表示要触发的事件
+function keydown(event){
+//表示键盘监听所触发的事件，同时传递传递参数event
+    document.write(event.keyCode);//keyCode表示键盘编码
 }
-```
+ ```
+ keydown(16进制输出),keypress(10进制输出) keyCode 
+#### Mouse 事件
+
+| 属性         | 描述                                         |
+|--------------+----------------------------------------------|
+| onclick      | 元素上发生鼠标点击时触发                     |
+| ondblclick   | 元素上发生鼠标双击时触发                     |
+| ondrag       | 元素被拖动时运行的脚本                       |
+| ondragend    | 在拖动操作末端运行的脚本                     |
+| ondragenter  | 当元素元素已被拖动到有效拖放区域时运行的脚本 |
+| ondragleave  | 当元素离开有效拖放目标时运行的脚本           |
+| ondragover   | 当元素在有效拖放目标上正在被拖动时运行的脚本 |
+| ondragstart  | 在拖动操作开端运行的脚本                     |
+| ondrop       | 当被拖元素正在被拖放时运行的脚本             |
+| onmousedown  | 当元素上按下鼠标按钮时触发                   |
+| onmousemove  | 当鼠标指针移动到元素上时触发                 |
+| onmouseout   | 当鼠标指针移出元素时触发                     |
+| onmouseover  | 当鼠标指针移动到元素上时触发                 |
+| onmouseup    | 当在元素上释放鼠标按钮时触发                 |
+| onmousewheel | 当鼠标滚轮正在被滚动时运行的脚本             |
+| onscroll     | 当元素滚动条被滚动时运行的脚本               |
+#### Media 事件
+由媒介（比如视频、图像和音频）触发的事件（适用于所有 HTML 元素，但常见于媒介元素中，比如 <audio>、<embed>、<img>、<object> 以及 <video>）:
+
+| 属性               | 描述                                                                     |
+|--------------------+--------------------------------------------------------------------------|
+| onabort            | 在退出时运行的脚本                                                       |
+| oncanplay          | 当文件就绪可以开始播放时运行的脚本（缓冲已足够开始时）                   |
+| oncanplaythrough   | 当媒介能够无需因缓冲而停止即可播放至结尾时运行的脚本                     |
+| ondurationchange   | 当媒介长度改变时运行的脚本                                               |
+| onemptied          | 当发生故障并且文件突然不可用时运行的脚本（比如连接意外断开时）           |
+| onended            | 当媒介已到达结尾时运行的脚本（可发送类似“感谢观看”之类的消息）         |
+| onerror            | 当在文件加载期间发生错误时运行的脚本                                     |
+| onloadeddata       | 当媒介数据已加载时运行的脚本                                             |
+| onloadedmetadata   | 当元数据（比如分辨率和时长）被加载时运行的脚本                           |
+| onloadstart        | 在文件开始加载且未实际加载任何数据前运行的脚本                           |
+| onpause            | 当媒介被用户或程序暂停时运行的脚本                                       |
+| onplay             | 当媒介已就绪可以开始播放时运行的脚本                                     |
+| onplaying          | 当媒介已开始播放时运行的脚本                                             |
+| onprogress         | 当浏览器正在获取媒介数据时运行的脚本                                     |
+| onratechange       | 每当回放速率改变时运行的脚本（比如当用户切换到慢动作或快进模式）         |
+| onreadystatechange | 每当就绪状态改变时运行的脚本（就绪状态监测媒介数据的状态）               |
+| onseeked           | 当 seeking 属性设置为 false（指示定位已结束）时运行的脚本                |
+| onseeking          | 当 seeking 属性设置为 true（指示定位是活动的）时运行的脚本               |
+| onstalled          | 在浏览器不论何种原因未能取回媒介数据时运行的脚本                         |
+| onsuspend          | 在媒介数据完全加载之前不论何种原因终止取回媒介数据时运行的脚本           |
+| ontimeupdate       | 当播放位置改变时（比如当用户快进到媒介中一个不同的位置时）运行的脚本     |
+| onvolumechange     | 每当音量改变时（包括将音量设置为静音）时运行的脚本                       |
+| onwaiting          | 当媒介已停止播放但打算继续播放时（比如当媒介暂停已缓冲更多数据）运行脚本 |
 
 ## 常用特殊符号
 

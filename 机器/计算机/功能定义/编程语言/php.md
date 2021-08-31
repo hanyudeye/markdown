@@ -731,7 +731,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 - $_SERVER 
 - $_GET
 - $_POST
-- $_FILES
+- $_FILES 文件信息，包含 (name,type,tmp_name,error,size) 
 - $_COOKIE 
 - $_SESSION session 
 会话信息是临时的，在用户离开网站后将被删除
