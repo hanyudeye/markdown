@@ -1,24 +1,26 @@
-# HTML (markup language)
- **网页** 中的内容部分，用不同标签标示不同内容[含不可见内容]。
+https://www.w3school.com.cn/tags/html_ref_eventattributes.asp
 
-## 不可见标签
+# HTML (markup language)
+> 供浏览器展示的文本，与 CSS ，JavaScript 共同构建了网页。  
+> 文本中包含 用 xml 标签括起来的元素。  
+
+## 头部标签
 ``` html
 <!DOCTYPE html> 声明html文件
 <html>  文件的开始与结尾
 <head>  头部信息，非实体
-<body>  实体部分
-<script>    样式
-<style> 脚本
+<script> 脚本
+<style> 内部样式
 <link>  链接外部资源
 <meta> 属性
 ```
-* 屏幕大小 
+内容显示方式
 ``` html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-## 可见标签
-### 结构性标签 (控制富文本组织结构)
+## 内容标签
+### 控制内容结构
 ``` html
 <header> 头部
 <section> 章节
@@ -74,17 +76,14 @@
 * colspan 单元格跨列
 * rowspan 单元格跨行
 * align 内容对齐
-### 表单 ###
-#### 数据传输 (数据更结构化) ####
-
+### 表单
+#### 数据传输
 - application/x-www-form-urlencoded
 - multipart/form-data   (多媒体)
 - application/x-www-form+xml  (xml 结构)
 
 
-#### 表单类型 (input) ####
-- date ,month ,week ,time, datetime,datetime-local日期
-- 小数  `<input type="number" min="0" max="100" step="0.01"/>`
+#### 表单
 
 ``` html
 <form action="" id=""form_id" name="form_name" method="" autocomplete="" enctype="">
@@ -110,13 +109,13 @@
 </form>
 
 ```
-
 - action 提交到的服务端地址
 - method 指定提交时用哪种HTTP方法：POST或GET
 - name 标识
 - autocomplete 浏览器是否可以自动填充
 - enctype 指定表单内容编码
 
+- 小数  `<input type="number" min="0" max="100" step="0.01"/>`
 
 
 #### 表单限制
@@ -156,6 +155,26 @@ if ($('#phone').val()!="")
 ```
 
 ## 事件
+### 事件类型
+#### Window事件
+| 属性     | 描述                         |
+|----------+------------------------------|
+| onload   | 页面结束加载之后触发         |
+| onresize | 当浏览器窗口被调整大小时触发 |
+
+#### Form 事件
+
+| 属性         | 描述                             |
+|--------------+----------------------------------|
+| onblur       | 元素失去焦点时运行的脚本。       |
+| onchange     | 在元素值被改变时运行的脚本。     |
+| onfocus      | 当元素获得焦点时运行的脚本。     |
+| onformchange | 在表单改变时运行的脚本。         |
+| onforminput  | 当表单获得用户输入时运行的脚本。 |
+| oninput      | 当元素获得用户输入时运行的脚本。 |
+| onsubmit     | 在提交表单时触发。               |
+
+
 ### 文件上传
 input file 对象 用change 事件触发，用 ajax 提交
 
