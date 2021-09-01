@@ -749,6 +749,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
  ```
 - 404 header('HTTP/1.1 400 Bad request');
 
+
 ## 错误信息 ##
 ``` php
 ini_set("display_errors","On");
