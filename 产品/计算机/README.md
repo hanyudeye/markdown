@@ -15,7 +15,6 @@
 
 
 ## 相关书籍
-视频 https://www.bilibili.com/video/av21376839?spm_id_from=333.788.b_636f6d6d656e74.56
 https://github.com/ddzy/fe-necessary-book
 
 真想系统学习计算机，还是按计算机基础/编程语言→软件工程/数据库/计算机网络→数据结构/组成原理/操作系统···这样循序渐进的学习比较好
