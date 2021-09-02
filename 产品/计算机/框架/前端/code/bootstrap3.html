@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BootStrap3的用法</title>
+	<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+	<section>
+		<legend>
+			<h2>排版</h2>
+		</legend>
+
+		<p class="text-info">本行内容带有一个 info class</p>
+		<blockquote>引用<small>world</small></blockquote>
+		<p class="text-capitalize">class="text-capitalize" 设定单词首字母大写</p>
+		<button type="button" class="btn btn-primary btn-lg">
+			<span class="glyphicon glyphicon-user"></span> 按钮
+		</button>
+
+		<h4>有序列表</h4>
+		<ol>
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+			<li>Item 4</li>
+		</ol>
+		<h4>无序列表</h4>
+		<ul>
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+			<li>Item 4</li>
+		</ul>
+		<h4>未定义样式列表</h4>
+		<ul class="list-unstyled">
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+			<li>Item 4</li>
+		</ul>
+		<h4>内联列表</h4>
+		<ul class="list-inline">
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+			<li>Item 4</li>
+		</ul>
+		<h4>定义列表</h4>
+		<dl>
+			<dt>Description 1</dt>
+			<dd>Item 1</dd>
+			<dt>Description 2</dt>
+			<dd>Item 2</dd>
+		</dl>
+		<h4>水平的定义列表</h4>
+		<dl class="dl-horizontal">
+			<dt>Description 1</dt>
+			<dd>Item 1</dd>
+			<dt>Description 2</dt>
+			<dd>Item 2</dd>
+		</dl>
+	</section>
+	<hr>
+	<section>
+		<legend>
+			<h2>组件</h2>
+		</legend>
+		<div class="dropdown">
+			<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="#">Java</a>
+				</li>
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+				</li>
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+				</li>
+				<li role="presentation" class="divider"></li>
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<hr>
+	<section>
+		<legend>
+			<h2>表单</h2>
+		</legend>
+
+		<h3>垂直表单</h3>
+		<form role="form">
+			<div class="form-group">
+				<label for="name">名称</label>
+				<input type="text" class="form-control" id="name" placeholder="请输入名称">
+			</div>
+			<div class="form-group">
+				<label for="inputfile">文件输入</label>
+				<input type="file" id="inputfile">
+				<p class="help-block">这里是块级帮助文本的实例。</p>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox">请打勾
+				</label>
+			</div>
+			<button type="submit" class="btn btn-default">提交</button>
+		</form>
+
+		<h3>水平表单</h3>
+		<form class=" form-inline" role="form">
+			<div class="form-group">
+				<label for="name">名称</label>
+				<input type="text" class="form-control" id="name" placeholder="请输入名称">
+			</div>
+			<div class="form-group">
+				<label for="inputfile">文件输入</label>
+				<input type="file" id="inputfile">
+				<p class="help-block">这里是块级帮助文本的实例。</p>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox">请打勾
+				</label>
+			</div>
+			<button type="submit" class="btn btn-default">提交</button>
+		</form>
+
+
+	</section>
+
+	<hr>
+	<section>
+		<legend>
+			<h2>模态框</h2>
+		</legend>
+		<h2>创建模态框（Modal）</h2>
+		<!-- 按钮触发模态框 -->
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+					</div>
+					<div class="modal-body">在这里添加一些文本</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default"
+							data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary">提交更改</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+	</section>
+
+	<script src="bootstrap3.js"></script>
+</body>
+
+</html>

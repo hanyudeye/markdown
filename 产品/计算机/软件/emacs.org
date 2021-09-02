@@ -1,0 +1,179 @@
+#+TITLE: emacs 简介
+#+DESCRIPTION: emacs 编辑器 
+#+TAGS[]: emacs
+#+CATEGORIES[]: 技术
+#+DATE: 2019-06-04T22:41:32+08:00
+#+lastmod: 2020-02-05T18:24:57+08:00
+
+一种文本编辑器，因为它是解释执行的，所以可以通过添加代码进行功能扩展。
+# more
+
+** 快速入门 
+   如果想要快速了解一下 emacs 的功能，最好的方法就是先打开 emacs，然后键入 =M-x help-with-tutorial= 命令打开官方文档进行学习。
+   
+  通过入门文档的学习，我们能对 *emacs* 的光标导航，文本查找，buffer，frame 有一个基本理解，还能学到3个帮助函数。
+  
+- =M-x describe-variable=, 快捷键 =C-h v=, 查看变量的文档
+- =M-x describe-function=, 快捷键 =C-h f=, 查看命令的文档
+- =M-x describe-key=, 快捷键 =C-h k=, 查看快捷键的文档
+
+** 基本功能
+*** 文字输入
+   - 键盘字母区的文字可以直接输入 *(insert ?a)*  或 *insert-char*
+   - 输入不可见字符 *quoted-insert*
+   - 输入键盘控制键 : 如  ~C-q  DEL~ ,  ~C-q RET~
+   - 八进制数字 : ~C-q  1 0 1~  插入 ~A~ 
+     
+*** 移动光标 (point)
+    | 后一个字   | forward-char           |
+    | 前一个字   | backward-char          |
+    | 下一行     | next-line              |
+    | 上一行     | previous-line          |
+    | 行首       | move-beginning-of-line |
+    | 行尾       | move-end-of-line       |
+    | 后一个词组 | forward-word           |
+    | 跳到某行   | goto-line              |
+
+*** 删除文字
+    | 删除光标前面的字     | delete-forward-char |
+    | 删除光标后面的字     | delete-char         |
+    | 把光标那行后面都删掉 | kill-line           |
+    | 删掉光标后面词组     | kill-word           |
+
+*** 撤消与恢复
+    | 撤消            | undo           |
+    | 恢复(取消撤销)  | undo-tree-redo |
+    | 恢复整个 buffer | revert-buffer  |
+
+*** 文件操作
+    | 访问 | find-file   |
+    | 保存 | save-buffer |
+*** 长行
+    | 长行换行                 | toggle-truncate-lines    |
+    | 自动填充(自动插入换行符) | auto-fill-mode           |
+    | 截断长行                 | fill-paragraph           |
+    | 截断区域                 | fill-region-as-paragraph |
+    | 设置断行的长度           | set-fill-column          |
+    | 设置填充前缀             | set-fill-prefix          |
+    
+*** 文本信息
+    | 哪一行         | what-line            |
+    | 模式行显示行号 | line-number-mode     |
+    | 模式行显示列号 | column-number-mode   |
+    | 区域信息       | count-words-region   |
+    | 缓冲区信息     | count-words          |
+    | 字符信息       | what-cursor-position |
+    | 高亮行         | hl-line-mode         |
+    | 缓冲区大小     | size-indication-mode |
+     
+*** 数字参数
+    有些命令要执行多次，可以加一个数字参数 
+    ~M~ 键加一个数字 N 就能执行 N 次命令
+*** 输入法
+    | 设置输入法 | set-input-method    |
+    | 输入法开关 | toggle-input-method |
+
+    #+begin_quote
+    M-x set-input-method RET TeX will allow you to write e.g. \beta to get β,
+    \sum or \Sigma to get Σ etc.
+    #+end_quote
+
+** 高级一点的功能
+*** Mark (标记) 
+    | 拖动标记              | set-mark-command        |
+    | 标记词                | mark-word               |
+    | 标记段 |mark-paragraph                          |
+    | 切换标记点            | exchange-point-and-mark |
+*** kill
+    | kill 行                       | kill-line      |
+    | kill 选区                     | kill-region    |
+    | 复制选区                      | kill-ring-save |
+    | 粘贴 *kill-ring* 顶部条目     | yank           |
+    | 弹出 *kill-ring* 列表余下条目 | yank-pop       |
+
+    #+begin_quote
+    #+begin_verse
+    不保存在 ~kill-ring~   的命令叫 ~delete~ 命令，通常删除字，词这些删的少的。 
+    如果要执行 ~yank-pop~ , 上一次命令 必须是 ~yank~ 命令哦
+    #+end_verse
+    #+end_quote
+*** rectangle (矩形标记)
+    | 标记矩形 | rectangle-mark-mode |
+*** 暂存器  ( 临时存储 ) 
+    | 访问寄存器内容       | view-register              |
+    | 记录位置             | point-to-register          |
+    | 跳转到位置           | jump-to-register           |
+    | 拷贝 *text* 到寄存器 | copy-to-register           |
+    | 弹出寄存器内容       | insert-register            |
+    | 内容追加             | append-to-register         |
+    | 拷贝矩形到寄存器     | copy-rectangle-to-register |
+     
+*** 搜索和替换 
+    | 向后搜 | isearch-forward  |
+    | 向前搜 | isearch-backward |
+    | 替换   | replace-string   |
+
+*** 大小转化  ( upcase, lowcase ) 
+*** 键盘宏  
+    | 记录键盘序列                   | kmacro-start-macro-or-insert-counter |
+    | 结束记录键盘宏，作为当前可用宏 | kmacro-end-or-call-macro             |
+
+*** 目录
+    | 显示目录列表 | list-directory   |
+    | 创建目录     | make-directory   |
+    | 删除目录     | delete-directory |
+*** 十六进制
+    | 插入 16 进制 | hexl-insert-hex-char |
+
+** 编码
+   | 查看文字编码信息       | what-cursor-position          |
+   | 设置 *buffer* 编码格式 | set-buffer-file-coding-system |
+   
+   #+begin_quote
+   网上查看编码信息， https://www.qqxiuzi.cn/bianma/zifuji.php ,可能会失效，网上搜个。
+   #+end_quote
+   
+** 服务 
+   #+begin_quote
+   开启服务后，就能共享 *emacs* 环境了。还可以设置多个不同服务
+   #+end_quote
+   | 开启服务         | server-start          |
+   | 连接服务         | emacsclient           |
+   | 设置客户端编辑器 | EDITOR=emacsclient -c |
+   | 关闭服务文件     | ~C-x #~               |
+
+** 扩展
+   | 列出扩展 | list-packages            |
+   | 重新安装 | package-reinstall        |
+   | 加载扩展 | load-file                |
+   | 加载扩展 | require                  |
+   | 字节编译 | byte-recompile-directory |
+** 排错
+   | 捕捉错误 | debug-on-error |
+
+** 帮助
+   | 初学者帮助 | help-with-tutorial |
+   | emacs 文档 | info-emacs-manual  |
+   | 按键信息   | describe-key       |
+   | 命令帮助   | describe-function  |
+   | 变量信息   | describe-variable  |
+
+** 选项
+   - q   不装载初始化文件
+   - l file 装载 文件 file 里面 的 lisp 代码
+   - f function 执行 lisp 函数 function
+
+** 自定义配置
+*** 创建配置文件 .emacs-light
+    #+begin_src lisp
+    (load "~/.emacs.d/main" nil t)
+    (load "~/.emacs.d/functions" nil t)
+    (load "~/.emacs.d/modes" nil t)
+    (load "~/.emacs.d/theme" nil t)
+    #+end_src
+    
+    emacs 会加载 main.elc 或 main.el 文件
+*** 加载配置文件
+    #+begin_src lisp
+    emacs -q -l ~/.emacs-light
+    #+end_src
