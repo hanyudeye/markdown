@@ -1,10 +1,10 @@
-# HTML (markup language)
-> 供浏览器展示的文本，与 CSS ，JavaScript 共同构建了网页。  
-> 文本中包含 用 xml 标签括起来的元素。  
+# HTML 
+> web 页面的基本构成  
+> 文本中包含 用 xml 标签括起来的元素  
 
 ## 头部标签
 ``` html
-<!DOCTYPE html> 声明html文件
+<!DOCTYPE html> 声明html文件，遵循某种标准？
 <html>  文件的开始与结尾
 <head>  头部信息，非实体
 <script> 脚本
@@ -12,7 +12,8 @@
 <link>  链接外部资源
 <meta> 属性
 ```
-内容显示方式
+
+- 内容显示
 ``` html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
@@ -76,9 +77,9 @@
 * align 内容对齐
 ### 表单
 #### 表单编码 enctype
-- application/x-www-form-urlencoded
-- multipart/form-data   (含有文件的表单)
-- application/x-www-form+xml  (xml 结构)
+- application/x-www-form-urlencoded  (Form Data 表单类型)
+- multipart/form-data   (含有文件的表单) (Form Data 表单类型)
+- text/plain  纯文本 (php中 无法获取值)
 
 #### 表单
 ``` html
@@ -108,9 +109,9 @@
 - action 提交到的服务端地址
 - method 指定提交时用哪种HTTP方法：POST或GET
 - name 标识
-- autocomplete 浏览器是否可以自动填充
+- autocomplete="on/off" 浏览器是否可以自动填充(历史记录填充)
 - enctype 指定表单内容编码
-
+- pattern="[a-zA-Z0-9]*"  输入限制
 - 小数  `<input type="number" min="0" max="100" step="0.01"/>`
 
 #### 文件上传
