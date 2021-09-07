@@ -6,16 +6,21 @@
 ; 日期 名词，表示消费分类
 ; 备注具体会计费用,  金额 正的为收入，负的为支出
 ; 会计账户，可指定不同账户
+; 储蓄
 
 2021/09/02 生活支出
-    out: 月伙食费                                         $450
-    acount: wuming
+    out:伙食
+    Liabilities:Savings Card                              -450CNY
 2021/09/03 工作
     in: 工资                                          
-    acount: wuming                                       $3000 
+    Liabilities:Savings Card                               3000CNY 
 2021/09/03 生活支出
-    out: 商店买吃的                                          $30
-    acount: wuming
+    out: 商店买吃的                                          
+    Liabilities:Savings Card                               -30CNY 
+
+2021/09/06 生活支出
+    out: 午饭
+    Liabilities:Savings Card                               -16CNY
 
 
 
