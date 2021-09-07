@@ -1,5 +1,5 @@
 # bootstrap3 ##
-> web页 样式模板
+
 ## Bootstrap css
 ### 网格系统
 #### 媒体查询 (有条件的CSS规则)

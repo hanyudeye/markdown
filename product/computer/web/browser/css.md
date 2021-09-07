@@ -1,6 +1,8 @@
 # css (Cascading Style Sheets)  
- **网页** 中的外观部分，用 {选择器+样式} 指明 内容对应的样式 。
- 
+把标签的样式属性写在 HTML中会大大扩展 html 文件的大小，把样式属性单独写在一个文件中可以减少体积
+
+> 基本规则是选择器 + 样式列表
+
 ## 选择器 ##
 ### 标签选择器
 ### 属性选择器 ###
@@ -55,8 +57,7 @@
 5.  透明 opacity
 
 ### 长度
-
-#### 绝对长度 (不介意，尺寸不固定) ####
+#### 绝对长度 (尺寸不固定，慎用) 
 
 | 单位 | 描述                       |
 |------+----------------------------|
@@ -69,7 +70,7 @@
 
 像素（px）是相对于观看设备的。对于低 dpi 的设备，1px 是显示器的一个设备像素（点）。对于打印机和高分辨率屏幕，1px 表示多个设备像素。
 
-#### 相对长度 ####
+#### 相对长度 (随着浏览器窗口缩放进行缩放)
 
 | 单位 | 描述                                                             |
 |------+------------------------------------------------------------------|
@@ -94,7 +95,6 @@
 - -moz- mozilla
 
 ### 文字
-
 - text-align 文字排列 (left,right,center)
 - line-height 行高
 - text-decoration  underline(下划线) overline(上划线) line-through(穿过线) blink(闪烁)	 inherit
@@ -409,8 +409,8 @@ src:url(http://www.examples.com/fonts/Calibri.ttf);
 
 ### 过渡效果 动画
 
-    div{transition:width 2s;}
-    div:hover{width:300px;}
+div{transition:width 2s;}
+div:hover{width:300px;}
 
 -   transition-property 	规定应用过渡的 CSS 属性的名称
 -   transition-duration 	定义过渡效果花费的时间

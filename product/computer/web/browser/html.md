@@ -1,8 +1,10 @@
 # HTML 
-> web 页面的基本构成  
-> 文本中包含 用 xml 标签括起来的元素  
+> web 页面的基本构成，web 浏览器解析富文本之用   
+> 范围元素用配对的标签标示，独立元素不需要配对  
+> 网页的主体内容 包含文字 ，表格，列表，图片，音乐，视频，表单
+> 事件用来赋予 网页内容的交互性
 
-## 头部标签
+## 头部标签  (含有特定意义)
 ``` html
 <!DOCTYPE html> 声明html文件，遵循某种标准？
 <html>  文件的开始与结尾
@@ -13,13 +15,12 @@
 <meta> 属性
 ```
 
-- 内容显示
+- 元信息
 ``` html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-## 内容标签
-### 控制内容结构
+## 控制结构
 ``` html
 <header> 头部
 <section> 章节
@@ -31,7 +32,8 @@
 <div> 标示一块区域
 ```
 
-### 文字格式化
+## 内容
+### 控制文字格式
 ``` html
 <b> 粗体
 <strong>    粗体
@@ -115,7 +117,7 @@
 - 小数  `<input type="number" min="0" max="100" step="0.01"/>`
 
 #### 文件上传
-表单结构
+
 ```  html
 <form action="/index/index/upload" enctype="multipart/form-data" method="post">
 <input type="file" name=""  id="" accept="image/*" >
@@ -173,7 +175,62 @@ if ($('#phone').val()!="")
 
 ```
 
+## 其它
+### 常用特殊符号 ###
+
+| HTML    | 显示结果 | 描述                   |
+|---------+----------+------------------------|
+| &lt;    | <        | 小于号或显示标记       |
+| &gt;    | >        | 大于号或显示标记       |
+| &amp;   | &        | 可用于显示其它特殊字符 |
+| &quot;  | “       | 引号                   |
+| &reg;   | ®        | 已注册                 |
+| &copy;  | ©        | 版权                   |
+| &trade; | ™        | 商标                   |
+| &ensp;  |          | 半个空白位             |
+| &emsp;  |          | 一个空白位             |
+| &nbsp;  |          | 不断行的空白           |
+
+
+
+### 一句话 Lorem 
+
+
+# DOM (内容树) 
+浏览器提供的操作元素的接口
+
+## 获取节点元素
+### getElementById 
+```js
+document.getElementById 
+``` 
+> 是 document特有的属性
+
+### getElemetnsByTagName / getElementsByClassName 
+
+``` js
+element.getElemetnsByTagName(tag)
+element.getElementsByClassName(classname)
+```
+### childNodes
+### nodeValue
+### firstChild lastChild属性
+## 获取/设置属性 getAttribute /setAttribute
+object.getAttribute(attribute)
+object.setAttribute(attribute,value)
+## 获取/设置样式 style
+object.style.stylename
+
+*.style.fontFamily
+*.style.color=value
+
+更好的方法是修改 className 属性
+``` js
+element.className=value
+```
+
 ## 事件
+>在 html 中是 on属性 ，在 addEventListener 中去掉 on
 ### 事件类型
 #### Window事件
 | 属性     | 描述                         |
@@ -265,19 +322,136 @@ function keydown(event){
 | onvolumechange     | 每当音量改变时（包括将音量设置为静音）时运行的脚本                       |
 | onwaiting          | 当媒介已停止播放但打算继续播放时（比如当媒介暂停已缓冲更多数据）运行脚本 |
 
-## 常用特殊符号
+## 动态创建标签
+* document.createElement(nodeName)
+* document.createTextNode(text)
+* appendChild(child)
+* innerHTML
 
-| HTML    | 显示结果 | 描述                   |
-|---------+----------+------------------------|
-| &lt;    | <        | 小于号或显示标记       |
-| &gt;    | >        | 大于号或显示标记       |
-| &amp;   | &        | 可用于显示其它特殊字符 |
-| &quot;  | “       | 引号                   |
-| &reg;   | ®        | 已注册                 |
-| &copy;  | ©        | 版权                   |
-| &trade; | ™        | 商标                   |
-| &ensp;  |          | 半个空白位             |
-| &emsp;  |          | 一个空白位             |
-| &nbsp;  |          | 不断行的空白           |
+## 动画 setTimeout
+``` js
+// if(!elem.style.left)
+function pom() {
+  if (!document.getElementById) return false;
+  if (!document.getElementsByTagName) return false;
+  var elem = document.getElementById("message");
+  elem.style.position = "absolute";
+  elem.style.left = "50px";
+  elem.style.top = "100px";
+  move("message", 200, 100, 10);
+}
+function move(tag, movex, movey, movetime) {
+  var elem = document.getElementById(tag);
+  var x = parseInt(elem.style.left);
+  var y = parseInt(elem.style.top);
+  if (x == movex && y == movey) return true;
+  if (x < movex) x++;
+  if (x > movex) x--;
+  if (y < movey) y++;
+  if (y > movey) y--;
+  elem.style.left = x + "px";
+  elem.style.left = y + "px";
+  setTimeout("move(tag,movex,movey,movetime)", movetime);
+}
+addLoadEvent(pom);
 
+```
+## canvas
 
+``` js
+var eleFile = document.querySelector('#file');
+// 压缩图片需要的一些元素和对象
+var reader = new FileReader(), img = new Image();
+// 选择的文件对象
+var file = null;
+// 缩放图片需要的canvas
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+
+// base64地址图片加载完毕后
+img.onload = function () {
+    // 图片原始尺寸
+    var originWidth = this.width;
+    var originHeight = this.height;
+    // 最大尺寸限制
+    var maxWidth = 400, maxHeight = 400;
+    // 目标尺寸
+    var targetWidth = originWidth, targetHeight = originHeight;
+    // 图片尺寸超过400x400的限制
+    if ((originWidth > maxWidth) || (originHeight > maxHeight)) {
+        if ((originWidth/originHeight)>(maxWidth / maxHeight)) {
+            // 更宽，按照宽度限定尺寸
+            targetWidth = maxWidth;
+            targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+        } else {
+            targetHeight = maxHeight;
+            targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+        }
+    }
+        
+    // canvas对图片进行缩放
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    // 清除画布
+    context.clearRect(0, 0, targetWidth, targetHeight);
+    // 图片压缩
+    context.drawImage(img, 0, 0, targetWidth, targetHeight);
+    //本地预览
+    var type = 'image/jpeg';
+        //第一种：将canvas元素中的图像转变为DataURL
+        var dataurl = canvas.toDataURL(type);
+        $("#ceshi1").attr("src",dataurl);
+
+//第二种
+        //抽取DataURL中的数据部分，从Base64格式转换为二进制格式
+        var bin = atob(dataurl.split(',')[1]);
+        //创建空的Uint8Array
+        var buffer = new Uint8Array(bin.length);
+        //将图像数据逐字节放入Uint8Array中
+        for (var i = 0; i < bin.length; i++) {
+            buffer[i] = bin.charCodeAt(i);
+        }
+        //利用Uint8Array创建Blob对象
+        var blob = new Blob([buffer.buffer], {type: type});
+        var url = window.URL.createObjectURL(blob);
+        $("#ceshi").attr("src",url);
+
+    
+    // canvas转为blob并上传
+    canvas.toBlob(function (blob) {
+        // 图片ajax上传
+        var xhr = new XMLHttpRequest();
+        // 文件上传成功
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200) {
+                // xhr.responseText就是返回的数据
+            }
+        };
+        // 开始上传
+        xhr.open("POST", 'upload.php', true);
+        xhr.send(blob);    
+    }, file.type || 'image/png');
+};
+
+// 文件base64化，以便获知图片原始尺寸
+reader.onload = function(e) {
+    img.src = e.target.result;
+};
+eleFile.addEventListener('change', function (event) {
+    file = event.target.files[0];
+    // 选择的文件是图片
+    if (file.type.indexOf("image") == 0) {
+     reader.readAsDataURL(file);  
+     
+    }
+});
+```
+## Ajax技术
+用到了异步发送请求 XMLHttpRequest
+
+方法
+``` js
+new XMLHttpRequest().open("GET","http://..",true)
+onreadystatechange
+send
+``` 
