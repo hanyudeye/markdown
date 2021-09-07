@@ -1,6 +1,11 @@
-# php基础
+# php
+>server 对于脚本文件的请求，会传送给相应的脚本执行程序解析后返回给浏览器。非脚本则通过 url 返回文件给浏览器。 
 
-## "静"物
+## 基本语法
+> 通用编程语言的句式为 ： 1.动词+名词结合而成的语句。2. 如果开头的判断语句
+
+
+## 名词类型
 - String（字符串）
 - Integer（整型）
 - Float（浮点型）
@@ -9,7 +14,7 @@
 - Object（对象）
 - NULL（空值）
 
-## "动"物
+## 动词
 ### String
 - strlen
 - strpos
@@ -18,7 +23,7 @@
 - count 长度
 - sort 升序 rsort 降序 asort,arsort 值排序 ksor,krsort 键排序
 
-## 判断物的类型
+## 判断类型
 ``` php
 gettype();
 isset():  //变量是否已经声明
