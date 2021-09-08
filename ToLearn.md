@@ -1,3 +1,11 @@
+
+* need to see
+  - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
+- 多看github 中的大神
+- 挣钱开刀做手术
+
+https://github.com/521xueweihan/HelloGitHub/blob/master/content/01/HelloGitHub01.md
+
 # 学习
 
 ## 1、Github: 程序员神站不解释。上面有各种开源库供学习使用，程序员心中的信仰！

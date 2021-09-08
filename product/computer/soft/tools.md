@@ -1,9 +1,20 @@
 
-# 产品
-## 办公 ##
 
-### office ###
+- find 和 xargs
+- 后台执行
+- << 与 >>
+- 传递参数
+- 函数
+- 控制流程
+- 环境变量
+- grep
+- 合并与分割
+- sed
+- 正则
+- awk
 
+
+# 指令
 ## 日常处理 ##
 
 | 命令                                   | 功能                                                        |
@@ -168,7 +179,7 @@ cat cast.json | svg-term-cli
 - http://sorting.at/
 - https://visualgo.net/zh
 
-## 在线工具 ##
+## Web
 
 - [工具大全](https://www.diycode.cc/sites)  
 - [正则表达式在线工具](https://regexr.com/)
@@ -208,7 +219,6 @@ stars:>20 extension:el language:elisp
 ```
 
 ## Tools ##
-
 ## 文件管理 ##
 
 ### 查找 ###
