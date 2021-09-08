@@ -1,7 +1,7 @@
 # HTML 
 > web 页面的基本构成，web 浏览器解析富文本之用   
 > 范围元素用配对的标签标示，独立元素不需要配对  
-> 网页的主体内容 包含文字 ，表格，列表，图片，音乐，视频，表单
+> 网页的主体内容 包含文字 ，表格，列表，图片，音乐，视频，表单  
 > 事件用来赋予 网页内容的交互性
 
 ## 头部标签  (含有特定意义)
@@ -455,3 +455,38 @@ new XMLHttpRequest().open("GET","http://..",true)
 onreadystatechange
 send
 ``` 
+
+# BOM (好多是实验性质)
+## history
+- window.history.back()
+- window.history.forward()
+- window.history.go()
+- window.history.length
+- window.history.pushState()
+- window.history.replaceState()
+
+## 跨源通信
+### 有安全问题
+1. 使用 iframe 或 Frameset 调用其它网站的页面
+2. Web Service 为代表的主动服务模式
+
+CSRF(Cross-Site Request Forgery) 跨站请求伪造
+>伪装来自受信任用户的请求
+### 安全使用
+sandbox  
+``` html
+<iframe sandbox src="frame1.html"></iframe>
+<iframe sandbox="allow-forms allow-scripts" src="frame1.html"></iframe>
+```
+
+### 跨文档消息通信
+#### window.postMessage
+#### 服务器端推送事件
+#### 管道消息传送  MessageChannel
+
+
+
+## Notification Api ##
+> window.webkitNotifications
+
+
