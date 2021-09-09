@@ -60,7 +60,12 @@ var y=false;
 | getSeconds()      | 返回 Date 对象的秒数 (0 ~ 59)             |
 | getTime()         | 返回1970年1月1日至今的毫秒数              |
 
-### 正则表达式
+### 查找
+#### 匹配查找
+```js
+let i="youare pttpme".indexOf("http")
+```
+#### 正则查
 /正则表达式主体/修饰符(可选)
 
 
@@ -71,13 +76,52 @@ var y=false;
 | m      | 执行全局匹配多行匹配                                 |
 
 ``` js
+//返回查找到的地方，没有则-1
 var str = "Visit Runoob!"; 
 var n = str.search(/Runoob/i);
+
 ```
 
-# 性能
-为了性能考虑，可以合并脚本，并压缩。
-## 内容分发
+``` js
+//相同效果
+var pattern1=/http/;
+var pattern2=new RegExp("http");
+
+if(pattern1.test("http://www.google.com")){
+alert("match");
+}else{
+alert("not match")
+}
+```
+
+ 验证
+``` 
+//邮箱
+var isemail=(/^/w+((-/w+)|(/./w+))*/@[A-Za-z0-9]+((/.|-)[A-Za-z0-9]+)*/.[A-Za-z0-9]+$/)
+
+//手机号
+1. <input onkeydown="this.value=this.value.replace('/\D/g','');" maxlength="11"/>
+
+2. function inputmobile(obj) {
+    obj.value = obj.value.replace(/\D+/g,'');
+    if (obj.value.length >=11) { 
+        obj.value = obj.value.substr(0,11);
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/g; 
+        if(!myreg.test(obj.value)) {
+            obj.value = '请输入正确的手机号';
+        }  
+    }
+}
+
+
+```
+
+
+# 提高性能
+## 合并脚本
+## 压缩
+
+## 利用CDN加速
 
 ``` html
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>

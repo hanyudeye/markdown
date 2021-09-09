@@ -1,0 +1,31 @@
+* 命令
+** layers  
+** packages
+** Environment
+   命令执行时，读取环境变量的值
+** Binding keys
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-]") 'forward-char)
+     #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (define-key evil-insert-state-map (kbd "C-]") 'forward-char)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (spacemacs/set-leader-keys "C-]" 'forward-char)
+  (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode "C-]" 'forward-char)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (spacemacs/declare-prefix-for-mode 'org-mode "mo" "custom")
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "oi" 'org-id-get-create)
+#+END_SRC
+
+
+** GUI Elements
+*** Mode-line 
+** Layouts and workspace
+** Commands
+** Server
+** Troubleshoot

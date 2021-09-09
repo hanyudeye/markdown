@@ -1,11 +1,5 @@
 # php
->server 对于脚本文件的请求，会传送给相应的脚本执行程序解析后返回给浏览器。非脚本则通过 url 返回文件给浏览器。 
-
-## 基本语法
-> 通用编程语言的句式为 ： 1.动词+名词结合而成的语句。2. 如果开头的判断语句
-
-
-## 名词类型
+## 数据
 - String（字符串）
 - Integer（整型）
 - Float（浮点型）
@@ -14,7 +8,11 @@
 - Object（对象）
 - NULL（空值）
 
-## 动词
+### 类
+- 继承(包含) extends
+- 多态
+
+## 命令
 ### String
 - strlen
 - strpos
@@ -23,7 +21,13 @@
 - count 长度
 - sort 升序 rsort 降序 asort,arsort 值排序 ksor,krsort 键排序
 
-## 判断类型
+### 数据转换
+- doubleval
+- floatval
+- intval
+- strval
+### 判断数据类型 
+
 ``` php
 gettype();
 isset():  //变量是否已经声明
@@ -41,140 +45,7 @@ is_array():       // 检测变量是否是数组
 is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 ```
 
-# 其他
-## 命令行 ##
-
-### 内置Web服务器 ###
-
-> php -S localhost:8000
-
-## 软件中心 ##
-
-### composer ###
-
- - 中文镜像 composer config -g repo.packagist composer https://packagist.laravel-china.org
- - 安装依赖 composer require twig/twig:~1.8
- - 全局安装 composer global require phpunit/phpunit
-
-## 开发实践 ##
-
-### 日期和时间 ###
-
-```
-<?php
-$raw = '22. 11. 1968';
-$start = DateTime::createFromFormat('d. m. Y', $raw);
-
-echo 'Start date: ' . $start->format('Y-m-d') . "\n";
-``` 
-
-### 使用 UTF-8  编码 ###
-
-获取长度 ，使用 mb_strlen
-![](image/php/2021-05-04_17-56.png)
-
-### 数据库层面的 UTF-8 ###
-
-使用 utf8mb4 字符集 ，而非 utf8 ，可以得到完整的 UTF-8 支持
-
-### 浏览器层面的 UTF-8 ###
-
-``` 
-<?php
-// Tell PHP that we're using UTF-8 strings until the end of the script
-mb_internal_encoding('UTF-8');
- 
-// Tell PHP that we'll be outputting UTF-8 to the browser
-mb_http_output('UTF-8');
- 
-// Our UTF-8 test string
-$string = 'Êl síla erin lû e-govaned vîn.';
- 
-// Transform the string in some way with a multibyte function
-// Note how we cut the string at a non-Ascii character for demonstration purposes
-$string = mb_substr($string, 0, 15);
- 
-// Connect to a database to store the transformed string
-// See the PDO example in this document for more information
-// Note the `charset=utf8mb4` in the Data Source Name (DSN)
-$link = new PDO(
-    'mysql:host=your-hostname;dbname=your-db;charset=utf8mb4',
-    'your-username',
-    'your-password',
-    array(
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_PERSISTENT => false
-    )
-);
- 
-// Store our transformed string as UTF-8 in our database
-// Your DB and tables are in the utf8mb4 character set and collation, right?
-$handle = $link->prepare('insert into ElvishSentences (Id, Body) values (?, ?)');
-$handle->bindValue(1, 1, PDO::PARAM_INT);
-$handle->bindValue(2, $string);
-$handle->execute();
- 
-// Retrieve the string we just stored to prove it was stored correctly
-$handle = $link->prepare('select * from ElvishSentences where Id = ?');
-$handle->bindValue(1, 1, PDO::PARAM_INT);
-$handle->execute();
- 
-// Store the result into an object that we'll output later in our HTML
-$result = $handle->fetchAll(\PDO::FETCH_OBJ);
-
-header('Content-Type: text/html; charset=UTF-8');
-?><!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>UTF-8 test page</title>
-    </head>
-    <body>
-        <?php
-        foreach($result as $row){
-            print($row->Body);  // This should correctly output our transformed UTF-8 string to the browser
-        }
-        ?>
-    </body>
-</html>
-
-```
-
-## 错误报告 ##
-
-### 开发环境 ###
-
-```
-display_errors = On
-display_startup_errors = On
-error_reporting = -1
-log_errors = On
-```
-
-### 生产环境 ###
-
-```
-display_errors = Off
-display_startup_errors = Off
-error_reporting = E_ALL
-log_errors = On
-```
-
-## 代码注释 ##
-
-### PHPDoc ###
-
-PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可以使用。
-
-```
-@author 标记是用來说明代码的作者，在多位开发者的情况下，可以同时列出好几位。
-@link 标记用来提供网站链接，进一步说明代码和网站之间的关系
-@param 标记，说明类型、名字和传入方法的参数。
-@return 和 @throws 标记说明返回类型以及可能抛出的异常。
-```
-
-# 手册 #
-## Array ##
+### Array ###
 
 | 函数                      | 描述                                                                                               |
 |---------------------------+----------------------------------------------------------------------------------------------------|
@@ -259,9 +130,9 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | uksort()                  | 使用用户自定义的比较函数对数组中的键名进行排序。                                                   |
 | usort()                   | 使用用户自定义的比较函数对数组进行排序。                                                           |
 
-## Calendar ##
+### Calendar ###
 
-## cURL ##
+### cURL ###
 
 
 | 函数                       | 描述                                                         |
@@ -296,7 +167,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | curl_unescape()            | 解码URL编码后的字符串。                                      |
 | curl_version()             | 获取cURL版本信息。                                           |
 
-## Date ##
+### Date ###
 
 格式化 
 
@@ -320,7 +191,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 
 - strtotime 时间转time
 
-## Directory ##
+### Directory ###
 
 | 函数        | 描述                               |
 |-------------+------------------------------------|
@@ -333,9 +204,11 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | readdir()   | 返回目录句柄中的条目。             |
 | rewinddir() | 重置目录句柄。                     |
 | scandir()   | 返回指定目录中的文件和目录的数组。 |
-## Error ##
 
-## Filesystem ##
+### Error ###
+
+### Filesystem ###
+
 | 函数                  | 描述                                                            |
 |-----------------------+-----------------------------------------------------------------|
 | basename()            | 返回路径中的文件名部分。                                        |
@@ -420,12 +293,8 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | umask()               | 改变文件的文件权限。                                            |
 | unlink()              | 删除文件。                                                      |
 
-## Filter ##
 
-## FTP ##
-
-## HTTP ##
-
+### HTTP ###
 
 | 函数           | 描述                                                |
 |----------------+-----------------------------------------------------|
@@ -435,11 +304,22 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | setcookie()    | 向客户端发送一个 HTTP cookie。                      |
 | setrawcookie() | 不对 cookie 值进行 URL 编码，发送一个 HTTP cookie。 |
 
-## LibXML ##
+- setcookie("user", "runoob", time()+3600);
+- setcookie(name, value, expire, path, domain);
 
-## Mail ##
 
-## Math ##
+```php
+// Redirect to login page
+header('HTTP/1.1 302 Redirect');
+header('Location: /login.php');
+header('HTTP/1.1 400 Bad request');
+ ```
+
+### LibXML ###
+
+### Mail ###
+
+### Math ###
 
 
 | 函数            | 描述                                                  |
@@ -493,7 +373,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | tan()           | 返回一个数的正切。                                    |
 | tanh()          | 返回一个数的双曲正切。                                |
 
-## Misc 杂项 
+### Misc 杂项 ###
 
 | 函数                   | 描述                                          |
 |------------------------+-----------------------------------------------|
@@ -519,7 +399,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | unpack()               | 从二进制字符串对数据进行解包。                |
 | usleep()               | 延迟代码执行若干微秒。                        |
 
-## MySQLi ##
+### MySQLi ###
 
 | 函数                              | 描述                                                            |
 | mysqli_affected_rows()            | 返回前一次 MySQL 操作所影响的记录行数。                         |
@@ -592,7 +472,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | mysqli_use_result()               | 从上次使用 mysqli_real_query() 执行的查询中初始化结果集的检索。 |
 | mysqli_warning_count()            | 返回连接中的最后一个查询的警告数量。                            |
 
-## SimpleXML ##
+### SimpleXML ###
 
 
 | 函数                     | 描述                                              |
@@ -613,8 +493,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | simplexml_load_string()  | 转换 XML 字符串为 SimpleXMLElement 对象。         |
 | xpath()                  | 运行对 XML 数据的 XPath 查询。                    |
 
-## String ##
-
+### String ###
 
 | 函数                         | 描述                                                              |
 | addcslashes()                | 返回在指定的字符前添加反斜杠的字符串。                            |
@@ -641,7 +520,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | htmlspecialchars_decode()    | 把一些预定义的 HTML 实体转换为字符。                              |
 | htmlspecialchars()           | 把一些预定义的字符转换为 HTML 实体。                              |
 | implode()                    | 返回一个由数组元素组合成的字符串。                                |
-| join()                       | implode() 的别名。                                                |
+| join()                       | implode() 的别名                                                  |
 | lcfirst()                    | 把字符串中的首字符转换为小写。                                    |
 | levenshtein()                | 返回两个字符串之间的 Levenshtein 距离。                           |
 | localeconv()                 | 返回本地数字及货币格式信息。                                      |
@@ -716,9 +595,11 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | vprintf()                    | 输出格式化的字符串。                                              |
 | vsprintf()                   | 把格式化字符串写入变量中。                                        |
 | wordwrap()                   | 按照指定长度对字符串进行折行处理。                                |
-## XML Parser ##
 
-## Zip ##
+### XML Parser ###
+
+### Zip ###
+
 读取压缩文件
 | 函数                          | 描述                                      |
 | zip_close()                   | 关闭 ZIP 文件。                           |
@@ -732,7 +613,7 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 | zip_open()                    | 打开 ZIP 文件。                           |
 | zip_read()                    | 读取 ZIP 文件中的下一个项目。             |
 
-## 请求 ##
+### 客户端请求
 
 - $_SERVER 
 - $_GET
@@ -743,27 +624,16 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 会话信息是临时的，在用户离开网站后将被删除
 设置或获取 Session 都要先 执行 session_start();
 
-## 响应 ##
+### 显示错误
 
-- cookie setcookie("user", "runoob", time()+3600);
-- setcookie(name, value, expire, path, domain);
-- 重定向
-```
-// Redirect to login page
- header('HTTP/1.1 302 Redirect');
- header('Location: /login.php');
- ```
-- 404 header('HTTP/1.1 400 Bad request');
-
-
-## 错误信息 ##
 ``` php
 ini_set("display_errors","On");
 error_reporting(E_ALL); 
 ```
-## 验证 ##
 
-### 验证Email ###
+### 验证 ###
+
+#### 验证Email ####
 
 ```php
 <?php
@@ -776,12 +646,14 @@ if ($isEmail !== false) {
 }
 ```
 
-## 对象缓存 ##
+### 对象缓存 ###
 
-### Memcached ###
+#### Memcached ####
 
-### redis ###
-#### php.ini配置 
+#### redis ####
+
+##### php.ini配置 #####
+
 ``` config
 [redis]
 extension = redis.so
@@ -792,7 +664,8 @@ phpinfi();
 ```
 有 redis 内容则配置成功
 
-#### 连接到 Redis 服务器
+##### 连接到 Redis 服务器 #####
+
 ``` php
 <?php 
     //Connecting to Redis server on localhost 
@@ -802,7 +675,9 @@ phpinfi();
     //check whether server is running or not 
     echo "Server is running: ".$redis->ping(); 
 ```
-#### $Redis PHP 字符串示例
+
+##### $Redis PHP 字符串示例 #####
+
 ``` php
 <?php 
     //Connecting to Redis server on localhost 
@@ -815,7 +690,8 @@ phpinfi();
     echo "Stored string in redis:: " .$redis→get("tutorial-name"); 
 ```
 
-#### Redis php 列表示例
+##### Redis php 列表示例 #####
+
 ``` php
 <?php 
     //Connecting to Redis server on localhost 
@@ -832,7 +708,9 @@ phpinfi();
     echo "Stored string in redis:: "; 
     print_r($arList); 
 ```
-#### Redis php 键示例
+
+##### Redis php 键示例 #####
+
 ``` php
 <?php 
     //Connecting to Redis server on localhost 
@@ -845,6 +723,135 @@ phpinfi();
     print_r($arList); 
  ?>
 ```
+
+### 日期和时间
+
+```
+<?php
+$raw = '22. 11. 1968';
+$start = DateTime::createFromFormat('d. m. Y', $raw);
+
+echo 'Start date: ' . $start->format('Y-m-d') . "\n";
+``` 
+
+### 正则查找 (模糊查找)
+#### preg_match
+
+
+
+
+# 其他
+## 下载库
+### composer ###
+
+ - 中文镜像 composer config -g repo.packagist composer https://packagist.laravel-china.org
+ - 安装依赖 composer require twig/twig:~1.8
+ - 全局安装 composer global require phpunit/phpunit
+
+## 开发实践 ##
+
+### 浏览器层面的 UTF-8 ###
+
+``` php 
+<?php
+// Tell PHP that we're using UTF-8 strings until the end of the script
+mb_internal_encoding('UTF-8');
+ 
+// Tell PHP that we'll be outputting UTF-8 to the browser
+mb_http_output('UTF-8');
+ 
+// Our UTF-8 test string
+$string = 'Êl síla erin lû e-govaned vîn.';
+ 
+// Transform the string in some way with a multibyte function
+// Note how we cut the string at a non-Ascii character for demonstration purposes
+$string = mb_substr($string, 0, 15);
+ 
+// Connect to a database to store the transformed string
+// See the PDO example in this document for more information
+// Note the `charset=utf8mb4` in the Data Source Name (DSN)
+$link = new PDO(
+    'mysql:host=your-hostname;dbname=your-db;charset=utf8mb4',
+    'your-username',
+    'your-password',
+    array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_PERSISTENT => false
+    )
+);
+ 
+// Store our transformed string as UTF-8 in our database
+// Your DB and tables are in the utf8mb4 character set and collation, right?
+$handle = $link->prepare('insert into ElvishSentences (Id, Body) values (?, ?)');
+$handle->bindValue(1, 1, PDO::PARAM_INT);
+$handle->bindValue(2, $string);
+$handle->execute();
+ 
+// Retrieve the string we just stored to prove it was stored correctly
+$handle = $link->prepare('select * from ElvishSentences where Id = ?');
+$handle->bindValue(1, 1, PDO::PARAM_INT);
+$handle->execute();
+ 
+// Store the result into an object that we'll output later in our HTML
+$result = $handle->fetchAll(\PDO::FETCH_OBJ);
+
+header('Content-Type: text/html; charset=UTF-8');
+?><!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>UTF-8 test page</title>
+    </head>
+    <body>
+        <?php
+        foreach($result as $row){
+            print($row->Body);  // This should correctly output our transformed UTF-8 string to the browser
+        }
+        ?>
+    </body>
+</html>
+
+```
+
+## 错误报告 ##
+### 开发环境 ###
+
+```
+display_errors = On
+display_startup_errors = On
+error_reporting = -1
+log_errors = On
+```
+
+### 生产环境 ###
+
+```
+display_errors = Off
+display_startup_errors = Off
+error_reporting = E_ALL
+log_errors = On
+```
+
+## 代码注释 ##
+### PHPDoc ###
+PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可以使用。
+
+```
+@author 标记是用來说明代码的作者，在多位开发者的情况下，可以同时列出好几位。
+@link 标记用来提供网站链接，进一步说明代码和网站之间的关系
+@param 标记，说明类型、名字和传入方法的参数。
+@return 和 @throws 标记说明返回类型以及可能抛出的异常。
+```
+## php.ini
+- error_reporting = E_ALL &~E_NOTICE &~E_STRICT
+- display_errors= On
+- default_charset="utf-8"
+- extension_dir="./ext"
+- file_uploads=On
+- upload_max_filesize=2M
+- session.save_path ="/tmp"
+- session.gc_maxlifetime=1440   Session过期时间
+
 # 问题
 ## Ajax 跨域问题
 ### 允许单个域名访问
