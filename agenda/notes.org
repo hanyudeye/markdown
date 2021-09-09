@@ -1,6 +1,6 @@
 * Quick notes
 
-** hello
-   -agenda-file-note
-  [2021-09-09 四 07:11]
+** nice
+  
+  [2021-09-09 周四 09:56]
 

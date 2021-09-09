@@ -1,0 +1,19 @@
+http://ahkcn.sourceforge.net/docs/AutoHotkey.htm
+
+* 用法
+** 创建项目  
+  创建 ~.ahk~ 
+** 替换字符
+   : 替换hello 到 hello,nice to meet you
+*** 方法1
+    #+begin_src ahk
+ ::hello:: hello,nice to meet you  
+    #+end_src
+*** 方法2
+    #+begin_src ahk
+::hello::
+Send hello,nice to meet you
+return
+    #+end_src
+
+    

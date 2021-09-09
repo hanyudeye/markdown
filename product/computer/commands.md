@@ -1,21 +1,123 @@
 
+# 基本管理
+## 日常处理
 
-- find 和 xargs
-- 后台执行
-- << 与 >>
-- 传递参数
-- 函数
-- 控制流程
-- 环境变量
-- grep
-- 合并与分割
-- sed
-- 正则
-- awk
+沟通
+| Command | Action                                                 |
+|---------+--------------------------------------------------------|
+| dig     | Query DNS server.                                      |
+| ftp     | File Transfer Protocol.                                |
+| login   | Sign on.                                               |
+| rsync   | Transfer files, particularly across a network.         |
+| scp     | Securely copy files to remote system.                  |
+| sftp    | Secure file transfer program.                          |
+| ssh     | Run shell or single command on remote system (secure). |
+
+比较
+
+| Command | Action                                     |
+|---------+--------------------------------------------|
+| cmp     | Compare two files, byte by byte.           |
+| comm    | Compare items in two sorted files.         |
+| diff    | Compare two files, line by line.           |
+| diff3   | Compare three files.                       |
+| sdiff   | Compare and interactively merge two files. |
+
+File Management
+
+| Command | Action                                                                  |
+|---------+-------------------------------------------------------------------------|
+| cat     | Concatenate files or display them.                                      |
+| chattr  | Change attributes on an ext2 file.                                      |
+| chgrp   | Change group of files.                                                  |
+| chmod   | Change access modes on files.                                           |
+| chown   | Change ownership of files.                                              |
+| chsh    | Change login shell.                                                     |
+| cp      | Copy files.                                                             |
+| csplit  | Split a file into pieces with a specific size or at specific locations. |
+| dd      | Copy files in raw disk form.                                            |
+| file    | Determine a file’s type.                                               |
+| head    | Show the first few lines of a file.                                     |
+| hexdump | Display files in hexadecimal format.                                    |
+| less    | Display files by screenful, forward and backward.                       |
+| ln      | Create filename aliases.                                                |
+| ls      | List files and directories.                                             |
+| md5sum  | Compute MD5 checksum.                                                   |
+| merge   | Merge changes from different files.                                     |
+| mkdir   | Create a directory.                                                     |
+| more    | Display files by screenful, forward only.                               |
+| mv      | Move or rename files or directories.                                    |
+| newgrp  | Change current group.                                                   |
+| od      | Display files in octal format.                                          |
+| pwd     | Print working directory.                                                |
+| rm      | Remove files.                                                           |
+| rmdir   | Remove directories.                                                     |
+| sha1sum | Compute SHA1 checksum                                                   |
+| shred   | Securely delete files.                                                  |
+| split   | Split files evenly.                                                     |
+| tac     | Print lines of a file in reverse order.                                 |
+
+Media
+
+| Command     | Action                                                    |
+|-------------+-----------------------------------------------------------|
+| cdparanoia  | Rip a CD while providing extra features.                  |
+| cdrdao      | Copy a CD.                                                |
+| eject       | Eject a removable disk or tape.                           |
+| genisoimage | Generate a binary image from a directory tree.            |
+| icedax      | Rip a CD or DVD to create a computer-friendly WAV format. |
+| readom      | Read or write a data CD or DVD.                           |
+| volname     | Provide the volume name of a CD-ROM.                      |
+| wodim       | Record to a CD or DVD                                     |
+
+Printing
+
+| Command | Action                           |
+|---------+----------------------------------|
+| lpq     | Show status of print jobs.       |
+| lpr     | Send to the printer.             |
+| lprm    | Remove print job.                |
+| lpstat  | Get printer status.              |
+| pr      | Format and paginate for printing |
+
+Program Maintenance (维护)
+| Command | Action                                                       |
+|---------+--------------------------------------------------------------|
+| ctags   | Generate symbol list for use with thevi editor.              |
+| etags   | Generate symbol list for use with the Emacs editor.          |
+| gdb     | GNU debugger.                                                |
+| git     | Scalable, distributed revision control system.               |
+| gprof   | Display object file’s profile data.                         |
+| make    | Maintain, update, and regenerate related programs and files. |
+| nm      | Display object file’s symbol table.                         |
+| objcopy | Copy and translate object files.                             |
+| objdump | Display information about object files.                      |
+| patch   | Apply patches to source code.                                |
+| pmap    | Print the memory map of a process.                           |
+| size    | Print the size of an object file in bytes.                   |
+| strace  | Trace system calls and signals.                              |
+| strip   | Strip symbols from an object file.                           |
+| svn     | Subversion revision control system                           |
+
+Searching
+
+| Command  | Action                                                                    |
+|----------+---------------------------------------------------------------------------|
+| apropos  | Search manpages for topic.                                                |
+| egrep    | Extended version of grep.                                                 |
+| fgrep    | Search files for literal words.                                           |
+| find     | Search the system for files by name and take a range of possible actions. |
+| grep     | Search files for text patterns.                                           |
+| locate   | Search a preexisting database to show where files are on the system.      |
+| look     | Search file for string at the beginning of lines.                         |
+| strings  | Search binary files for text patterns.                                    |
+| updatedb | Update thelocate database.                                                |
+| whereis  | Find command.                                                             |
+| which    | Print pathname of a command                                               |
 
 
-# 指令
-## 日常处理 ##
+
+
 
 | 命令                                   | 功能                                                        |
 | --------------                         | -----------                                                 |
@@ -84,6 +186,35 @@
 | lsb_release                            | Linux 发行版信息                                            |
 | lsblk                                  | 列出块设备信息                                              |
 | lshw，lscpu，lspci，lsusb 和 dmidecode | 查看硬件信息，包括 CPU、BIOS、RAID、显卡、其他设备等        |
+| bg nohup                               | 后台执行                                                    |
+
+## 用户管理
+## 文件系统管理
+## 文件管理
+## 周期任务
+## 备份
+## 系统日志
+## 软件安装
+- yum (rpm-based)
+- aptitude/synaptic (debian-based)
+
+
+# 网络管理
+
+## TCP/IP网络
+## 路由选择
+## 网络硬件
+## 网络文件系统
+## 共享系统文件
+## 电子邮件
+## 安全
+## Web主机托管和Internet服务器
+
+
+
+
+
+
 
 ## 网络 ##
 
@@ -184,15 +315,6 @@ cat cast.json | svg-term-cli
 - [工具大全](https://www.diycode.cc/sites)  
 - [正则表达式在线工具](https://regexr.com/)
 - [谷歌开源](https://github.com/google)
-
-## zsh插件 ##
-
-### zsh-proxy ###
-
-- 首次使用需要初始化 init_proxy
-- 开启　proxy
-- 关闭　noproxy
-- 查ip myip
 
 ## 协作 ##
 
@@ -404,3 +526,15 @@ xsetwacom -s --set "Wacom Intuos5 touch M Pen pad" Button 13 "button 0"
 - 显示设备 cat /proc/asound/cards
 - kill进程 pulseaudio -k 
 - 重启 pulseaudio -D
+
+
+# 其他管理技术 
+## X窗口系统
+## 打印
+## 维护与环境
+## 性能分析
+## 同Windows协作
+## 串行设备
+## 驱动程序和内核
+## 守护进程
+## 管理政策与策略
