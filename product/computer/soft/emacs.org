@@ -164,6 +164,16 @@
    - f function 执行 lisp 函数 function
 
 ** 自定义配置
+*** 配置   
+    #+begin_src lisp
+      (add-to-list 'load-path "~/.emacs.d/jade-mode")
+      ;; windows系统要注意有两个 \ 
+      (add-to-list 'load-path "E:\\self\\config\\emacs\\script")
+      (require 'sws-mode)
+      (require 'jade-mode)    
+      (add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
+
+#+end_src
 *** 创建配置文件 .emacs-light
     #+begin_src lisp
     (load "~/.emacs.d/main" nil t)
