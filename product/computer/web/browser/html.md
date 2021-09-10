@@ -1,10 +1,8 @@
 # HTML 
-> web 页面的基本构成，web 浏览器解析富文本之用   
-> 范围元素用配对的标签标示，独立元素不需要配对  
-> 网页的主体内容 包含文字 ，表格，列表，图片，音乐，视频，表单  
-> 事件用来赋予 网页内容的交互性
+>用文字来定义美丽的网页 
+>用事件来定义网页的交互性
 
-## 头部标签  (含有特定意义)
+## 网页头
 ``` html
 <!DOCTYPE html> 声明html文件，遵循某种标准？
 <html>  文件的开始与结尾
@@ -20,7 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-## 控制结构
+## 结构控制
 ``` html
 <header> 头部
 <section> 章节
@@ -32,7 +30,7 @@
 <div> 标示一块区域
 ```
 
-## 内容
+## 网页内容
 ### 控制文字格式
 ``` html
 <b> 粗体
@@ -175,8 +173,7 @@ if ($('#phone').val()!="")
 
 ```
 
-## 其它
-### 常用特殊符号 ###
+### 特殊符号
 
 | HTML    | 显示结果 | 描述                   |
 |---------+----------+------------------------|
@@ -193,12 +190,36 @@ if ($('#phone').val()!="")
 
 
 
-### 一句话 Lorem 
+### Lorem 
+### 多媒体
+#### audio
+``` html
+<audio controls>
+<source src="song.ogg">
+<source src="song.mp3">
+</audio>
+```
+``` js
+let audio =$('audio')
+audio.currentPosition;  //得到要播放的位置
+audio.play(); //播放
+audio.volume //获取音量
 
+```
 
-# DOM (内容树) 
-浏览器提供的操作元素的接口
+#### video
+>仅支持 mp4 H.264, webm和 Ogg 
+``` js
+<video controls id="v">
+		<source src="../../../../../resource/media/a.mp4">
+	</video>
+```
 
+- autoplay 自动播放
+- autobuffer 自动缓冲
+- loop 循环
+
+# DOM 命令 (js解析器命令)
 ## 获取节点元素
 ### getElementById 
 ```js
@@ -456,7 +477,12 @@ onreadystatechange
 send
 ``` 
 
-# BOM (好多是实验性质)
+## base64
+window.atob('hello world')
+> ascii 转 base64
+
+window.atob
+# BOM (浏览器命令)
 ## history
 - window.history.back()
 - window.history.forward()
@@ -490,3 +516,50 @@ sandbox
 > window.webkitNotifications
 
 
+
+
+# websocket与ajax的区别浅析
+
+1.本质不同
+ Ajax,即异步JavaScript和XML，是一种创建交互式网页应用的网页开发技术；
+ WebSocket是HTML5一种新的协议，实现了浏览器与服务器全双工通信。其本质是先通过HTTP/HTTPS协议进行握手后创建一个用于交换数据的TCP连接，服务端与客户端通过此TCP连接进行实时通信。
+2.生命周期不同。
+websocket建立的是长连接，在一个会话中一直保持连接；而ajax是短连接，数据发送和接受完成后就会断开连接。
+3.适用范围不同
+websocket一般用于前后端实时数据交互，而ajax前后端非实时数据交互。
+4.发起人不同
+Ajax技术需要客户端发起请求，而WebSocket服务器和客户端可以相互推送信息。
+5.用法不同
+``` js
+ajax：
+$.ajax({
+type:"post",
+url:"http://localhost:8080/target",
+data:"state = yes",
+dataType:"json",
+success:funciont(data){
+}
+});
+ ```
+websocket:
+``` js
+var monitor = new WebSocket("ws://"+ip+path)
+onOpen()、onMessage()、onClose()
+```
+
+# 使用  web storage ,web worker 和 websocket 对 存储 计算 通信  进行了改进 
+
+web storage 有  localstorage 和 sessionstorage 组成
+
+# 离线应用 
+
+## 判断浏览器是否在线
+``` js
+if(navigator.onLine){
+}
+
+window.addEventListener("online",function(evt){})
+window.addEventListener("offline",function(evt){})
+```
+
+# manifest
