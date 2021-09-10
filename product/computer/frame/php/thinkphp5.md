@@ -1,34 +1,75 @@
+## thinkphp5 
+### MVC架构
+> 响应架构，可用到其他做事场景  
+> 控制器(下命令) 模型(处理) 视图(展示) 
 
-## thinkphp5 网站程序框架
-### 架构
-基于 MVC (模型-视图-控制器)的方式来组织
+- 入口文件 index.php
+- 多模块 app_multi_module
 
-请求 -> 响应 ( 路由，转入控制器，到业务处理，到渲染响应)
-> 采用 单应用 (\think\app) 对象 [多入口]，[多模块] 的架构
+#### 行为 
+1. 侦听
+``` php
+// 在app_init位置侦听行为
+\think\Hook::listen('app_init');
 
+```
+2. 绑定
+``` php
+// 绑定行为到app_init位置
+\think\Hook::add('app_init','\app\index\behavior\Test');
 
-url 重写 (请求重写)
-> apache 和 nginx
-
-
-
-### 配置
+```
+### 配置文件
 - config.php 应用配置
 - database.php 数据库配置
 - route.php 路由配置
 - .env 环境变量配置
+
 ``` php
 // 设置配置参数
 Config::set($config);
 // 读取二级配置参数
 echo Config::get('user.type');
+```
+
+### 路由
+定义
+``` php
+ Route::get('new/:id','News/read'); // 定义GET请求路由规则
+```
+
+### 命名空间
+>调用类库要加个 \
+#### 内置或没命名空间类库
+> 如果你需要调用PHP内置的类库,或者第三方没有使用命名空间的类库,记得在实例化类库的时候加上 \ 
+```php
+// 错误的用法
+$class = new
+ stdClass();
+$xml = new
+ SimpleXmlElement($xmlstr);
+// 正确的用法
+$class = new
+ \stdClass();
+$xml = new
+ \SimpleXmlElement($xmlstr);
 
 ```
-### 路由
-Route::get('new/:id','News/read'); // 定义GET请求路由规则
+
+
+#### 有命名空间
+``` php
+$class = new \think\cache\driver\File();
+```
 
 ### 控制器
+#### 数据输出
+默认类型 'default_return_type'=>'json'
 
+指定 xml类型
+``` php
+return xml(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+```
 #### 跳转和重定向
 ``` php
 //设置成功后跳转页面的地址,默认的返回页面是$_SERVER['HTTP_REFERER']
@@ -48,7 +89,7 @@ $this->redirect('News/category', ['cate_id' => 2]);
 #### 空控制器
 class Error
 
-### 请求信息
+### 客户端请求
 
 ``` php
 $request = Request::instance();
@@ -72,11 +113,6 @@ Request::instance()->param('username','','strip_tags,strtolower'); // 获取para
 变量 并依次调用strip_tags、strtolower函数过滤
 Request::instance()->post('email','','email');
 ```
-### 伪静态
-``` php
-'url_html_suffix' => 'html'
-```
-
 ### 数据库
 #### 原生
 ``` php
@@ -232,7 +268,6 @@ Db::table('think_blog')->whereTime('create_time', 'week')->select();
 
 ```
 #### 子查询
-
 1.构造
 ``` php
 $subQuery = Db::table('think_user')
@@ -274,7 +309,7 @@ $query->table('think_profile')->where('status',1)->field('id');
     }
                 
 ```
-### 模型 (自动对应表对象)
+### 模型
 
 ``` php
 $user = new User;
@@ -316,15 +351,14 @@ $user->where('name', 'thinkphp')
  ```
 
 ### 视图
-实例化
 ``` php
 // 渲染模板输出
 return $this->fetch('hello',['name'=>'thinkphp']);
 return view('hello',['name'=>'thinkphp']);
 ```
 
-### 模板输出
-请求参数 
+### 模板
+#### 请求参数 
 ``` php
 {$Request.get.id}
 {$Request.param.name}
@@ -334,7 +368,7 @@ return view('hello',['name'=>'thinkphp']);
 - 运算符 {$user['score']+myFun($user['level'])} //正确的
 - 包含文件 {include file="public/header" /} // 包含头部模版header
 
-标签
+#### 标签
 
 | 标签名 | 作用             | 包含属性                      |
 | :-:    | :-:              | :-:                           |
@@ -622,14 +656,14 @@ if(!captcha_check($captcha)){
 ```
 
 ### 图像处理
-打开图像
+#### 打开图像
 ``` php
 $image = \think\Image::open('./image.png');
 //也可以从直接获取当前请求中的文件上传对象,例如:
 $image = \think\Image::open(request()->file('image'));
 ```
 
-获取图像信息
+#### 获取图像信息
 ``` php
 
 $image = \think\Image::open('./image.png');
@@ -645,7 +679,7 @@ $mime = $image->mime();
 $size = $image->size();
 ```
 
-裁剪图像
+#### 裁剪图像
 ``` php
 $image->crop(300, 300)->save('./crop.png');
 //支持从某个坐标开始裁剪,例如下面从(100,30)开始裁剪,
@@ -682,9 +716,7 @@ $image->text('十年磨一剑 - 为API开发设计的高性能框架','HYQingKon
 - make:model
 
 ### 部署
-#### 虚拟主机环境
-
-修改入口文件
+#### 修改入口文件
 
 ``` php
 // 应用目录
@@ -697,7 +729,7 @@ require './thinkphp/start.php';
 
 [Apache]
 
-``` .htaccess
+``` apache
 <IfModule mod_rewrite.c>
 Options +FollowSymlinks -Multiviews
 RewriteEngine on
@@ -709,7 +741,7 @@ RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
 ```
 
 [Nginx]
-``` .htaccess
+``` c
 location / { // .....省略部分代码
 if (!-e $request_filename) {
 rewrite ^(.*)$ /index.php?s=/$1
@@ -720,8 +752,8 @@ break;
 
 ```
 
-### 设置session 时间 (在配置文件中)
-ROOT\application\config.php
+### 设置session 时间
+> ROOT\application\config.php
 
 添加个字段  expire
 
@@ -742,7 +774,7 @@ ROOT\application\config.php
     ],
 ```
 
-## sql 日志
+### sql 日志 ###
 
 第一步：在Database.php文件中将数据库debug设置为true，（默认是true）
 ``` php
@@ -762,9 +794,6 @@ ROOT\application\config.php
     ],
 ```
 一班这样设置之后就可以开启SQL日志记录了。
-
-## session
-这是因为第一次登录时框架自动生成了session，你换个浏览器或者做个退出按钮清理session
 
 ## 登录方案
 ### controller\Login.php

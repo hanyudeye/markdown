@@ -25,7 +25,18 @@
 
 ** GUI Elements
 *** Mode-line 
-** Layouts and workspace
+   - 关闭 minor mode  SPC t m m
+   - 关闭版本控制  SPC t m v
+   - 关闭 Point SPC t m p
+** Layouts and workspace (workspace没啥用）
+   布局指定窗口的分配，显示在最左边（通常是文件夹的名字(工程布局），默认布局 Default 通常不显示名字）
+   
 ** Commands
+  
+*** 代码浏览 
+   - 跳转  ，gg
+   - 返回 C o
+      
+     
 ** Server
 ** Troubleshoot

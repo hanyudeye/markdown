@@ -741,8 +741,7 @@ echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 
 
 # 其他
-## 下载库
-### composer ###
+## composer 
 
  - 中文镜像 composer config -g repo.packagist composer https://packagist.laravel-china.org
  - 安装依赖 composer require twig/twig:~1.8

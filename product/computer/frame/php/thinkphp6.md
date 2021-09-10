@@ -1,23 +1,9 @@
 # thinkphp6
-## 安装 使用 composer
+## 安装 
 > composer create-project topthink/think tp
+> composer require topthink/think-multi-app
+> composer require topthink/think-view
 > php think run -p 80
-
-多应用
-每个应用相对保持独立，并且可以支持多个入口文件，应用下面还可以通过多级控制器来维护控制器分组。
-
-``` php
-// [ 应用入口文件 ]
-namespace think;
- 
-require __DIR__ . '/../vendor/autoload.php';
- 
-// 执行HTTP应用并响应
-$http = (new  App())->http;
-$response = $http->name('admin')->run();
-$response->send();
-$http->end($response);
-```
 
 ## config (设置)
 ### environment-variables
@@ -50,9 +36,26 @@ think\facade\Config;
 | view.php       | 视图配置                 |
 
   
-## 路由 (指针)
+### 多应用
+>每个应用相对保持独立，并且可以支持多个入口文件，应用下面还可以通过多级控制器来维护控制器分组。
+
+``` php
+// [ 应用入口文件 ]
+namespace think;
+ 
+require __DIR__ . '/../vendor/autoload.php';
+ 
+// 执行HTTP应用并响应
+$http = (new  App())->http;
+$response = $http->name('admin')->run();
+$response->send();
+$http->end($response);
+```
+
+
+## 路由
 ### 路由
-路由地址不能跨 __应用__（除非采用重定向路由） 
+路由地址不能跨 应用 (除非采用重定向路由) 
     
 ```
 // 关闭应用的路由功能
@@ -263,7 +266,7 @@ return download('image.jpg', 'my')->expire(300);
 ```
 
 ## 数据库
-删除数据
+### 删除数据
 ``` php
 // 软删除数据 使用delete_time字段标记删除
 Db::name('user')
@@ -277,15 +280,6 @@ UPDATE `think_user` SET `delete_time` = '1515745214' WHERE `id` = 1
 ```
 
 ## 模型
-
-如果你希望给模型类添加后缀,需要设置 name 属性或者 table 属性。
-
-``` php
-class UserModel extends Model
-{
-protected $name = 'user';
-}
-``` 
 
 ``` php
 //指定主键
@@ -306,7 +300,6 @@ protected $schema = [
 ];
 ```
 ## 视图
-composer require topthink/think-view
 
 ``` php
 // 模板变量赋值

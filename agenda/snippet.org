@@ -1,0 +1,4 @@
+* goupi                                                                :fuck:
+#+BEGIN_SRC c
+printf("hel");
+#+END_SRC

@@ -1,6 +1,78 @@
 # Javascript
+## 数据类型 ##
 
-## 数据类型
+### 语句结尾加;号，方便压缩 ###
+
+### 全局变量 ###
+
+不要用 var 修饰
+
+``` js
+function test(){
+message = "hi"; // 全局变量
+}
+test();
+alert(message); // "hi"
+
+```
+
+### undefined类型 ###
+
+>使用 var 声明变量但未对其加以初始化时
+```js
+var message;
+alert(message == undefined); //true
+```
+
+### null 类型 ###
+
+> 用来指定对象指针
+
+```js
+var car = null;
+alert(typeof car); // "object"
+
+if (car != null){
+// 对 car 对象执行某些操作
+}
+```
+
+### Number ###
+
+```js
+var intNum=55; //整数
+var octalNum1 = 070;//八进制的 56
+var hexNum1 = 0xA; // 十六进制的 10
+var floatNum2 = 0.1;
+
+```
+
+浮点不要等于测试
+``` js
+if (a + b == 0.3){
+ // 不要做这样的测试!
+alert("You got 0.3.");
+}
+```
+
+### NaN ###
+
+``` js
+alert(isNaN(NaN));     //true
+alert(isNaN(10));      //false(10 是一个数值)
+alert(isNaN("10"));    //false(可以被转换成数值10)
+alert(isNaN("blue"));  //true(不能转换成数值)
+alert(isNaN(true));    //false(可以被转换成数值 1)
+```
+
+
+
+
+
+
+### String ###
+
+### 数组 ###
 
 ``` js
 var cars=new Array("Saab","Volvo","BMW");
@@ -10,7 +82,11 @@ var cars=new Array();
 cars[0]="Saab";
 cars[1]="Volvo";
 cars[2]="BMW";
+``` 
 
+### Object ###
+
+``` js
 // 对象
 var person={
 firstname : "John",
@@ -18,15 +94,7 @@ lastname  : "Doe",
 id        :  5566
 };
 
-// Undefined 和 Null:
-cars=null;
-person=null;
-
-// 布尔:
-var x=true;
-var y=false;
 ``` 
-
 ## 事件 (能接收反馈的对象[DOC对象]的特殊属性)
 
 | 事件        | 描述                           |
@@ -47,6 +115,10 @@ var y=false;
 | parseFloat() | 解析一个字符串，并返回一个浮点数                   |
 | parseInt()   | 解析一个字符串，并返回一个整数                     |
 	
+``` js
+var num1 = parseInt("AF", 16); //175
+var num2 = parseInt("AF"); //NaN
+```
 ### 时间处理
 | 方法              | 描述                                      |
 |-------------------+-------------------------------------------|
@@ -135,3 +207,5 @@ const files = new window.File(
     { type: this.files[0].type }
 );
 ```
+
+
