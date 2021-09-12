@@ -1,9 +1,7 @@
-# vue
-前台动态内容的显示有两种方式，一种是后台拼接，另一种是前台拼接，vue 完成的是前台拼接的功能。
+# Vue2
+ > 前端框架
 
-## 拼接元素与数据关联 (跟 jQuery 一样用选择器化) 对选择器中的对象进行Vue化
-
-Vue对象包含的东西
+## Vue对象
 
 - el
 - data
@@ -201,10 +199,26 @@ vm.$watch('counter', function(nval, oval) {
 <input v-model.trim="msg">
 ```
 
+
 ## vue-cli
+### 创建项目
 ``` shell
-vue init webpack my-project
-cd my-project
+vue init webpack MY-PROJECT
+cd MY-PROJECT
 npm install
 npm run dev
+```
+
+
+### file structure
+
+- index.html     #main app file
+- src/App.vue   #Component  
+- src/main.js  #drive file
+- src/assets/logo.png
+- src/components/HelloWorld.vue   # 另一个组件，被App.vue 包含
+
+### 添加 plugins
+``` console
+vue add @vue/cli-plugin-babel
 ```

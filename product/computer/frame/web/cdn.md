@@ -18,7 +18,6 @@
 ``` html
 <!-- vue2 -->
 <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
-
 <!-- vue3  -->
 <script src="https://unpkg.com/vue@next"></script>
 ```
