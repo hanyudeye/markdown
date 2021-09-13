@@ -13,3 +13,6 @@ git rm
 ### git 排除入库的文件
 对于已入库的文件，取消状态跟踪
 命令：git update-index –assume-unchanged FILENAME 路径+文件名
+
+# github
+- 趋势 https://github.com/trending

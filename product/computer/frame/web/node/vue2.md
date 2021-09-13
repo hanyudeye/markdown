@@ -38,7 +38,7 @@ showBtn:true
 ```
 
 
-## Vue 对象实例 
+## 对象
 
 - el (用来绑定模板 )
 - data
@@ -67,23 +67,26 @@ new Vue({
 
 
 
-## 数据模板
-### 插入内容
-#### 文本  {{datavar}}
+## 模板
+### 内容
+#### 文本节点
+```
+{{datavar}}
+```
 #### html 
 ``` html
  <div v-html="message"></div>
 ```
 #### 属性 
 ``` html
-插入属性: <span v-bind:style="style1">hello</span> <br>
+<span v-bind:style="style1">属性</span>
+<div v-bind:id="'list-' + id">ID</div>
 ```
 #### 表达式
 ``` html
 {{5+5}}<br>
-    {{ ok ? 'YES' : 'NO' }}<br>
-    {{ message.split('').reverse().join('') }}
-    <div v-bind:id="'list-' + id">菜鸟教程</div>
+{{ ok ? 'YES' : 'NO' }}<br>
+{{ message.split('').reverse().join('') }}
 
 ```
 
@@ -120,9 +123,11 @@ v-model与 input ,select ,textarea,checkbox,radio 等表单形成关联
 方法放在 methods 中
 ### 过滤filters  {{ a | b}}
 
-## 条件
-### v-if  等价于后台模板的写法 {{#if }} {{/if}}
-### v-else
+### 条件 ###
+#### v-if  等价于后台模板的写法 {{#if }} {{/if}} ####
+
+#### v-else ####
+
 ``` html
 <div id="app">
     <div v-if="Math.random() > 0.5">
@@ -134,7 +139,9 @@ v-model与 input ,select ,textarea,checkbox,radio 等表单形成关联
 </div>
 
 ```
-### 监听属性 watch
+
+#### 监听属性 watch ####
+
 ``` html
 <div id = "app">
     <p style = "font-size:25px;">计数器: {{ counter }}</p>
@@ -152,8 +159,11 @@ vm.$watch('counter', function(nval, oval) {
 });
 </script>
 ``` 
-### 样式绑定
-#### class
+
+#### 样式绑定 ####
+
+##### class #####
+
 实例中将 isActive 设置为 true 显示了一个绿色的 div 块，如果设置为 false 则不显示：
 ``` html
 <div v-bind:class="{ 'active': isActive }"></div>
@@ -162,15 +172,19 @@ vm.$watch('counter', function(nval, oval) {
 ``` html
 <div v-bind:class="[errorClass ,isActive ? activeClass : '']"></div>
 ```
-#### style
+
+##### style #####
+
 ``` html
 <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">菜鸟教程</div>
 <!-- 或者绑定样式对象 -->
 <div v-bind:style="styleObject">菜鸟教程</div>
 ```
 
-## 事件
-### 事件修饰符
+### 事件 ###
+
+#### 事件修饰符 ####
+
 ``` html
 <!-- 阻止单击事件冒泡 -->
 <a v-on:click.stop="doThis"></a>
@@ -189,7 +203,8 @@ vm.$watch('counter', function(nval, oval) {
 <a v-on:click.once="doThis"></a>
 ``` 
 
-### 按键修饰符
+#### 按键修饰符 ####
+
 ``` html
 <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
 <input v-on:keyup.13="submit">
@@ -216,23 +231,29 @@ vm.$watch('counter', function(nval, oval) {
 .meta
 ``` 
 
-## 表单 v-model 双向绑定
+### 表单 v-model 双向绑定 ###
+
 修饰符
-### .lazy
+
+#### .lazy ####
+
 在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
 
 ``` html
 <!-- 在 "change" 而不是 "input" 事件中更新 -->
 <input v-model.lazy="msg" >
 ```
-### .number
+
+#### .number ####
+
 如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：
 ``` html
 <input v-model.number="age" type="number">
 ```
 这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
 
-### .trim
+#### .trim ####
+
 如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
 ``` html
 <input v-model.trim="msg">
