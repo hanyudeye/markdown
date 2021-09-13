@@ -1,20 +1,56 @@
+https://github.com/hardphp/tp6-vue-admin.git
+
+https://github.com/icarusion/vue-book
+
 # Vue2
- > 前端框架
+ > 处理SPA(单页面富应用)  
+ > 复杂应用  （单 Vue 文件 + webpack + [vuex 管理状态] +[vue-router 管理路由])   
 
-## Vue对象
+## jQuery 与 Vue 区别
+jQuery
+``` js
+if(showBtn){
+var btn=$('<button>Click me</button>');
+btn.on('click',function(){});
 
-- el
+$('#app').append(btn);
+
+}
+
+```
+
+Vue
+```
+<div id="app">
+<button v-if="showBtn" v-on:click="handleClick">Click me</button>
+</div>
+
+<script>
+new Vue({
+el:'#app',
+data:{
+showBtn:true
+}
+});
+
+</script>
+
+```
+
+
+## Vue 对象实例 
+
+- el (用来绑定模板 )
 - data
 - methods
-- 事件 created mounted(元素挂载时执行) updated,destoryed
-- 
+- 生命周期 created mounted(元素挂载时执行) updated,beforeDestory,destoryed
 
 
 ``` js
-let vm= new Vue({
+new Vue({
   el: ".app1",
   data: {
-    name: "阿明",
+    name: "aming",
   },
   methods: {},
   created: function () {
@@ -28,7 +64,10 @@ let vm= new Vue({
 });
 
 ```
-## 模板语法
+
+
+
+## 数据模板
 ### 插入内容
 #### 文本  {{datavar}}
 #### html 
@@ -222,3 +261,5 @@ npm run dev
 ``` console
 vue add @vue/cli-plugin-babel
 ```
+
+
