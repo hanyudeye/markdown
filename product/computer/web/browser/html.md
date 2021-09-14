@@ -1,8 +1,9 @@
 # HTML 
->用文字来定义美丽的网页 
+>用文字来定义美丽的网页   
 >用事件来定义网页的交互性
 
 ## 网页头
+### 基本结构
 ``` html
 <!DOCTYPE html> 声明html文件，遵循某种标准？
 <html>  文件的开始与结尾
@@ -12,8 +13,12 @@
 <link>  链接外部资源
 <meta> 属性
 ```
-
-- 元信息
+### 头部元素
+- favicon
+``` html
+  <link rel="shortcut icon" href="/img/favicon.ico" />
+```
+- viewport
 ``` html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
