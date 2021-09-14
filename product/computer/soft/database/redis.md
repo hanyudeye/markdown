@@ -1,10 +1,23 @@
+# Redis (REmote DIctionary Server)
+## 运行
+``` console
+# 启动服务器
+sudo service redis-server start
+# 检测本地服务器 用 ping 或 ps
+ping 127.0.0.1 6379 
+# 连接服务器
+redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
+# 获取配置  
+CONFIG GET #
+```
+
+## 数据类型
+- String
+- Hash  (键值对)
+- List (字符串集合)
+- Set (无序不重复的集合)
+- Zset (有序不重复的集合)
 # 数据库设置
-## 命令行 ( redis-cli )
- -  ping 
- -  获取配置  CONFIG GET #
- -  连接到服务器语法  redis-cli -h host -p port -a password
- -  redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
- -  redis-cli -h 10.170.63.180 -p 6379
 ## 命令
 
 | 命令                                 | 描述                                                            |
@@ -51,10 +64,6 @@
 | PING                                 | 检查服务器是否正在运行                                          |
 | QUIT                                 | 关闭当前连接                                                    |
 | SELECT index                         | 更改当前连接的所选数据库                                        |
-# Redis (REmote DIctionary Server,key-value 非关系型数据库)
-## 启动 Redis
-   sudo server redis-server start
-   redis-cli 客户端
 ## 配置
 ### 配置文件 /etc/redis/redis.conf 
 ### 获取所有配置 config get #

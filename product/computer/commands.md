@@ -117,8 +117,6 @@ Searching
 
 
 
-
-
 | 命令                                   | 功能                                                        |
 | --------------                         | -----------                                                 |
 | expr                                   | 计算表达式、布尔操作或正则匹配                              |
@@ -201,6 +199,10 @@ Searching
 
 # 网络管理
 ## TCP/IP网络
+- ping - send ICMP ECHO_REQUEST to network hosts
+- telnet 可以  ping 端口 telnet 127.0.0.1 8080
+- ss - another utility to investigate sockets
+- ufw (防火墙)- program for managing a netfilter firewall
 ## 路由选择
 ## 网络硬件
 ## 网络文件系统

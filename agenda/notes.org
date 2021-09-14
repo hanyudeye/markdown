@@ -1,35 +1,9 @@
+* Blog Ideas
+* Web
+* Inbox
 * Quick notes
 
-** nice
-  
-  [2021-09-09 周四 09:56]
+** hello
+   看书1小时
+  [2021-09-14 二 20:00]
 
-** h
-  
-  [2021-09-10 五 19:04]
-
-** TODO [#C] llll
-  %![Error: (void-function zilongshanren/retrieve-chrome-current-tab-url)]
- 
-  [2021-09-10 五 19:05]
-
-** TODO [#C] j
-  
-  
-  [2021-09-10 五 19:05]
-
-* Blog Ideas
-
-** TODO [#B] h
-  
-  [2021-09-10 五 19:04]
-
-* Web
-** [2021-09-10 五 19:05] 
-
-
-够
- 
-* Inbox
-** hew [[][]] 
- Captured On: [2021-09-10 五 19:06]

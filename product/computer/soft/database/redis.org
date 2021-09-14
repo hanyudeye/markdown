@@ -2,8 +2,6 @@
 
 ** Article
 
-本文为我阅读了 *[[http://www.shouce.ren/api/view/a/6229][redis参考手册]]* 之后编写，注意 php_redis 和 redis-cli 的区别（主要是返回值类型和参数用法）
-
 *目录：*
 
 *Server（服务器）*
