@@ -1,5 +1,13 @@
 
 * TODO 马上做
+ 
+** TODO 更新 emacs config 
+   SCHEDULED: <2021-09-15 周三>
+
+** TODO 渗透知识
+   https://github.com/Mr-xn/Penetration_Testing_POC.git
+
+** TODO 做小说app，放老版本的书,放个片刻栏目，放商户广告
 * TODO 天天做
 ** PROG 有氧运动5分钟
    SCHEDULED: <2021-09-15 三>

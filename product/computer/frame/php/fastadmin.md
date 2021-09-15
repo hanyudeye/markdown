@@ -1,13 +1,16 @@
-# fastadmin
-https://doc.fastadmin.net/doc/178.html
-
+# TODO
 fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学，开发文档看完，跟着操作一遍，多写写API接口；
 
 第六天：了解一些并发、缓存、数据库优化等知识；
 第七天：看看网上大神的PHP技能树进阶，准备一份看起来还行的简历，等面试吧；
 
-## 命令行
-### 一键生成CURD (控制器，model，和菜单)
+
+
+# fastadmin
+https://doc.fastadmin.net/doc/178.html
+
+## 命令
+### 生成CURD (控制器，model，和菜单)
 
 常用命令
 --force=true
@@ -37,9 +40,7 @@ php think crud -t test --relation=category --relation=admin --relationforeignkey
 php think crud -t test --db=v_phealth_db2
 ```
 
-### 一键生成菜单
-
-常用命令
+### 生成菜单
 ``` shell
 //一键生成test控制器的权限菜单
 php think menu -c test
@@ -51,7 +52,7 @@ php think menu -c test -d 1
 php think menu -c all-controller
 ```
 
-### 一键压缩打包
+### 压缩打包
 在FastAdmin中如果修改了核心的JS或CSS文件，是需要重新压缩打包后在生产环境下才会生效。FastAdmin采用的是基于RequireJS的r.js进行JS和CSS文件的压缩打包。
 
 常用命令
@@ -86,7 +87,7 @@ public/assets/css/frontend.min.css
 public/assets/css/backend.min.css
 ```
 
-### 一键生成API文档
+### 生成API文档
 FastAdmin中的一键生成API文档可以在命令行或后台一键生成我们API接口的接口测试文档，可以直接在线模拟接口请求，查看参数示例和返回示例。
 常用命令
 ``` shell
@@ -104,8 +105,7 @@ php think api -t FastAdmin -a Karson --force=true
 php think api -h
 ```
 参数介绍
-### 一键管理插件
-常用命令
+### 管理插件
 ``` shell
 //创建一个myaddon本地插件，常用于开发自己的插件时使用
 php think addon -a myaddon -c create
@@ -125,7 +125,7 @@ php think addon -a example -c upgrade
 php think addon -a example -c package
 ``` 
 
-### 一键安装FastAdmin
+### 安装FastAdmin
 常用命令
 ``` shell
 //一键安装FastAdmin

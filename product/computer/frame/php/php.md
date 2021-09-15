@@ -741,11 +741,34 @@ echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 
 
 # 其他
-## composer 
+## 命令管理
+### composer 
+#### 配置命令下载路径
+```console
+composer config -g repo.packagist composer https://packagist.laravel-china.org
+```
+#### 管理命令
 
- - 中文镜像 composer config -g repo.packagist composer https://packagist.laravel-china.org
- - 安装依赖 composer require twig/twig:~1.8
- - 全局安装 composer global require phpunit/phpunit
+安装命令
+``` console
+composer install
+```
+
+更新命令
+``` console
+composer update
+```
+funding
+
+下载并安装命令 
+ ``` console
+  composer require twig/twig:~1.8
+``` 
+
+安装到全局空间
+``` console
+ composer global require phpunit/phpunit
+```
 
 ## 开发实践 ##
 
