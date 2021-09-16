@@ -1,4 +1,6 @@
+
 ## thinkphp5 
+http://static.kancloud.cn/manual/thinkphp5/118003
 ### MVC架构
 > 响应架构，可用到其他做事场景  
 > 控制器(下命令) 模型(处理) 视图(展示) 

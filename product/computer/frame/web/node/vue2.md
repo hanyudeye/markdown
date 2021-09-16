@@ -1,4 +1,5 @@
 https://github.com/hardphp/tp6-vue-admin.git
+vue 绑定 link
 
 https://github.com/icarusion/vue-book
 
@@ -284,3 +285,5 @@ vue add @vue/cli-plugin-babel
 ```
 
 
+# link
+  <a :href="'addalarmnotes.do?alarmId='+item.id+'&activetype1=detail'" target="_blank">{{item.name}}</a>
