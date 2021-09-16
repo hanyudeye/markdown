@@ -1,12 +1,53 @@
-* 要做微信公众号开发需要设置
-** 开发> 基本配置
-  获取 appid 秘钥， 白名单 
-** 公众号设置>功能设置
-   设置授权域名
-** 开发者工具>web开发者工具
-   绑定开发者
-** ip 白名单设置
-  把服务器  ip 地址加入白名单，不然报下面错误(其实之前会报白名单错误) 
+* 开发流程
+  https://blog.csdn.net/qq_41662696/article/details/89555634
+** 配置开发服务器
+
+   交互方式
+  #+begin_example
+  公众号用户 <==>  微信服务器 <==> 开发服务器 
+  #+end_example
+  交互格式 : xml
+
+*** 本地调试  
+    使用内网穿透工具
+   
+*** 微信公众平台->开发->开发者工具
+   简单的检查 
+   #+begin_src java
+     @RequestMapping(value="/wxserver",method={RequestMethod.GET}) 
+     public void check(HttpServletRequest request,HttpServletResponnse response){
+         String echostr=request.getParameter("echostr");
+         PrintWriter out=null;
+         out.print(echostring);
+         }
+   #+end_src
+** 获取access_token
+   建议公众号开发者使用中控服务器统一获取和刷新access_token，其他业务逻辑服务器所使用的access_token均来自于该中控服务器，不应该各自去刷新，否则容易造成冲突，导致access_token覆盖而影响业务；  
+   
+   接口，GET
+
+   #+begin_example
+   https//api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+   #+end_example
+
+
+| 参数       | 是否必须 | 说明                                  |
+| grant_type | 是       | 获取access_token填写client_credential |
+| appid      | 是       | 第三方用户唯一凭证                    |
+| secret     | 是       | 第三方用户唯一凭证密钥，即appsecret   |
+
+
+** 关键词回复
+** 模板消息
+** 授权回调
+
+* 微信开发教程
+** 配置  
+- 获取 appid 秘钥， 白名单
+- 设置授权域名 公众号设置>功能设置
+- 绑定开发者  开发者工具>web开发者工具
+- ip白名单设置
+- 清除缓存 debugx5.qq.com
 ** 系统错误，错误码：63002,invalid signature
    1.确认签名算法正确，可用http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign 页面工具进行校验。
 
@@ -25,13 +66,9 @@
 1.检查appId和js接口安全域名配置是否正确
 2.检查IP白名单设置
 3.核查前端和后端appid是否一致
-** 清除缓存
-   debugx5.qq.com
 ** 微信支付“当前页面URL未注册
    https://pay.weixin.qq.com/index.php/extend/product/lists?tid=3
    商户平台–>产品中心–>开发配置
-
-   绑定二级域名就可以，不用再往下约束 ，如 ~www.123.com/~  或 ~hello.123.com/~
    
 * 微信网页授权
 如果用户在微信客户端中访问第三方网页，公众号可以通过微信网页授权机制，来获取用户基本信息，进而实现业务逻辑。
@@ -1261,45 +1298,6 @@ http://demo.open.weixin.qq.com/jssdk/sample.zip
 ** 测试号信息
    | appID     | wx3b238e70544d300c               |
    | appsecret | 08ad5c7a920832bcecae8f1e4f6c67d6 |
-** 接口配置信息 
-   配置了接口信息就可以调用可用接口
-   
-   URL  
-   Token
-*** 服务器验证
-  开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，GET请求携带参数如下表所示：
-
- | 参数      | 描述                                                                                   |
- | signature | 微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。 |
- | timestamp | 时间戳                                                                                 |
- | nonce     | 随机数                                                                                 |
- | echostr   | 随机字符串                                                                             |
-
-  开发者通过检验signature对请求进行校验。若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。加密/校验流程如下：
-
-- 1）将token、timestamp、nonce三个参数进行字典序排序
-- 2）将三个参数字符串拼接成一个字符串进行sha1加密
-- 3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-
-  private function checkSignature()
-  {
-      $signature = $_GET["signature"];
-      $timestamp = $_GET["timestamp"];
-      $nonce = $_GET["nonce"];
-	
-      $token = TOKEN;
-      $tmpArr = array($token, $timestamp, $nonce);
-      sort($tmpArr, SORT_STRING);
-      $tmpStr = implode( $tmpArr );
-      $tmpStr = sha1( $tmpStr );
-    
-      if( $tmpStr == $signature ){
-          return true;
-      }else{
-          return false;
-      }
-  }
-  
 ** JS接口配置
 *** 绑定JS接口安全域名 
     先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
@@ -1611,8 +1609,6 @@ wx.error(function(res){
 
 22 附录7-问题反馈
 
-
-* js
 * 接口调用说明
 所有接口通过wx对象(也可使用jWeixin对象)来调用，参数是一个对象，除了每个接口本身需要传的参数之外，还有以下通用参数：
 
@@ -2138,7 +2134,6 @@ trigger: 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu
  出于安全考虑，开发者必须在服务器端实现签名的逻辑。
 
  如出现invalid signature 等错误详见附录5常见错误及解决办法。
-
 
 * 附录1-JS-SDK使用权限签名算法
 ** jsapi_ticket
