@@ -410,6 +410,12 @@ Case标签还有一个break属性,表示是否需要break,默认是会自动添�
 {/between}
 ```
 
+#### url
+``` html
+{:url('aaa/bbb?id='.$vo.id)}
+{:url('aaa/bbb',array('id'=>$vo.id))}
+{:url('admin/group')}?id={$vo['id']}
+```
 ### 验证
 ### 安全
 #### 输入安全

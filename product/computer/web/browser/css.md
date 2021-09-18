@@ -1,4 +1,6 @@
 # css (Cascading Style Sheets)  
+impressivewebs.com
+sitepoint.com/books/rw1
 把标签的样式属性写在 HTML中会大大扩展 html 文件的大小，把样式属性单独写在一个文件中可以减少体积
 
 > 基本规则是选择器 + 样式列表
