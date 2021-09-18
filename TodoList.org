@@ -1,4 +1,6 @@
-
+* 程序员
+** TODO 核桃手串，解压放松神器
+** TODO 保温杯，泡枸杞，眼睛
 * TODO 马上做
  
 ** TODO 更新 emacs config 
@@ -8,6 +10,9 @@
    https://github.com/Mr-xn/Penetration_Testing_POC.git
 
 ** TODO 做小说app，放老版本的书,放个片刻栏目，放商户广告
+
+** TODO 椅子，受力在腰部,头平，手平，脚平，显示器放平，灯撤走
+
 * TODO 天天做
 ** PROG 有氧运动5分钟
    SCHEDULED: <2021-09-15 三>
