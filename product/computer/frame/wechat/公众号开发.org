@@ -3,24 +3,24 @@
 ** 配置开发服务器
 
    交互方式
-  #+begin_example
-  公众号用户 <==>  微信服务器 <==> 开发服务器 
-  #+end_example
-  交互格式 : xml
+   #+begin_example
+   公众号用户 <==>  微信服务器 <==> 开发服务器 
+   #+end_example
+   交互格式 : xml
 
 *** 本地调试  
     使用内网穿透工具
    
 *** 微信公众平台->开发->开发者工具
-   简单的检查 
-   #+begin_src java
-     @RequestMapping(value="/wxserver",method={RequestMethod.GET}) 
-     public void check(HttpServletRequest request,HttpServletResponnse response){
-         String echostr=request.getParameter("echostr");
-         PrintWriter out=null;
-         out.print(echostring);
-         }
-   #+end_src
+    简单的检查 
+    #+begin_src java
+      @RequestMapping(value="/wxserver",method={RequestMethod.GET}) 
+      public void check(HttpServletRequest request,HttpServletResponnse response){
+          String echostr=request.getParameter("echostr");
+          PrintWriter out=null;
+          out.print(echostring);
+      }
+    #+end_src
 ** 获取access_token
    建议公众号开发者使用中控服务器统一获取和刷新access_token，其他业务逻辑服务器所使用的access_token均来自于该中控服务器，不应该各自去刷新，否则容易造成冲突，导致access_token覆盖而影响业务；  
    
@@ -31,11 +31,10 @@
    #+end_example
 
 
-| 参数       | 是否必须 | 说明                                  |
-| grant_type | 是       | 获取access_token填写client_credential |
-| appid      | 是       | 第三方用户唯一凭证                    |
-| secret     | 是       | 第三方用户唯一凭证密钥，即appsecret   |
-
+   | 参数       | 是否必须 | 说明                                  |
+   | grant_type | 是       | 获取access_token填写client_credential |
+   | appid      | 是       | 第三方用户唯一凭证                    |
+   | secret     | 是       | 第三方用户唯一凭证密钥，即appsecret   |
 
 ** 关键词回复
 ** 模板消息
