@@ -1,8 +1,9 @@
 * 程序员
-** TODO 核桃手串，解压放松神器
+** TODO 不提笔，不读书
 ** TODO 保温杯，泡枸杞，眼睛
+** TODO 显示器桌面齐平
+
 * TODO 马上做
- 
 ** TODO 更新 emacs config 
    SCHEDULED: <2021-09-15 周三>
 
