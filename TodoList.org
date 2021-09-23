@@ -4,6 +4,7 @@
 ** TODO 显示器桌面齐平
 ** TODO 一天写5个网页
 ** TODO 整理 bootstrap3 网页
+** TODO 10点睡，6点起,少玩平板
 
 * TODO 马上做
 ** TODO 更新 emacs config 
