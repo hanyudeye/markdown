@@ -1,9 +1,6 @@
-* linux编程
+* linux环境下C语言编程
  - 静态库
  - 合并库文件  ar
-** shell 程序设计
-   - 管道和重定向
-   - 
 ** 文件操作
 - fopen
 - fread
@@ -21,7 +18,6 @@
 - opendir readdir telldir seekdir closedir
 - strerror perror
    
-  
 ** Linux 环境 
 - 程序参数 getopt getopt_long   
 - 环境变量
@@ -131,3 +127,7 @@
  - 套接字通信
  - 主机字节序和网路字节序
 *** 网络信息
+
+* shell 编程
+  - 管道和重定向
+  - 

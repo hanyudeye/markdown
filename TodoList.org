@@ -2,6 +2,8 @@
 ** TODO 不提笔，不读书
 ** TODO 保温杯，泡枸杞，眼睛
 ** TODO 显示器桌面齐平
+** TODO 一天写5个网页
+** TODO 整理 bootstrap3 网页
 
 * TODO 马上做
 ** TODO 更新 emacs config 
