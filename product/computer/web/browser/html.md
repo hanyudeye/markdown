@@ -551,7 +551,7 @@ var monitor = new WebSocket("ws://"+ip+path)
 onOpen()、onMessage()、onClose()
 ```
 
-# 使用  web storage ,web worker 和 websocket 对 存储 计算 通信  进行了改进 
+# localstorage
 
 web storage 有  localstorage 和 sessionstorage 组成
 
