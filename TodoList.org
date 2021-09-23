@@ -1,21 +1,17 @@
+* 好的规划，能节省时间
+** thinkphp 源码解析 
+** 
 * 程序员
-** TODO 不提笔，不读书
-** TODO 保温杯，泡枸杞，眼睛
-** TODO 显示器桌面齐平
 ** TODO 一天写5个网页
 ** TODO 整理 bootstrap3 网页
 ** TODO 10点睡，6点起,少玩平板
+** TODO chrome.desktop change back
 
 * TODO 马上做
-** TODO 更新 emacs config 
-   SCHEDULED: <2021-09-15 周三>
-
 ** TODO 渗透知识
    https://github.com/Mr-xn/Penetration_Testing_POC.git
 
 ** TODO 做小说app，放老版本的书,放个片刻栏目，放商户广告
-
-** TODO 椅子，受力在腰部,头平，手平，脚平，显示器放平，灯撤走
 
 * TODO 天天做
 ** PROG 有氧运动5分钟
