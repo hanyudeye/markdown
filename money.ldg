@@ -11,9 +11,11 @@
 2021/09/02 生活支出
     out:伙食
     Liabilities:Savings Card                              -450CNY
+
 2021/09/03 工作
     in: 工资                                          
     Liabilities:Savings Card                               3000CNY 
+
 2021/09/03 生活支出
     out: 商店买吃的                                          
     Liabilities:Savings Card                               -30CNY 
@@ -90,6 +92,15 @@
 2021/09/22 生活支出
     out: 午饭
     Liabilities:Savings Card                              -15CNY
+
+2021/09/24 生活支出
+    out: 午饭
+    Liabilities:Savings Card                               -10CNY
+
+2021/09/24 工作
+    in: 工资
+    Liabilities:Savings Card                              3800CNY
+
 
 
 
