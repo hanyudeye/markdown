@@ -1,7 +1,8 @@
 * 好的规划，能节省时间
 ** thinkphp 源码解析 
 ** 没有需求，只能给自己创造需求，网上也有需求
-** TODO 把泡沫拿掉，量好尺寸，换桌子上的台布，超市买铺桌子上，10点学习睡觉
+** 80*140，超市买铺桌子上，10点学习睡觉
+   
 * 程序员
 ** TODO 一天写5个网页
 ** TODO 整理 bootstrap3 网页
@@ -13,7 +14,6 @@
    https://github.com/Mr-xn/Penetration_Testing_POC.git
 
 ** TODO 做小说app，放老版本的书,放个片刻栏目，放商户广告
-
 * TODO 天天做
 ** PROG 有氧运动5分钟
    SCHEDULED: <2021-09-15 三>
