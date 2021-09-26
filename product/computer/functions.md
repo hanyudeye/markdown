@@ -1,121 +1,5 @@
-
 # 基本管理
 ## 日常处理
-
-沟通
-| Command | Action                                                 |
-|---------+--------------------------------------------------------|
-| dig     | Query DNS server.                                      |
-| ftp     | File Transfer Protocol.                                |
-| login   | Sign on.                                               |
-| rsync   | Transfer files, particularly across a network.         |
-| scp     | Securely copy files to remote system.                  |
-| sftp    | Secure file transfer program.                          |
-| ssh     | Run shell or single command on remote system (secure). |
-
-比较
-
-| Command | Action                                     |
-|---------+--------------------------------------------|
-| cmp     | Compare two files, byte by byte.           |
-| comm    | Compare items in two sorted files.         |
-| diff    | Compare two files, line by line.           |
-| diff3   | Compare three files.                       |
-| sdiff   | Compare and interactively merge two files. |
-
-File Management
-
-| Command | Action                                                                  |
-|---------+-------------------------------------------------------------------------|
-| cat     | Concatenate files or display them.                                      |
-| chattr  | Change attributes on an ext2 file.                                      |
-| chgrp   | Change group of files.                                                  |
-| chmod   | Change access modes on files.                                           |
-| chown   | Change ownership of files.                                              |
-| chsh    | Change login shell.                                                     |
-| cp      | Copy files.                                                             |
-| csplit  | Split a file into pieces with a specific size or at specific locations. |
-| dd      | Copy files in raw disk form.                                            |
-| file    | Determine a file’s type.                                               |
-| head    | Show the first few lines of a file.                                     |
-| hexdump | Display files in hexadecimal format.                                    |
-| less    | Display files by screenful, forward and backward.                       |
-| ln      | Create filename aliases.                                                |
-| ls      | List files and directories.                                             |
-| md5sum  | Compute MD5 checksum.                                                   |
-| merge   | Merge changes from different files.                                     |
-| mkdir   | Create a directory.                                                     |
-| more    | Display files by screenful, forward only.                               |
-| mv      | Move or rename files or directories.                                    |
-| newgrp  | Change current group.                                                   |
-| od      | Display files in octal format.                                          |
-| pwd     | Print working directory.                                                |
-| rm      | Remove files.                                                           |
-| rmdir   | Remove directories.                                                     |
-| sha1sum | Compute SHA1 checksum                                                   |
-| shred   | Securely delete files.                                                  |
-| split   | Split files evenly.                                                     |
-| tac     | Print lines of a file in reverse order.                                 |
-
-Media
-
-| Command     | Action                                                    |
-|-------------+-----------------------------------------------------------|
-| cdparanoia  | Rip a CD while providing extra features.                  |
-| cdrdao      | Copy a CD.                                                |
-| eject       | Eject a removable disk or tape.                           |
-| genisoimage | Generate a binary image from a directory tree.            |
-| icedax      | Rip a CD or DVD to create a computer-friendly WAV format. |
-| readom      | Read or write a data CD or DVD.                           |
-| volname     | Provide the volume name of a CD-ROM.                      |
-| wodim       | Record to a CD or DVD                                     |
-
-Printing
-
-| Command | Action                           |
-|---------+----------------------------------|
-| lpq     | Show status of print jobs.       |
-| lpr     | Send to the printer.             |
-| lprm    | Remove print job.                |
-| lpstat  | Get printer status.              |
-| pr      | Format and paginate for printing |
-
-Program Maintenance (维护)
-| Command | Action                                                       |
-|---------+--------------------------------------------------------------|
-| ctags   | Generate symbol list for use with thevi editor.              |
-| etags   | Generate symbol list for use with the Emacs editor.          |
-| gdb     | GNU debugger.                                                |
-| git     | Scalable, distributed revision control system.               |
-| gprof   | Display object file’s profile data.                         |
-| make    | Maintain, update, and regenerate related programs and files. |
-| nm      | Display object file’s symbol table.                         |
-| objcopy | Copy and translate object files.                             |
-| objdump | Display information about object files.                      |
-| patch   | Apply patches to source code.                                |
-| pmap    | Print the memory map of a process.                           |
-| size    | Print the size of an object file in bytes.                   |
-| strace  | Trace system calls and signals.                              |
-| strip   | Strip symbols from an object file.                           |
-| svn     | Subversion revision control system                           |
-
-Searching
-
-| Command  | Action                                                                    |
-|----------+---------------------------------------------------------------------------|
-| apropos  | Search manpages for topic.                                                |
-| egrep    | Extended version of grep.                                                 |
-| fgrep    | Search files for literal words.                                           |
-| find     | Search the system for files by name and take a range of possible actions. |
-| grep     | Search files for text patterns.                                           |
-| locate   | Search a preexisting database to show where files are on the system.      |
-| look     | Search file for string at the beginning of lines.                         |
-| strings  | Search binary files for text patterns.                                    |
-| updatedb | Update thelocate database.                                                |
-| whereis  | Find command.                                                             |
-| which    | Print pathname of a command                                               |
-
-
 
 | 命令                                   | 功能                                                        |
 | --------------                         | -----------                                                 |
@@ -192,10 +76,6 @@ Searching
 ## 周期任务
 ## 备份
 ## 系统日志
-## 软件安装
-- yum (rpm-based)
-- aptitude/synaptic (debian-based)
-
 
 # 网络管理
 ## TCP/IP网络
@@ -203,22 +83,7 @@ Searching
 - telnet 可以  ping 端口 telnet 127.0.0.1 8080
 - ss - another utility to investigate sockets
 - ufw (防火墙)- program for managing a netfilter firewall
-## 路由选择
-## 网络硬件
-## 网络文件系统
-## 共享系统文件
-## 电子邮件
-## 安全
-## Web主机托管和Internet服务器
-
-
-
-
-
-
-
 ## 网络 ##
-
 ### 下载 ###
 
 #### youtube视频下载 ####
@@ -311,12 +176,6 @@ cat cast.json | svg-term-cli
 - http://sorting.at/
 - https://visualgo.net/zh
 
-## Web
-
-- [工具大全](https://www.diycode.cc/sites)  
-- [正则表达式在线工具](https://regexr.com/)
-- [谷歌开源](https://github.com/google)
-
 ## 协作 ##
 
 ### github ###
@@ -341,7 +200,6 @@ language:C++ location:china 搜索国内的开发者，语言限定为 C++
 stars:>20 extension:el language:elisp
 ```
 
-## Tools ##
 ## 文件管理 ##
 
 ### 查找 ###
