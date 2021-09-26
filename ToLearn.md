@@ -1,15 +1,5 @@
-python环境变量设置
-每次按F5运行的时候都会提示选择python环境变量,如果想按F5的时候直接运行可以
-调试 ——> 打开配置 在launch.json中
-修改以下两项：
-"stopOnEntry": false,
-"pythonPath": "C:/Python27/python",
-
-
 # need to see
   - https://blog.csdn.net/guolin_blog/  每天看两篇  查看CSDN 博客园 精华文章
-- 多看github 中的大神
-- 挣钱开刀做手术
 
 https://github.com/521xueweihan/HelloGitHub/blob/master/content/01/HelloGitHub01.md
 https://blog.csdn.net/qq_40190624/article/details/86605563
