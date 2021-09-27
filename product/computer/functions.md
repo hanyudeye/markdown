@@ -1,3 +1,7 @@
+功能的使用分两种 ： 
+1. 命令方式
+2. 图形点击方式
+
 # 基本管理
 ## 日常处理
 
@@ -76,7 +80,6 @@
 ## 周期任务
 ## 备份
 ## 系统日志
-
 # 网络管理
 ## TCP/IP网络
 - ping - send ICMP ECHO_REQUEST to network hosts
