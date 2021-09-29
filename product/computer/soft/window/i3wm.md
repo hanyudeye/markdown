@@ -1,12 +1,11 @@
 # i3wm  https://i3wm.org/
-一个程序一个窗口，所有程序共用窗口，程序越多，窗口越小。
+> improved tilling wm
 
-所以
-1. 多用SHELL 
-2. 少开窗口
+- 窗口(容器)有四种形态： 平铺(till)，堆栈(stacks)，标签(table)，浮动(float)
+- 键盘操控窗口(工作区)方便 (配置快捷键)
 
-## 文档
-### 鼠标绑定 ###
+## 配置
+### 鼠标快捷键
 
 i3支持在容器里按下特定的鼠标按钮时执行命令。 和键盘的绑定一样，使用bindsym命令。
 
@@ -65,7 +64,7 @@ default_floating_border normal|pixel <px>
 - <px>用来指定边框大小
 
 
-### 特定窗口的任意命令（for_window） ###
+### 窗口默认形态
 使用for_window命令，可以让i3在遇到特定窗口时执行命令
 for_window <criteria> <command>
 
@@ -89,7 +88,7 @@ for_window [class="Xfce4-terminal"] floating enable border normal 25
 for_window [title="x200: ~/work"] floating enable
 ```
 
-### 自动将窗口放置到指定工作区上 ###
+### 自动将窗口放置到指定工作区上 
 
 assign <criteria> [→] [workspace] [number] <workspace>
 assign <criteria> [→] output left|right|up|down|primary|<output>
@@ -136,7 +135,7 @@ WM_CLASS(STRING) = "irssi", "URxvt"
 其中“irssi”是实例，”URxvt“是类。
 ```
 
-### 改变颜色 ### 标题栏颜色
+### 窗口颜色
 > <colorclass> <border> <background> <text> <indicator> <child_border>
 
 colorclass可以是：
@@ -163,13 +162,13 @@ client.background       #ffffff
 
 indicator颜色用于提示新窗口的打开位置。 对于水平分割容器，右边框将以indicator颜色绘制，对于垂直分割容器，则是底部边框。
 
-### 调整浮动窗口(虽然没什么用但还是讲一下吧……) ###
+### 调整浮动窗口(虽然没什么用但还是讲一下吧……)
 
 可以使用floating_modifier来定义一个按键。
 
 可以在按下这个按键的同时按下左键不放，移动悬浮窗口。
 
-### 工作区的默认拆分方向 ###
+### 工作区的默认拆分方向 
 
 这是用来指定工作区在打开新窗口时是怎样拆分屏幕的。
 
@@ -260,5 +259,24 @@ bindsym $mod+Shift+b bar mode invisible bar-1
 # 设置屏幕不同背景
 feh --bg-scale cat2.jpeg cat3.jpeg
 # 显示屏幕按键 screenkey
+# xrandr
+>打开外接显示器，双屏幕显示相同的内容--克隆，（auto为最高分辨率）
+xrandr --output HDMI-1 --same-as DVI-D-1 --auto
 
+>若要指定外接显示器的分辨率可以使用下面的命令（1280*1024）：
+xrandr --output HDMI-1 --same-as DVI-D-1 --mode 1280x1024
 
+>打开外接显示器，设置为右侧扩展
+xrandr --output HDMI-1 --right-of DVI-D-1 --auto
+
+>关闭显示器
+xrandr --output DVI-D-1 --off
+
+>打开HDMI-1接口显示器，关闭DVI-D-1接口显示器
+xrandr --output HDMI-1 --auto --output DVI-D-1 --off
+
+>设置主屏幕
+xrandr --output HDMI-0 --primary
+
+# arandr 
+设置多屏的图形化软件
