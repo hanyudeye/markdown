@@ -190,8 +190,6 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | s                | 秒格式，有前导0                                      |
 | A                | 大写上下午，如AM，a为小写                            |
 
-
-
 - strtotime 时间转time
 
 ### Directory ###
