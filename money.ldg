@@ -80,7 +80,6 @@
     out: 相亲
     Liabilities:Savings Card                               -300CNY
 
-
 2021/09/22 生活支出
     out: 午饭
     Liabilities:Savings Card                              -22CNY
@@ -116,6 +115,22 @@
 2021/09/26 生活支出
     out: 拼多多坚果
     Liabilities:Savings Card                               -146CNY
+
+2021/09/27 生活支出
+    out: 午饭
+    Liabilities:Savings Card                              -15CNY
+
+2021/09/28 生活支出
+    out: 午饭
+    Liabilities:Savings Card                              -11CNY
+
+2021/09/28 生活支出
+    out: 购买耳机
+    Liabilities:Savings Card                              -500CNY
+
+2021/09/29 生活支出
+    out: 午饭
+    Liabilities:Savings Card                              -15CNY
 
 
 
