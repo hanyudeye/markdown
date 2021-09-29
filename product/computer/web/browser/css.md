@@ -1,4 +1,6 @@
 # css (Cascading Style Sheets)  
+> 用于WEB上定制样式的表达方式（非脚本语言）
+
 impressivewebs.com
 sitepoint.com/books/rw1
 把标签的样式属性写在 HTML中会大大扩展 html 文件的大小，把样式属性单独写在一个文件中可以减少体积

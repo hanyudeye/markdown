@@ -1,4 +1,7 @@
 # php
+脚本语言，常用于WEB 页面后端处理， JAVA 是编译型语言，执行效率高，但开发效率低。
+
+
 ## 数据
 - String（字符串）
 - Integer（整型）
@@ -741,26 +744,19 @@ echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 
 
 # 其他
-## 命令管理
+## 依赖管理
 ### composer 
-#### 配置命令下载路径
-```console
-composer config -g repo.packagist composer https://packagist.laravel-china.org
-```
-#### 管理命令
-
-安装命令
+安装所有依赖
 ``` console
 composer install
 ```
 
-更新命令
+更新所有依赖
 ``` console
 composer update
 ```
-funding
 
-下载并安装命令 
+下载并安装某个依赖
  ``` console
   composer require twig/twig:~1.8
 ``` 
@@ -770,6 +766,10 @@ funding
  composer global require phpunit/phpunit
 ```
 
+## 启动自带服务器
+``` console
+php -S localhost:9999
+```
 ## 开发实践 ##
 
 ### 浏览器层面的 UTF-8 ###
