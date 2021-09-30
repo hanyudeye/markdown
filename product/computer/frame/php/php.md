@@ -1,8 +1,7 @@
 # php
 脚本语言，常用于WEB 页面后端处理， JAVA 是编译型语言，执行效率高，但开发效率低。
 
-
-## 数据
+## 数据(变量)类型
 - String（字符串）
 - Integer（整型）
 - Float（浮点型）
@@ -10,6 +9,29 @@
 - Array（数组）
 - Object（对象）
 - NULL（空值）
+
+>检查变量类型，gettype()，settype()
+> 检查特定类型
+- is_numeric ( mixed var )://检测变量是 否为数字或数字字符串
+- is_bool():        // 检测变量是否是布尔型
+- is_float():       // 检测变量是否是浮点型 和is_double，is_real()都一样的用法
+- is_int():         // 检测变量是否是整数is_integer() 一样的 用法
+- is_string():      // 检测变量是否是字符串
+- is_object():      // 检测变量是否是一个对象
+- is_array():       // 检测变量是否是数组
+- is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
+
+>检查变量状态
+- isset():  //变量是否已经声明
+- unset() //销毁变量
+- empty():  //变量是否声明，或者变量值是否为空或0 
+
+### 常量
+定义常量 
+define('SPARKPRICE',4);
+
+预定义常量
+使用 phpinfo(); 可以查看
 
 ### 类
 - 继承(包含) extends
@@ -33,8 +55,6 @@
 
 ``` php
 gettype();
-isset():  //变量是否已经声明
-empty():  //变量是否为空
 defined()://常量是否已经定义 define()
 array_key_exists(mixed key, array search):  //检查给定的键名或索引是否存在于数组中
 
@@ -170,9 +190,7 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | curl_unescape()            | 解码URL编码后的字符串。                                      |
 | curl_version()             | 获取cURL版本信息。                                           |
 
-### Date ###
-
-格式化 
+### date
 
 | 时间格式化的方式 | 说明                                                 |
 |------------------+------------------------------------------------------|
@@ -189,8 +207,6 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | i                | 分钟格式，有前导0                                    |
 | s                | 秒格式，有前导0                                      |
 | A                | 大写上下午，如AM，a为小写                            |
-
-
 
 - strtotime 时间转time
 
@@ -210,7 +226,7 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 
 ### Error ###
 
-### Filesystem ###
+### Filesystem
 
 | 函数                  | 描述                                                            |
 |-----------------------+-----------------------------------------------------------------|
@@ -616,16 +632,17 @@ header('HTTP/1.1 400 Bad request');
 | zip_open()                    | 打开 ZIP 文件。                           |
 | zip_read()                    | 读取 ZIP 文件中的下一个项目。             |
 
-### 客户端请求
-
-- $_SERVER 
+### 获取WEB信息
+#### 服务器信息 $_SERVER 
+- DOCUMENT_ROOT
+#### 表单信息
 - $_GET
 - $_POST
+- $_REQUEST ($_GET 与 $_POST 的合集)
 - $_FILES 文件信息，包含 (name,type,tmp_name,error,size) 
 - $_COOKIE 
 - $_SESSION session 
-会话信息是临时的，在用户离开网站后将被删除
-设置或获取 Session 都要先 执行 session_start();
+会话信息是临时的，在用户离开网站后将被删除设置或获取 Session 都要先 执行 session_start();
 
 ### 显示错误
 
