@@ -1,0 +1,13 @@
+#+title:  命令行的艺术
+https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
+
+如果在某一天，你只能使用命令行表示想法，那么，你应该怎么办？你会把你的想法尽可能简洁的表达出来，避免啰嗦。
+
+前言:
+
+如果你对某些命令不够理解，可以使用 [[https://explainshell.com][Explainshell]] 获取调试型的帮助。
+
+** 基础
+  * 学习 Bash 的基础知识 
+
+
