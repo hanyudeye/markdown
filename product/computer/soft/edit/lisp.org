@@ -31,6 +31,81 @@ emacs 的概念，emacs 是世界上最强大的文本编辑器。emacs 不光�
 
 文字的输入与修改，与光标的关系。
 
-   
+** 定义函数
 
+*** 可选参数
+#+begin_src lisp
+(defun other-window-back(&optional n)
+  "回到上n个窗口"
+  (interactive "p")
+  (if n
+      (other-window (- n))
+    (other-window -1)
+    )
+  )
+#+end_src
+    
+** 辅助帮助
+帮助文档，是关于 软件功能 使用的说明，一个软件用途是什么，怎么用解决什么问题，需要有说明文档
    
+   - 快捷键的绑定帮助  description-key
+   - 功能帮助  description-function
+   - 名词描述帮助 description-variable
+** 文本编辑器的功能
+对 *文本面*  的操作
+   
+*** 光标
+   光标用来指定位置，在地图上，二位坐标系内，我们用坐标点来标记商店的位置（在什么路什么路） 
+   三位坐标中，空间中，也可以用点标记位置。
+   在文本文件中，也可以用行列坐标标记位置。
+   在 CSS 中，用元素的绝对大小来排列元素。也可以用定位光标(left ,right) 来定位元素。
+   
+*** 添加文字
+    insert-char
+*** 删去文字
+    delete-char
+    
+*** 滚动
+**** 逐行滚动
+     scroll-up     
+
+
+**** 逐列滚动
+     scroll-down  默认滚屏一页,加上参数为滚动 n 行
+*** 多 Buffer 操作
+    多文件编辑
+*** 多窗口操作
+- 窗口编号
+- 窗口定位 
+
+**** 回到上一个窗口  
+     #+begin_src lisp
+       (defun other-window-back()
+         "回到上一个窗口"
+         (interactive)
+
+         (other-window -1)
+         )
+     #+end_src
+
+**** 回到上 n 个窗口
+#+begin_src lisp
+(defun other-window-back(n)
+"回到上n个窗口"
+(interactive "p")
+
+(other-window (- n))
+)
+#+end_src
+
+**** 最好的方式
+#+BEGIN_SRC emacs-lisp
+  (defun other-window-backward (&optional n)
+    "Select Nth previous window."
+    (interactive "P")
+    (other-window (- (prefix-numeric-value n))))
+#+END_SRC
+
+- 大写的 P 表示 "当以交互的方式调用时，将前置参数保持为原始形式并将其赋值给 n"
+- prefix-numeric-value 可以将 n 转换成数字，如果 n 为 nil 则返回 1
+
