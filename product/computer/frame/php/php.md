@@ -1,6 +1,30 @@
 # php
 脚本语言，常用于WEB 页面后端处理， JAVA 是编译型语言，执行效率高，但开发效率低。
 
+## PSR 规范
+PHP Standard Recommendation  
+
+### 自动加载规范
+\vendor\Namespace\class
+
+* `\Doctrine\Common\IsolatedClassLoader` => `/path/to/project/lib/vendor/Doctrine/Common/IsolatedClassLoader.php`
+### 基本代码规范
+- PHP代码文件**必须**以 `<?php` 或 `<?=` 标签开始；
+
+- PHP代码文件**必须**以 `不带BOM的 UTF-8` 编码；
+
+- PHP代码中**应该**只定义类、函数、常量等声明，或其他会产生 `从属效应` 的操作（如：生成文件输出以及修改.ini配置文件等），二者只能选其一；
+
+- 命名空间以及类**必须**符合 PSR 的自动加载规范：[PSR-4][]；
+
+- 类的命名**必须**遵循 `StudlyCaps` 大写开头的驼峰命名规范；
+
+- 类中的常量所有字母都**必须**大写，单词间用下划线分隔；
+
+- 方法名称**必须**符合 `camelCase` 式的小写开头驼峰命名规范。
+
+###  代码风格规范
+
 ## 数据(变量)类型
 - String（字符串）
 - Integer（整型）

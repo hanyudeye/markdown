@@ -35,6 +35,45 @@ class HelloWorld{
 作用域: 名词、动词的使用范围
 
 
+## For-Each 
+``` java
+for(int i: nums){
+}
+```
+## 包
+``` java
+package aa.bb;
+import aa.bb.*;
+```
+## 继承 extends
+中断继承  final
+抽象类 abstract
+接口 interface
+``` java
+public interface Animal
+{
+//接口中的变量
+int BIG_TYPE=5;
+//用接口声明方法,只有方法的声明没有具体实现
+void sleep();
+void eat();
+void breath();
+}
+```
+接口实现
+``` java
+class 类名 implements 接口 1,接口 2
+{
+方法 1(){
+//方法体
+}
+方法 2(){
+//方法体
+}
+}
+
+```
+
 # java
 ## Number & Math 类
 | 方法        | 描述                                                                                                                                              |
