@@ -8,6 +8,13 @@ PHP Standard Recommendation
 \vendor\Namespace\class
 
 * `\Doctrine\Common\IsolatedClassLoader` => `/path/to/project/lib/vendor/Doctrine/Common/IsolatedClassLoader.php`
+
+1. 一个完整的类名需具有以下结构:
+```
+\<命名空间>(\<子命名空间>)*\<类名>
+ ```
+
+
 ### 基本代码规范
 - PHP代码文件**必须**以 `<?php` 或 `<?=` 标签开始；
 
@@ -24,6 +31,19 @@ PHP Standard Recommendation
 - 方法名称**必须**符合 `camelCase` 式的小写开头驼峰命名规范。
 
 ###  代码风格规范
+
+### 日志接口规范
+- LoggerInterface 接口定义了八个等级 ,debug, info ,notice, warning, error, critical,alert,emergency
+### 缓存接口规范
+- 实现类库
+- 生存时间值 (TTL - Time To Live)
+- 过期时间 （Expiration)
+- 命中 （Hit）
+- 未命中 （miss）
+- 延迟 （Deferred)
+- 缓存池
+### HTTP消息接口
+
 
 ## 数据(变量)类型
 - String（字符串）
