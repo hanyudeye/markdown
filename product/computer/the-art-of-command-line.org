@@ -30,3 +30,9 @@ https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
    - set -o vi vi风格快捷键， set -o emacs
    - 为了便于编辑长命令，当设置默认编辑器后 （export EDITOR=vim） , ctrl-x ctrl-e 可以调出编辑器
    - history 调出命令历史 , !n 执行命令编号
+   - nohup 或 disown 使后台进程持续进行
+   - plat
+   - uptime 或 w  显示开机时间
+
+     kvm 模糊 
+     
