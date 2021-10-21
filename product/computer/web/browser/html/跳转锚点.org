@@ -1,0 +1,12 @@
+* 跳转锚点
+** 实现方式
+*** 方式一 #id 属性
+  #+begin_src html
+  <h2 id="md1">锚点一</h2>
+  <a href="#md1">锚点一</a>
+  #+end_src
+*** 方式二 #name 属性
+    #+begin_src html
+      <a name="md1"></a>
+      <a href="#md1">锚点一</a>
+  #+end_src
