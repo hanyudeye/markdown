@@ -943,3 +943,6 @@ https://blog.csdn.net/GhostWHS/article/details/110085937
 ``` php
     protected $noNeedLogin = ['init','upload'];
 ```
+
+### fastadmin关闭验证码登录
+把配置文件config.php中的 fastadmin => login_captcha 改为false
