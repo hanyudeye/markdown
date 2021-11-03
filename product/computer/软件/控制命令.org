@@ -1,70 +1,101 @@
-操控信息
+https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
 
-* Linux 常用命令集合
-** 系统信息
-   arch 显示机器的处理器架构(1)
-   uname -m 显示机器的处理器架构(2)
-   uname -r 显示正在使用的内核版本
-   dmidecode -q 显示硬件系统部件 - (SMBIOS / DMI)
-   hdparm -i /dev/hda 罗列一个磁盘的架构特性
-   hdparm -tT /dev/sda 在磁盘上执行测试性读取操作
-   cat /proc/cpuinfo 显示CPU info的信息
-   cat /proc/interrupts 显示中断
-   cat /proc/meminfo 校验内存使用
-   cat /proc/swaps 显示哪些swap被使用
-   cat /proc/version 显示内核的版本
-   cat /proc/net/dev 显示网络适配器及统计
-   cat /proc/mounts 显示已加载的文件系统
-   lspci -tv 罗列 PCI 设备
-   lsusb -tv 显示 USB 设备
-   date 显示系统日期
-   cal 2007 显示2007年的日历表
-   date 041217002007.00 设置日期和时间 - 月日时分年.秒
-   clock -w 将时间修改保存到 BIOS
+
+** 获得帮助
+- [[https://explainshell.com][Explainshell]] 
+ 
+** 基础 
+  - 学习 Bash 的基础知识
+  - 学习vim
+  - 学习使用 man 和 使用 type 确定命令类型
+  - 学会 > < | 这些重定向命令
+  - 学会使用通配符 * ,? [...]
+  - 熟悉任务管理工具 & ,ctrl-z , ctrl-c ,jobs ,fg,bg,kill 等
+  - 学习 ssh 远程登录,ssh-agent,ssh-add 无密码认证登录
+  - 学习基本文件管理  ls ,less ,head ,tail , tail -f ,ln ,ln -s , chown, chmod, du ,df ,mount ,fdisk,mkfs ,lsblk ,ls -i ,df -i
+  - 学习基本网络管理 ip 或 ifconfig ,dig
+  - 学习版本管理  git
+  - 学习正则表达式 grep  , 参数 -i , -o , -v, -A , -B , -c
+  - 学习 apt-get ,yum ,dnf 或 pacman, pip (python)
+
+** 日常使用
+   - 使用 Tab键补全, ctrl-r 查找历史
+   - set -o vi vi风格快捷键， set -o emacs
+   - 为了便于编辑长命令，当设置默认编辑器后 （export EDITOR=vim） , ctrl-x ctrl-e 可以调出编辑器
+   - history 调出命令历史 , !n 执行命令编号
+   - nohup 或 disown 使后台进程持续进行
+   - plat
+   - uptime 或 w  显示开机时间
+
+     kvm 模糊 
+     
+** 显示系统信息
+ - arch 显示机器的处理器架构
+ - uname -m 显示机器的处理器架构
+ - uname -r 显示正在使用的内核版本
+ - dmidecode -q 显示硬件系统部件 - (SMBIOS / DMI)
+ - hdparm -i /dev/hda 罗列一个磁盘的架构特性
+ - hdparm -tT /dev/sda 在磁盘上执行测试性读取操作
+ - cat /proc/cpuinfo 显示CPU info的信息
+ - cat /proc/interrupts 显示中断
+ - cat /proc/meminfo 校验内存使用
+ - cat /proc/swaps 显示哪些swap被使用
+ - cat /proc/version 显示内核的版本
+ - cat /proc/net/dev 显示网络适配器及统计
+ - cat /proc/mounts 显示已加载的文件系统
+ - lspci -tv 罗列 PCI 设备
+ - lsusb -tv 显示 USB 设备
+ - date 显示系统日期
+ - cal 2007 显示2007年的日历表
+ - date 041217002007.00 设置日期和时间 - 月日时分年.秒
+ - clock -w 将时间修改保存到 BIOS
    
+
 ** 关机 (系统的关机、重启以及登出 )
-   shutdown -h now 关闭系统(1)
-   init 0 关闭系统(2)
-   telinit 0 关闭系统(3)
-   shutdown -h hours:minutes & 按预定时间关闭系统
-   shutdown -c 取消按预定时间关闭系统
-   shutdown -r now 重启(1)
-   reboot 重启(2)
-   logout 注销
+-  shutdown -h now 关闭系统(1)
+-  init 0 关闭系统(2)
+-  telinit 0 关闭系统(3)
+-  shutdown -h hours:minutes & 按预定时间关闭系统
+-  shutdown -c 取消按预定时间关闭系统
+-  shutdown -r now 重启(1)
+-  reboot 重启(2)
+-  logout 注销
+
 ** 文件和目录
-   cd /home 进入 '/ home' 目录'
-   cd .. 返回上一级目录
-   cd ../.. 返回上两级目录
-   cd 进入个人的主目录
-   cd ~user1 进入个人的主目录
-   cd - 返回上次所在的目录
-   pwd 显示工作路径
-   ls 查看目录中的文件
-   ls -F 查看目录中的文件
-   ls -l 显示文件和目录的详细资料
-   ls -a 显示隐藏文件
-   ls *[0-9]* 显示包含数字的文件名和目录名
-   tree 显示文件和目录由根目录开始的树形结构(1)
-   lstree 显示文件和目录由根目录开始的树形结构(2)
-   mkdir dir1 创建一个叫做 'dir1' 的目录'
-   mkdir dir1 dir2 同时创建两个目录
-   mkdir -p /tmp/dir1/dir2 创建一个目录树
-   rm -f file1 删除一个叫做 'file1' 的文件'
-   rmdir dir1 删除一个叫做 'dir1' 的目录'
-   rm -rf dir1 删除一个叫做 'dir1' 的目录并同时删除其内容
-   rm -rf dir1 dir2 同时删除两个目录及它们的内容
-   mv dir1 new_dir 重命名/移动 一个目录
-   cp file1 file2 复制一个文件
-   cp dir/* . 复制一个目录下的所有文件到当前工作目录
-   cp -a /tmp/dir1 . 复制一个目录到当前工作目录
-   cp -a dir1 dir2 复制一个目录
-   ln -s file1 lnk1 创建一个指向文件或目录的软链接
-   ln file1 lnk1 创建一个指向文件或目录的物理链接
-   touch -t 0712250000 file1 修改一个文件或目录的时间戳 - (YYMMDDhhmm)
-   file file1 outputs the mime type of the file as text
-   iconv -l 列出已知的编码
-   iconv -f fromEncoding -t toEncoding inputFile > outputFile creates a new from the given input file by assuming it is encoded in fromEncoding and converting it to toEncoding.
-   find . -maxdepth 1 -name *.jpg -print -exec convert "{}" -resize 80x60 "thumbs/{}" \; batch resize files in the current directory and send them to a thumbnails directory (requires convert from Imagemagick)
+ - cd /home 进入 '/ home' 目录'
+ - cd .. 返回上一级目录
+ - cd ../.. 返回上两级目录
+ - cd 进入个人的主目录
+ - cd ~user1 进入个人的主目录
+ - cd - 返回上次所在的目录
+ - pwd 显示工作路径
+ - ls 查看目录中的文件
+ - ls -F 查看目录中的文件
+ - ls -l 显示文件和目录的详细资料
+ - ls -a 显示隐藏文件
+ - ls *[0-9]* 显示包含数字的文件名和目录名
+ - tree 显示文件和目录由根目录开始的树形结构(1)
+ - lstree 显示文件和目录由根目录开始的树形结构(2)
+ - mkdir dir1 创建一个叫做 'dir1' 的目录'
+ - mkdir dir1 dir2 同时创建两个目录
+ - mkdir -p /tmp/dir1/dir2 创建一个目录树
+ - rm -f file1 删除一个叫做 'file1' 的文件'
+ - rmdir dir1 删除一个叫做 'dir1' 的目录'
+ - rm -rf dir1 删除一个叫做 'dir1' 的目录并同时删除其内容
+ - rm -rf dir1 dir2 同时删除两个目录及它们的内容
+ - mv dir1 new_dir 重命名/移动 一个目录
+ - cp file1 file2 复制一个文件
+ - cp dir/* . 复制一个目录下的所有文件到当前工作目录
+ - cp -a /tmp/dir1 . 复制一个目录到当前工作目录
+ - cp -a dir1 dir2 复制一个目录
+ - ln -s file1 lnk1 创建一个指向文件或目录的软链接
+ - ln file1 lnk1 创建一个指向文件或目录的物理链接
+ - touch -t 0712250000 file1 修改一个文件或目录的时间戳 - (YYMMDDhhmm)
+ - file file1 outputs the mime type of the file as text
+ - iconv -l 列出已知的编码
+ - iconv -f fromEncoding -t toEncoding inputFile > outputFile creates a new from the given input file by assuming it is encoded in fromEncoding and converting it to toEncoding.
+ - find . -maxdepth 1 -name *.jpg -print -exec convert "{}" -resize 80x60 "thumbs/{}" \; batch resize files in the current directory and send them to a thumbnails directory (requires convert from Imagemagick)
+
 ** 文件搜索
    find / -name file1 从 '/' 开始进入根文件系统搜索文件和目录
    find / -user user1 搜索属于用户 'user1' 的文件和目录

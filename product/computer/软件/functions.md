@@ -1,7 +1,3 @@
-功能的使用分两种 ： 
-1. 命令方式
-2. 图形点击方式
-
 # 基本管理
 ## 日常处理
 
@@ -74,12 +70,6 @@
 | lshw，lscpu，lspci，lsusb 和 dmidecode | 查看硬件信息，包括 CPU、BIOS、RAID、显卡、其他设备等        |
 | bg nohup                               | 后台执行                                                    |
 
-## 用户管理
-## 文件系统管理
-## 文件管理
-## 周期任务
-## 备份
-## 系统日志
 # 网络管理
 ## TCP/IP网络
 - ping - send ICMP ECHO_REQUEST to network hosts
@@ -87,37 +77,13 @@
 - ss - another utility to investigate sockets
 - ufw (防火墙)- program for managing a netfilter firewall
 ## 网络 ##
-### 下载 ###
-
-#### youtube视频下载 ####
-
-youtube-dl-gui 图形界面  
-youtube-dl --proxy socks5://127.0.0.1:42428  https://www.youtube.com/watch?v=pKauTcfL-AE&feature=youtu.be
-
-### 内网穿透 ###
-
-#### natapp ####
+### 内网穿透
+#### natapp
 
 natapp -authtoken=e5eb817e91aeee83  
 
 由于微信屏蔽了natapp的三级域名，所以如果需要进行微信支付或者微信小程序的联调时需要注册一个二级域名
 如果用于联调微信小程序的话，则需要注册带有SSL证书的，因为微信小程序仅支持https协议。
-
-
-### 查看公网 IP ###
-
-- curl cip.cc
-- curl icanhazip.com
-- curl ident.me
-
-### 文件传输 ftp ###
-
-- ftp ftp.oreilly.com
-- 匿名登录 anonymous
-- pwd /cd /ls
-- binary (对于二进制文件，需要切换传输模式)
-- 获取文件 get filename
-- 退出
 
 ## 多媒体 ##
 
@@ -180,7 +146,6 @@ cat cast.json | svg-term-cli
 - https://visualgo.net/zh
 
 ## 协作 ##
-
 ### github ###
 
 - 热门  https://github.com/trending
@@ -251,7 +216,6 @@ find . -type f -mtime +1
 - hexyl 
 
 ## 目录管理 ##
-
 ### 跳转 ###
 
 - z 模糊跳转 
@@ -324,9 +288,7 @@ gzip -dc file.tar.gz | tar -xvf -
 ### 手机投屏 scrcpy ###
 
 ## 仓库管理 ##
-
 ### tig 交互式地浏览 git 仓库 ###
-
 
 ## 系统
 ### 绘图板 ###
@@ -390,13 +352,3 @@ xsetwacom -s --set "Wacom Intuos5 touch M Pen pad" Button 13 "button 0"
 - 重启 pulseaudio -D
 
 
-# 其他管理技术 
-## X窗口系统
-## 打印
-## 维护与环境
-## 性能分析
-## 同Windows协作
-## 串行设备
-## 驱动程序和内核
-## 守护进程
-## 管理政策与策略
