@@ -18,10 +18,13 @@ https://doc.fastadmin.net/doc/178.html
 ``` shell
 //生成fa_test表的CRUD
 php think crud -t test
+
 //生成fa_test表的CRUD且一键生成菜单
 php think crud -t test -u 1
+
 //删除fa_test表生成的CRUD
 php think crud -t test -d 1
+
 //生成fa_test表的CRUD且控制器生成在二级目录下
 php think crud -t test -c mydir/test
 //生成fa_test_log表的CRUD且生成对应的控制器为testlog
