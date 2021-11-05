@@ -1,133 +1,102 @@
-# php
-脚本语言，常用于WEB 页面后端处理， JAVA 是编译型语言，执行效率高，但开发效率低。
+* php
+** 定义问题 
+   用特定的数据结构表示待处理的问题内容
+*** 抽象类和接口 
+**** 抽象类 
+ #+begin_src php
+ <?php
+ abstract class Animal {
+   public $name;
+   abstract public function eat($food);
+ }
+ ?>
 
-## PSR 规范
-PHP Standard Recommendation  
+ #+end_src
+    
+ #+begin_src php
+     <?php
+   include_once("Animal.php");
+     class Whale extends Animal {
+       public function __construct() {
+         $this->name = "Whale";
+       }
+       public function eat($food) {
+         echo $this->name . " eat " . $food . ".\n";
+       }
+     }
+     ?>
 
-### 自动加载规范
-\vendor\Namespace\class
+ #+end_src
 
-* `\Doctrine\Common\IsolatedClassLoader` => `/path/to/project/lib/vendor/Doctrine/Common/IsolatedClassLoader.php`
+ #+begin_src php
+   <?php
+   include_once("Whale.php");
+   $whale = new Whale();
+   $whale->eat("fish");
+   ?>
 
-1. 一个完整的类名需具有以下结构:
-```
-\<命名空间>(\<子命名空间>)*\<类名>
- ```
+ #+end_src
 
-### 基本代码规范
-- PHP代码文件**必须**以 `<?php` 或 `<?=` 标签开始；
-
-- PHP代码文件**必须**以 `不带BOM的 UTF-8` 编码；
-
-- PHP代码中**应该**只定义类、函数、常量等声明，或其他会产生 `从属效应` 的操作（如：生成文件输出以及修改.ini配置文件等），二者只能选其一；
-
-- 命名空间以及类**必须**符合 PSR 的自动加载规范：[PSR-4][]；
-
-- 类的命名**必须**遵循 `StudlyCaps` 大写开头的驼峰命名规范；
-
-- 类中的常量所有字母都**必须**大写，单词间用下划线分隔；
-
-- 方法名称**必须**符合 `camelCase` 式的小写开头驼峰命名规范。
-
-###  代码风格规范
-
-### 日志接口规范
-- LoggerInterface 接口定义了八个等级 ,debug, info ,notice, warning, error, critical,alert,emergency
-### 缓存接口规范
-- 实现类库
-- 生存时间值 (TTL - Time To Live)
-- 过期时间 （Expiration)
-- 命中 （Hit）
-- 未命中 （miss）
-- 延迟 （Deferred)
-- 缓存池
-### HTTP消息接口
-每一个HTTP请求消息有一个具体形式：
-```php
-POST /path HTTP/1.1
-Host: example.com
-
-foo=bar&baz=bat
-```
-
-HTTP响应信息具有类似的结构：
-```php
-HTTP/1.1 200 OK
-Content-Type: text/plain
-
-This is the response body
-```
-
-#### HTTP 头
-不区分大小写的头字段名
-```php
-$message = $message->withHeader('foo', 'bar');
-
-echo $message->getHeaderLine('foo');
-// Outputs: bar
-
-echo $message->getHeaderLine('FOO');
-// Outputs: bar
-
-$message = $message->withHeader('fOO', 'baz');
-echo $message->getHeaderLine('foo');
-// Outputs: baz
-```
+ 运行
+ #+begin_src shell
+ $ php Whale.php
+ Whale eat fish.
+ #+end_src
+**** 接口
+     #+begin_src php
+       <?php
+       interface IAction {
+           public function eat($food);
+           public function swim();
+       }
+       ?>
+     #+end_src
 
 
+     #+begin_src php
+       <?php
+       class Whale implements IAction {
+         public function eat($food) {
+           echo "Whale eat " . $food . "\n.";
+         }
+         public swim() {
+           echo "Whale is swimming.\n";
+         }
+       }
+       ?>
 
+     #+end_src
+** 处理问题
+*** 检查类型    
+ - 检查变量类型，gettype()，settype()
+ - is_numeric ( mixed var )://检测变量是 否为数字或数字字符串
+ - is_bool():        // 检测变量是否是布尔型
+ - is_float():       // 检测变量是否是浮点型 和 is_double，is_real()都一样的用法
+ - is_int():         // 检测变量是否是整数 is_integer() 一样的 用法
+ - is_string():      // 检测变量是否是字符串
+ - is_object():      // 检测变量是否是一个对象
+ - is_array():       // 检测变量是否是数组
+ - is_null():        // 检测变量是否为 NULL 值是否是 NULL 大小写敏感
 
-## 数据(变量)类型
-- String（字符串）
-- Integer（整型）
-- Float（浮点型）
-- Boolean（布尔型）
-- Array（数组）
-- Object（对象）
-- NULL（空值）
+ >检查变量状态
+ - isset():  //变量是否已经声明
+ - unset() //销毁变量
+ - empty():  //变量是否声明，或者变量值是否为空或 0 
 
->检查变量类型，gettype()，settype()
-> 检查特定类型
-- is_numeric ( mixed var )://检测变量是 否为数字或数字字符串
-- is_bool():        // 检测变量是否是布尔型
-- is_float():       // 检测变量是否是浮点型 和is_double，is_real()都一样的用法
-- is_int():         // 检测变量是否是整数is_integer() 一样的 用法
-- is_string():      // 检测变量是否是字符串
-- is_object():      // 检测变量是否是一个对象
-- is_array():       // 检测变量是否是数组
-- is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
-
->检查变量状态
-- isset():  //变量是否已经声明
-- unset() //销毁变量
-- empty():  //变量是否声明，或者变量值是否为空或0 
-
-### 常量
-定义常量 
-define('SPARKPRICE',4);
-
-预定义常量
-使用 phpinfo(); 可以查看
-
-### 类
-- 继承(包含) extends
-- 多态
-
-## 命令
-### String
+*** String
 - strlen
 - strpos
 
-### Array
+*** Array
 - count 长度
 - sort 升序 rsort 降序 asort,arsort 值排序 ksor,krsort 键排序
 
-### 数据转换
+*** 数据转换
 - doubleval
 - floatval
 - intval
 - strval
-### 判断数据类型 
+*** 判断数据类型 
 
 ``` php
 gettype();
@@ -136,15 +105,15 @@ array_key_exists(mixed key, array search):  //检查给定的键名或索引是�
 
 is_numeric ( mixed var )://检测变量是 否为数字或数字字符串
 is_bool():        // 检测变量是否是布尔型
-is_float():       // 检测变量是否是浮点型 和is_double，is_real()都一样的用法
-is_int():         // 检测变量是否是整数is_integer() 一样的 用法
+is_float():       // 检测变量是否是浮点型 和 is_double，is_real()都一样的用法
+is_int():         // 检测变量是否是整数 is_integer() 一样的 用法
 is_string():      // 检测变量是否是字符串
 is_object():      // 检测变量是否是一个对象
 is_array():       // 检测变量是否是数组
-is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
+is_null():        // 检测变量是否为 NULL 值是否是 NULL 大小写敏感
 ```
 
-### Array ###
+*** Array ***
 
 | 函数                      | 描述                                                                                               |
 |---------------------------+----------------------------------------------------------------------------------------------------|
@@ -229,64 +198,64 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | uksort()                  | 使用用户自定义的比较函数对数组中的键名进行排序。                                                   |
 | usort()                   | 使用用户自定义的比较函数对数组进行排序。                                                           |
 
-### Calendar ###
+*** Calendar ***
 
-### cURL ###
+*** cURL ***
 
 
 | 函数                       | 描述                                                         |
 |----------------------------+--------------------------------------------------------------|
-| curl_close()               | 关闭一个cURL会话。                                           |
-| curl_copy_handle()         | 复制一个cURL句柄和它的所有选项。                             |
+| curl_close()               | 关闭一个 cURL 会话。                                           |
+| curl_copy_handle()         | 复制一个 cURL 句柄和它的所有选项。                             |
 | curl_errno()               | 返回最后一次的错误号。                                       |
 | curl_error()               | 返回一个保护当前会话最近一次错误的字符串。                   |
-| curl_escape()              | 返回转义字符串，对给定的字符串进行URL编码。                  |
-| curl_exec()                | 执行一个cURL会话。                                           |
+| curl_escape()              | 返回转义字符串，对给定的字符串进行 URL 编码。                  |
+| curl_exec()                | 执行一个 cURL 会话。                                           |
 | curl_file_create()         | 创建一个 CURLFile 对象。                                     |
-| curl_getinfo()             | 获取一个cURL连接资源句柄的信息。                             |
-| curl_init()                | 初始化一个cURL会话。                                         |
-| curl_multi_add_handle()    | 向curl批处理会话中添加单独的curl句柄。                       |
-| curl_multi_close()         | 关闭一组cURL句柄。                                           |
+| curl_getinfo()             | 获取一个 cURL 连接资源句柄的信息。                             |
+| curl_init()                | 初始化一个 cURL 会话。                                         |
+| curl_multi_add_handle()    | 向 curl 批处理会话中添加单独的 curl 句柄。                       |
+| curl_multi_close()         | 关闭一组 cURL 句柄。                                           |
 | curl_multi_exec()          | 运行当前 cURL 句柄的子连接。                                 |
-| curl_multi_getcontent()    | 如果设置了CURLOPT_RETURNTRANSFER，则返回获取的输出的文本流。 |
-| curl_multi_info_read()     | 获取当前解析的cURL的相关传输信息。                           |
-| curl_multi_init()          | 返回一个新cURL批处理句柄。                                   |
-| curl_multi_remove_handle() | 移除curl批处理句柄资源中的某个句柄资源。                     |
-| curl_multi_select()        | 等待所有cURL批处理中的活动连接。                             |
-| curl_multi_setopt()        | 设置一个批处理cURL传输选项。                                 |
+| curl_multi_getcontent()    | 如果设置了 CURLOPT_RETURNTRANSFER，则返回获取的输出的文本流。 |
+| curl_multi_info_read()     | 获取当前解析的 cURL 的相关传输信息。                           |
+| curl_multi_init()          | 返回一个新 cURL 批处理句柄。                                   |
+| curl_multi_remove_handle() | 移除 curl 批处理句柄资源中的某个句柄资源。                     |
+| curl_multi_select()        | 等待所有 cURL 批处理中的活动连接。                             |
+| curl_multi_setopt()        | 设置一个批处理 cURL 传输选项。                                 |
 | curl_multi_strerror()      | 返回描述错误码的字符串文本。                                 |
 | curl_pause()               | 暂停及恢复连接。                                             |
-| curl_reset()               | 重置libcurl的会话句柄的所有选项。                            |
-| curl_setopt_array()        | 为cURL传输会话批量设置选项。                                 |
-| curl_setopt()              | 设置一个cURL传输选项。                                       |
-| curl_share_close()         | 关闭cURL共享句柄。                                           |
-| curl_share_init()          | 初始化cURL共享句柄。                                         |
-| curl_share_setopt()        | 设置一个共享句柄的cURL传输选项。                             |
+| curl_reset()               | 重置 libcurl 的会话句柄的所有选项。                            |
+| curl_setopt_array()        | 为 cURL 传输会话批量设置选项。                                 |
+| curl_setopt()              | 设置一个 cURL 传输选项。                                       |
+| curl_share_close()         | 关闭 cURL 共享句柄。                                           |
+| curl_share_init()          | 初始化 cURL 共享句柄。                                         |
+| curl_share_setopt()        | 设置一个共享句柄的 cURL 传输选项。                             |
 | curl_strerror()            | 返回错误代码的字符串描述。                                   |
-| curl_unescape()            | 解码URL编码后的字符串。                                      |
-| curl_version()             | 获取cURL版本信息。                                           |
+| curl_unescape()            | 解码 URL 编码后的字符串。                                      |
+| curl_version()             | 获取 cURL 版本信息。                                           |
 
-### date
+*** date
 
 | 时间格式化的方式 | 说明                                                 |
 |------------------+------------------------------------------------------|
-| Y                | 4位数字年，y为2位数字，如99即1999年                  |
-| m                | 数字月份，前面有前导0，如01。n 为无前导0数字月份     |
+| Y                | 4 位数字年，y为 2 位数字，如 99 即 1999 年                  |
+| m                | 数字月份，前面有前导 0，如 01。n 为无前导 0 数字月份     |
 | F                | 月份，完整的文本格式，例如 January 或者 March        |
 | M                | 三个字母缩写表示的月份，例如 Jan 或者 Mar            |
-| d                | 月份中的第几天，前面有前导0，如03。j 为无前导0的天数 |
+| d                | 月份中的第几天，前面有前导 0，如 03。j 为无前导 0 的天数 |
 | w                | 星期中的第几天，以数字表示，0表示星期天              |
-| z                | 年份中的第几天，范围0-366                            |
-| W                | 年份中的第几周，如第32周                             |
-| H                | 24小时格式，有前导0，h为12小时格式                   |
-| G                | 24小时格式，无前导0，g为对应12小时格式               |
-| i                | 分钟格式，有前导0                                    |
-| s                | 秒格式，有前导0                                      |
-| A                | 大写上下午，如AM，a为小写                            |
+| z                | 年份中的第几天，范围 0-366                            |
+| W                | 年份中的第几周，如第 32 周                             |
+| H                | 24 小时格式，有前导 0，h 为 12 小时格式                   |
+| G                | 24 小时格式，无前导 0，g 为对应 12 小时格式               |
+| i                | 分钟格式，有前导 0                                    |
+| s                | 秒格式，有前导 0                                      |
+| A                | 大写上下午，如 AM，a 为小写                            |
 
-- strtotime 时间转time
+- strtotime 时间转 time
 
-### Directory ###
+*** Directory ***
 
 | 函数        | 描述                               |
 |-------------+------------------------------------|
@@ -300,9 +269,9 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | rewinddir() | 重置目录句柄。                     |
 | scandir()   | 返回指定目录中的文件和目录的数组。 |
 
-### Error ###
+*** Error ***
 
-### Filesystem
+*** Filesystem
 
 | 函数                  | 描述                                                            |
 |-----------------------+-----------------------------------------------------------------|
@@ -388,8 +357,7 @@ is_null():        // 检测变量是否为 NULL 值是否是NULL大小写敏感
 | umask()               | 改变文件的文件权限。                                            |
 | unlink()              | 删除文件。                                                      |
 
-
-### HTTP ###
+*** HTTP ***
 
 | 函数           | 描述                                                |
 |----------------+-----------------------------------------------------|
@@ -410,11 +378,11 @@ header('Location: /login.php');
 header('HTTP/1.1 400 Bad request');
  ```
 
-### LibXML ###
+*** LibXML ***
 
-### Mail ###
+*** Mail ***
 
-### Math ###
+*** Math ***
 
 
 | 函数            | 描述                                                  |
@@ -468,7 +436,7 @@ header('HTTP/1.1 400 Bad request');
 | tan()           | 返回一个数的正切。                                    |
 | tanh()          | 返回一个数的双曲正切。                                |
 
-### Misc 杂项 ###
+*** Misc 杂项 ***
 
 | 函数                   | 描述                                          |
 |------------------------+-----------------------------------------------|
@@ -494,7 +462,7 @@ header('HTTP/1.1 400 Bad request');
 | unpack()               | 从二进制字符串对数据进行解包。                |
 | usleep()               | 延迟代码执行若干微秒。                        |
 
-### MySQLi ###
+*** MySQLi ***
 
 | 函数                              | 描述                                                            |
 | mysqli_affected_rows()            | 返回前一次 MySQL 操作所影响的记录行数。                         |
@@ -567,7 +535,7 @@ header('HTTP/1.1 400 Bad request');
 | mysqli_use_result()               | 从上次使用 mysqli_real_query() 执行的查询中初始化结果集的检索。 |
 | mysqli_warning_count()            | 返回连接中的最后一个查询的警告数量。                            |
 
-### SimpleXML ###
+*** SimpleXML ***
 
 
 | 函数                     | 描述                                              |
@@ -588,7 +556,7 @@ header('HTTP/1.1 400 Bad request');
 | simplexml_load_string()  | 转换 XML 字符串为 SimpleXMLElement 对象。         |
 | xpath()                  | 运行对 XML 数据的 XPath 查询。                    |
 
-### String ###
+*** String ***
 
 | 函数                         | 描述                                                              |
 | addcslashes()                | 返回在指定的字符前添加反斜杠的字符串。                            |
@@ -691,9 +659,9 @@ header('HTTP/1.1 400 Bad request');
 | vsprintf()                   | 把格式化字符串写入变量中。                                        |
 | wordwrap()                   | 按照指定长度对字符串进行折行处理。                                |
 
-### XML Parser ###
+*** XML Parser ***
 
-### Zip ###
+*** Zip ***
 
 读取压缩文件
 | 函数                          | 描述                                      |
@@ -708,10 +676,10 @@ header('HTTP/1.1 400 Bad request');
 | zip_open()                    | 打开 ZIP 文件。                           |
 | zip_read()                    | 读取 ZIP 文件中的下一个项目。             |
 
-### 获取WEB信息
-#### 服务器信息 $_SERVER 
+*** 获取 WEB 信息
+**** 服务器信息 $_SERVER 
 - DOCUMENT_ROOT
-#### 表单信息
+**** 表单信息
 - $_GET
 - $_POST
 - $_REQUEST ($_GET 与 $_POST 的合集)
@@ -720,16 +688,16 @@ header('HTTP/1.1 400 Bad request');
 - $_SESSION session 
 会话信息是临时的，在用户离开网站后将被删除设置或获取 Session 都要先 执行 session_start();
 
-### 显示错误
+*** 显示错误
 
 ``` php
 ini_set("display_errors","On");
 error_reporting(E_ALL); 
 ```
 
-### 验证 ###
+*** 验证 ***
 
-#### 验证Email ####
+**** 验证 Email ****
 
 ```php
 <?php
@@ -742,13 +710,13 @@ if ($isEmail !== false) {
 }
 ```
 
-### 对象缓存 ###
+*** 对象缓存 ***
 
-#### Memcached ####
+**** Memcached ****
 
-#### redis ####
+**** redis ****
 
-##### php.ini配置 #####
+***** php.ini 配置 *****
 
 ``` config
 [redis]
@@ -760,7 +728,7 @@ phpinfi();
 ```
 有 redis 内容则配置成功
 
-##### 连接到 Redis 服务器 #####
+***** 连接到 Redis 服务器 *****
 
 ``` php
 <?php 
@@ -772,7 +740,7 @@ phpinfi();
     echo "Server is running: ".$redis->ping(); 
 ```
 
-##### $Redis PHP 字符串示例 #####
+***** $Redis PHP 字符串示例 *****
 
 ``` php
 <?php 
@@ -786,7 +754,7 @@ phpinfi();
     echo "Stored string in redis:: " .$redis→get("tutorial-name"); 
 ```
 
-##### Redis php 列表示例 #####
+***** Redis php 列表示例 *****
 
 ``` php
 <?php 
@@ -805,7 +773,7 @@ phpinfi();
     print_r($arList); 
 ```
 
-##### Redis php 键示例 #####
+***** Redis php 键示例 *****
 
 ``` php
 <?php 
@@ -814,13 +782,13 @@ phpinfi();
     $redis->connect('127.0.0.1', 6379); 
     echo "Connection to server sucessfully"; 
     // Get the stored keys and print it 
-    $arList = $redis->keys("#"); 
+    $arList = $redis->keys("*"); 
     echo "Stored keys in redis:: " 
     print_r($arList); 
  ?>
 ```
 
-### 日期和时间
+*** 日期和时间
 
 ```
 <?php
@@ -830,134 +798,32 @@ $start = DateTime::createFromFormat('d. m. Y', $raw);
 echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 ``` 
 
-### 正则查找 (模糊查找)
-#### preg_match
+*** 正则查找 (模糊查找)
+**** preg_match
 
 
 
+* 其他
+** 依赖管理
+- 安装所有依赖 composer install
+- 更新所有依赖 composer update
+- 下载并安装某个依赖 composer require twig/twig:~1.8
+- 安装到全局空间 composer global require phpunit/phpunit
 
-# 其他
-## 依赖管理
-### composer 
-安装所有依赖
-``` console
-composer install
-```
-
-更新所有依赖
-``` console
-composer update
-```
-
-下载并安装某个依赖
- ``` console
-  composer require twig/twig:~1.8
-``` 
-
-安装到全局空间
-``` console
- composer global require phpunit/phpunit
-```
-
-## 启动自带服务器
-``` console
-php -S localhost:9999
-```
-## 开发实践 ##
-
-### 浏览器层面的 UTF-8 ###
-
-``` php 
-<?php
-// Tell PHP that we're using UTF-8 strings until the end of the script
-mb_internal_encoding('UTF-8');
- 
-// Tell PHP that we'll be outputting UTF-8 to the browser
-mb_http_output('UTF-8');
- 
-// Our UTF-8 test string
-$string = 'Êl síla erin lû e-govaned vîn.';
- 
-// Transform the string in some way with a multibyte function
-// Note how we cut the string at a non-Ascii character for demonstration purposes
-$string = mb_substr($string, 0, 15);
- 
-// Connect to a database to store the transformed string
-// See the PDO example in this document for more information
-// Note the `charset=utf8mb4` in the Data Source Name (DSN)
-$link = new PDO(
-    'mysql:host=your-hostname;dbname=your-db;charset=utf8mb4',
-    'your-username',
-    'your-password',
-    array(
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_PERSISTENT => false
-    )
-);
- 
-// Store our transformed string as UTF-8 in our database
-// Your DB and tables are in the utf8mb4 character set and collation, right?
-$handle = $link->prepare('insert into ElvishSentences (Id, Body) values (?, ?)');
-$handle->bindValue(1, 1, PDO::PARAM_INT);
-$handle->bindValue(2, $string);
-$handle->execute();
- 
-// Retrieve the string we just stored to prove it was stored correctly
-$handle = $link->prepare('select * from ElvishSentences where Id = ?');
-$handle->bindValue(1, 1, PDO::PARAM_INT);
-$handle->execute();
- 
-// Store the result into an object that we'll output later in our HTML
-$result = $handle->fetchAll(\PDO::FETCH_OBJ);
-
-header('Content-Type: text/html; charset=UTF-8');
-?><!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>UTF-8 test page</title>
-    </head>
-    <body>
-        <?php
-        foreach($result as $row){
-            print($row->Body);  // This should correctly output our transformed UTF-8 string to the browser
-        }
-        ?>
-    </body>
-</html>
-
-```
-
-## 错误报告 ##
-### 开发环境 ###
-
-```
+** 服务器配置
+*** 开发环境
 display_errors = On
 display_startup_errors = On
 error_reporting = -1
 log_errors = On
-```
 
-### 生产环境 ###
-
-```
+*** 生产环境 
 display_errors = Off
 display_startup_errors = Off
 error_reporting = E_ALL
 log_errors = On
-```
 
-## 代码注释 ##
-### PHPDoc ###
-PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可以使用。
-
-```
-@author 标记是用來说明代码的作者，在多位开发者的情况下，可以同时列出好几位。
-@link 标记用来提供网站链接，进一步说明代码和网站之间的关系
-@param 标记，说明类型、名字和传入方法的参数。
-@return 和 @throws 标记说明返回类型以及可能抛出的异常。
-```
-## php.ini
+*** php.ini
 - error_reporting = E_ALL &~E_NOTICE &~E_STRICT
 - display_errors= On
 - default_charset="utf-8"
@@ -965,18 +831,15 @@ PHPDoc 是注释 PHP 代码的非正式标准。它有许多不同的标记可�
 - file_uploads=On
 - upload_max_filesize=2M
 - session.save_path ="/tmp"
-- session.gc_maxlifetime=1440   Session过期时间
+- session.gc_maxlifetime=1440   Session 过期时间
 
-# 问题
-## Ajax 跨域问题
-### 允许单个域名访问
-``` php
+* 问题
+** Ajax 跨域问题
+*** 允许单个域名访问
 header('Access-Control-Allow-Origin:http://client.runoob.com');
-```
 
-### 允许多个域名访问
-
-``` php
+*** 允许多个域名访问
+#+begin_src php
 $origin = isset($_SERVER['HTTP_ORIGIN'])? $_SERVER['HTTP_ORIGIN'] : '';  
   
 $allow_origin = array(  
@@ -987,73 +850,10 @@ $allow_origin = array(
 if(in_array($origin, $allow_origin)){  
     header('Access-Control-Allow-Origin:'.$origin);       
 } 
-```
+#+end_src
 
-### 允许所有域名访问
-``` php
+*** 允许所有域名访问
 header('Access-Control-Allow-Origin:*'); 
-```
 
  
 
-# 面向对象编程
-
-###目的
-* 高内聚，低耦合
-
-### 面向对象设计的基本原则
-
-1. 单一职责：一个类只做一件事
-2. 开闭原则：对扩展开放对修改关闭
-3. 里氏替换：子类必须能替换所有父类的使用
-4. 依赖倒置：设计依赖于抽象而不是实现
-5. 接口隔离：接口倾向于小而多
-6. 最少知识：对象应当尽可能少的去了解其他对象
-7. 组合优先：优先使用类的组合而不是继承
-
-
-**抽象类和接口的使用**
-- 当类中有共同的行为或属性时,可以考虑使用 abstract calss
-- 当类别中有共同的操作界面,但是在实现上有所差别,可以考虑使用 interface
-
-
-##一些概念
-1. Static（静态）关键字
-
-  声明类属性或方法为静态，就可以不实例化类而直接访问。**静态属性不能通过一个类已实例化的对象来访问（但静态方法可以）。**
-  
-2. 抽象类 
-
-  PHP 5 支持抽象类和抽象方法。定义为抽象的类不能被实例化。任何一个类，如果它里面至少有一个方法是被声明为抽象的，那么这个类就必须被声明为抽象的。被定义为抽象的方法只是声明了其调用方式（参数），不能定义其具体的功能实现。
-  继承一个抽象类的时候，子类必须定义父类中的所有抽象方法；另外，这些方法的访问控制必须和父类中一样（或者更为宽松）。
-
-3. 对象接口 
-  使用接口（interface），可以指定某个类必须实现哪些方法，但不需要定义这些方法的具体内容。
-
-  接口是通过 interface 关键字来定义的，就像定义一个标准的类一样，但其中定义所有的方法都是空的。
-
-  接口中定义的所有方法都必须是公有，这是接口的特性。
-  
-4. Trait
-  Trait 是为类似 PHP 的单继承语言而准备的一种代码复用机制。Trait 为了减少单继承语言的限制，使开发人员能够自由地在不同层次结构内独立的类中复用 method。Trait 和 Class 组合的语义定义了一种减少复杂性的方式，避免传统多继承和 Mixin 类相关典型问题。
-
-   Trait 和 Class 相似，但仅仅旨在用细粒度和一致的方式来组合功能。 无法通过 trait 自身来实例化。它为传统继承增加了水平特性的组合；也就是说，应用的几个 Class 之间不需要继承。
-
-5. Final 关键字 
-  PHP 5 新增了一个 final 关键字。如果父类中的方法被声明为 final，则子类无法覆盖该方法。如果一个类被声明为 final，则不能被继承。
-  一般是为了防止父类的一个方法被重写
-  
-1. 类与对象二者之间的关系：
-    - 类是定义一系列属性和操作的模板，而对象则把属性进行具体化，然后交给类处理
-    - 对象就是数据，对象本身不包含方法。但是对象有一个指针指向一个类，这个类里面可以有方法。
-    - 方法描述不同属性所导致的不同表现。
-    - 类和对象是不可分割的，有对象就有一个类和其对应。
-2. 多态
-    - 多态指同一类对象在运行时的具体化
-    - PHP语言室弱类型的，实现多态更简单，更灵活
-    - 类型转换不是多态
-    - PHP中父类和子类是继父和继子关系，他们存在继承关系，不存在血缘关系。因此子类无法向上转型为父类，从而失去多态最典型的特征。
-3. 接口
-    - 接口作为一种规范和契约存在。作为规范，接口应该保证可用；作为契约，接口应该保证可控性。
-    - 接口只是一个声明，一旦使用了interface关键字，就应该实现它。接口本身什么都不做，他只是告诉我们他能做什么。
-    - PHP中的接口存在二个不足，一是没有契约限制，二是缺少足够多的内部接口
