@@ -801,8 +801,9 @@ echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 *** 正则查找 (模糊查找)
 **** preg_match
 
-
-
+     
+* 服务器平台
+  $_SERVER
 * 其他
 ** 依赖管理
 - 安装所有依赖 composer install

@@ -1,0 +1,27 @@
+* MySQL
+  
+** 登录平台
+
+   mysql -h hostname -u username -p
+
+   
+** 数据库操作
+  
+*** 创建数据库 
+    
+    create database dbname;
+
+*** 列出数据库
+    
+    show databases;
+
+    
+*** 切换工作数据库
+
+    use dbname;
+
+** 数据表操作
+  
+*** 列出数据表 
+
+    show tables;
