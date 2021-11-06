@@ -1,4 +1,4 @@
-# TODO
+* TODO
 fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学，开发文档看完，跟着操作一遍，多写写API接口；
 
 第六天：了解一些并发、缓存、数据库优化等知识；
@@ -6,11 +6,11 @@ fastadmin：以TP5为基础的，把框架里免费的插件安装上学一学�
 
 
 
-# fastadmin
+* fastadmin
 https://doc.fastadmin.net/doc/178.html
 
-## 命令
-### 生成CURD (控制器，model，和菜单)
+** 命令
+*** 生成CURD (控制器，model，和菜单)
 
 常用命令
 --force=true
@@ -43,7 +43,7 @@ php think crud -t test --relation=category --relation=admin --relationforeignkey
 php think crud -t test --db=v_phealth_db2
 ```
 
-### 生成菜单
+*** 生成菜单
 ``` shell
 //一键生成test控制器的权限菜单
 php think menu -c test
@@ -55,7 +55,7 @@ php think menu -c test -d 1
 php think menu -c all-controller
 ```
 
-### 压缩打包
+*** 压缩打包
 在FastAdmin中如果修改了核心的JS或CSS文件，是需要重新压缩打包后在生产环境下才会生效。FastAdmin采用的是基于RequireJS的r.js进行JS和CSS文件的压缩打包。
 
 常用命令
@@ -90,7 +90,7 @@ public/assets/css/frontend.min.css
 public/assets/css/backend.min.css
 ```
 
-### 生成API文档
+*** 生成API文档
 FastAdmin中的一键生成API文档可以在命令行或后台一键生成我们API接口的接口测试文档，可以直接在线模拟接口请求，查看参数示例和返回示例。
 常用命令
 ``` shell
@@ -108,7 +108,7 @@ php think api -t FastAdmin -a Karson --force=true
 php think api -h
 ```
 参数介绍
-### 管理插件
+*** 管理插件
 ``` shell
 //创建一个myaddon本地插件，常用于开发自己的插件时使用
 php think addon -a myaddon -c create
@@ -128,7 +128,7 @@ php think addon -a example -c upgrade
 php think addon -a example -c package
 ``` 
 
-### 安装FastAdmin
+*** 安装FastAdmin
 常用命令
 ``` shell
 //一键安装FastAdmin
@@ -144,14 +144,14 @@ php think install -r ff_
 //强制重新安装FastAdmin
 php think install -f 1
 ```
-## 多语言
+** 多语言
 ``` html
 __('My name is %s', "FastAdmin");
 __('This is %s,base on %s', ['FastAdmin', 'ThinkPHP5']);
 ```
 
-## 数据库
-### 根据字段类型
+** 数据库
+*** 根据字段类型
 | 类型 | 备注 | 类型说明 |
 |------+------+----------|
 | int       | 整型     | 自动生成type为number的文本框，步长为1                |
@@ -162,7 +162,7 @@ __('This is %s,base on %s', ['FastAdmin', 'ThinkPHP5']);
 | datetime  | 日期时间 | 自动生成日期时间的组件                               |
 | date      | 日期型   | 自动生成日期型的组件                                 |
 | timestamp | 时间戳   | 自动生成日期时间的组件                               |
-### 特殊字段
+*** 特殊字段
 | 字段         | 字段名称   | 字段类型 | 字段说明                                                                                |
 |--------------+------------+----------+-----------------------------------------------------------------------------------------|
 | category_id  | 分类ID     | int      | 将生成选择分类的下拉框,分类类型根据去掉前缀的表名，单选                                 |
@@ -173,7 +173,7 @@ __('This is %s,base on %s', ['FastAdmin', 'ThinkPHP5']);
 | deletetime   | 删除时间   | int      | 记录删除时间的字段,不需要手动维护,如果存在此字段将会生成回收站功能,字段默认值务必为null |
 | status       | 状态字段   | enum     | 列表筛选字段,如果存在此字段将启用TAB选项卡展示列表                                      |
 
-### 以特殊字符结尾的规则
+*** 以特殊字符结尾的规则
 
 | 结尾字符 | 示例        | 类型要求    | 字段说明                                           |
 |----------+-------------+-------------+----------------------------------------------------|
@@ -194,15 +194,15 @@ __('This is %s,base on %s', ['FastAdmin', 'ThinkPHP5']);
 | json     | configjson  | varchar     | 识别为键值组件，自动生成键值录入组件               |
 | switch   | siteswitch  | tinyint     | 识别为开关字段，自动生成开关组件                   |
 
-### 注释说明
+*** 注释说明
 | 字段   | 注释内容                  | 字段类型                | 字段说明                                                                      |
 |--------+---------------------------+-------------------------+-------------------------------------------------------------------------------|
 | status | 状态                      | int                     | 将生成普通语言包和普通文本框                                                  |
 | status | 状态                      | enum(‘0’,’1’,’2’) | 将生成普通语言包和单选下拉列表,同时生成TAB选项卡                              |
 | status | 状态:0=隐藏,1=正常,2=推荐 | enum(‘0’,’1’,’2’) | 将生成多个语言包和单选下拉列表,同时生成TAB选项卡,且列表中的值显示为对应的文字 |
-## 控制器
+** 控制器
 
-### 基类控制器
+*** 基类控制器
 FastAdmin中定义了三个基类控制器，分别位于
 
 application/common/controller/Api.php //API接口基类控制器
@@ -268,7 +268,7 @@ class Backend extends Controller{
 } 
 ```
 
-### 属性和方法
+*** 属性和方法
 当我们的控制器继承自app\common\controller\Backend以后，我们就可以使用以下属性
 ``` php
 /**
@@ -387,7 +387,7 @@ protected function selectpage()
 ```
 我们可以直接在当前控制器使用$this->方法名()来调用所支持的方法，同时TP5中\think\Controller所支持的方法也全部支持。
 
-### 数据限制
+*** 数据限制
 在后台开发的过程中经常会有这样的一个需求，每个管理员单独管理自己添加的数据或单独管理自己下级管理员添加的数据，管理员之间的数据是不相通的，每个管理员看到的数据是不同的。在FastAdmin中可以很方便的实现此功能。
 
 首先我们需要在当前控制器添加以下两个属性
@@ -403,7 +403,7 @@ $dataLimitField字段默认为admin_id，请注意添加该字段类型为int(10
 
 如果需要将原有的数据加入到FastAdmin后台管理权限控制当中，比如已有的数据已经有标识归属，但这个归属体系并非是FastAdmin的后台管理员体系。在这个时候我们就需要重写基类的getDataLimitAdminIds方法，将此方法返回数据标识的归属ID数组集合，这样即可使用FastAdmin的后台管理权限进行管理。
 
-### 关联查询
+*** 关联查询
 目前FastAdmin后台index方法支持一对一关联查询，比如我们一篇文章有归属分类，我们在列出数据时需要同时列表文章分类名称。
 
 首先我们需要在当前控制器中添加以下属性
@@ -465,7 +465,7 @@ table.bootstrapTable({
 ```
 
 
-### 数据校验
+*** 数据校验
 在FastAdmin中默认的add/edit方法可以使用模型验证，验证器位于application/admin/validate/模型名.php中，模型验证默认是关闭的状态，如果需要启用，我们需要在当前控制器定义以下属性
 ``` php
 protected $modelValidate = true; //是否开启Validate验证，默认是false关闭状态
@@ -474,7 +474,7 @@ protected $modelSceneValidate = true; //是否开启模型场景验证，默认�
 当开启模型验证后，我们的添加和修改操作都会首先进行模型验证，验证不通过将会抛出错误信息，具体的模型验证规则可以参考TP5官方文档的模型验证规则：https://www.kancloud.cn/manual/thinkphp5/129355
 
 场景验证可以参考TP5场景验证章节：https://www.kancloud.cn/manual/thinkphp5/129322
-### 权限控制
+*** 权限控制
 在基类中我们有定义以下两个属性
 ``` php
 protected $noNeedLogin = []; //无需登录的方法,同时也就不需要鉴权了
@@ -490,7 +490,7 @@ protected $noNeedRight = ['mytest'];
 ```
 如果我们需要动态定义，请务必放在调用父类的_initialize方法之前，否则是不会生效的。
 
-### 视图渲染
+*** 视图渲染
 基类app\common\controller\Backend会默认渲染以下几个对象到视图中
 ``` php 
 //渲染站点配置
@@ -537,9 +537,9 @@ Config.demo.name
 ```
 来获取对应的数据
 
-## 模块
-### 前台
-#### 会员模块
+** 模块
+*** 前台
+**** 会员模块
 FastAdmin的前台自带一个简单的会员功能模块，可以进行会员的注册、登录、找回密码、会员中心、修改个人资料、修改密码等操作。
 
 会员模块可用于进行前台会员功能开发时使用。此处的会员模块和API中的会员模块账号是相通的，但他们登录时是不会互相影响的，可以同时登录。
@@ -560,12 +560,12 @@ Hook::add('user_logout_successed', function ($user) {
 });
 ```
 
-### 公共
-#### Token验证
-##### 功能介绍
+*** 公共
+**** Token验证
+***** 功能介绍
 Token验证主要用于会员登录状态信息的维护和验证，通常情况下不需要我们调用此类的方法，在一些特殊情况下我们可以手动调用。
 
-##### 使用示例
+***** 使用示例
 获取Token信息
 获取Token的详情、关联的会员ID、过期时间、有效期等信息
 ``` php
@@ -591,7 +591,7 @@ Token::delete('c2259a37-5fee-4c4b-93b0-1d7313e1d1ac');
 ``` php
 Token::clear(1);
 ```
-#### 邮件发送
+**** 邮件发送
 功能介绍
 FastAdmin中的邮件发送采用phpmailer进行邮件发送，在使用邮件发送功能前请先在后台常规管理->系统配置中配置好邮件的相关信息。
 
@@ -611,7 +611,7 @@ $email->getError();
 ```
 来获取到错误详情
 
-#### 短信发送
+**** 短信发送
 功能介绍
 在我们开发过程中经常会用到短信发送和短信推广的功能，FastAdmin提供了一个简单实用的短信接口供开发者调用。
 
@@ -630,7 +630,7 @@ $email->getError();
 如果我们需要清空指定手机号的验证码，则可以使用
 
 > Sms::flush('13888888888', 'register');
-#### 辅助函数
+**** 辅助函数
 在FastAdmin中我们有提供几个常用的辅助函数。
 
 ``` php
@@ -739,7 +739,7 @@ function var_export_short($var, $indent = "")
 
 
 
-## 组件
+** 组件
 FastAdmin默认集成了多个第三方组合，如表单验证、文件上传、下拉列表、时间选择、城市选择、Selectpage，所有的组件都必须使用Form.api.bindevent("form[role=form]")来进行初始化，如果不进行初始化是无法对相应组件进行渲染和事件绑定。
 
 如果我们想单独为元素绑定事件和渲染，我们可以使用如下的代码
@@ -759,7 +759,7 @@ FastAdmin默认集成了多个第三方组合，如表单验证、文件上传�
 
 如果是动态生成的元素，默认是没有绑定事件的，可以使用上述的代码进行绑定事件。其中$("form")为所需绑定事件元素的父级元素，并不限定为必须是一个form，也可以是个div或p元素。
 
-### 参数列表
+*** 参数列表
 Form.api.bindevent共有四个元素，分别如下：
 
 | 名称    | 类型           | 说明                                                      |
@@ -769,7 +769,7 @@ Form.api.bindevent共有四个元素，分别如下：
 | error   | function       | 失败后的回调，回调参数：data,ret                          |
 | submit  | function       | 提交前的回调，回调参数：success,error                     |
 
-### 常规用法
+*** 常规用法
 ``` php
 Form.api.bindevent($("form"), function(data,ret){
     //成功的回调,如果返回false,将不会出现提示消息
@@ -783,28 +783,28 @@ Form.api.bindevent($("form"), function(data,ret){
     //如果处理成功后我们可以使用Form.api.submit(this, success, error);再次提交表单
 });
 ```
-### 单独绑定组件
+*** 单独绑定组件
 如果我们需要给一个文本框单独绑定一个组件，如我们只需要给文本框绑定日期时间选择组件，我们可以采用下面的方式
 ``` php
 require(['form'], function(Form){
-    Form.events.datetimepicker($("#parentdiv"));
+    Form.events.datetimepicker($("*parentdiv"));
 });
 ```
-注意这里的$("#parentdiv")为文本框父元素的选择对象。
+注意这里的$("*parentdiv")为文本框父元素的选择对象。
 
-## 表格
-### 依赖
+** 表格
+*** 依赖
 
 在FastAdmin中如果需要使用Bootstrap-table，需要使用require引入table模块。table模块对应的是assets/js/require-table.js文件，FastAdmin做了许多通用方法和默认值操作。
 
-#### 载入依赖
+**** 载入依赖
 ``` js
 require(['table'], function(Table){
     //编写实例化代码
     //使用Table对象
 });
 ```
-#### 引入CSS
+**** 引入CSS
 由于表格列表常用于后台管理列表，后台已经默认引入了表格相关的CSS文件，在前台未引入相关的CSS文件，如果你需要在前台使用到Bootstrap-table，则需要手动载入表格相关的CSS文件。如下：
 ``` html
 <link rel="stylesheet" type="text/css" href="__CDN__/assets/libs/bootstrap-table/dist/bootstrap-table.min.css"/>
@@ -817,7 +817,7 @@ require(['table'], function(Table){
 
 
 
-### Table对象
+*** Table对象
 我们引入表格依赖后table后，我们就可以通过Table来进行相关表格的初始化和绑定相关事件。
 返回的Table对象包括以下几个对象：
 ``` json
@@ -830,31 +830,31 @@ require(['table'], function(Table){
     api:{} //封装的API方法
 }
 ```
-#### Table.list
+**** Table.list
 其中Table.list存储的是表格实例化后的对象。比如我们实例化的表格有个id="mytable"的属性，则我们可以通过
 
 > Table.list['mytable']
 来获取此表格的Bootstrap-table的对象。
 
-#### Table.defaults
+**** Table.defaults
 Table.defaults是指Bootstrap-table表格参数默认值。修改单一的值，我们可以直接通过
 
 > Table.defaults.showExport = false;
 来进行修改
 
-#### Table.columnDefaults
+**** Table.columnDefaults
 Table.columnDefaults是指Bootstrap-table表格列参数默认值修改单一的值，我们可以直接通过
 
 > Table.columnDefaults.align = 'left';
 来进行修改
 
-#### Table.config
+**** Table.config
 Table.config是指表格使用到的按钮和工具栏的DOM选择类，一般情况下不建议修改。
 
-#### Table.button
+**** Table.button
 Table.button是指表格默认编辑、删除、挺拽按钮的配置信息，一般情况下不建议修改。
 
-#### Table.api
+**** Table.api
 Table.api封装了表格常用的方法、单元格事件及渲染方法。在表格中会经常使用到。
 ``` 
 Table.api.init(defaults, columnDefaults, locales) //此方法用于初始化表格默认配置、表格列配置、写入语言包等操作
@@ -871,7 +871,7 @@ Table.api.getrowdata(table, index) //根据行索引获取行数据
 Table.api.getrowbyindex(table, index) //根据行索引获取行数据
 Table.api.getrowbyid(table, id) //根据主键ID获取行数据
 ```
-#### Table.api.formatter
+**** Table.api.formatter
 Table.api.formatter封装了许多FastAdmin表格列表中常用的单元格数据渲染的方法。
 ```
 Table.api.formatter.icon //渲染成图标按钮
@@ -892,16 +892,16 @@ Table.api.formatter.operate //渲染成操作栏按钮
 Table.api.formatter.buttons //渲染成按钮组
 ```
 
-# fastadmin 登录方案
+* fastadmin 登录方案
 https://blog.csdn.net/GhostWHS/article/details/110085937
 
-## 密码
+** 密码
 数据库修改fa_admin表的两个字段
 密码(password)：c13f62012fd6a8fdf06b3452a94430e5
 密码盐(salt)：rpR6Bv
 登录密码是 123456
 
-# 上传图片
+* 上传图片
 ``` js
 		function bjimg(i) {
 			// var obj = i[0].files[0];
@@ -947,5 +947,23 @@ https://blog.csdn.net/GhostWHS/article/details/110085937
     protected $noNeedLogin = ['init','upload'];
 ```
 
-### fastadmin关闭验证码登录
+*** fastadmin关闭验证码登录
 把配置文件config.php中的 fastadmin => login_captcha 改为false
+
+
+* 上传文件
+
+<div class="form-group">
+    <label for="c-avatar" class="control-label col-xs-12 col-sm-2">头像:</label>
+    <div class="col-xs-12 col-sm-8">
+        <div class="input-group">
+            <input id="c-avatar" data-rule="" class="form-control" size="50" name="row[avatar]" type="text" value="{$row.avatar}">
+            <div class="input-group-addon no-border no-padding">
+                <span><button type="button" id="plupload-avatar" class="btn btn-danger plupload" data-input-id="c-avatar" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-avatar"><i class="fa fa-upload"></i> 上传</button></span>
+                <span><button type="button" id="fachoose-avatar" class="btn btn-primary fachoose" data-input-id="c-avatar" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+            </div>
+            <span class="msg-box n-right" for="c-avatar"></span>
+        </div>
+        <ul class="row list-inline plupload-preview" id="p-avatar"></ul>
+    </div>
+</div>

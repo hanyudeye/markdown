@@ -10,4 +10,17 @@
 5. 接口隔离：接口倾向于小而多
 6. 最少知识：对象应当尽可能少的去了解其他对象
 7. 组合优先：优先使用类的组合而不是继承
+** 命名空间
 
+#+begin_src php
+<?php
+
+namespace aming;
+include_once("file/File.php");
+
+use aming\file\File;
+
+$f=new File();
+$f->show();
+
+#+end_src

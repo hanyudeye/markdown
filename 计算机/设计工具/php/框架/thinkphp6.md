@@ -1,9 +1,11 @@
 # thinkphp6
+用途： 敏捷 web 应用开发
+
 ## 安装 
-> composer create-project topthink/think tp
-> composer require topthink/think-multi-app
-> composer require topthink/think-view
-> php think run -p 80
+> composer create-project topthink/think tp 安装核心
+> composer require topthink/think-multi-app  加载多应用模块
+> composer require topthink/think-view  加载视图模块
+> php think run -p 80 运行web服务器
 
 ## config (设置)
 ### environment-variables
@@ -55,6 +57,7 @@ $http->end($response);
 
 ## 路由
 ### 路由
+
 路由地址不能跨 应用 (除非采用重定向路由) 
     
 ```
@@ -63,6 +66,7 @@ $http->end($response);
 ```
 
 ### 路由定义
+
 ```
 Route::get('new/<id>','News/read'); // 定义GET请求路由规则
 Route::post('new/<id>','News/update'); // 定义POST请求路由规则
@@ -99,6 +103,7 @@ Route::view('hello/:name', 'index/hello');
 #### 绑定到命名空间
 ## 控制器
 ### 控制器定义
+
 渲染输出
 > halt('输出测试');
 

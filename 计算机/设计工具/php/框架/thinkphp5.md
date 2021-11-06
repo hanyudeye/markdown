@@ -1,12 +1,11 @@
-
 ## thinkphp5 
-http://static.kancloud.cn/manual/thinkphp5/118003
-### MVC架构
-> 响应架构，可用到其他做事场景  
-> 控制器(下命令) 模型(处理) 视图(展示) 
 
-- 入口文件 index.php
-- 多模块 app_multi_module
+用途： 敏捷 web 应用开发
+
+http://static.kancloud.cn/manual/thinkphp5/118003
+
+
+### 架构
 
 #### 行为 
 1. 侦听
@@ -35,7 +34,7 @@ echo Config::get('user.type');
 ```
 
 ### 路由
-定义
+#### 定义
 ``` php
  Route::get('new/:id','News/read'); // 定义GET请求路由规则
 ```
@@ -782,7 +781,7 @@ break;
     ],
 ```
 
-### sql 日志 ###
+### sql 日志
 
 第一步：在Database.php文件中将数据库debug设置为true，（默认是true）
 ``` php
