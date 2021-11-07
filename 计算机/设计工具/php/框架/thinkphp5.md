@@ -4,7 +4,6 @@
 
 http://static.kancloud.cn/manual/thinkphp5/118003
 
-
 ### 架构
 
 #### 行为 
@@ -20,7 +19,8 @@ http://static.kancloud.cn/manual/thinkphp5/118003
 \think\Hook::add('app_init','\app\index\behavior\Test');
 
 ```
-### 配置文件
+### 配置
+
 - config.php 应用配置
 - database.php 数据库配置
 - route.php 路由配置
@@ -34,6 +34,8 @@ echo Config::get('user.type');
 ```
 
 ### 路由
+对HTTP协议中的 URL  进行管理。
+
 #### 定义
 ``` php
  Route::get('new/:id','News/read'); // 定义GET请求路由规则

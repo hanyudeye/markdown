@@ -2,20 +2,6 @@
 #+DESCRIPTION: emacs 编辑器 
 #+TAGS[]: emacs
 #+CATEGORIES[]: 技术
-#+DATE: 2019-06-04T22:41:32+08:00
-#+lastmod: 2020-02-05T18:24:57+08:00
-
-一种文本编辑器，因为它是解释执行的，所以可以通过添加代码进行功能扩展。
-# more
-
-** 快速入门 
-   如果想要快速了解一下 emacs 的功能，最好的方法就是先打开 emacs，然后键入 =M-x help-with-tutorial= 命令打开官方文档进行学习。
-   
-  通过入门文档的学习，我们能对 *emacs* 的光标导航，文本查找，buffer，frame 有一个基本理解，还能学到3个帮助函数。
-  
-- =M-x describe-variable=, 快捷键 =C-h v=, 查看变量的文档
-- =M-x describe-function=, 快捷键 =C-h f=, 查看命令的文档
-- =M-x describe-key=, 快捷键 =C-h k=, 查看快捷键的文档
 
 ** 基本功能
 *** 文字输入

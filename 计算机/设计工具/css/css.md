@@ -1,15 +1,8 @@
-# css (Cascading Style Sheets)  
-> 用于WEB上定制样式的表达方式（非脚本语言）
+# css 
 
-impressivewebs.com
-sitepoint.com/books/rw1
-把标签的样式属性写在 HTML中会大大扩展 html 文件的大小，把样式属性单独写在一个文件中可以减少体积
-
-> 基本规则是选择器 + 样式列表
-
-## 选择器 ##
+## 选择器 
 ### 标签选择器
-### 属性选择器 ###
+### 属性选择器 
 
 | 代码                                 | 说明                                                 |
 | ------------------------------------ | ---------------------------------------------------- |
@@ -21,17 +14,16 @@ sitepoint.com/books/rw1
 | [attribute$="value"]                 | 属性attribute里最后的是value                         |
 | [attribute*="value"]                 | 属性attribute里有value出现过至少一次                 |
 
-### 位置选择器 ###
+### 位置选择器 
 
 | 符号  | 说明                                                     |
 | ----- | -------------------------------------------------------- |
 | A > B | 子代选择器，选择A下一层的元素B                           |
 | A ~ B | 兄弟选择器，选择与A同层的元素B                           |
-| A + B | 相邻兄弟选择器，选择与A相邻的元素B（不能被任何元素相隔） |
+| A + B | 相邻兄弟选择器，选择与A相邻的元素B                       |
 | A B   | 后代选择器，包含选择符                                   |
 
-### 其他 (伪元素) ###
-包含特定的内容
+### 其他 (伪元素) 
 
 | 符号                  | 说明                                             |
 | ------------------    | --------------------------------                 |
@@ -91,14 +83,15 @@ sitepoint.com/books/rw1
 提示：em 和 rem 单元可用于创建完美的可扩展布局！
 * 视口（Viewport）= 浏览器窗口的尺寸。如果视口宽 50 里面，则 1vw = 0.5cm。
 
-## 样式 [盒子模型（盒内+边框+背景)]
+## 样式 
 
-### 浏览器特殊前缀 ###
+### 浏览器特殊前缀 
 - -o- Opera 
 - -webkit- safari 和 chrome
 - -moz- mozilla
 
 ### 文字
+
 - text-align 文字排列 (left,right,center)
 - line-height 行高
 - text-decoration  underline(下划线) overline(上划线) line-through(穿过线) blink(闪烁)	 inherit
@@ -159,13 +152,16 @@ body{
 
 ```
 
-#### 多背景 ####
+
+#### 多背景 
+
 background: url() left top no-repeat ,url() right bottom no-repeat;
 
-#### 遮罩 ####
+#### 遮罩
 
 mask-box-image:url() 75 stretch;
 mask-image: linear-gradient(left, rgba(209, 36, 36, 0), rgba(33, 30, 30, 0) 30%);
+
 ### 边框
 
 -   盒子大小的控制（width / height）
@@ -314,77 +310,6 @@ src:url(http://www.examples.com/fonts/Calibri.ttf);
 ```
 
 ### 特效，滤镜
-
-## 样式初始化
-``` css
-    body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,legend,button,form,fieldset,input,textarea,p,blockquote,th,td {   
-      　　padding: 0;   
-      　　margin: 0;   
-    }
-    /* 酌情修改 */
-    body {
-      background:#fff;color:#333;font-size:12px; margin-top:5px;font-family:"SimSun","宋体","Arial Narrow";
-    }
-    
-    /* 短引用的内容可取值：''或"" */
-    q:before,q:after {content:”;}  
-    
-    /* 缩写，图片等无边框 */
-    fieldset,img,abbr,acronym {border: 0 none;}
-    abbr,acronym {font-variant: normal;}
-    legend {color:#000;}
-    
-    /* 清除特殊标记的字体和字号 */
-    address,caption,cite,code,dfn,em,strong,th,var {   
-      　　font-weight: normal;   
-      　　font-style: normal;   
-    }
-    
-    /* 上下标 */
-    sup {vertical-align: text-top;}
-    sub {vertical-align: text-bottom;}
-    
-    /* 设置表格的边框被合并为一个单一的边框, 指定分隔边框模型中单元格边界之间的距离为 0*/
-    table {   
-      　　border-collapse: collapse;   
-      　　border-spacing: 0;   
-    }   
-    
-    /* 表格标题及内容居左显示 */
-    caption,th {text-align: left;}
-    input,img,select {vertical-align:middle;}
-    
-    /* 清除列表样式 */
-    ol,ul {list-style: none;}  
-    
-    /* 输入控件字体 */
-    input,button,textarea,select,optgroup,option {
-      font-family:inherit;
-      font-size:inherit;
-      font-style:inherit;
-      font-weight:inherit;
-    }
-    
-    /* 标题元素样式清除 */ 
-    h1,h2,h3,h4,h5,h6 {   
-      　　font-weight: normal;   
-      　　font-size: 100%;   
-    }   
-    
-    /* 链接样式，颜色可酌情修改 */
-    del,ins,a {text-decoration:none;}
-    a:link {color:#009;}
-    a:visited {color:#800080;}
-    a:hover,a:active,a:focus {color:#c00; text-decoration:underline;} 
-    
-    /* 鼠标样式 */
-    input[type="submit"] {cursor: pointer;}
-    button {cursor: pointer;}
-    input::-moz-focus-inner { border: 0; padding: 0;}
-    
-    .clear {clear:both;}
-
-```
 
 ## 高级功能
 ### viewport (视窗)
