@@ -138,6 +138,7 @@ Request::instance()->param('username','','strip_tags,strtolower'); // 获取para
 Request::instance()->post('email','','email');
 ```
 ### 数据库
+
 #### 原生
 ``` php
 Db::query('select * from think_user where id=:id',['id'=>8]);

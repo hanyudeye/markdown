@@ -1,16 +1,9 @@
-* TODO 安装 windows
 
 * 好的规划，能节省时间
 ** thinkphp 源码解析 
 ** 没有需求，只能给自己创造需求，网上也有需求
 ** 80*140，超市买铺桌子上，10点学习睡觉
    
-* 程序员
-** TODO 一天写5个网页
-** TODO 整理 bootstrap3 网页
-** TODO 10点睡，6点起,少玩平板
-** TODO chrome.desktop change back
-
 * TODO 马上做
 ** TODO 渗透知识
    https://github.com/Mr-xn/Penetration_Testing_POC.git

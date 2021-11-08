@@ -1,8 +1,15 @@
 # thinkphp6
 用途： 敏捷 web 应用开发
 
+## 架构分层 (模块细分)
+
+![](../images/jiagou.png)
+
+fLyMd-mAkEr
 ## 安装 
+
 > composer create-project topthink/think tp 安装核心
+> cd tp  进入tp 目录
 > composer require topthink/think-multi-app  加载多应用模块
 > composer require topthink/think-view  加载视图模块
 > php think run -p 80 运行web服务器
