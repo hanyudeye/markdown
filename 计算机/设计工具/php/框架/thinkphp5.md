@@ -4,8 +4,7 @@
 
 http://static.kancloud.cn/manual/thinkphp5/118003
 
-### 架构
-
+### 面向对象的 MVC架构方式
 #### 行为 
 1. 侦听
 ``` php
@@ -33,29 +32,37 @@ Config::set($config);
 echo Config::get('user.type');
 ```
 
-### 路由
-对HTTP协议中的 URL  进行管理。
+### 路由管理
+通过 \think\Route 对HTTP协议中的 URL  进行管理。
 
-#### 定义
+#### 默认路由规则
+
+- 多模块 
+  - http://server/module/controller/action/param/value/
+  - 或者 http://server?s=/module/controller/action/param/value/
+
+- 单模块
+  - http://server/controller/action/param/value/
+
+命名空间也要修改
+
+#### 自定义规则
 ``` php
- Route::get('new/:id','News/read'); // 定义GET请求路由规则
+Route::get('new/:id','News/read'); // 定义GET请求路由规则
 ```
 
+
 ### 命名空间
->调用类库要加个 \
+
 #### 内置或没命名空间类库
 > 如果你需要调用PHP内置的类库,或者第三方没有使用命名空间的类库,记得在实例化类库的时候加上 \ 
 ```php
 // 错误的用法
-$class = new
- stdClass();
-$xml = new
- SimpleXmlElement($xmlstr);
+$class = new stdClass();
+$xml = new SimpleXmlElement($xmlstr);
 // 正确的用法
-$class = new
- \stdClass();
-$xml = new
- \SimpleXmlElement($xmlstr);
+$class = new \stdClass();
+$xml = new \SimpleXmlElement($xmlstr);
 
 ```
 
@@ -66,13 +73,27 @@ $class = new \think\cache\driver\File();
 ```
 
 ### 控制器
-#### 数据输出
+
+控制器文件的命名规范是 : 首字母需要大写，如果是两个单词的组合，如 HelloWorld ，则 URL 为 hello_world
+
+``` php
+// 是否自动转换URL中的控制器和操作名
+'url_convert'            => true,
+```
+
+#### 渲染输出
+##### json 输出
 默认类型 'default_return_type'=>'json'
 
 指定 xml类型
 ``` php
 return xml(['data'=>$data,'code'=>1,'message'=>'操作完成']);
 ```
+
+##### 模板输出
+
+return view();
+
 #### 跳转和重定向
 ``` php
 //设置成功后跳转页面的地址,默认的返回页面是$_SERVER['HTTP_REFERER']
