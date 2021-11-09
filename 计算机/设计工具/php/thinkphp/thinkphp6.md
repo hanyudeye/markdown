@@ -18,7 +18,9 @@ https://blog.csdn.net/zy1281539626/article/details/110411390
 
 ## config (设置)
 ### environment-variables
+
 think\facade\Env
+
 ```
 Env::get('database.username');
 ```
@@ -48,7 +50,7 @@ think\facade\Config;
 
   
 ### 多应用
->每个应用相对保持独立，并且可以支持多个入口文件，应用下面还可以通过多级控制器来维护控制器分组。
+> 每个应用相对保持独立，并且可以支持多个入口文件，应用下面还可以通过多级控制器来维护控制器分组。
 
 ``` php
 // [ 应用入口文件 ]
@@ -62,7 +64,6 @@ $response = $http->name('admin')->run();
 $response->send();
 $http->end($response);
 ```
-
 
 ## 路由
 ### 路由
