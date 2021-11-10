@@ -1,5 +1,4 @@
 # thinkphp6
-https://blog.csdn.net/zy1281539626/article/details/110411390
 
 用途： 敏捷 web 应用开发
 
@@ -32,6 +31,7 @@ think\facade\Config;
 ```
       
 ### system-config-files
+
 | 文件           | 配置                     |
 | -------------- | ------------------------ |
 | app.php        | 'show_error_msg' => true |
