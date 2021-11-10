@@ -1,11 +1,34 @@
 # thinkphp6
-https://blog.csdn.net/zy1281539626/article/details/110411390
 
 用途： 敏捷 web 应用开发
 
 ## 架构分层 (模块细分)
 
 ![](../images/jiagou.png)
+
+
+## 请求流程
+
+![](../images/request.png)
+
+## 架构总览
+### 入口文件 (多应用)
+
+public/index.php
+public/admin.php (后台)
+public/自己添加.php
+
+### 应用(子目录对应多应用)
+app/index
+app/admin 后台
+
+### 容器 (统一管理对象实例)
+
+### 系统服务 
+### 路由 (规划访问地址)
+### 控制器 (负责请求的接收和调，模型，并输出。不应过多介入逻辑)
+### 模型 (完成实际的业务逻辑和数据封装，并返回与格式无关数据)
+### 视图 (调用模板引擎进行内容输出)
 
 
 ## 安装 
@@ -15,6 +38,7 @@ https://blog.csdn.net/zy1281539626/article/details/110411390
 > composer require topthink/think-multi-app  加载多应用模块
 > composer require topthink/think-view  加载视图模块
 > php think run -p 80 运行web服务器
+
 
 ## config (设置)
 ### environment-variables
@@ -84,7 +108,9 @@ Route::put('new/:id','News/update'); // 定义PUT请求路由规则
 Route::delete('new/:id','News/delete'); // 定义DELETE请求路由规则
 Route::any('new/:id','News/read'); // 所有请求都支持的路由规则
 ```
+
 规则表达式
+
 ```
 Route::rule('/', 'index'); // 首页访问路由
 Route::rule('my', 'Member/myinfo'); // 静态地址路由
