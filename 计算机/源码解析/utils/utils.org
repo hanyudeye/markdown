@@ -1,0 +1,12 @@
+
+
+** basename (截断路径或后缀，最终返回文件名） 
+
+   def useage(cmd)
+
+   def xbasename(path, suffix=None)
+   
+   def xexit(prog,msg)
+
+   def main():
+   
