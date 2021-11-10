@@ -3,8 +3,13 @@
 
 
 * 语言
-** 数据类型
+  
+** 基础数据类型
+   
+   语言中的数据类型就像 生物世界中 动植物分类一样，构成了面向对象编程的基础。
+   
 *** Number
+    
    - int
    - long
    - float
@@ -13,7 +18,9 @@
    print(complex(12,3))
    print(12+3j)
 #+end_src
+
 *** String
+    
     - len()
     - s[:-1]
     - s[0:3]
@@ -25,13 +32,18 @@
     - s.rstrip()
 
 *** List
+    
     - L.append(x)
     - L.pop(x) 移除某一项
     - L.sort()
     - L.reverse() 倒序
+    
+      
 *** Tuple
+    
     - T.index(x)
     - T.count(x) 统计
+    - 
 *** Dictionary
     - D.keys()
     - sorted(D) 返回排好序的键组
@@ -54,7 +66,7 @@
 - dict(d) d 必须是一个序列 (key,value)元组。
 - frozenset(s)  转换为不可变集合
 - chr(x) 将一个整数转换为一个字符
-- unichr(x) 将一个整数转换为Unicode字符
+- unichr(x) 将一个整数转换为 Unicode 字符
 - ord(x) 将一个字符转换为它的整数值
 - hex(x) 将一个整数转换为一个十六进制字符串
 - oct(x) 将一个整数转换为一个八进制字符串
@@ -105,7 +117,7 @@
 #+end_src
     
 *** 模块
-    一个python文件就是一个模块  
+    一个 python 文件就是一个模块  
     一个包含模块的文件夹也是一个模块
 
     import ${module_name} # module_name 就是模块文件的名称,不加后缀 .py
@@ -145,7 +157,7 @@
     - match 从起始位置开始匹配
     - search 查找第一个
     - fullmath 完全一样
-    - split 用pattern 截断
+    - split 用 pattern 截断
     - findall
 
     #+begin_src py
@@ -490,7 +502,7 @@
 **** 信号量与有边界的信号量
 **** 事件
 **** 条件变量
-**** 使用Lock
+**** 使用 Lock
 **** 线程终止与挂起
 *** queue、Queue
 *** 协程与微线程
@@ -518,12 +530,12 @@
 *** smtplib
 *** urllib
 *** xmlrpc
-** Web编程
+** Web 编程
 *** cgi
 *** cgitb
 *** wsgiref
 *** webbrowser
-** Internet数据处理与编码
+** Internet 数据处理与编码
 *** base64
 *** binascii
 *** csv
@@ -536,19 +548,19 @@
 *** quopri
 *** xml
 ** 其它库
-*** Python服务
+*** Python 服务
 *** 国际化
 *** 多媒体
 ** 扩展与嵌入
 *** 扩展模块
-*** 嵌入Python解释器
-* python项目的通用创建方法     
+*** 嵌入 Python 解释器
+* python 项目的通用创建方法     
   1 .Create and configure virtualenv for your project, before using pip. This is
   the most Pythonic way (创建一个虚拟环境)
   
   Try to install Django using built-in pip module:
 
-2.python -m pip install django  (可以显示django 的安装路径)
+2.python -m pip install django  (可以显示 django 的安装路径)
 
 This command should install packages into site-packages directory.
 
@@ -626,6 +638,6 @@ This question should help you: How to globally modify the default PYTHONPATH (sy
 * pip
 ** 包的安装路径
   pip show PACKAGENAME
- 一般情况下，包总是被安装在python安装目录下的lib\site-packages\包名\
+ 一般情况下，包总是被安装在 python 安装目录下的 lib\site-packages\包名\
 
  
