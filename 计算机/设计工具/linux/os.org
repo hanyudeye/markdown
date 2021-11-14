@@ -1,0 +1,78 @@
+
+linux 是操作系统内核
+
+GNU 是核心应用软件集合
+
+** 开关机
+
+** 文本编辑 (修改东西)
+   
+   - vi
+   - emacs
+   - vscode
+   
+** 目录操作 (浏览东西摆放)
+
+   - pwd
+   - ls
+   - cd
+   - mkdir
+   - cp
+   - chown
+   - chmod
+
+     
+** 文本操作 (浏览东西一部分)
+   - head
+   - tail
+   - nl (显示行号)
+   - sort
+   - uniq
+   - cut
+   - diff
+   - awk
+
+     
+** 查找文本 (查找东西的一部分)
+   - grep
+
+** 查找文件
+   - find
+   - which
+   - whereis
+
+** 日期和时间显示
+   - date
+
+** 计算器
+   - bc
+   - 
+
+** 用户管理 (管理使用计算机的人)
+
+   - useradd
+   - userdel
+   - usermod
+
+** 显示登录的用户
+   - w / who
+
+** 文件压缩
+   - tar
+   - gzip
+
+** 进程处理 (正在运行的程序)
+   - ps
+   - kill
+   - top
+
+** 系统检测
+   - uptime
+
+** 计划任务
+   - crontab
+
+** 网络命令
+   
+  - ping
+  - apache (ServerName phptest.bb) 虚拟主机
