@@ -1,9 +1,14 @@
+#+title: 我对 gnu/linux 操作系统的了解
 
-linux 是操作系统内核
+- linux 是操作系统内核
+- GNU 是核心应用软件集合，多为命令行界面
 
-GNU 是核心应用软件集合
-
-** 开关机
+* 操作系统  
+  
+** 开关机、重启
+   
+   - shutdown
+   - reboot
 
 ** 文本编辑 (修改东西)
    
@@ -21,7 +26,6 @@ GNU 是核心应用软件集合
    - chown
    - chmod
 
-     
 ** 文本操作 (浏览东西一部分)
    - head
    - tail
@@ -37,12 +41,15 @@ GNU 是核心应用软件集合
    - grep
 
 ** 查找文件
+   
    - find
    - which
    - whereis
 
 ** 日期和时间显示
+   
    - date
+   - cal
 
 ** 计算器
    - bc
@@ -55,7 +62,10 @@ GNU 是核心应用软件集合
    - usermod
 
 ** 显示登录的用户
+   
    - w / who
+   - login
+   - logout
 
 ** 文件压缩
    - tar

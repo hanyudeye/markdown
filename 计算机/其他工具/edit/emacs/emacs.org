@@ -1,16 +1,21 @@
-#+TITLE: emacs 简介
-#+DESCRIPTION: emacs 编辑器 
-#+TAGS[]: emacs
-#+CATEGORIES[]: 技术
+#+TITLE: 我对 emacs 的了解
 
-** 基本功能
-*** 文字输入
-   - 键盘字母区的文字可以直接输入 *(insert ?a)*  或 *insert-char*
-   - 输入不可见字符 *quoted-insert*
-   - 输入键盘控制键 : 如  ~C-q  DEL~ ,  ~C-q RET~
-   - 八进制数字 : ~C-q  1 0 1~  插入 ~A~ 
+- emacs 是一个编辑器，可以编辑文本，代码 ，跟常用的编辑器一样，所见即所得，但在那个打字机年代，是很先进的使用到显示器了
+- emacs 还是一个 shell ，可以执行命令
+
+** 文字处理
+*** 文字的输入
+    
+   - 键盘上的可见字符可以直接输入，所见即所得
+   - 对于不可见字符，可以使用 *quoted-insert* 以8进制的形式输入 (如中文或特殊表情符等)
+   - 如使用快捷键: ~C-q  1 0 1~  会得到字母 ~A~ 
      
+*** 插入十六进制字符
+    | 插入 16 进制 | hexl-insert-hex-char |
+
 *** 移动光标 (point)
+    可以使用 上、下、左、右 键 按字符 移动光标，也可以使用下面的命令 按不同单位移动光标
+    
     | 后一个字   | forward-char           |
     | 前一个字   | backward-char          |
     | 下一行     | next-line              |
@@ -21,28 +26,32 @@
     | 跳到某行   | goto-line              |
 
 *** 删除文字
+    
     | 删除光标前面的字     | delete-forward-char |
     | 删除光标后面的字     | delete-char         |
     | 把光标那行后面都删掉 | kill-line           |
     | 删掉光标后面词组     | kill-word           |
 
 *** 撤消与恢复
+    
+    对于批量的错误，可以 使用撤销来恢复到保存前的文本状态。
+   
     | 撤消            | undo           |
     | 恢复(取消撤销)  | undo-tree-redo |
     | 恢复整个 buffer | revert-buffer  |
 
-*** 文件操作
-    | 访问 | find-file   |
-    | 保存 | save-buffer |
-*** 长行
+*** 段落
+    可以把段落分割成 特定长度的行。
+   
     | 长行换行                 | toggle-truncate-lines    |
     | 自动填充(自动插入换行符) | auto-fill-mode           |
-    | 截断长行                 | fill-paragraph           |
+    | 截断段落                 | fill-paragraph           |
     | 截断区域                 | fill-region-as-paragraph |
-    | 设置断行的长度           | set-fill-column          |
+    | 设置行的长度             | set-fill-column          |
     | 设置填充前缀             | set-fill-prefix          |
     
 *** 文本信息
+    
     | 哪一行         | what-line            |
     | 模式行显示行号 | line-number-mode     |
     | 模式行显示列号 | column-number-mode   |
@@ -52,10 +61,13 @@
     | 高亮行         | hl-line-mode         |
     | 缓冲区大小     | size-indication-mode |
      
-*** 数字参数
+*** 数字参数 (命令前缀)
+    
     有些命令要执行多次，可以加一个数字参数 
     ~M~ 键加一个数字 N 就能执行 N 次命令
+    
 *** 输入法
+    
     | 设置输入法 | set-input-method    |
     | 输入法开关 | toggle-input-method |
 
@@ -64,13 +76,15 @@
     \sum or \Sigma to get Σ etc.
     #+end_quote
 
-** 高级一点的功能
 *** Mark (标记) 
+    对于某区间中的文字，如果需要删除操作，可以使用标记来选中 
+    
     | 拖动标记              | set-mark-command        |
     | 标记词                | mark-word               |
     | 标记段 |mark-paragraph                          |
     | 切换标记点            | exchange-point-and-mark |
-*** kill
+*** kill (删除)
+    
     | kill 行                       | kill-line      |
     | kill 选区                     | kill-region    |
     | 复制选区                      | kill-ring-save |
@@ -86,32 +100,40 @@
 *** rectangle (矩形标记)
     | 标记矩形 | rectangle-mark-mode |
 *** 暂存器  ( 临时存储 ) 
+    
     | 访问寄存器内容       | view-register              |
     | 记录位置             | point-to-register          |
     | 跳转到位置           | jump-to-register           |
-    | 拷贝 *text* 到寄存器 | copy-to-register           |
+    | 拷贝 *文本* 到寄存器 | copy-to-register           |
     | 弹出寄存器内容       | insert-register            |
     | 内容追加             | append-to-register         |
     | 拷贝矩形到寄存器     | copy-rectangle-to-register |
      
-*** 搜索和替换 
-    | 向后搜 | isearch-forward  |
-    | 向前搜 | isearch-backward |
+*** 查找和替换 
+    
+    | 向后查找 | isearch-forward  |
+    | 向前查找 | isearch-backward |
     | 替换   | replace-string   |
 
-*** 大小转化  ( upcase, lowcase ) 
+*** 大小写转换  ( upcase, lowcase ) 
 *** 键盘宏  
+    
     | 记录键盘序列                   | kmacro-start-macro-or-insert-counter |
     | 结束记录键盘宏，作为当前可用宏 | kmacro-end-or-call-macro             |
 
+** 文件和目录    
+*** 文件操作
+    
+    | 访问 | find-file   |
+    | 保存 | save-buffer |
+   
 *** 目录
+    
     | 显示目录列表 | list-directory   |
     | 创建目录     | make-directory   |
     | 删除目录     | delete-directory |
-*** 十六进制
-    | 插入 16 进制 | hexl-insert-hex-char |
-
 ** 编码
+   
    | 查看文字编码信息       | what-cursor-position          |
    | 设置 *buffer* 编码格式 | set-buffer-file-coding-system |
    
@@ -119,25 +141,22 @@
    网上查看编码信息， https://www.qqxiuzi.cn/bianma/zifuji.php ,可能会失效，网上搜个。
    #+end_quote
    
-** 服务 
+** emacs服务 
+   
    #+begin_quote
-   开启服务后，就能共享 *emacs* 环境了。还可以设置多个不同服务
+   开启emacs服务后，就能共享 *emacs* 环境了。还可以设置多个不同服务
    #+end_quote
+   
    | 开启服务         | server-start          |
    | 连接服务         | emacsclient           |
    | 设置客户端编辑器 | EDITOR=emacsclient -c |
    | 关闭服务文件     | ~C-x #~               |
 
-** 扩展
-   | 列出扩展 | list-packages            |
-   | 重新安装 | package-reinstall        |
-   | 加载扩展 | load-file                |
-   | 加载扩展 | require                  |
-   | 字节编译 | byte-recompile-directory |
-** 排错
+** 排除错误 
    | 捕捉错误 | debug-on-error |
 
 ** 帮助
+   
    | 初学者帮助 | help-with-tutorial |
    | emacs 文档 | info-emacs-manual  |
    | 按键信息   | describe-key       |
@@ -145,11 +164,20 @@
    | 变量信息   | describe-variable  |
 
 ** 选项
+   
    - q   不装载初始化文件
    - l file 装载 文件 file 里面 的 lisp 代码
    - f function 执行 lisp 函数 function
 
-** 自定义配置
+** 扩展
+  扩展用来增强 emacs 的功能 
+  
+   | 列出扩展 | list-packages            |
+   | 重新安装 | package-reinstall        |
+   | 加载扩展 | load-file                |
+   | 加载扩展 | require                  |
+   | 字节编译 | byte-recompile-directory |
+** 载入自己的扩展
 *** 配置   
     #+begin_src lisp
       (add-to-list 'load-path "~/.emacs.d/jade-mode")
