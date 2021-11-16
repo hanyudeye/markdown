@@ -2,7 +2,7 @@
 
 用途： 敏捷 web 应用开发
 
-http://static.kancloud.cn/manual/thinkphp5/118003
+文档 http://static.kancloud.cn/manual/thinkphp5/118003
 
 ### 面向对象的 MVC架构方式
 #### 行为 

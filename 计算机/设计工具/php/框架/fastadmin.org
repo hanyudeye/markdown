@@ -301,6 +301,7 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 | status | 状态                      | int                     | 将生成普通语言包和普通文本框                                                  |
 | status | 状态                      | enum(‘0’,’1’,’2’) | 将生成普通语言包和单选下拉列表,同时生成 TAB 选项卡                              |
 | status | 状态:0=隐藏,1=正常,2=推荐 | enum(‘0’,’1’,’2’) | 将生成多个语言包和单选下拉列表,同时生成 TAB 选项卡,且列表中的值显示为对应的文字 |
+
 ** 控制器
 
 *** 基类控制器
@@ -310,67 +311,72 @@ application/common/controller/Api.php //API 接口基类控制器
 application/common/controller/Backend.php //后台基类控制器
 application/common/controller/Frontend.php //前台基类控制器
 
-基类中所定义的方法如下，以下方法都是通过 application/admin/library/traits/Backend.php 引入的
+*** 基类结构
+    
+    基类中所定义的方法如下，以下方法都是通过 application/admin/library/traits/Backend.php 引入的
 
-``` php
-class Backend extends Controller{
-    /**
-     * 查看
-     */
-    public function index(){}
+    #+begin_src php
+
+      class Backend extends Controller{
+          /**
+           ,* 查看
+           ,*/
+          public function index(){}
   
-    /**
-     * 添加
-     */
-    public function add($ids = ""){}
+          /**
+           ,* 添加
+           ,*/
+          public function add($ids = ""){}
   
-    /**
-     * 编辑
-     */
-    public function edit($ids = ""){}
+          /**
+           ,* 编辑
+           ,*/
+          public function edit($ids = ""){}
   
-    /**
-     * 删除
-     */
-    public function del($ids = ""){}
+          /**
+           ,* 删除
+           ,*/
+          public function del($ids = ""){}
   
-    /**
-     * 批量更新
-     */
-    public function multi($ids = ""){}
+          /**
+           ,* 批量更新
+           ,*/
+          public function multi($ids = ""){}
   
-    /**
-     * 回收站
-     */
-    public function recyclebin(){}
+          /**
+           ,* 回收站
+           ,*/
+          public function recyclebin(){}
   
-    /**
-     * 真实删除
-     */
-    public function destroy($ids = ""){}
+          /**
+           ,* 真实删除
+           ,*/
+          public function destroy($ids = ""){}
   
-    /**
-     * 还原
-     */
-    public function restore($ids = ""){}
+          /**
+           ,* 还原
+           ,*/
+          public function restore($ids = ""){}
   
-      /**
-     * 导入
-     */
-    protected function import(){}
+          /**
+           ,* 导入
+           ,*/
+          protected function import(){}
   
-    /**
-     * 下拉筛选
-     */
-    public function selectpage()
-    {
-        return parent::selectpage();
-    }
-} 
-```
+          /**
+           ,* 下拉筛选
+           ,*/
+          public function selectpage()
+          {
+              return parent::selectpage();
+          }
+      } 
+#+end_src
 
 *** 属性和方法
+    
 当我们的控制器继承自 app\common\controller\Backend 以后，我们就可以使用以下属性
+
 ``` php
 /**
  * 无需登录的方法,同时也就不需要鉴权了
