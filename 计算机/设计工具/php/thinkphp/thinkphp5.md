@@ -5,6 +5,7 @@
 文档 http://static.kancloud.cn/manual/thinkphp5/118003
 
 ### 面向对象的 MVC架构方式
+
 #### 行为 
 1. 侦听
 ``` php
