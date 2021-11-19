@@ -1,0 +1,50 @@
+
+** 判断是否手机号码
+   
+    #+begin_src js
+    var isSubmit = 0;
+    $(function () {
+
+        $(".Oe_button").click(function () {
+            if (isSubmit == 1) return;
+
+            isSubmit = 1;
+            var val = $(".Oe_input").val();
+            if (IsMobile(val)) {
+                $.post('/Home/FreeMobile', { mobile: val }, function (res) {
+                    if (res.status > 0) {
+                        $(".tishi").show();
+                        setTimeout(function () {
+                                $(".tishi").hide();
+                            },
+                            3000);
+                    } else {
+                        alert(res.msg);
+                    }
+                    isSubmit = 0;
+                });
+            } else {
+                alert("请填写正确的手机号码");
+                isSubmit = 0;
+            }
+        })
+    })
+
+    function IsMobile(value) {
+        if (value.length != 0) {
+            var reg = /^((\(\d{2,3}\))|(\d{3}\-))?1[3,8,5,7,4,6,9]{1}\d{9}$/;
+            var r = value.match(reg);
+            if (r == null) {
+                return false;
+            }
+            return true;
+        }
+    }
+    #+end_src
+
+    
+** 备案
+
+   #+begin_src href
+<a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备 16006543</a>
+   #+end_src

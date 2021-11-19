@@ -1,3 +1,6 @@
+
+修改元素默认的显示属性
+
 # css 
 
 ## 选择器 
@@ -199,6 +202,7 @@ box-reflect：none | <direction> <offset>? <mask-box-image>?
 - 对齐图像
 - 背景图像（background / background-image / background-repeat / background-position）
 ### 布局([盒子模型布局]非自适应)
+
 - 控制元素的位置（position / z-index）
     - 普通流
     - 相对定位
