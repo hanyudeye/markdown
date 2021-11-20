@@ -4,8 +4,6 @@ fastadmin：以 TP5 为基础的，把框架里免费的插件安装上学一学
 第六天：了解一些并发、缓存、数据库优化等知识；
 第七天：看看网上大神的 PHP 技能树进阶，准备一份看起来还行的简历，等面试吧；
 
-
-
 https://doc.fastadmin.net/doc/178.html
 
 * fastadmin
@@ -65,21 +63,27 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
     //生成 fa_test 表的 CRUD 且控制器生成在二级目录下
     php think crud -t test -c mydir/test
+    
     //生成 fa_test_log 表的 CRUD 且生成对应的控制器为 testlog
     php think crud -t test_log -c testlog
+    
     //生成 fa_test 表的 CRUD 且对应的模型名为 testmodel
     php think crud -t test -m testmodel
+    
     //生成 fa_test 表的 CRUD 且生成关联模型 category，外链为 category_id，关联表主键为 id
     php think crud -t test -r category -k category_id -p id
+    
     //生成 fa_test 表的 CRUD 且所有以 list 或 data 结尾的字段都生成复选框
     php think crud -t test --setcheckboxsuffix=list --setcheckboxsuffix=data
+    
     //生成 fa_test 表的 CRUD 且所有以 image 和 img 结尾的字段都生成图片上传组件
     php think crud -t test --imagefield=image --imagefield=img
+    
     //关联多个表,参数传递时请按顺序依次传递，支持以下几个参数 relation/relationmodel/relationforeignkey/relationprimarykey/relationfields/relationmode
     php think crud -t test --relation=category --relation=admin --relationforeignkey=category_id --relationforeignkey=admin_id
+    
     //生成 v_phealth_db2 数据库下的 fa_test 表的 CRUD
     php think crud -t test --db=v_phealth_db2
-    ```
 
 *** 生成菜单
 
