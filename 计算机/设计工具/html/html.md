@@ -1,16 +1,17 @@
 # HTML 
 
-与 CSS 一起用来构建 UI (用户界面) , 用 javascript 控制行为
+万维网技术的基础， 与 CSS 一起用来构建 UI (用户界面) , 用 javascript 赋予界面行为，一起组成了客户端与用户进行交互。
 
-## 非UI部分 (head)
+
+## 非界面部分
 
 - title 标题
-- script 包含脚本
-- style 包含样式
-- favicon <link rel="shortcut icon" href="/img/favicon.ico" />
+- script 包含要用到的javascript 脚本文件
+- style 包含要用到的样式文件
+- 包含要用到的 favicon文件  <link rel="shortcut icon" href="/img/favicon.ico" />
 - viewport <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-## 控制 UI 布局
+## 控制界面布局
 
 - section 章节
 - header 头部
@@ -20,7 +21,7 @@
 - aside 侧栏
 - legend 着重部分 
 
-## UI 界面元素
+## 界面元素
 ### 文字
 
 - b 粗体
