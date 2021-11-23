@@ -1,0 +1,15 @@
+** 弹出框 (浮动定位)
+
+   #+begin_src css
+     .tip {
+         background-color: #fff;
+         position: fixed;
+         border: 1px solid #bbb;
+         border-radius: 8px;
+         width: 90%;
+         height: 160px;
+         left: 5%;
+         bottom: 280px;
+         z-index: 999;
+     }
+   #+end_src

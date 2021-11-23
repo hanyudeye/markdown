@@ -7,6 +7,7 @@ fastadmin：以 TP5 为基础的，把框架里免费的插件安装上学一学
 https://doc.fastadmin.net/doc/178.html
 
 * fastadmin
+  
 FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
 ** 主要特征
@@ -89,13 +90,15 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
     //一键生成 test 控制器的权限菜单
     php think menu -c test
+    
     //一键生成 mydir/test 控制器的权限菜单
     php think menu -c mydir/test
+    
     //删除 test 控制器生成的菜单
     php think menu -c test -d 1
+    
     //一键全部重新所有控制器的权限菜单
     php think menu -c all-controller
-
 
 *** 压缩打包
     在 FastAdmin 中如果修改了核心的 JS 或 CSS 文件，是需要重新压缩打包后在生产环境下才会生效。FastAdmin 采用的是基于 RequireJS 的 r.js 进行 JS 和 CSS 文件的压缩打包。
@@ -104,12 +107,16 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
     //一键压缩打包前后台的 JS 和 CSS
     php think min -m all -r all
+    
     //一键压缩打包后台的 JS 和 CSS
     php think min -m backend -r all
+    
     //一键压缩打包前后台的 JS
     php think min -m all -r js
+    
     //一键压缩打包后台的 CSS
     php think min -m backend -r css
+    
     //使用 uglify 进行一键压缩打包后台的 JS 文件
     php think min -m backend -r js -o uglify
 
@@ -131,21 +138,25 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
     public/assets/css/frontend.min.css
     public/assets/css/backend.min.css
 
-
 *** 生成 API 文档
     FastAdmin 中的一键生成 API 文档可以在命令行或后台一键生成我们 API 接口的接口测试文档，可以直接在线模拟接口请求，查看参数示例和返回示例。
     常用命令
     
     //一键生成 API 文档
     php think api --force=true
+    
     //指定https://www.example.com为API接口请求域名,默认为空
     php think api -u https://www.example.com --force=true
+    
     //输出自定义文件为 myapi.html,默认为 api.html
     php think api -o myapi.html --force=true
+    
     //修改 API 模板为 mytemplate.html，默认为 index.html
     php think api -e mytemplate.html --force=true
+    
     //修改标题为 FastAdmin,作者为作者
     php think api -t FastAdmin -a Karson --force=true
+    
     //查看 API 接口命令行帮助
     php think api -h
    
@@ -153,34 +164,45 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
     //创建一个 myaddon 本地插件，常用于开发自己的插件时使用
     php think addon -a myaddon -c create
+    
     //刷新插件缓存，如果禁用启用了插件，部分文件需要刷新才会生效
     php think addon -a example -c refresh
+    
     //远程安装 example 插件
     php think addon -a example -c install
+    
     //卸载本地的 example 插件
     php think addon -a example -c uninstall
+    
     //启用本地的 example 插件
     php think addon -a example -c enable
+    
     //禁用本地的 example 插件
     php think addon -a example -c disable
+    
     //升级本地的 example 插件
     php think addon -a example -c upgrade
+    
     //将本地的 example 插件打包成 zip 文件
     php think addon -a example -c package
-
 
 *** 安装 FastAdmin
 
     //一键安装 FastAdmin
     php think install
+    
     //配置数据库连接地址为 127.0.0.1
     php think install -a 127.0.0.1
+    
     //配置数据库用户名密码
     php think install -u root -p 123456
+    
     //配置数据库表名为 dbname
     php think install -d dbname
+    
     //配置数据库表前缀为 ff_
     php think install -r ff_
+    
     //强制重新安装 FastAdmin
     php think install -f 1
 
@@ -189,15 +211,21 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
   file:../images/fastadmin-jiagou.png
   
 *** 应用模块  
+    
     在 FastAdmin 中默认有四个应用模块：admin、api、common、index
     
-    后台模块(admin)是 FastAdmin 中的核心模块，后台模块又分为系统配置、附件管理、分类管理、插件管理等多个功能模块，更多的功能模块可以在插件管理中自由的安装和卸载
+    后台模块(admin)是 FastAdmin 中的核心模块，后台模块又分为系统配置、附件管理、
+    分类管理、插件管理等多个功能模块，更多的功能模块可以在插件管理中自由的安装和
+    卸载
     
-    后台的前端是基于 AdminLTE 和 Bootstrap 进行了大量二次开发，采用 RequireJS 进行 JS 模块化管理和加载。
+    后台的前端是基于 AdminLTE 和 Bootstrap 进行了大量二次开发，采用 RequireJS 进
+    行 JS 模块化管理和加载。
    
-    公共模块(common)是一个特殊的模块，默认是禁止直接访问的，一般用于放置一些公共的类或其它模块的继承基类等。
+    公共模块(common)是一个特殊的模块，默认是禁止直接访问的，一般用于放置一些公共
+    的类或其它模块的继承基类等。
 
-    Api 模块(api)通常用于对接 APP，用于向 APP 提供接口，目前 FastAdmin 暂未提供 API 相关的插件和文档，你可以直接参考 ThinkPHP5 官方的文档。
+    Api 模块(api)通常用于对接 APP，用于向 APP 提供接口，目前 FastAdmin 暂未提供
+    API 相关的插件和文档，你可以直接参考 ThinkPHP5 官方的文档。
 
 *** 功能模块
     
@@ -228,7 +256,9 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
     
     
 ** 多语言
-在 FastAdmin 中可以在任何位置(控制器、视图、JS)使用__('语言标识');调用语言包，如果语言标识不存在，则直接输出该语言标识
+   
+   在 FastAdmin 中可以在任何位置(控制器、视图、JS)使用__('语言标识');调用语言包，如
+   果语言标识不存在，则直接输出该语言标识
    
 *** 使用方法
     
@@ -250,8 +280,9 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 
 ** 数据库
    
-   这里提供的是数据库表字段规则在你创建表时使用，当按如下的规则进行字段命名、类型设置和备注时
-   使用 php think crud -t 表名生成 CRUD 时会自动生成对应的 HTML 元素和组件
+   这里提供的是数据库表字段规则在你创建表时使用，当按如下的规则进行字段命名、类
+   型设置和备注时使用 php think crud -t 表名生成 CRUD 时会自动生成对应的 HTML 元
+   素和组件
 
 *** 根据字段类型
     
@@ -850,7 +881,7 @@ function var_export_short($var, $indent = "")
 
 
 ** 组件
-FastAdmin 默认集成了多个第三方组合，如表单验证、文件上传、下拉列表、时间选择、城市选择、Selectpage，所有的组件都必须使用 Form.api.bindevent("form[role=form]")来进行初始化，如果不进行初始化是无法对相应组件进行渲染和事件绑定。
+   FastAdmin 默认集成了多个第三方组合，如表单验证、文件上传、下拉列表、时间选择、城市选择、Selectpage，所有的组件都必须使用 Form.api.bindevent("form[role=form]")来进行初始化，如果不进行初始化是无法对相应组件进行渲染和事件绑定。
 
 如果我们想单独为元素绑定事件和渲染，我们可以使用如下的代码
 
@@ -908,29 +939,29 @@ require(['form'], function(Form){
 在 FastAdmin 中如果需要使用 Bootstrap-table，需要使用 require 引入 table 模块。table 模块对应的是 assets/js/require-table.js 文件，FastAdmin 做了许多通用方法和默认值操作。
 
 **** 载入依赖
-``` js
+     
+#+begin_src js
 require(['table'], function(Table){
     //编写实例化代码
     //使用 Table 对象
 });
-```
+#+end_src
+
 **** 引入 CSS
 由于表格列表常用于后台管理列表，后台已经默认引入了表格相关的 CSS 文件，在前台未引入相关的 CSS 文件，如果你需要在前台使用到 Bootstrap-table，则需要手动载入表格相关的 CSS 文件。如下：
-``` html
-<link rel="stylesheet" type="text/css" href="__CDN__/assets/libs/bootstrap-table/dist/bootstrap-table.min.css"/>
-```
 
-
-
-
-
-
-
+#+begin_src html
+  <link rel="stylesheet" type="text/css"
+  href="__CDN__/assets/libs/bootstrap-table/dist/bootstrap-table.min.css"/>
+#+end_src
 
 *** Table 对象
+    
 我们引入表格依赖后 table 后，我们就可以通过 Table 来进行相关表格的初始化和绑定相关事件。
 返回的 Table 对象包括以下几个对象：
-``` json
+
+
+#+begin_src json
 {
     list:[], //实例化的表格对象列表
     defaults:{}, //默认表格参数
@@ -939,7 +970,8 @@ require(['table'], function(Table){
     button:{}, //默认编辑、删除、排序按钮配置
     api:{} //封装的 API 方法
 }
-```
+#+end_src
+
 **** Table.list
 其中 Table.list 存储的是表格实例化后的对象。比如我们实例化的表格有个 id="mytable"的属性，则我们可以通过
 
