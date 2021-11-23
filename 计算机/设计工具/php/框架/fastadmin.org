@@ -936,47 +936,53 @@ require(['form'], function(Form){
 ** 表格
 *** 依赖
 
-在 FastAdmin 中如果需要使用 Bootstrap-table，需要使用 require 引入 table 模块。table 模块对应的是 assets/js/require-table.js 文件，FastAdmin 做了许多通用方法和默认值操作。
+    在 FastAdmin 中如果需要使用 Bootstrap-table，需要使用 require 引入 table 模块。
+    table 模块对应的是 assets/js/require-table.js 文件，FastAdmin 做了许多通用方法和
+    默认值操作。
 
 **** 载入依赖
      
-#+begin_src js
-require(['table'], function(Table){
-    //编写实例化代码
-    //使用 Table 对象
-});
-#+end_src
+     #+begin_src js
+       require(['table'], function(Table){
+           //编写实例化代码
+           //使用 Table 对象
+       });
+     #+end_src
 
 **** 引入 CSS
-由于表格列表常用于后台管理列表，后台已经默认引入了表格相关的 CSS 文件，在前台未引入相关的 CSS 文件，如果你需要在前台使用到 Bootstrap-table，则需要手动载入表格相关的 CSS 文件。如下：
+     由于表格列表常用于后台管理列表，后台已经默认引入了表格相关的 CSS 文件，在前台未
+     引入相关的 CSS 文件，如果你需要在前台使用到 Bootstrap-table，则需要手动载入表格
+     相关的 CSS 文件。如下：
 
-#+begin_src html
-  <link rel="stylesheet" type="text/css"
-  href="__CDN__/assets/libs/bootstrap-table/dist/bootstrap-table.min.css"/>
-#+end_src
+     #+begin_src html
+       <link rel="stylesheet" type="text/css"
+             href="__CDN__/assets/libs/bootstrap-table/dist/bootstrap-table.min.css"/>
+     #+end_src
 
 *** Table 对象
     
-我们引入表格依赖后 table 后，我们就可以通过 Table 来进行相关表格的初始化和绑定相关事件。
-返回的 Table 对象包括以下几个对象：
+    我们引入表格依赖后 table 后，我们就可以通过 Table 来进行相关表格的初始化和绑
+    定相关事件。返回的 Table 对象包括以下几个对象：
 
 
-#+begin_src json
-{
-    list:[], //实例化的表格对象列表
-    defaults:{}, //默认表格参数
-    columnDefaults:{}, //默认列参数
-    config:{}, //相关按钮的 DOM 选择类
-    button:{}, //默认编辑、删除、排序按钮配置
-    api:{} //封装的 API 方法
-}
-#+end_src
+    #+begin_src json
+      {
+          list:[], //实例化的表格对象列表
+          defaults:{}, //默认表格参数
+          columnDefaults:{}, //默认列参数
+          config:{}, //相关按钮的 DOM 选择类
+          button:{}, //默认编辑、删除、排序按钮配置
+          api:{} //封装的 API 方法
+      }
+    #+end_src
 
 **** Table.list
-其中 Table.list 存储的是表格实例化后的对象。比如我们实例化的表格有个 id="mytable"的属性，则我们可以通过
+     
+     其中 Table.list 存储的是表格实例化后的对象。比如我们实例化的表格有个
+     id="mytable"的属性，则我们可以通过
 
-> Table.list['mytable']
-来获取此表格的 Bootstrap-table 的对象。
+     > Table.list['mytable']
+     来获取此表格的 Bootstrap-table 的对象。
 
 **** Table.defaults
 Table.defaults 是指 Bootstrap-table 表格参数默认值。修改单一的值，我们可以直接通过

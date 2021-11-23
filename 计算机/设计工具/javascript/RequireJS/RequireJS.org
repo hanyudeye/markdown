@@ -1,6 +1,21 @@
+* RequireJS 
+  文件和模块加载器，有选择加载可以提高网页访问速度并提交代码质量 
+ 
 ** 用法
 
-#+begin_src js
-define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form){});
-#+end_src
+*** 用法1
+    
+    #+begin_src js
+    requirejs(["lib"],function(){
+    test();
+    console.log(name)
+});
+    #+end_src
+
+   
+*** 用法2 
+    
+  #+begin_src js
+  define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form){});
+  #+end_src
 
