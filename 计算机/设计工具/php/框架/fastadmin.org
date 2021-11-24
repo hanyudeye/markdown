@@ -206,7 +206,6 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
     //强制重新安装 FastAdmin
     php think install -f 1
 
-    
 ** 架构
   file:../images/fastadmin-jiagou.png
   
@@ -340,6 +339,7 @@ FastAdmin 是一款基于 ThinkPHP5+Bootstrap 的快速后台开发框架
 ** 控制器
 
 *** 基类控制器
+    
 FastAdmin 中定义了三个基类控制器，分别位于
 
 application/common/controller/Api.php //API 接口基类控制器
@@ -351,53 +351,53 @@ application/common/controller/Frontend.php //前台基类控制器
     基类中所定义的方法如下，以下方法都是通过 application/admin/library/traits/Backend.php 引入的
 
     #+begin_src php
-
+      
       class Backend extends Controller{
           /**
            ,* 查看
            ,*/
           public function index(){}
-  
+      
           /**
            ,* 添加
            ,*/
           public function add($ids = ""){}
-  
+      
           /**
            ,* 编辑
            ,*/
           public function edit($ids = ""){}
-  
+      
           /**
            ,* 删除
            ,*/
           public function del($ids = ""){}
-  
+      
           /**
            ,* 批量更新
            ,*/
           public function multi($ids = ""){}
-  
+      
           /**
            ,* 回收站
            ,*/
           public function recyclebin(){}
-  
+      
           /**
            ,* 真实删除
            ,*/
           public function destroy($ids = ""){}
-  
+      
           /**
            ,* 还原
            ,*/
           public function restore($ids = ""){}
-  
+      
           /**
            ,* 导入
            ,*/
           protected function import(){}
-  
+      
           /**
            ,* 下拉筛选
            ,*/
@@ -549,9 +549,11 @@ $dataLimitField 字段默认为 admin_id，请注意添加该字段类型为 int
 目前 FastAdmin 后台 index 方法支持一对一关联查询，比如我们一篇文章有归属分类，我们在列出数据时需要同时列表文章分类名称。
 
 首先我们需要在当前控制器中添加以下属性
+
 ``` php
 protected $relationSearch = true;
 ```
+
 然后我们修改控制器的 index 方法，代码如下：
 ``` php
 public function index()
@@ -605,7 +607,6 @@ table.bootstrapTable({
     ],
 });
 ```
-
 
 *** 数据校验
 在 FastAdmin 中默认的 add/edit 方法可以使用模型验证，验证器位于 application/admin/validate/模型名.php 中，模型验证默认是关闭的状态，如果需要启用，我们需要在当前控制器定义以下属性
@@ -964,18 +965,16 @@ require(['form'], function(Form){
     我们引入表格依赖后 table 后，我们就可以通过 Table 来进行相关表格的初始化和绑
     定相关事件。返回的 Table 对象包括以下几个对象：
 
-<<<<<<< HEAD
-#+begin_src json
-{
-    list:[], //实例化的表格对象列表
-    defaults:{}, //默认表格参数
-    columnDefaults:{}, //默认列参数
-    config:{}, //相关按钮的 DOM 选择类
-    button:{}, //默认编辑、删除、排序按钮配置
-    api:{} //封装的 API 方法
-}
-#+end_src
-=======
+    #+begin_src json
+      {
+          list:[], //实例化的表格对象列表
+          defaults:{}, //默认表格参数
+          columnDefaults:{}, //默认列参数
+          config:{}, //相关按钮的 DOM 选择类
+          button:{}, //默认编辑、删除、排序按钮配置
+          api:{} //封装的 API 方法
+      }
+    #+end_src
 
     #+begin_src json
       {
