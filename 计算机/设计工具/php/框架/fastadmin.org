@@ -960,7 +960,6 @@ require(['table'], function(Table){
 我们引入表格依赖后 table 后，我们就可以通过 Table 来进行相关表格的初始化和绑定相关事件。
 返回的 Table 对象包括以下几个对象：
 
-
 #+begin_src json
 {
     list:[], //实例化的表格对象列表

@@ -1,0 +1,159 @@
+** 判断是否 PC 端，进行跳转
+#+begin_src js
+  // 判断 PC 端与 WAP 端
+
+  var mobile_bs = {
+      versions: function() {
+          var u = navigator.userAgent;
+          return {
+              trident: u.indexOf('Trident') > -1, //IE 内核
+              presto: u.indexOf('Presto') > -1, //opera 内核
+              webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+              gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+              mobile: !! u.match(/AppleWebKit.*Mobile.*/) || !! u.match(/AppleWebKit/) && u.indexOf('QIHU') && u.indexOf('QIHU') > -1 && u.indexOf('Chrome') < 0, //是否为移动终端
+              ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios 终端
+              android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android 终端或者 uc 浏览器
+              iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为 iPhone 或者 QQHD 浏览器
+              iPad: u.indexOf('iPad') > -1, //是否 iPad
+              webApp: u.indexOf('Safari') == -1 //是否 web 应该程序，没有头部与底部
+          }
+      } ()
+  };
+
+  if (mobile_bs.versions.mobile) {
+      if (mobile_bs.versions.android || mobile_bs.versions.iPhone || mobile_bs.versions.iPad || mobile_bs.versions.ios) {
+          window.location.href = "移动端网址";
+      }
+  }; 
+#+end_src
+
+但是此方法判断的类型并不全，比如努比亚手机就没有判断。。。
+
+方法二：
+
+if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE|Nubia/.test(navigator.userAgent))){
+    window.location.href = '移动端网址'
+}
+
+此法如果缺少机型，可以自己进行追加~
+** 判断是否 PC 端
+
+   #+begin_src js
+     function IsPC() {
+         var userAgentInfo = navigator.userAgent;
+         var Agents = ["Android", "iPhone",
+                       "SymbianOS", "Windows Phone",
+                       "iPad", "iPod"];
+         var flag = true;
+         for (var v = 0; v < Agents.length; v++) {
+             if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                 flag = false;
+                 break;
+             }
+         }
+         return flag;
+     }
+    #+end_src
+** 如何使用 submit，进行 ajax 数据提交
+#+begin_src html
+<div>
+		<form id="form1" onsubmit="return false;">
+			<h1>用户登录</h1>
+				<input type="text" placeholder="姓名" required="" id="username" />
+				<input type="password" placeholder="密码" required="" id="pwd" />
+				<input type="submit" value="登录" class="btn btn-primary" id="js-btn-login"/>
+		</form>
+</div>
+#+end_src
+
+#+begin_src js
+$("form").submit(function (e) {var btn = $("#btn_register").button('loading');
+        $.ajax({
+            url: "/Account/Register",
+            type: "Post",
+            data: $(this).serialize(),
+            success: function (obj) {
+                if (obj.code === 0) {
+                    swal({
+                        title: "恭喜您，注册成功",
+                        text: "",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "好的",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            window.location.href = "./";
+                        }
+                    });
+                    return;
+                }
+                swal({
+                    title: "悲剧了",
+                    text: obj.msg,
+                    type: "error"
+                });
+            },
+            error: function (error) {
+                swal({
+                    title: "悲剧了",
+                    text: "服务器罢工了吧",
+                    type: "error"
+                });
+            },
+            complete: function () {
+                btn.button('reset');
+            }
+        })
+        return false;
+    });
+#+end_src
+
+
+#+begin_src js
+<script type="text/javascript">
+    $(function() {
+        $('#form1').submit(function() { //当提交表单时，会发生 submit 事件。
+            //此处可做表单验证
+            if ($("#username").val() == "") {
+                alert("用户名不能为空");
+                return false;
+            }
+
+            var postData = $("#form1").serialize(); //序列化表单，后台可正常通过 post 方法获取数据
+            $.ajax({
+                type: "POST",
+                url: "/member/member/post_member",
+                data: postData,
+                beforeSend: function() {
+                    $("#btn-submit").attr("disabled", true);//提交表单前的处理，防止用户多次点击【登陆】，重复提交表单
+                    $("#btn-submit").val("正在登陆...");
+                },
+                success: function(msg) {
+                    if (msg == 0) {
+                        alert('操作成功');
+                        window.location.href = '/member/member';
+                    } else {
+                        $("#btn-submit").attr("disabled", false);
+                        $("#btn-submit").val("登陆");
+                        alert("用户或密码错误！");
+                    }
+                }
+            });
+        });
+    });
+</script>
+<div>
+    <form id="form1" onsubmit="return false;">  //注意：此处必须阻止表单提交
+        <!--表单内容部分-->
+        <input type="reset" value="重置" />
+        <input type="submit" id="btn-submit" value="登陆" />
+    </form>
+</div>
+#+end_src
+
+
+注意 
+以上两个差异就是一个是用 form 标签，一个是用 id，在使用 id 时，注意加上 onsubmit="return false;" 防止重复提交。
