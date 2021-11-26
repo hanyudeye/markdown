@@ -157,3 +157,29 @@ $("form").submit(function (e) {var btn = $("#btn_register").button('loading');
 
 注意 
 以上两个差异就是一个是用 form 标签，一个是用 id，在使用 id 时，注意加上 onsubmit="return false;" 防止重复提交。
+** 页面跳转
+   #+begin_src js
+     var totalpage = 30;
+     var regu = /^[1-9]+$/;
+     var re = new RegExp(regu);
+
+     function changepage(pageurl) {
+         var topage = $("#pageNumber").val();
+         if (!re.test(topage)) {
+             alert("页数请输入正整数");
+             return false;
+         }
+         if (topage == "") {
+             alert("请输入跳转页面");
+             return false;
+         }
+         if (parseInt(topage) > totalpage) {
+             topage = totalpage;
+         }
+         if (parseInt(topage) < 1) {
+             topage = 1;
+         }
+         location.href = pageurl + "_" + topage + ".html";
+     }
+
+    #+end_src
