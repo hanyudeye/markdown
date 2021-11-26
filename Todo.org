@@ -1,7 +1,8 @@
 - 2. thinkphp
 - http://www.haiqism.com/
 - 官网
-- 
+- 好的博客  https://www.cnblogs.com/F4NNIU/p/9054995.html
+- https://www.mobaishare.com/
 
 ** TODO 读一本好书 (细细品读，这是一种低效的阅读模式，可能在中小学知识需要大量增长时需要） 
   
