@@ -1,0 +1,10 @@
+** Swiper 的结构和基础原理
+   
+ Swiper 的每个展示块（屏）为一个 slide，slide 中放置图片或文字等展示的内容，全部
+ slide 排成一行(或多行)包含在包装器 wrapper 中，而总容器 container 又包裹着
+ wrapper 和箭头按钮控件 navigation 以及分页器控件 pagination。
+
+ 当手指（或鼠标）触摸滑动 Swiper 时，Swiper 在浏览器每一帧通过计算滑动的距离差对
+ wrapper 进行位移（transform）从而产生拖动的效果。在手指（或鼠标）释放时，计算下
+ 一个 slide 的起始位置对 wrapper 设置位移动画（transition），从而产生切换动画效
+ 果。
