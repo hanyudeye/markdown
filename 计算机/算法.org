@@ -1,4 +1,5 @@
-
+算法就是方法 
+* 实例
 ** 判断是否手机号码
    
     #+begin_src js
@@ -48,3 +49,18 @@
    #+begin_src href
 <a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备 16006543</a>
    #+end_src
+
+   
+* 算法   
+ 
+** 排序 
+应用在搜索引擎中
+
+*** 冒泡排序
+
+    
+*** 选择排序
+
+*** 归并排序
+
+** 搜索
