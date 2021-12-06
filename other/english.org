@@ -1,5 +1,0 @@
-- theater tickets 剧院门票
-- rush 匆忙
-- cherry 樱桃
-- lobster 龙虾
-- 
