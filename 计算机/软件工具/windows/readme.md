@@ -5,7 +5,8 @@ https://github.com/Awesome-Windows/Awesome/blob/master/README-cn.md
 ### 音频
 
 - [Audacity](http://audacityteam.org/) 录制与编辑音频
-- 
+
+  
 
 ### 聊天
 
