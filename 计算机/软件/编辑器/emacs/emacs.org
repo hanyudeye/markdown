@@ -1,13 +1,10 @@
-#+TITLE: 我对 emacs 的了解
-
-- emacs 是一个编辑器，可以编辑文本，代码 ，跟常用的编辑器一样，所见即所得，但在那个打字机年代，是很先进的使用到显示器了
-- emacs 还是一个 shell ，可以执行命令
+#+TITLE: emacs编辑器
 
 ** 文字处理
 *** 文字的输入
     
    - 键盘上的可见字符可以直接输入，所见即所得
-   - 对于不可见字符，可以使用 *quoted-insert* 以8进制的形式输入 (如中文或特殊表情符等)
+   - 对于不可见字符，可以使用 *quoted-insert* 以 8 进制的形式输入 (如中文或特殊表情符等)
    - 如使用快捷键: ~C-q  1 0 1~  会得到字母 ~A~ 
      
 *** 插入十六进制字符
@@ -141,10 +138,10 @@
    网上查看编码信息， https://www.qqxiuzi.cn/bianma/zifuji.php ,可能会失效，网上搜个。
    #+end_quote
    
-** emacs服务 
+** emacs 服务 
    
    #+begin_quote
-   开启emacs服务后，就能共享 *emacs* 环境了。还可以设置多个不同服务
+   开启 emacs 服务后，就能共享 *emacs* 环境了。还可以设置多个不同服务
    #+end_quote
    
    | 开启服务         | server-start          |
