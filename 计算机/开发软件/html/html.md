@@ -203,3 +203,71 @@ audio.volume //获取音量
 - autobuffer 自动缓冲
 - loop 循环
 
+
+
+# 事件
+
+## 事件转移  
+
+使用 
+label for="IDNAME"
+
+# 图片上传
+``` js
+  function bjimg(i) {
+            // var obj = i[0].files[0];
+            // i.prev().attr("src", URL.createObjectURL(obj));
+            // 
+
+            // console.log(formdata);return;
+            // console.log(i[0].files)
+            // return;
+            // i.prev().attr("src", data.data.url);
+
+            let formdata = new FormData();
+            formdata.append('file', i[0].files[0]);
+            //图片上传
+            $.ajax({
+                url: '/index/ajax/upload.html',
+                type: 'POST',
+                cache: false,
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.code == 1) {
+                        i.next().val(data.data.url)
+                        i.prev().prev().attr("src", data.data.url)
+                    } else {
+                        alert(data.msg)
+                        i.prev().prev().attr("src", '')
+                    }
+
+                }
+            });
+        }
+```
+``` js
+    //上传图片
+    public function upload(){
+        $file = request()->file('file');
+
+        $info = $file->move('uploads');
+
+        if($info) {
+
+            $data['code'] = 0;
+
+            $data['msg'] = '/uploads/'.$info->getSaveName();
+
+        }else{
+
+            $data['code'] = 1;
+
+            $data['msg'] = $file->getError();
+
+        }
+
+            return json($data);
+    }
+```
