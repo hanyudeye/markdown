@@ -1,4 +1,4 @@
-- https://www.r2coding.com/#/
-- 同步资源
-- 好的博客  https://www.cnblogs.com/F4NNIU/p/9054995.html
-- https://www.mobaishare.com/
+* hello
+- 学做图和视频，网站
+- 参照博客 https://www.php.cn/course.html
+ 你好 
