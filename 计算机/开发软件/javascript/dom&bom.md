@@ -341,3 +341,9 @@ if(navigator.onLine){
 window.addEventListener("online",function(evt){})
 window.addEventListener("offline",function(evt){})
 ```
+
+3、通过临近节点获取：
+     （1）neighbourNode.previousSibling：获取已知节点（neighbourNode）的前一个节点，这个属性和前面的firstChild、lastChild一样都似乎可以递归使用的。
+     （2）neighbourNode.nextSibling：获取已知节点（neighbourNode）的下一个节点，同样支持递归。
+   4、通过子节点获取：
+     （1）childNode.parentNode：获取已知节点的父节点。

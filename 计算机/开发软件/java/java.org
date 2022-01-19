@@ -1,29 +1,11 @@
+vscode 编写 java ，不能用中文，不能创建目录，建议用  idea
+
+
 * java
-  
   
 ** java 程序的执行
 - 编译  javac JAVASRC
 - 执行 java JAVACLASS
-
-** java 语言的内容
-``` java
-class HelloWorld{
-    public static void main(String[] args){
-        System.out.println("Hello,World!");
-        
-        String name1="今天天气很好";
-        int name2=34;
-        final double PI=3.1415926;  //PI 名词
-        System.out.println("打印名词 1 的内容: name1="+name1);
-        System.out.println("打印名词 2 的内容: name2="+name2);
-        System.out.println("打印名词 PI 的内容: PI="+PI);
-        }
-    }
-```
-
-- 1. java 语言 是由一个语句块组成的，表示某个对象
-- 2. 语句块由语句组成，而语句由 名词+动词/操作符 组成
-- 3. 这就是 java 语言的全部内容
 
 ** For-Each 
 ``` java
@@ -32,7 +14,9 @@ for(int i: nums){
 ```
 ** 包
 ``` java
+# 定义包
 package aa.bb;
+# 引入包
 import aa.bb.*;
 ```
 ** 继承 extends
@@ -272,4 +256,4 @@ java -classpath /home/user/classdir:.:/home/user/archives/archive.jar MyProg
 
 * Java
   
-**   
+** 本书已全面更新  

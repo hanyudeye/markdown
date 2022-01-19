@@ -34,6 +34,26 @@
 - blockquote    引用
 - del   删除线
 - 上标 sup  下标 sub (子)
+- del s   删除线
+
+### 特殊字符
+
+| 特殊字符 | 描述 |字符的代码 |
+|:-------------|:-------------|:-----|
+||空格符|`&nbsp;`|
+|<|小于号|`&lt;`|
+|> |大于号|`&gt;`|
+|&|和号|`&amp;`|
+|￥|人民币|`&yen;`|
+|©|版权|`&copy;`|
+|®|注册商标|`&reg;`|
+|°|摄氏度|`&deg;`|
+|±|正负号|`&plusmn;`|
+|×|乘号|`&times;`|
+|÷|除号|`&divide;`|
+|²|平方2（上标2）|`&sup2;`|
+|³|立方3（上标3）|`&sup3;`|
+
 
 ### 表格
 ``` html
@@ -213,4 +233,70 @@ audio.volume //获取音量
 <input type="text" name="q" placeholder="search">
 </form>
  
+
+# 事件
+
+## 事件转移  
+
+使用 
+label for="IDNAME"
+
+# 图片上传
+``` js
+  function bjimg(i) {
+            // var obj = i[0].files[0];
+            // i.prev().attr("src", URL.createObjectURL(obj));
+            // 
+
+            // console.log(formdata);return;
+            // console.log(i[0].files)
+            // return;
+            // i.prev().attr("src", data.data.url);
+
+            let formdata = new FormData();
+            formdata.append('file', i[0].files[0]);
+            //图片上传
+            $.ajax({
+                url: '/index/ajax/upload.html',
+                type: 'POST',
+                cache: false,
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.code == 1) {
+                        i.next().val(data.data.url)
+                        i.prev().prev().attr("src", data.data.url)
+                    } else {
+                        alert(data.msg)
+                        i.prev().prev().attr("src", '')
+                    }
+
+                }
+            });
+        }
+```
+``` js
+    //上传图片
+    public function upload(){
+        $file = request()->file('file');
+
+        $info = $file->move('uploads');
+
+        if($info) {
+
+            $data['code'] = 0;
+
+            $data['msg'] = '/uploads/'.$info->getSaveName();
+
+        }else{
+
+            $data['code'] = 1;
+
+            $data['msg'] = $file->getError();
+
+        }
+
+            return json($data);
+    }
 ```

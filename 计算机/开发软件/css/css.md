@@ -47,11 +47,11 @@
 ## 单位
 ### 颜色
 
-1.  关键字  red , yellow  用颜色的英文单词表示
-2.  rgb(0,100,100) 用十进制的 rgb 混色模式
+1.  使用颜色的名字表示特定颜色  red , yellow  
+2.  rgb(0,100,100) 用十进制的 rgb 混色模式 (255的色值)
 3.  \#ffffff 用十六进制的 rgb 混色模式
 4.  hsl(0,100%,50%) 用色相(0-360)，饱和度，明度的混色模式表示
-5.  透明 opacity
+5.  设置透明 [图片(opacity:0.8)] [文字rgba(100,0,0,0)]  (0-1) 0是全透明
 
 ### 长度
 #### 绝对长度 (尺寸不固定，慎用) 
@@ -93,7 +93,7 @@
 
 ### 文字
 
-- text-align 文字排列 (left,right,center)
+- text-align 内容排列，不光是文字排列 (left,right,center)
 - line-height 行高
 - text-decoration  underline(下划线) overline(上划线) line-through(穿过线) blink(闪烁)	 inherit
 - font-family  字型 font-family: Times, Times New Roman, Georgia, serif;
