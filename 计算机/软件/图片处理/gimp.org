@@ -188,3 +188,6 @@ https://teliute.org/linux/gimp/index.html
 ** Perl-Fu
 ** Advanced Installations
 ** Appendixes
+
+** 如何给图片加边框
+修改画布，[修改尺寸，定位居中，设置颜色]
