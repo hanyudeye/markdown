@@ -231,6 +231,7 @@ try {
 ** 类路径 (不同的类有不同的编译程序，分开来的)
 类路径的设置使用 : (冒号)分隔
 如 
+
 ```
 /home/user/classdir:.:/home/user/archives/archive.jar
 ```
@@ -253,7 +254,3 @@ java -classpath /home/user/classdir:.:/home/user/archives/archive.jar MyProg
 - ensureCapacity(100) 分配空间 100 
 - trimToSize (销减尺寸，注意空间不会增长)
 
-
-* Java
-  
-** 本书已全面更新  

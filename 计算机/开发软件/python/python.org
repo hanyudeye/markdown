@@ -6,14 +6,13 @@
   
 ** 基础数据类型
    
-   语言中的数据类型就像 生物世界中 动植物分类一样，构成了面向对象编程的基础。
-   
 *** Number
     
    - int
    - long
    - float
    - complex
+
 #+begin_src python
    print(complex(12,3))
    print(12+3j)
