@@ -1,0 +1,8 @@
+#+title: 标题 (org 大纲文件的使用方法）
+#+description: 使用特殊格式的文档格式，可以写出可以渲染的富文本书写文档
+#+keywords: org,mark language
+
+* 标题
+  内容
+
+图片  [[file:images/a.png]]  

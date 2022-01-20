@@ -32,6 +32,8 @@
 - small 斜体
 - pre   预格式文本(适合呈现代码)
 - blockquote    引用
+- del   删除线
+- 上标 sup  下标 sub (子)
 - del s   删除线
 
 ### 特殊字符
@@ -223,6 +225,14 @@ audio.volume //获取音量
 - loop 循环
 
 
+# 例子
+## google 查找
+
+``` html
+<form method="get" action="http://www.google.com/search">
+<input type="text" name="q" placeholder="search">
+</form>
+ 
 
 # 事件
 

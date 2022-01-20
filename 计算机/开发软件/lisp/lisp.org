@@ -1,2 +1,19 @@
 * 输出
   write
+
+* web 服务器  
+
+  #+begin_src lisp
+    
+    sitename  站点名称
+    repository-directory 站点的本地目录
+    site-domain   站点网址
+    site-main-title 站点标题
+    site-sub-title  站点副标题
+    theme    站点的主题 
+    summary  导航栏设置
+    
+    
+  #+end_src
+
+  

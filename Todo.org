@@ -1,4 +1,4 @@
-- 买握力器
+* hello
 - 学做图和视频，网站
 - 参照博客 https://www.php.cn/course.html
   
