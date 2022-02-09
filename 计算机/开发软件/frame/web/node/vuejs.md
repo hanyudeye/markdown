@@ -40,12 +40,41 @@ Vue.component('buttonclicked', {
 
 
 # 使用
-## 安装
-独立版本
-> 直接下载并用 <script> 标签引入，Vue 会被注册为一个全局变量。
+## 一. 引入 Vue.js文件
 
-NPM
-> 大型项目中使用，可以与 webpack 或 Browserify 配合使用
+
+1. 独立版本
+   直接下载并用 <script> 标签引入，Vue 会被注册为一个全局变量。
+
+2. NPM
+   npm install vue
+
+    import Vue from 'vue'
+
+   大型项目中使用，可以与 webpack 或 Browserify 配合使用
+
+## 二. 利用 Vue-cli 新建一个空的项目
+
+``` sh
+npm install -g @vue/cli
+vue create my-app
+cd my-app
+npm run serve
+```
+
+备注： 我们在 Github 上下载的任何Vue 项目，第一步都是要首先执行 npm install ，安装依赖的  node_modules， 然后再运行。我们发给同事的工程文件，建议不要包含 node_modules。
+
+## 图片的 base64 编码
+默认10k以下，建议都通过 base64 编码，在 配置文件 webpack.base.conf.js 中进行修改：
+``` json
+ {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        }
+```
 
 ## 表单数据与应用状态的双向绑定
 ``` html
@@ -65,7 +94,10 @@ NPM
   </ol>
 ```
 
-
+绑定值
+``` html
+<option v-for="v in shengao" v-bind:value="v"  >{{v}}</option>
+```
 
 ## vue对象操作 [直接数据操作]
 ``` js

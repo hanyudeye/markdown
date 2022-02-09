@@ -1,3 +1,7 @@
+#+title: gitbook 的用法
+#+description: 用于制作博客型内容网站
+
+
 * gitbook
 ** 安装 
    $ npm install gitbook -g

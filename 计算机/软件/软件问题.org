@@ -1,0 +1,18 @@
+** Linux 网易云音乐字体太小
+
+因为在Deepin系统默认的的显示分辨率1920*1080下，在高分辨率显示器下就会变小。
+
+在 desktop 文件中进行配置
+
+#+begin_src 
+Exec=netease-cloud-music --force-device-scale-factor=2 %U
+#+end_src
+   
+修改倍数
+
+** 如何下载youtube字幕
+
+  可以复制 youtube 的视频 url ,然后到字幕下载网站进行下载  
+
+  网站如下：   
+  - https://youtube4kdownloader.com/zh17/download-youtube-subtitles.html

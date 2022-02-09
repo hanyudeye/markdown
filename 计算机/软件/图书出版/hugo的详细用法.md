@@ -1,5 +1,8 @@
-# hugo
-静态网站创造软件
+---
+title: hugo 的详细用法
+---
+
+# hugo 的发布
 
 ## Templating
 Hugo uses Go’s html/template and text/template libraries as the basis for the templating.  

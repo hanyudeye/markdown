@@ -1,4 +1,4 @@
-#+title: 我对 PHP 的了解
+#+title: PHP 
 
 * php
 ** 定义问题 
@@ -779,12 +779,6 @@ echo 'Start date: ' . $start->format('Y-m-d') . "\n";
 * 服务器平台
   $_SERVER
 * 其他
-** 依赖管理
-- 安装所有依赖 composer install
-- 更新所有依赖 composer update
-- 下载并安装某个依赖 composer require twig/twig:~1.8
-- 安装到全局空间 composer global require phpunit/phpunit
-
 ** 服务器配置
 *** 开发环境
 display_errors = On
