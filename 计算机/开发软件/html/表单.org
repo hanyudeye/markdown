@@ -1,5 +1,0 @@
-** 表单处理
-   #+begin_src html
-					<input type="text" value="姓名" onfocus="this.value = '';"
-						onblur="if (this.value == '') {this.value = '姓名';}" />
-   #+end_src
