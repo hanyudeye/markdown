@@ -1,6 +1,9 @@
-- 买握力器
+* hello
 - 学做图和视频，网站
 - 参照博客 https://www.php.cn/course.html
   
 - 好的博客  https://www.cnblogs.com/F4NNIU/p/9054995.html
 - https://www.mobaishare.com/
+
+自媒体还能做吗？怎么做
+想想挣钱这件事

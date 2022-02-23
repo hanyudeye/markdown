@@ -1,5 +1,0 @@
-
-** 解释器
-
-  npm install biwascheme 
-  biwas a.scm
